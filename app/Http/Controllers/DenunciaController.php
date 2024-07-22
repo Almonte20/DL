@@ -492,17 +492,18 @@ class DenunciaController extends Controller
         // $denuncia = 1112;
         // $folio = "PD/xxx55";
         $rutaAcuse = $this->generarPDF($id_denuncia);
-
+        
+        $mensajeNotificacion = 'El registro de su Denuncia se realizó de forma correcta, asignándole el folio '.$folio.' y la clave de seguimiento '.$token.', Su denuncia en línea será analizada por el Agente de Ministerio Público Orientador Digital, quien la asignará a la Fiscalía correspondiente para su seguimiento, atención y comunicación con usted. Esté al pendiente del correo/teléfono proporcionado.';
         $info = new \stdClass;
         $info->nombre = $nombre.' '.$PrimerApellido.' '.$SegundoApellido;
         $info->folio = $folio;
         $info->email = $correo;
         $info->asunto = 'Denuncia en Línea FGE';
         $info->token = $token;
-        $info->mensaje = 'El registro de su Denuncia se realizó de forma correcta, asignándole el folio '.$folio.' y la clave de seguimiento '.$token.', Su denuncia en línea será analizada por el Agente de Ministerio Público Orientador Digital, quien la asignará a la Fiscalía correspondiente para su seguimiento, atención y comunicación con usted. Esté al pendiente del correo/teléfono proporcionado.';
+        $info->mensaje = $mensajeNotificacion;
         //$info->sede1 = $sede1;
         //$info->sede2 = $sede2;
-    
+        
         setlocale(LC_TIME, 'spanish');
         $fecha = Carbon::now();
         $fecha = strftime("%A, %d de %B del %Y", strtotime($fecha));
@@ -512,8 +513,19 @@ class DenunciaController extends Controller
         unlink($rutaAcuse);
         
         $array = ["respuesta"=> true ,"token"=> $token, "denuncia" => Crypt::encrypt($denuncia->id) ,  "data"=>$denuncia, "folio" => $folio ];
-        $mensajeWhatsapp = "Denuncia en línea registrada '\n' con éxito, con el siguiente folio: $folio y clave de seguimiento: $token";
-        $this->sendWhatsapp($mensajeWhatsapp,$telefono);
+        // $mensajeWhatsapp = "Denuncia en línea registrada '\n' con éxito, con el siguiente folio: $folio y clave de seguimiento: $token";
+        $this->sendWhatsapp($mensajeNotificacion,$telefono);
+
+        $notificacion = new NotificacionUsuario;
+        $notificacion->nombre_involucrado = $nombre." ".$PrimerApellido." ".$SegundoApellido;
+        $notificacion->correo_electronico = $correo;
+        $notificacion->telefono = $telefono;
+        $notificacion->id_modulo = 1;
+        $notificacion->llave_modulo = $denuncia->id;
+        $notificacion->mensaje = $mensajeNotificacion;
+        $notificacion->id_usuario_receptor = $involucrado->id;
+        $notificacion->save();
+
         DB::commit();
         return response()->json($array);
 
@@ -602,7 +614,9 @@ class DenunciaController extends Controller
 
                             // return $testigos;
                             
-            $notificaciones = NotificacionUsuario::where("id_denuncia_linea")->get();
+            // $notificaciones = NotificacionUsuario::where("id_denuncia_linea")->get();
+            $notificaciones = NotificacionUsuario::where("llave_modulo",$id_denuncia)->where("id_modulo",1)->whereNull("id_usuario_emisor")->get();
+
             // $notificaciones = DB::connection('sqlpredenuncia')->table('Notificaciones')
             //                 ->select('FechaCita','Hora','TipoNotificacion','Asunto','Descripcion','created_at')
             //                 ->where('IdExpediente',$expediente[0]->IdExpediente)
@@ -691,7 +705,7 @@ class DenunciaController extends Controller
 
                             // return $testigos;
                             
-            $notificaciones = NotificacionUsuario::where("id_denuncia_linea")->get();
+            $notificaciones = NotificacionUsuario::where("llave_modulo",$id_denuncia)->where("id_modulo",1)->whereNull("id_usuario_emisor")->get();
             // $notificaciones = DB::connection('sqlpredenuncia')->table('Notificaciones')
             //                 ->select('FechaCita','Hora','TipoNotificacion','Asunto','Descripcion','created_at')
             //                 ->where('IdExpediente',$expediente[0]->IdExpediente)

@@ -101,14 +101,14 @@
 				<td class="table-secondary"><b>Calle:</b></td>
 				<td>{{ !empty($Calle) ? $Calle : 'N/P'}}</td>
 				<td class="table-secondary"><b>Número exterior:</b></td>
-				<td>{{ !empty($NumeroExt) ? $NumeroExt : 'N/P'}}</td>
+				<td>{{ !empty($NumExt) ? $NumExt : 'N/P'}}</td>
+
+				<td class="table-secondary"><b>Código postal:</b></td>
+				<td>{{ !empty($CodigoPostal) ? $CodigoPostal : 'N/P'}}</td>
 				{{-- <td class="table-secondary"><b>Número interior:</b></td>
 				<td>{{ !empty($hechos[0]->NumeroInt) ? $hechos[0]->NumeroInt : 'N/P' }}</td> --}}
 			</tr>
-			<tr>
-				<td colspan="3" class="table-secondary"><b>Código postal:</b></td>
-				<td colspan="3">{{ !empty($CodigoPostal) ? $CodigoPostal : 'N/P'}}</td>
-			</tr>
+		
 			@else
 			<tr>
 				<td class="table-secondary"><b>Kilometro:</b></td>
