@@ -8,6 +8,7 @@ use App\Models\Catalogs\CatAsentamientos;
 use App\Models\Catalogs\CatCountries as CatalogsCatCountries;
 use Illuminate\Support\Facades\DB;
 use App\Models\Catalogs\CatMunicipality;
+use App\Models\Catalogs\CatPlaces;
 use App\Models\Catalogs\CatState;
 use App\Models\Catalogs\DelitoClasificacion;
 use App\Models\Denuncia;
@@ -49,9 +50,10 @@ class DenunciaController extends Controller
         $countries = CatalogsCatCountries::all();
         $estados = CatState::all();
         $municipios = CatMunicipality::all();
+        $lugares = CatPlaces::all();
         // dd($paises);
        
-        return view('denuncia',compact('countries','estados'));
+        return view('denuncia',compact('countries','estados','lugares'));
     }
 
     /**
@@ -217,7 +219,8 @@ class DenunciaController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
+        dd($request);
+        // dd($request->hasFile('evidencias'));
         DB::beginTransaction();
 
         try{

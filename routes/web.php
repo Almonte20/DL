@@ -105,11 +105,6 @@ echo $response;
 
 
 Route::get('prueba', function(){
-		$password = Hash::make("123456");
-		dd($password);
-	// $correo = "sistemas.ingresos@gmail.com";
-		$folio = "inghvlz04@gmail.com";
-		$folio = "123456";
 		$folio = "PD/XXX55";
         $token = "Pasffefeasfs";
         $nombre = "Alejandro";

@@ -34,19 +34,198 @@
     }
 </style>
 
+<div class="form-row col-lg-12">
+    <h1 class="mb-4">¿Dónde sucedieron los hechos? </h1>
+    <div class="form-group col-md-6" id="carretera_div">
+        {{-- <div class="form-ic-cmp">
+            <i class="fal fa-list"></i>&nbsp;
+            <label for="carretera">¿Dónde ocurrieron los hechos?</label>
+            <label for="search" style="font-size: 7px;">Requerido</label>
+        </div> --}}
+        <select name="carretera" class="form-control required d-none" style="background-color:rgba(230, 238, 250, 0.5);"
+            onchange="LugarHechos(this)">
+            <option value="0">Seleccione una opción</option>
+            <option value="2" selected>Domicilio</option>
+            <option value="1">Tramo carretero</option>
+        </select>
+        <div style="color:#FF0000;">
+            {{ $errors->first('carretera') }}
+        </div>
+    </div>
+</div>
+<div id="lugarhechos_domicilio" class="d-non">
+    <div class="row">
+        <div class="col-md-12">
+            <i class="fad fa-map-marker-alt "></i>&nbsp;
+            <label for="municipio_hechos" class="mb-0">Domicilio</label>
+            <input type="text" name="domicilio_mapa" id="search" class="form-control mb-3 mt-1"
+                placeholder="Buscar dirección en México">
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="map"></div>
+        </div>
+    </div>
+    <div class="form-row col-lg-12">
+        <div class="form-group col-md-4">
+            <div class="form-ic-cmp">
+                <i class="fal fa-envelope"></i>&nbsp;
+                <label for="CP_hechos">Código Postal</label>
+                <label for="CP_hechos" style="font-size: 7px;">Requerido</label>
+
+            </div>
+            <input class=" form-control required" value="" maxlength="5" onkeypress="return justNumbers(event);"
+                style="background-color:rgba(230, 238, 250, 0.5);" name="CP_hechos" type="text" id="CP_hechos"
+                placeholder="Ingrese CP" maxlength="5"
+                onblur="validarCP(this,'entidad_hechos','municipio_hechos','asentamiento_hechos')"
+                onchange="validarCP(this,'entidad_hechos','municipio_hechos','asentamiento_hechos')">
+
+            <div style="color:#FF0000;">
+
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            <div class="form-ic-cmp">
+                <i class="fal fa-map"></i>&nbsp;
+                <label for="entidad_hechos">Estado</label>
+            </div>
+            <select class=" form-control " value="{{(old('entidad'))}}"
+                style="background-color:rgba(230, 238, 250, 0.5);" id="entidad_hechos" name="entidad_hechos" disabled>
+                <option value="0">Estado</option>
+            </select>
+            <div style="color:#FF0000;">
+
+            </div>
+        </div>
+
+        <div class="form-group col-md-4">
+            <div class="form-ic-cmp">
+                <i class="fad fa-map-marker-alt"></i>&nbsp;
+                <label for="municipio_hechos">Municipio</label>
+            </div>
+            <select class=" form-control " value="<?php echo e(old('municipio')); ?>" id="municipio_hechos"
+                style="background-color:rgba(230, 238, 250, 0.5);" name="municipio_hechos" disabled>
+                <option value="0">Municipio</option>
+                {{-- @foreach ($municipios as $country)
+
+                <option @if ($country->id == 118)
+                    {{'selected'}}
+                    @endif value="{{$country->id}}">{{$country->pais}}</option>
+                @endforeach --}}
+            </select>
+            <div style="color:#FF0000;">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row col-lg-12">
+        <div class="form-group col-md-4">
+            <div class="form-ic-cmp">
+                <i class="fal fa-map-pin"></i>&nbsp;
+                <label for="colonia">Colonia</label>
+                <label for="colonia" style="font-size: 7px;">Requerido</label>
+
+            </div>
+            <select class=" form-control required" value="<?php echo e(old('municipio')); ?>"
+                style="background-color:rgba(230, 238, 250, 0.5);" name="asentamiento_hechos" id="asentamiento_hechos">
+                <option value="0">Seleccione una colonia</option>
+            </select>
+            {{-- <input class=" form-control " maxlength="250" value=""
+                style="background-color:rgba(230, 238, 250, 0.5);" name="colonia" type="text" id="colonia"> --}}
+            <div style="color:#FF0000;">
+
+            </div>
+        </div>
+        <div class="form-group col-md-4">
+            <div class="form-ic-cmp">
+                <i class="fas fa-map-signs"></i>&nbsp;
+                <label for="calle_hechos">Calle</label>
+                <label for="calle_hechos" style="font-size: 7px;">Requerido</label>
+
+            </div>
+            <input class=" form-control required " value="" maxlength="250"
+                style="background-color:rgba(230, 238, 250, 0.5);" name="calle_hechos" type="text" id="calle_hechos"
+                placeholder="Ingrese la calle">
+            <div style="color:#FF0000;">
+
+            </div>
+        </div>
+
+        <div class="form-group col-md-2">
+            <div class="form-ic-cmp">
+                <i class="fal fa-hashtag"></i>&nbsp;
+                <label for="numext_hechos">Número Exterior</label>
+
+            </div>
+            <input class=" form-control required" value="" maxlength="6"
+                style="background-color:rgba(230, 238, 250, 0.5);" name="numext_hechos" type="text" id="numext_hechos"
+                placeholder="Número exterior">
+            <div style="color:#FF0000;">
+
+            </div>
+        </div>
 
 
-<h1>Ocurrencia de los hechos:</h1>
+
+
+        <div class="form-group col-md-2">
+            <div class="form-ic-cmp">
+                <i class="fal fa-hashtag"></i>&nbsp;
+                <label for="numext_hechos">Número Interior</label>
+
+            </div>
+            <input class=" form-control" value="" maxlength="6" style="background-color:rgba(230, 238, 250, 0.5);"
+                name="numint_hechos" type="text" id="numint_hechos" placeholder="Número interior">
+            <div style="color:#FF0000;">
+
+            </div>
+        </div>
+
+        <div class="form-row col-lg-12">
+            <div class="form-group col-md-4">
+                <div class="form-ic-cmp">
+                    <i class="fal fa-home"></i>&nbsp;
+                    <label for="numext_hechos">Lugar</label>
+
+                </div>
+                <select name="lugar_descripcion" style="background-color:rgba(230, 238, 250, 0.5);" id="select_lugar" class=" form-control required" data-show-subtext="true"
+                    data-live-search="true">
+                    <option value="0">Seleccione un lugar</option>
+
+                    @foreach ($lugares as $lugar)
+
+                    <option value="{{$lugar->id}}">{{$lugar->lugar}}</option>
+                    @endforeach
+
+                </select>
+                <div style="color:#FF0000;">
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<h1>¿Cuándo sucedieron los hechos?:</h1>
 
 <div class="row">
     <div class="col-md text-center">
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fechaintervalo" id="fecha" value="1" checked onchange="fechaIntervalo(this)">
+            <input class="form-check-input" type="radio" name="fechaintervalo" id="fecha" value="1" checked
+                onchange="fechaIntervalo(this)">
             <label class="form-check-label" for="fecha">Fecha específica</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fechaintervalo" id="intervalo" value="2" onchange="fechaIntervalo(this)">
-            <label class="form-check-label" for="intervalo">Intérvalo de tiempo</label>
+            <input class="form-check-input" type="radio" name="fechaintervalo" id="intervalo" value="2"
+                onchange="fechaIntervalo(this)">
+            <label class="form-check-label" for="intervalo">Lapso de tiempo</label>
         </div>
     </div>
 </div>
@@ -66,7 +245,7 @@
         </div>
     </div>
 
-     <div class="col-md-4">
+    <div class="col-md-4">
         <div class="form-group">
             <div class="form-ic-cmp">
                 <i class="fal fa-file-alt"></i>&nbsp;
@@ -96,7 +275,7 @@
         </div>
     </div>
 
-     <div class="col-md-4">
+    <div class="col-md-4">
         <div class="form-group">
             <div class="form-ic-cmp">
                 <i class="fal fa-file-alt"></i>&nbsp;
@@ -111,7 +290,7 @@
 </div>
 
 
-<h1>Datos generales de la Denuncia:</h1>
+<h1>¿Cómo sucedieron los hechos?</h1>
 
 <div class="form-group col-lg-12">
     <div class="form-ic-cmp">
@@ -132,27 +311,9 @@
     <input type="text" name="coordenadas" class="form-control">
 </div>
 
-<h1>Lugar de los Hechos:</h1>
 
 
-<div class="form-row col-lg-12">
-    <div class="form-group col-md-6" id="carretera_div">
-        <div class="form-ic-cmp">
-            <i class="fal fa-list"></i>&nbsp;
-            <label for="carretera">¿Dónde ocurrieron los hechos?</label>
-            <label for="colonia" style="font-size: 7px;">Requerido</label>
-        </div>
-        <select name="carretera" class="form-control required" style="background-color:rgba(230, 238, 250, 0.5);"
-            onchange="LugarHechos(this)">
-            <option value="0">Seleccione una opción</option>
-            <option value="2">Domicilio</option>
-            <option value="1">Tramo carretero</option>
-        </select>
-        <div style="color:#FF0000;">
-            {{ $errors->first('carretera') }}
-        </div>
-    </div>
-</div>
+
 
 <div id="lugarhechos_carretera" class="d-none">
     <div class="form-group col-lg-12">
@@ -176,7 +337,7 @@
                 <label for="descripcion_lugar">Descripcion del lugar de los hechos</label>
                 <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title=""
                     data-original-title="Recuerda colocar todos los datos conocidos del lugar donde sucedieron los hechos. Ej. municipio más cerc, lugar conocido más cerca, etc."></i>&nbsp;
-                    <label for="colonia" style="font-size: 7px;">Requerido</label>
+                <label for="colonia" style="font-size: 7px;">Requerido</label>
             </div>
             <textarea class="form-control" name="descripcion_lugar" id="descripcion_lugar" rows="7" maxlength="1990"
                 style="background-color:rgba(230, 238, 250, 0.5);"></textarea>
@@ -189,140 +350,35 @@
 
 </div>
 
-<div id="lugarhechos_domicilio" class="d-none">
-    <div class="form-row col-lg-12">
-        <div class="form-group col-md-4">
-            <div class="form-ic-cmp">
-                <i class="fal fa-envelope"></i>&nbsp;
-                <label for="CP_hechos">Código Postal</label>
-                <label for="CP_hechos" style="font-size: 7px;">Requerido</label>
 
-            </div>
-            <input class=" form-control required" value="" maxlength="5" onkeypress="return justNumbers(event);"
-                style="background-color:rgba(230, 238, 250, 0.5);" name="CP_hechos" type="text" id="CP_hechos"
-                placeholder="Ingrese CP" maxlength="5" onblur="validarCP(this,'entidad_hechos','municipio_hechos','asentamiento_hechos')">
-
-            <div style="color:#FF0000;">
-
-            </div>
-        </div>
-        <div class="form-group col-md-4">
-            <div class="form-ic-cmp">
-                <i class="fal fa-map"></i>&nbsp;
-                <label for="entidad_hechos">Estado</label>
-            </div>
-            <select class=" form-control " value="{{(old('entidad'))}}"
-                style="background-color:rgba(230, 238, 250, 0.5);" id="entidad_hechos" name="entidad_hechos"
-                disabled>
-                <option value="0">Estado</option>
-            </select>
-            <div style="color:#FF0000;">
-
-            </div>
-        </div>
- 
-        <div class="form-group col-md-4">
-            <div class="form-ic-cmp">
-                <i class="fad fa-map-marker-alt"></i>&nbsp;
-                <label for="municipio_hechos">Municipio</label>
-            </div>
-            <select class=" form-control " value="<?php echo e(old('municipio')); ?>" id="municipio_hechos"
-                style="background-color:rgba(230, 238, 250, 0.5);" name="municipio_hechos" disabled>
-                <option value="0">Municipio</option>
-                {{-- @foreach ($municipios as $country)
-
-                <option @if ($country->id == 118)
-                    {{'selected'}}
-                    @endif value="{{$country->id}}">{{$country->pais}}</option>
-                @endforeach --}}
-            </select>
-            <div style="color:#FF0000;">
-
-            </div>
-        </div>
-
-
-
-    </div>
-
-    <div class="form-row col-lg-12">
-        <div class="form-group col-md-4">
-            <div class="form-ic-cmp">
-                <i class="fal fa-map-pin"></i>&nbsp;
-                <label for="colonia">Colonia</label>
-                <label for="colonia" style="font-size: 7px;">Requerido</label>
-
-            </div>
-            <select class=" form-control required" value="<?php echo e(old('municipio')); ?>"
-                style="background-color:rgba(230, 238, 250, 0.5);" name="asentamiento_hechos"
-                id="asentamiento_hechos">
-                <option value="0">Seleccione una colonia</option>
-            </select>
-            {{-- <input class=" form-control " maxlength="250" value=""
-                style="background-color:rgba(230, 238, 250, 0.5);" name="colonia" type="text" id="colonia"> --}}
-            <div style="color:#FF0000;">
-
-            </div>
-        </div>
-        <div class="form-group col-md-4">
-            <div class="form-ic-cmp">
-                <i class="fas fa-map-signs"></i>&nbsp;
-                <label for="calle_hechos">Calle</label>
-                <label for="calle_hechos" style="font-size: 7px;">Requerido</label>
-
-            </div>
-            <input class=" form-control required " value="" maxlength="250"
-                style="background-color:rgba(230, 238, 250, 0.5);" name="calle_hechos" type="text" id="calle_hechos"
-                placeholder="Ingrese la calle">
-            <div style="color:#FF0000;">
-
-            </div>
-        </div>
-        <div class="form-group col-md-2">
-            <div class="form-ic-cmp">
-                <i class="fal fa-hashtag"></i>&nbsp;
-                <label for="numext_hechos">Número Exterior</label>
-
-            </div>
-            <input class=" form-control required" value="" maxlength="6"
-                style="background-color:rgba(230, 238, 250, 0.5);" name="numext_hechos" type="text" id="numext_hechos"
-                placeholder="Número exterior">
-            <div style="color:#FF0000;">
-
-            </div>
-        </div>
-    
-    </div>    
-
-</div> 
 <div id="lugarhechos_mapa" class="d-none">
-    <div class="row">
-        <div class="col-md-12">
-            <input type="text" name="domicilio_mapa" id="search" class="form-control mb-3" placeholder="Buscar dirección en México">
-        </div>
 
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div id="map"></div>
-        </div>
-    </div>
     <div class="row d-none">
-        <div class="col-md-3">
-            <input type="text" name="CP_mapa" id="CP_mapa" class="form-control mb-3" placeholder="Código Postal" readonly>
-        </div>
-        <div class="col-md-3">
+        <div class="d-none">
             <input type="text" name="latitud" id="latitude" class="form-control mb-3" placeholder="Latitud" readonly>
-        </div>
-        <div class="col-md-3">
             <input type="text" name="longitud" id="longitude" class="form-control mb-3" placeholder="Longitud" readonly>
         </div>
+        <div class="col-md-3">
+            Código Postal
+            <input type="text" name="CP_mapa" id="CP_mapa" class="form-control mb-3" placeholder="Código Postal">
+        </div>
+        <div class="col-md-3">
+            Entidad
+            <input type="text" name="estado_mapa" id="estado_mapa" class="form-control mb-3" placeholder="Estado"
+                readonly>
+        </div>
+        <div class="col-md-3">
+            Municipio
+            <input type="text" name="municipio_mapa" id="municipio_mapa" class="form-control mb-3"
+                placeholder="Municipio" readonly>
+        </div>
+        <div class="col-md-3">
+            Número exterior
+            <input type="text" name="numero_mapa" id="numero_mapa" class="form-control mb-3" placeholder="Número">
+        </div>
 
         <div class="col-md-3">
-            <input type="text" name="calle_mapa" id="calle_mapa" class="form-control mb-3" placeholder="Calle" readonly>
-            <input type="text" name="municipio_mapa" id="municipio_mapa" class="form-control mb-3" placeholder="Municipio" readonly>
-            <input type="text" name="estado_mapa" id="estado_mapa" class="form-control mb-3" placeholder="Estado" readonly>
-            <input type="text" name="numero_mapa" id="numero_mapa" class="form-control mb-3" placeholder="Número" readonly>
+            <input type="text" name="calle_mapa" id="calle_mapa" class="form-control mb-3" placeholder="Calle">
         </div>
 
 
@@ -416,8 +472,10 @@
 </div>
 
 <script
-    src="https://maps.googleapis.com/maps/api/js?key={{config('app.api_google')}}&callback=initMap&libraries=places,marker,drawing,geometry&loading=async&v=beta" async defer>
+    src="https://maps.googleapis.com/maps/api/js?key={{config('app.api_google')}}&callback=initMap&libraries=places,marker,drawing,geometry&loading=async&v=beta"
+    async defer>
 </script>
+
 <script>
     let map;
 			let marker;
@@ -454,14 +512,27 @@
 
 				infoWindow = new google.maps.InfoWindow();
 
-				const searchInput = document.getElementById("search");
-				const postalCodeInput = document.getElementById("CP_mapa");
+				// const searchInput = document.getElementById("search");
+				// const postalCodeInput = document.getElementById("CP_mapa");
+				// const latitudeInput = document.getElementById("latitude");
+				// const longitudeInput = document.getElementById("longitude");
+				// const streetInput = document.getElementById("calle_mapa");
+				// const municipioInput = document.getElementById("municipio_mapa");
+				// const estadoInput = document.getElementById("estado_mapa");
+				// const numeroInput = document.getElementById("numero_mapa");
+
+
+                const searchInput = document.getElementById("search");
+				const postalCodeInput = document.getElementById("CP_hechos");
 				const latitudeInput = document.getElementById("latitude");
 				const longitudeInput = document.getElementById("longitude");
-				const streetInput = document.getElementById("calle_mapa");
-				const municipioInput = document.getElementById("municipio_mapa");
-				const estadoInput = document.getElementById("estado_mapa");
-				const numeroInput = document.getElementById("numero_mapa");
+				const streetInput = document.getElementById("calle_hechos");
+				// const municipioInput = document.getElementById("municipio_hechos");
+				// const estadoInput = document.getElementById("estado_hechos");
+				const numeroInput = document.getElementById("numext_hechos");
+
+
+                
 
 				const searchBox = new google.maps.places.SearchBox(searchInput, {
 					componentRestrictions: {
@@ -507,6 +578,8 @@
                                     
                                     if (results[0].address_components[i].types.includes("postal_code")) {
                                         postalCodeInput.value = results[0].address_components[i].long_name;
+                                        const blurEvent = new Event('blur');
+                                        postalCodeInput.dispatchEvent(blurEvent);
                                         break;
                                     }
 
@@ -520,7 +593,7 @@
                                     if (municipality) {
                                         // Asignar el municipio al campo de entrada
                                         // Aquí debes reemplazar 'municipalityInput' con el ID o nombre de tu campo de entrada para el municipio
-                                        municipioInput.value = municipality;
+                                        // municipioInput.value = municipality;
                                     }
 
                                     if (number) {
@@ -530,7 +603,7 @@
                                     }
 
                                     if (state) {
-                                        estadoInput.value = state;
+                                        // estadoInput.value = state;
                                     }
 
 								}

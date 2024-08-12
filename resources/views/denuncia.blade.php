@@ -3,186 +3,220 @@
 
 @section('contenido')
 
-    @if($errors ->any())
-        <li class="list-group-item list-group-item-danger" style="text-align:center">
-            <h6>Para continuar con el registro corrige los siguientes errores:</h6>
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        </li>
-    @endif
-    <link rel="stylesheet" href= "{{ asset('lib/pnotify/pnotify.custom.min.css') }}">
-    <link rel="stylesheet" href= "assetsWizard/css/form-elements.css">
-    <link rel="stylesheet" href= "assetsWizard/css/style.css">
-    <link rel="stylesheet" href= "assetsWizard/fontawesome-pro-5.10.2-web/css/all.css">
-    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('plugins/sweetalert2/sweetalert2.min.css') }}"> --}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        .card-bodys {
-            background-image: url('{{asset("img/denuncia/Tarjeta Registro Exitoso.png")}}');
-            background-size: cover;
-        }
-    
-        .txt-conclusion {
-            font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-60)/var(--unnamed-line-spacing-69) var(--unnamed-font-family-labrador-a);
-            letter-spacing: var(--unnamed-character-spacing-0);
-            color: var(--unnamed-color-707070);
-            text-align: center;
-            font: normal normal normal 40px/69px Labrador A;
-            letter-spacing: 0px;
-            color: #707070;
-            width: 100%;
-        }
-    
-        .txt-dato {
-            /* UI Properties */
-            font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-bold) var(--unnamed-font-size-60)/var(--unnamed-line-spacing-69) var(--unnamed-font-family-labrador-a);
-            letter-spacing: var(--unnamed-character-spacing-0);
-            color: var(--unnamed-color-77bcc0);
-            text-align: center;
-            font: normal normal bold 50px/69px Labrador A;
-            letter-spacing: 0px;
-            color: #77BCC0;
-            width: 100%;
-        }
-    </style>
-
-		<div class="modal fade" id="ModalFormalizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-		aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content modal-xl">
-				<div class="modal-header text-center">
-					<h3 class="modal-title w-100 font-weight-bold">CONDICIONES DE USO</h3>
-				</div>
-				<div class="modal-body mx-2 " style="text-align: justify;">
-                    La Denuncia digital es una herramienta tecnológica que facilita a la ciudadanía la presentación de denuncias o querellas y permite su seguimiento; no obstante, a efecto de agotar los requisitos de procedibilidad a que hacen referencia los artículos 221, 223, 224 y 225 del Código Nacional de Procedimientos Penales, se debe acudir ante el agente del Ministerio Público más cercano para el reconocimiento de su contenido y firma o, en su caso, plasmar la huella digital, previa lectura de la misma.
-
-                    La falta de estos requisitos dará lugar a la improcedencia de la denuncia o querella, sin que ello sea impedimento para volver a presentarla una vez cumplidos los requisitos señalados en el Código Nacional de Procedimientos Penales.
-                    <br>
-                    <br>
-                    <label for="acepto">Acepto</label>
-                    <input type="checkbox" name="acepto" id="acepto">
-
-				</div>
-				<div class="modal-footer d-flex justify-content-center">
-                    <button class="btn btn-default" style="background: #394049;" onclick="window.location.href='/'">Cancelar</button>
-					<button class="btn btn-default"  id="boton-acepto" data-dismiss="modal" aria-label="Close" style="background: #394049;" disabled>Continuar</button>
-				</div>
-			</div>
-		</div>
+@if($errors ->any())
+<li class="list-group-item list-group-item-danger" style="text-align:center">
+    <h6>Para continuar con el registro corrige los siguientes errores:</h6>
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
     </div>
+</li>
+@endif
+<link rel="stylesheet" href="{{ asset('lib/pnotify/pnotify.custom.min.css') }}">
+<link rel="stylesheet" href="assetsWizard/css/form-elements.css">
+<link rel="stylesheet" href="assetsWizard/css/style.css">
+<link rel="stylesheet" href="assetsWizard/fontawesome-pro-5.10.2-web/css/all.css">
+{{--
+<link rel="stylesheet" type="text/css" href="{{ asset('plugins/sweetalert2/sweetalert2.min.css') }}"> --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<style>
+    .card-bodys {
+        background-image: url('{{asset("img/denuncia/Tarjeta Registro Exitoso.png")}}');
+        background-size: cover;
+    }
+
+    .txt-conclusion {
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-60)/var(--unnamed-line-spacing-69) var(--unnamed-font-family-labrador-a);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--unnamed-color-707070);
+        text-align: center;
+        font: normal normal normal 40px/69px Labrador A;
+        letter-spacing: 0px;
+        color: #707070;
+        width: 100%;
+    }
+
+    .txt-dato {
+        /* UI Properties */
+        font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-bold) var(--unnamed-font-size-60)/var(--unnamed-line-spacing-69) var(--unnamed-font-family-labrador-a);
+        letter-spacing: var(--unnamed-character-spacing-0);
+        color: var(--unnamed-color-77bcc0);
+        text-align: center;
+        font: normal normal bold 50px/69px Labrador A;
+        letter-spacing: 0px;
+        color: #77BCC0;
+        width: 100%;
+    }
+
+    .custom-file-label::after {
+        content: "Elegir";
+    }
+</style>
+
+<div class="modal fade" id="ModalFormalizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content modal-xl">
+            <div class="modal-header text-center">
+                <h3 class="modal-title w-100 font-weight-bold">CONDICIONES DE USO</h3>
+            </div>
+            <div class="modal-body mx-2 " style="text-align: justify;">
+                La Denuncia digital es una herramienta tecnológica que facilita a la ciudadanía la presentación de
+                denuncias o querellas y permite su seguimiento; no obstante, a efecto de agotar los requisitos de
+                procedibilidad a que hacen referencia los artículos 221, 223, 224 y 225 del Código Nacional de
+                Procedimientos Penales, se debe acudir ante el agente del Ministerio Público más cercano para el
+                reconocimiento de su contenido y firma o, en su caso, plasmar la huella digital, previa lectura de la
+                misma.
+
+                La falta de estos requisitos dará lugar a la improcedencia de la denuncia o querella, sin que ello sea
+                impedimento para volver a presentarla una vez cumplidos los requisitos señalados en el Código Nacional
+                de Procedimientos Penales.
+                <br>
+                <br>
+                <label for="acepto">Acepto</label>
+                <input type="checkbox" name="acepto" id="acepto">
+
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-default" style="background: #394049;"
+                    onclick="window.location.href='/'">Cancelar</button>
+                <button class="btn btn-default" id="boton-acepto" data-dismiss="modal" aria-label="Close"
+                    style="background: #394049;" disabled>Continuar</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <div class="top-content">
 
-    <div class="container" style = "font-weight: bold; color: Black;" id="registro">
+    <div class="container" style="font-weight: bold; color: Black;" id="registro">
         <div class="row">
-        <div class="col-lg-8 col-md-8 col-sm-12 text-left ">
-            <img src="{{ asset('img/denuncia/logo.png') }}" height="150" width="auto"><br>
-        </div>
-         
-        <div class="col-lg-4  col-md-4 col-sm-12 text-rigth ">
-            <a href="{{asset('documentos/Denuncia_ayuda.png')}}" ><img src="{{ asset('img/denuncia/Ayuda.png') }}" data-toggle="modal" data-target="#ModalAyuda" height="50" width="auto" style="margin-top: 80px;"></a>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-10 col-sm-offset-1 col-md-12 col-lg-12 col-lg-offset-0 form-box">
-            <form action="{{ route('denuncia.store') }}" method="POST" enctype="multipart/form-data" class="f1" id="form_denuncia">
-                @csrf
-                <!-- <form role="form" action="" method="post" class="f1"> -->
-                <input type="hidden" name="id_policia" value="" class="form-control" maxlength="50" style="display: none;">
-                <div class="f1-steps" style="text-align: center;">
-                    <div class="f1-progress">
-                        {{-- <div class="f1-progress-line" data-now-value="16.66" data-number-of-steps="3" style="width: 16.66%;"></div> --}}
-                        <div class="f1-progress-line" data-now-value="16.66" data-number-of-steps="2" style="width: 16.66%;"></div>
-                    </div>
-                    <div class="f1-step active">
-                        <div class="f1-step-icon"><i class="fal fa-user-circle"></i></div>
-                        <p>Generales</p>
-                    </div>
-                    <div class="f1-step">
-                        <div class="f1-step-icon"><i class="fal fa-pen-alt"></i></div>
-                        <p>Hechos</p>
-                    </div>
-                    <div class="f1-step ">
-                        <div class="f1-step-icon"><i class="fal fa-fingerprint"></i></div>
-                        <p>Evidencias/Testigos</p>
-                    </div>
-                    <div class="f1-step">
-                        <div class="f1-step-icon"><i class="fal fa-check"></i></div>
-                        <p>Conclusión</p>
-                    </div>
-                </div>
-                <div class="form-row col-lg-12" id="campos_faltantes" style="display: none">
-                    <div class="form-group col-md-6.5" style="background-color: #f8d7da;">
-                        <label for="nombre" style="color: #721c24;">* Por favor verifique que los campos requeridos se encuentren ingresados.</label>
-                    </div>
-                </div>
-                <fieldset class="">
-                    @include('DenunciaDigital.DatosDenunciante')
-                </fieldset>
-                <fieldset class="">
-                    @include('DenunciaDigital.LugarHechos')
-                </fieldset>
-                <fieldset>
-                    <h1>Evidencias:</h1>
-                    @include('DenunciaDigital.evidencia')
-                    
-                    <h1>Testigos:</h1>
-                    @include('DenunciaDigital.testigos')
-                    <div class="f1-buttons">
-                        <button type="button" class="btn btn-previous">Atrás</button>
-                        <button type="button" class="btn btn-next">Siguiente</button>
-                    </div>
-                </fieldset>
-                <fieldset class="">
-                    @include('DenunciaDigital.ConcluirDenuncia')
-                </fieldset>
-            </form>
-            <!-- </form> -->
-        </div>
-    </div>
-    
-
-</div>{{--  container --}}
-
-
-
-
-
-<div class="container d-none" id="registro_exitoso">
-
-    <div class="row justify-content-center">
-        <div class="col-md text-center">
-
-            <form action="{{ route('denuncia.consultaDenuncia') }}" method="POST">
-                @csrf 
-                <div class="d-none">
-                <input type="hidden" id="folio" name="folio"><br><br>
-    
-                <input type="hidden" id="token" name="token"><br><br>
+            <div class="col-lg-8 col-md-8 col-sm-12 text-left ">
+                <img src="{{ asset('img/denuncia/logo.png') }}" height="150" width="auto"><br>
             </div>
-                <button class="btn btn-info" style="
+
+            <div class="col-lg-4  col-md-4 col-sm-12 text-rigth ">
+                <a href="{{asset('documentos/Denuncia_ayuda.png')}}"><img src="{{ asset('img/denuncia/Ayuda.png') }}"
+                        data-toggle="modal" data-target="#ModalAyuda" height="50" width="auto"
+                        style="margin-top: 80px;"></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1 col-md-12 col-lg-12 col-lg-offset-0 form-box">
+                <form action="{{ route('denuncia.store') }}" method="POST" enctype="multipart/form-data" class="f1"
+                    id="form_denuncia">
+                    @csrf
+                    <!-- <form role="form" action="" method="post" class="f1"> -->
+                    <input type="hidden" name="id_policia" value="" class="form-control" maxlength="50"
+                        style="display: none;">
+                    <div class="f1-steps" style="text-align: center;">
+                        <div class="f1-progress">
+                            {{-- <div class="f1-progress-line" data-now-value="16.66" data-number-of-steps="3"
+                                style="width: 16.66%;"></div> --}}
+                            <div class="f1-progress-line" data-now-value="33.33" data-number-of-steps="3"
+                                style="width: 16.66%;"></div>
+                        </div>
+                        <div class="f1-step active">
+                            <div class="f1-step-icon"><i class="fal fa-user-circle"></i></div>
+                            <p>Generales</p>
+                        </div>
+                        <div class="f1-step">
+                            <div class="f1-step-icon"><i class="fal fa-pen-alt"></i></div>
+                            <p>Hechos</p>
+                        </div>
+                        <div class="f1-step ">
+                            <div class="f1-step-icon"><i class="fal fa-fingerprint"></i></div>
+                            <p>Evidencias/Testigos</p>
+                        </div>
+                    </div>
+                    <div class="form-row col-lg-12" id="campos_faltantes" style="display: none">
+                        <div class="form-group col-md-6.5" style="background-color: #f8d7da;">
+                            <label for="nombre" style="color: #721c24;">* Por favor verifique que los campos requeridos
+                                se encuentren ingresados.</label>
+                        </div>
+                    </div>
+                    <fieldset class="d-none">
+                        @include('DenunciaDigital.DatosDenunciante')
+                    </fieldset>
+                    <fieldset class="">
+                        @include('DenunciaDigital.LugarHechos')
+                    </fieldset>
+                    <fieldset class="d-block">
+                        <h1>Evidencias:</h1>
+                        @include('DenunciaDigital.evidencia')
+
+                        <h1>Testigos:</h1>
+                        @include('DenunciaDigital.testigos')
+
+
+                        <div class="fa-4x d-none" id="div_spin">
+                            <center>
+                                <i class="fas fa-circle-notch fa-spin" style="color:#002b49;"></i>
+                            </center>
+                        </div>
+
+                        <div class="f1-buttons" id="botones_finalizacion">
+                            <button type="button" class="btn btn-previous " id="btn_atras">Atrás</button>
+                            <button type="button" onclick="guardarDenuncia(this)" class="btn btn-success"
+                                id="finalizar_denuncia"><i class="fa-solid fa-floppy-disk"></i> Registrar
+                                Denuncia</button>
+
+                        </div>
+
+                        {{-- <div class="f1-buttons">
+                            <button type="button" class="btn btn-previous">Atrás</button>
+                            <button type="button" class="btn btn-next">Siguiente</button>
+                        </div> --}}
+                    </fieldset>
+
+
+                </form>
+                <!-- </form> -->
+            </div>
+        </div>
+
+
+    </div>{{-- container --}}
+
+
+
+
+
+    <div class="container d-none" id="registro_exitoso">
+
+        <div class="row justify-content-center">
+            <div class="col-md text-center">
+
+                <form action="{{ route('denuncia.consultaDenuncia') }}" method="POST">
+                    @csrf
+                    <div class="d-none">
+                        <input type="hidden" id="folio" name="folio"><br><br>
+
+                        <input type="hidden" id="token" name="token"><br><br>
+                    </div>
+                    <button class="btn btn-info" style="
                 background-color: #c09f77;
                 font-family: Labrador A;  font-size: x-large;" type="submit">Consultar denuncia</button>
-            </form>
+                </form>
 
+            </div>
         </div>
-    </div>
 
-    <div class="row justify-content-center">
-        <div class="col-md">
-            <div class="card  bg-light border-dark mt-5">
-                <img class="card-img" src="{{asset("img/denuncia/Tarjeta Registro Exitoso.png")}}"
-                    alt="Card image cap">
-         
+        <div class="row justify-content-center">
+            <div class="col-md">
+                <div class="card  bg-light border-dark mt-5">
+                    <img class="card-img" src="{{asset(" img/denuncia/Tarjeta Registro Exitoso.png")}}"
+                        alt="Card image cap">
 
-                <div class="card-img-overlay text-center" style=" 
+
+                    <div class="card-img-overlay text-center" style=" 
                     font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-900) var(--unnamed-font-size-90)/var(--unnamed-line-spacing-103) var(--unnamed-font-family-labrador-a);
                     letter-spacing: var(--unnamed-character-spacing-0);
                     color: var(--unnamed-color-cf8e1d);
@@ -193,45 +227,48 @@
                     opacity: 1;
                     top: 175px;
                     width: 100%;">
-                    ¡REGISTRO EXITOSO!
-                </div>
-                <div class="card-img-overlay  text-center txt-conclusion" style="    top: 250px;">
-                    Su denuncia se registró con el
+                        ¡REGISTRO EXITOSO!
+                    </div>
+                    <div class="card-img-overlay  text-center txt-conclusion" style="    top: 250px;">
+                        Su denuncia se registró con el
+                    </div>
+
+                    <div class="card-img-overlay text-center txt-conclusion" style="    top: 285px;">
+                        Folio único:
+                    </div>
+
+
+                    <div class="card-img-overlay  text-center txt-dato" style="    top: 330px;" id="txt_folio">
+
+                    </div>
+
+                    <div class="card-img-overlay  text-center txt-conclusion" style="    top: 380px;">
+                        Clave de seguimiento:
+                    </div>
+
+                    <div class="card-img-overlay  text-center txt-dato" style="    top: 425px;"
+                        id="txt_clave_seguimiento">
+
+                    </div>
+
+
                 </div>
 
-                <div class="card-img-overlay text-center txt-conclusion" style="    top: 285px;">
-                    Folio único:
-                </div>
 
 
-                <div class="card-img-overlay  text-center txt-dato" style="    top: 330px;" id="txt_folio">
-                  
-                </div>
-
-                <div class="card-img-overlay  text-center txt-conclusion" style="    top: 380px;">
-                    Clave de seguimiento:
-                </div>
-
-                <div class="card-img-overlay  text-center txt-dato" style="    top: 425px;" id="txt_clave_seguimiento">
-                   
-                </div>
-
-           
             </div>
-
-
-
         </div>
     </div>
-</div>
 
 
 
 
 </div>
 
-<div class="modal fade" id="modalpolicia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
-    <form class="form-horizontal form-bordered" method="POST" action="{{ url("/policia_registro_denuncia") }}" enctype="multipart/form-data">
+<div class="modal fade" id="modalpolicia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="false">
+    <form class="form-horizontal form-bordered" method="POST" action="{{ url("/policia_registro_denuncia") }}"
+        enctype="multipart/form-data">
         @csrf
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -239,7 +276,8 @@
                     <h3 class="modal-title w-100 font-weight-bold">¿Es Policía?</h3>
                 </div>
                 <div class="modal-body mx-3">
-                    <select id="Respuestapolicia" name="Respuestapolicia" class="form-control selectpicker" data-live-search="true">
+                    <select id="Respuestapolicia" name="Respuestapolicia" class="form-control selectpicker"
+                        data-live-search="true">
                         <option value="0" selected disabled>Seleccione una opción</option>
                         <option value="1">Sí</option>
                         <option value="2">No</option>
@@ -252,7 +290,8 @@
                                 <i class="fad fa-id-card"></i>&nbsp;
                                 <label for="NombrePol">Nombre</label>
                             </div>
-                            <input type="text" id="NombrePol" name="NombrePol" class="form-control" maxlength="50" style="background-color:rgba(230, 238, 250, 0.5);">
+                            <input type="text" id="NombrePol" name="NombrePol" class="form-control" maxlength="50"
+                                style="background-color:rgba(230, 238, 250, 0.5);">
                         </div>
                     </div>
                     <div class="form-row col-lg-12">
@@ -261,14 +300,16 @@
                                 <i class="fal fa-at"></i>&nbsp;
                                 <label for="EmailPol">Correo</label>
                             </div>
-                            <input type="email" id="EmailPol" name="EmailPol" class="form-control" maxlength="50" style="background-color:rgba(230, 238, 250, 0.5);">
+                            <input type="email" id="EmailPol" name="EmailPol" class="form-control" maxlength="50"
+                                style="background-color:rgba(230, 238, 250, 0.5);">
                         </div>
                         <div class="form-group col-md-6">
                             <div class="form-ic-cmp">
                                 <i class="fal fa-phone-alt"></i>&nbsp;
                                 <label for="TelPol">Teléfono</label>
                             </div>
-                            <input type="number" id="TelPol" name="TelPol" class="form-control" maxlength="10" style="background-color:rgba(230, 238, 250, 0.5);">
+                            <input type="number" id="TelPol" name="TelPol" class="form-control" maxlength="10"
+                                style="background-color:rgba(230, 238, 250, 0.5);">
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
@@ -283,13 +324,13 @@
 
 
 
-    @endsection
+@endsection
 
 @section('js')
-    <script src= "assetsWizard/js/scripts.js"></script>
-    <script src= "lib/pnotify/pnotify.custom.min.js"></script>
+<script src="assetsWizard/js/scripts.js"></script>
+<script src="lib/pnotify/pnotify.custom.min.js"></script>
 
-    <script>
+<script>
     jQuery(document).ready( function(){
     //$("#modalpolicia").modal("show");
     // regresar al url de denuncia con el id del policia validar si existe id no se mostrara el modal
@@ -328,6 +369,17 @@ $( '#acepto' ).on( 'click', function() {
         $("#fecha_exacta").on('change', function(){
             validarFechaMenorActual($("#fecha_exacta").val());
         });
+
+        // $("#select_lugar").select2({
+        //     placeholder: 'Selecciona un lugar',
+        //     theme: 'bootstrap4'
+        // });
+
+        $('#imageModal').on('hidden.bs.modal', function (e) {
+            // alert("cerrado");
+           $("#imageInput").val("").trigger("change");
+        });
+
     });
 
 
@@ -444,7 +496,7 @@ function alertas(msg)
     
     var nacionalidad = $("#nacionalidad").val();
     var credencial = $("#credencial").val();
-    if(credencial == ""){
+    if(credencial == "sfs"){
         Swal.fire({
                 title: "¡Cuidado!",
                 text: "Ingresa la imagen de tu credencia para poder continuar",
@@ -452,8 +504,10 @@ function alertas(msg)
             });
     }else{
 
+    // var formData = new FormData(document.getElementById("form_denuncia"));
     var formData = new FormData(document.getElementById("form_denuncia"));
     formData.append("nacionalidad", nacionalidad);
+    console.log($("#form_denuncia").serializeArray());
     // alert(formData);
     Swal.fire({
         title: "¿Está seguro de querer registrar la denuncia?",
@@ -469,10 +523,10 @@ function alertas(msg)
                     $("#botones_finalizacion").addClass("d-none");
                     $("#div_spin").removeClass("d-none");
                     try {
+                        
                         $.ajax({
                             url: "{{ route('denuncia.store') }}",
                             type: "post",
-                            dataType: "html",
                             data: formData,
                             cache: false,
                             contentType: false,
@@ -879,7 +933,7 @@ function alertas(msg)
         }
 
 
-    </script>
-    <script src= "{{ asset('js/testigos.js') }}"></script>
-    {{-- <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script> --}}
+</script>
+<script src="{{ asset('js/testigos.js') }}"></script>
+{{-- <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script> --}}
 @endsection

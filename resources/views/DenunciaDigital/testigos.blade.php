@@ -24,7 +24,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td colspan="3"><center><a style="cursor:pointer; color: #1c426a;" onclick="showForm('#div-formTestigo', '#div-tablaTestigo')"><i class="icon-line-circle-plus"></i> Haz clic aquí para agregar un registro</a></center></td>
+                            <td colspan="3"><center><a style="cursor:pointer; color: #1c426a;" onclick="showForm('#div-formTestigo', '#div-tablaTestigo')"><i class="icon-line-circle-plus"></i> Haz clic aquí para agregar un testigo</a></center></td>
                         </tr>
                     </tbody>
                 </table>

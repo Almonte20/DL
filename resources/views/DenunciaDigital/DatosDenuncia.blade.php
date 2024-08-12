@@ -1,4 +1,21 @@
-<h1>Datos generales de la Denuncia:</h1>
+<h1>Narrativa de los Hechos:</h1>
+
+<div class="form-row col-lg-12">
+    <div class="form-group col-md-6" id="carretera_div">
+        <div class="form-ic-cmp">
+            <i class="fal fa-list"></i>&nbsp;
+            <label for="carretera">¿Dónde ocurrieron los hechos?</label>
+        </div>
+        <select name="carretera" class="form-control" style="background-color:rgba(230, 238, 250, 0.5);">
+            <option value="0">Seleccione una opción</option>
+            <option value="2">Domicilio</option>
+            <option value="1">Tramo carretero</option>
+        </select>
+        <div style="color:#FF0000;">
+            {{ $errors->first('carretera') }}
+        </div>
+    </div>
+</div>
 
 <div class="form-group col-lg-12">
     <div class="form-ic-cmp">
@@ -11,6 +28,13 @@
         {{ $errors->first('narrativa') }}
     </div>
 </div>
+
+
+
+
+
+
+
 
 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="display: none">
     <input type="text" name="coordenadas" class="form-control">

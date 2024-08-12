@@ -6,20 +6,27 @@
         </div>
     </div>
 </div> --}}
+{{-- <div class="row justify-content-end">
+    <div class="col-md-4 text-end">
+        <button type="button" class="btn btn-secondary" onclick="agregar_evidencia()">Agregar
+            evidencia</button>
+    </div>
+</div> --}}
 
-<div class="form-row col-lg-12">
+<div class="form-row col-lg-12 d-none">
     <div class="form-group col-md-4">
         <div class="form-ic-cmp">
             <i class="fal fa-list"></i>&nbsp;
             <label for="evidencias">¿Cuenta con Evidencias? (Opcional)</label>
         </div>
-        <select name="evidencias" onchange="Evidencias(this)" class="form-control required" style="background-color:rgba(230, 238, 250, 0.5);">
+        {{-- <select name="evidencias" onchange="Evidencias(this)" class="form-control required d-none"
+            style="background-color:rgba(230, 238, 250, 0.5);">
             <option value="1">Sí</option>
             <option value="2" selected>No</option>
         </select>
         <div style="color:#FF0000;">
             <!-- Aquí iría el mensaje de error -->
-        </div>
+        </div> --}}
     </div>
 </div>
 <div class="form-row col-lg-12 d-none" id="evidencias_div">
@@ -53,20 +60,107 @@
     </div>
     <br>
 </div>
-<div class="form-row col-lg-12">
+<div class="form-row col-lg-12 d-none">
     <div class="form-group col-md-4">
         <div id="preview_imagen"></div>
     </div>
     <div class="form-group col-md-4" id="preview_video" style="display: none">
-        <img src="{{asset("img/denuncia/video_adjunto.png")}}" alt="Video Adjunto">
+        <img src="{{asset(" img/denuncia/video_adjunto.png")}}" alt="Video Adjunto">
     </div>
     <div class="form-group col-md-4" id="preview_audio" style="display: none">
-        <img src="{{asset("img/denuncia/audio_adjunto.png")}}" alt="Audio Adjunto">
+        <img src="{{asset(" img/denuncia/audio_adjunto.png")}}" alt="Audio Adjunto">
+    </div>
+</div>
+<div class="row justify-content-end">
+
+    <div class="col-md text-end">
+        <label>Lista de Evidencias</label>
+    </div>
+
+    <div class="col-md-4 text-center">
+        <button type="button" class="btn btn-secondary" onclick="agregar_evidencia()">Agregar
+            evidencia</button>
     </div>
 </div>
 
-<script>
 
+
+<div class="row">
+    <div class="col-md-12 py-3 px-md-.25">
+        <div>
+            
+            <table class="table table-striped table-responsive-sm" id="tablaEvidencia">
+                <thead>
+                    <tr>
+                        <th style="width: 10%;" class="text-center">#</th>
+                        <th class="text-center">Evidencia</th>
+                        <th class="text-center">Tipo</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="evidencias_tbody">
+                    <tr>
+                        <td colspan="4">
+                            <center><a style="cursor:pointer; color: #1c426a;" onclick="agregar_evidencia()"><i
+                                        class="icon-line-circle-plus"></i> Haz clic aquí para agregar una evidencia</a>
+                            </center>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Agregar
+                    Evidencia</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row justify-content-center">
+                    <div class=" col-md-8">
+                        <form id="imageForm">
+                            <div class="form-group">
+                                <input type="file" name="files[]" class="form-control-file" id="imageInput">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="form-row col-lg-12">
+                    <div class="form-group col-md-4 d-none">
+                        <div id="preview_imagen"></div>
+                    </div>
+                    <div class="form-group col-md-4 d-none text-center" id="preview_video">
+                        <img src="{{asset(" img/denuncia/video_adjunto.png")}}" alt="Video Adjunto">
+                    </div>
+                    <div class="form-group col-md-4 d-none" id="preview_audio">
+                        <img src="{{asset(" img/denuncia/audio_adjunto.png")}}" alt="Audio Adjunto">
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="addImage"
+                    onclick="AgregarEvidencia()">Agregar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- <input id="count_files" value="0"> --}}
+<script>
+    var count = 0;
+    var btn_evidencias = "";
     function Evidencias(select){
         var valor = $(select).val();
         if(valor == 2){
@@ -75,4 +169,141 @@
             $("#evidencias_div").removeClass("d-none");
         }
     }
+
+    function modal_evidencia(){
+        $("#imageModal").modal("show");
+    }
+
+    function cargarArchivo(input){
+       
+        var td = $(input).parents("td");
+        var tr = $(input).parents("tr");
+        var td_tipo = tr.find('td').eq(2);
+        var inputGroup = $(input).parents(".input-group");
+        var valor = $(input).val();
+        var fileName = $(input).prop('files')[0].name;
+        $(inputGroup).addClass("d-none");
+        $(td).append(fileName);
+        // Obtener la extensión del archivo
+        var fileExtension = fileName.split('.').pop().toLowerCase();
+
+        // Determinar el tipo de archivo basado en la extensión
+        var fileType;
+        switch (fileExtension) {
+            case 'jpg':
+            case 'jpeg':
+            case 'png':
+                fileType = 'Imagen';
+                break;
+            case 'pdf':
+                fileType = 'Documento PDF';
+                break;
+            case 'doc':
+            case 'docx':
+                fileType = 'Documento de Word';
+                break;
+            case 'csv':
+            case 'xls':
+            case 'xlsx':
+                fileType = 'Hoja de cálculo de Excel';
+                break;
+            case 'ppt':
+            case 'pptx':
+                fileType = 'Presentación de PowerPoint';
+                break;
+            case 'txt':
+                fileType = 'Archivo de texto';
+                break;
+            default:
+                fileType = 'Desconocido';
+        }
+        // alert(fileName);
+        $(td_tipo).html(fileType);
+    }
+
+     function agregar_evidencia(){
+        var bandera = true;
+        var inputVacio;
+        $('input[name="evidencias[]"]').each(function(){
+            if($(this).val() == ""){
+                bandera = false;
+                inputVacio = $(this);
+            }
+        });
+        
+        if(bandera){
+
+            count++;
+            var tr = '<tr> ';
+                tr += '<td class="text-center">'+count+'</td>';
+            tr += '<td class="text-center"><div class="input-group mb-3">  <div class="input-group-prepend">  </div>  <div class="custom-file">    <input type="file" class="custom-file-input" onchange="cargarArchivo(this)" name="evidencias[]">    <label class="custom-file-label" for="inputGroupFile01">Buscar Archivo</label>  </div></div></td>';
+            tr += '<td class="text-center"></td>';
+            tr += ' <td class="text-center"> <i style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Eliminar" class="fas fa-trash-alt icon-trash-alt" onclick="eliminar_evidencia(this);"></i></td>';
+            tr += '</tr>';
+            if(count == 1){
+                btn_evidencias = $("#evidencias_tbody").html();
+                $("#evidencias_tbody").html(tr);
+            }else{
+                $("#evidencias_tbody").append(tr);
+            }
+        }else{
+            Swal.fire("Ingresa primero la evidencia antes de agregar otra", "", "warning");
+        }
+    }
+
+    
+
+    function AgregarEvidencia(){
+      
+        const originalInput = document.getElementById('imageInput');  
+        var nombre = "";
+        if (originalInput.files.length > 0) {
+            // Obtener el nombre del primer archivo
+            const fileName = originalInput.files[0].name;
+            // Mostrar el nombre del archivo en el párrafo
+            const fileExtension = fileName.split('.').pop();
+           
+            const clonedInput = originalInput.cloneNode(true);
+            // var count_evidencia = document.querySelectorAll('input[name="evidencias[]"]').length + 1;
+            var count_evidencia = parseInt(document.getElementById('count_files').value) + 1;
+            clonedInput.id = 'evidenciaInput' + count_evidencia;
+            clonedInput.name = 'evidencias[]';
+            var table = "<tr><td class='d-none' id='tr_input"+count_evidencia+"'></td><td >"+ count_evidencia + "</td><td >"+fileName+"</td> <td>"+fileExtension+"</td> <td> <i style='cursor:pointer;' data-toggle='tooltip' data-placement='bottom' title='Eliminar' class='fas fa-trash-alt icon-trash-alt' onclick='eliminar_evidencia(this);''></i></td>  <td></td> </tr>";
+            if(count_evidencia == 1){
+                document.getElementById("evidencias_tbody").innerHTML = table;
+            }else{
+                document.getElementById("evidencias_tbody").innerHTML += table;
+            }
+            document.getElementById("tr_input"+count_evidencia).appendChild(clonedInput);
+            document.getElementById("count_files").value = count_evidencia;
+            var htmlTags = '<tr>' + '<td colspan="3"><center><a style="cursor:pointer; color: #1c426a;" onclick="showForm(&#34;#div-formTestigo&#34;, &#34;#div-tablaTestigo&#34;)"><i class="icon-line-circle-plus"></i> Haz clic aquí para agregar un registro</a></center></td>' + '</tr>';
+
+            $('#imageModal').modal('hide');
+        }
+    }
+    
+    function eliminar_evidencia(boton){
+        // var sinEvidencias = ' <tr><td colspan="4"><center><a style="cursor:pointer; color: #1c426a;" onclick="modal_evidencia()"><iclass="icon-line-circle-plus"></i> Haz clic aquí para agregar una evidencia</a></center></td></tr>';
+        Swal.fire({
+            title: "¿Está seguro de que quiere eliminar esta evidencia?",
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: "Si, eliminar",
+            denyButtonText: `Cancelar`
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                var tr = $(boton).parents("tr");
+                Swal.fire("¡Evidencia eliminada!", "", "success");
+                $(tr).remove();
+                var count_evidencia = document.querySelectorAll('input[name="evidencias[]"]').length;
+             
+                if(count_evidencia == 0){
+                    $("#evidencias_tbody").html(btn_evidencias);
+                    count = 0;
+                }
+            }
+        });
+    }
+  
 </script>

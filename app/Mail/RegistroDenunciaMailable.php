@@ -63,15 +63,4 @@ class RegistroDenunciaMailable extends Mailable
         ];
     }
 
-    // public function build()
-    // {
-    //     // $pathToFile = $pdfPath;
-    //     $pathToFile = $this->pdfPath;
-    //     $display = 'Acuse_Predenuncia_.pdf';
-    //     $mime = 'pdf';
-    //     // $this->subject('Denuncia en Línea FGE');
-    //     return $this->attach($pathToFile, ['as' => $display, 'mime' => $mime]);
-    //     // $this->subject('Dedenuncia en Linea FGE');
-    //     // return $this->view('email.notificacionpredenuncia');
-    // }
 }
