@@ -142,7 +142,7 @@
                                 se encuentren ingresados.</label>
                         </div>
                     </div>
-                    <fieldset class="d-none">
+                    <fieldset id="datos-denunciante" class="d-none">
                         @include('DenunciaDigital.DatosDenunciante')
                     </fieldset>
                     <fieldset class="">
@@ -216,7 +216,7 @@
                         alt="Card image cap">
 
 
-                    <div class="card-img-overlay text-center" style=" 
+                    <div class="card-img-overlay text-center" style="
                     font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-900) var(--unnamed-font-size-90)/var(--unnamed-line-spacing-103) var(--unnamed-font-family-labrador-a);
                     letter-spacing: var(--unnamed-character-spacing-0);
                     color: var(--unnamed-color-cf8e1d);
@@ -337,14 +337,14 @@
 });
 
 $("#Respuestapolicia").on('change', function(){
-    var respuestapolicia = $('#Respuestapolicia').val();  
+    var respuestapolicia = $('#Respuestapolicia').val();
     if (respuestapolicia == 1){
         $("#modaldatospol").css("display","block");
     }else if(respuestapolicia == 2){
-        $("#modalpolicia").modal("hide"); 
+        $("#modalpolicia").modal("hide");
     } else{
-        $("#modaldatospol").css("display","none"); 
-    }  
+        $("#modaldatospol").css("display","none");
+    }
 });
 
 $("#video").on('change', function(){
@@ -489,11 +489,11 @@ function alertas(msg)
             entidad = $('#entidad').val();
             municipios(entidad);
         });
-       
+
         function guardarDenuncia(boton){
-            
+
     // Código que puede generar errores
-    
+
     var nacionalidad = $("#nacionalidad").val();
     var credencial = $("#credencial").val();
     if(credencial == "sfs"){
@@ -523,7 +523,7 @@ function alertas(msg)
                     $("#botones_finalizacion").addClass("d-none");
                     $("#div_spin").removeClass("d-none");
                     try {
-                        
+
                         $.ajax({
                             url: "{{ route('denuncia.store') }}",
                             type: "post",
@@ -581,14 +581,14 @@ function alertas(msg)
                                 text: "Comuniquese con el administrador del sistema",
                                 showConfirmButton: true
                             });
-                            
+
                     }
                     }else{
                         $(boton).attr("disabled",false);
                     }
                 });
         }
-           
+
         }
 
         function justNumbers(e)

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NotificacionConttroller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
@@ -19,3 +20,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('enviar-codigo-verificacion', [NotificacionConttroller::class, 'enviarCodigoVerificacion']);
+
+// Route::post('enviar-codigo-verificacion', function(Request $request){
+//     return response()->json(['mensaje' => 'Datos recibidos correctamente']);
+// });
