@@ -38,6 +38,8 @@
   <meta name="twitter:description" content="">
   <meta name="twitter:image" content="">
 
+  @vite([/* 'resources/css/app.css',  */'resources/js/app.js'])
+
   @include('layouts.librerias_css')
 
 	<style>
@@ -105,7 +107,7 @@ font-size: 19px !important;
         font-family: "labrador_aregular";
     }
 
-    
+
 
     /* ----------------------------------------------------------------
         Top Search
@@ -613,7 +615,7 @@ font-size: 19px !important;
       @yield ('contenido')
   </div>
 
-  
+
   <!-- Footer -->
   <footer class="site-footer">
       <div class="row">
