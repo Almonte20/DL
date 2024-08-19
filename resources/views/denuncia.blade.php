@@ -142,13 +142,13 @@
                                 se encuentren ingresados.</label>
                         </div>
                     </div>
-                    <fieldset id="datos-denunciante" class="d-none">
+                    <fieldset id="datos-denunciante" {{-- class="d-none" --}}>
                         @include('DenunciaDigital.DatosDenunciante')
                     </fieldset>
                     <fieldset class="">
                         @include('DenunciaDigital.LugarHechos')
                     </fieldset>
-                    <fieldset class="d-block">
+                    <fieldset class="{{-- d-block --}}">
                         <h1>Evidencias:</h1>
                         @include('DenunciaDigital.evidencia')
 

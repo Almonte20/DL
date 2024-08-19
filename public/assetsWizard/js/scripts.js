@@ -169,44 +169,42 @@ jQuery(document).ready(function() {
             //     }
             // }
 
-            //-----
+            var elemento = $(this);
+            // Obtener el nombre del tipo de elemento HTML
 
-            // var elemento = $(this);
-            // // Obtener el nombre del tipo de elemento HTML
-
-            // var nombreInput = elemento.attr('name');
-            // var tipoElemento = elemento.prop("nodeName"); // O $elemento.attr("nodeName");
+            var nombreInput = elemento.attr('name');
+            var tipoElemento = elemento.prop("nodeName"); // O $elemento.attr("nodeName");
 
 
 
-            // if (elemento.val() == "" || (tipoElemento == "SELECT" && elemento.val() == "0")) {
-            //     $("#campos_faltantes").css("display", "flex");
-            //     $(this).addClass('input-error');
-            //     next_step = false;
-            //     msg = 'Faltan campos por llenar...';
-            //     errores_validacion += 1;
-            // } else {
-            //     $(this).removeClass('input-error');
-            // }
+            if (elemento.val() == "" || (tipoElemento == "SELECT" && elemento.val() == "0")) {
+                $("#campos_faltantes").css("display", "flex");
+                $(this).addClass('input-error');
+                next_step = false;
+                msg = 'Faltan campos por llenar...';
+                errores_validacion += 1;
+            } else {
+                $(this).removeClass('input-error');
+            }
 
-            // if (nombreInput == "correo") {
-            //     if (!validarFormatoCorreo(elemento.val())) {
-            //         $(this).addClass('input-error');
-            //         next_step = false;
-            //         msg = 'El correo no cuenta con un formato válido';
-            //         errores_validacion += 1;
-            //     }
-            // } else if (nombreInput == "evidencias") {
-            //     var documento = $("#documento").val();
-            //     var audio = $("#audio").val();
-            //     var video = $("#video").val();
-            //     var imagen = $("#image").val();
-            //     if (elemento.val() == 1 && (documento == "" && audio == "" && video == "" && imagen == "")) {
-            //         next_step = false;
-            //         msg = 'Seleccionaste que cuentas con evidencias, agrega por lo menos una evidencia';
+            if (nombreInput == "correo") {
+                if (!validarFormatoCorreo(elemento.val())) {
+                    $(this).addClass('input-error');
+                    next_step = false;
+                    msg = 'El correo no cuenta con un formato válido';
+                    errores_validacion += 1;
+                }
+            } else if (nombreInput == "evidencias") {
+                var documento = $("#documento").val();
+                var audio = $("#audio").val();
+                var video = $("#video").val();
+                var imagen = $("#image").val();
+                if (elemento.val() == 1 && (documento == "" && audio == "" && video == "" && imagen == "")) {
+                    next_step = false;
+                    msg = 'Seleccionaste que cuentas con evidencias, agrega por lo menos una evidencia';
 
-            //     }
-            // }
+                }
+            }
 
 
 
@@ -228,7 +226,7 @@ jQuery(document).ready(function() {
                 let codigoVerificacion = generarCodigoVerificacion();
                 console.log(`Código verificación: ${codigoVerificacion}`);
                 // se envia codigo de verificacion
-                // enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
+                enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
 
                 Swal.fire({
                     title: "Código de verificación",
@@ -254,6 +252,8 @@ jQuery(document).ready(function() {
                     cancelButtonText: "Editar campos",
                     cancelButtonColor: "#808080",
                     preConfirm: (inputValue) => {
+                        /** VERIFICACIÓN DEL CÓDIGO */
+
                         console.log( `código ingresado: ${inputValue}` );
                         console.log(`código verificación a comparar: ${codigoVerificacion}`);
 
@@ -294,13 +294,16 @@ jQuery(document).ready(function() {
 
                     },
                     preDeny: () => {
+                        /** REENVIO DEL CÓDIGO DE VALIDACIÓN */
                       // Lógica para reenviar el código
                     //   Swal.fire("Código reenviado", "Hemos reenviado el código a tu correo y WhatsApp.", "info");
                     console.log(`Código verificación antes: ${codigoVerificacion}`);
                     codigoVerificacion = generarCodigoVerificacion();
                     console.log(`Código verificación despues: ${codigoVerificacion}`);
                     // se envia codigo de verificacion nuevamente
-                    // enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
+                    enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
+
+                    toastr.success('Se reenvió el código de validacón con exito.')
 
                       // Retorna false para evitar que el cuadro de diálogo se cierre
                       return false;
