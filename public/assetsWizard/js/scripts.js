@@ -249,7 +249,7 @@ jQuery(document).ready(function() {
                     denyButtonColor: "#142f4a",
                     // confirm btn
                     showCancelButton: true,
-                    cancelButtonText: "Editar campos",
+                    cancelButtonText: "Editar datos",
                     cancelButtonColor: "#808080",
                     preConfirm: (inputValue) => {
                         /** VERIFICACIÓN DEL CÓDIGO */
