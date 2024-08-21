@@ -107,12 +107,12 @@
             <div class="form-ic-cmp">
                 <i class="fal fa-at"></i>&nbsp;
                 <label for="correo">Correo</label>
-                
+
                 <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top"
                     title="Capture un correo electrónico vigente, a esta cuenta llegará su acceso para poder realizar el seguimiento puntual a su denuncia"></i>&nbsp;
             <label for="nombre" style="font-size: 7px;">Requerido</label>
 
-                    
+
             </div>
             <input type="email" name="correo" id="correo" class=" form-control required " value="{{ old('correo') }}"
                 maxlength="50" placeholder="correo@dominio.com" style="background-color:rgba(230, 238, 250, 0.5);">
@@ -138,13 +138,13 @@
     </div>
 
     <div class="form-row col-lg-12 justify-content-center">
-   
+
         <div class="form-group col-md-8">
             <div class="form-ic-cmp">
                 <i class="fal fa-file"></i>&nbsp;
                 <label for="credencial">Identificación oficial (INE o Pasaporte) *<font style="font-size: 8px">Formato aceptado: .jpg/.jpeg/.png </font>*<font style="font-size: 8px">Tamaño máximo: 3mb </font></label>
                 <label for="credencial" style="font-size: 7px;">Requerido</label>
-    
+
             </div>
             <input type="file" name="credencial" class="file_multi_image required" id="credencial" accept="image/*" required>
         </div>
@@ -342,7 +342,7 @@
 
         var nacionalidad = $("#nacionalidad").val();
         var curp = $("#curp").val();
-        
+
 
         if(nacionalidad == "0"){
             Swal.fire({
@@ -366,7 +366,7 @@
             if(nacionalidad == "118"){
                 if(validarCURP(curp)){
                     RenapoCURP(curp);
-                    
+
                 }else{
                     Swal.fire({
                         title: "¡CURP inválida!",
@@ -386,7 +386,7 @@
     }
 
     function RenapoCURP(curp){
-      
+
 
         $.ajax(
             {
@@ -396,37 +396,37 @@
         ).done( function( res ) {
             // alert(res);
             console.log( res );
-            
+
 
             if ( res.statusOper === "EXITOSO" ) {
-                
+
                 // $('#btnConsultarCurp').prop('disabled', true);
 
                 Swal.fire({
                     // imageUrl: "{{ asset('img/renapo.png') }}",
                     icon: 'success',
                     imageWidth: 200,
-                    html: 'CURP encontrada en el Registro Nacional de Población', 
+                    html: 'CURP encontrada en el Registro Nacional de Población',
                     confirmButtonText: 'Continuar',
                     confirmButtonColor: '#152F4A',
                     width: 450,
                 });
                 $('#imgLoading').addClass("d-none");
 
-               
+
                 // input-hidden
                 $('#curp').val( curp );
                 $('#Nombre').val( res.nombres );
                 $('#PrimerApellido').val( res.apellido1 );
                 $('#SegundoApellido').val( res.apellido2 );
-                $('#fnacimiento').val( res.fechaNacF );    
-                
-                
+                $('#fnacimiento').val( res.fechaNacF );
+
+
                 $('#Nombre').attr('readonly',true);
                 $('#PrimerApellido').attr('readonly',true);
                 $('#SegundoApellido').attr('readonly',true);
                 $('#fnacimiento').attr('readonly',true);
-                
+
 
                 if ( res.nacionalidad == 'MEX' ) {
                     // input hidden
@@ -459,7 +459,7 @@
                 Swal.fire({
                     imageUrl: "{{ asset('img/renapo.png') }}",
                     imageWidth: 200,
-                    html: 'La CURP no fue encontrada en el Registro Nacional De Población. Revisa tu CURP en: ' + '<br>' + '<strong>' + '<br>' + '<a style="text-decoration: underline;" href="https://www.gob.mx/curp/" target="_blank">https://www.gob.mx/curp/</a> ' +'' + '</strong>', 
+                    html: 'La CURP no fue encontrada en el Registro Nacional De Población. Revisa tu CURP en: ' + '<br>' + '<strong>' + '<br>' + '<a style="text-decoration: underline;" href="https://www.gob.mx/curp/" target="_blank">https://www.gob.mx/curp/</a> ' +'' + '</strong>',
                     confirmButtonText: 'Enterado',
                     confirmButtonColor: '#152F4A',
                     width: 450,
@@ -469,13 +469,13 @@
                 $('#nacionalidad').attr('disabled',false);
                 $('#curp').attr('readonly',false);
 
-            }    
-            
-        
+            }
 
-       
+
+
+
     });
-        
+
     }
 
     function validarCURP(curp) {
@@ -561,9 +561,9 @@ function validarCP(input,select_estado,select_municipio,select_asentamiento){
                 $('#'+select_municipio).append('<option>Municipio</option>');
                 $('#'+select_asentamiento).append('<option value="0">Seleccione una colonia</option>');
                 Swal.fire({
-                    icon: 'warning', 
-                    title: '¡Código postal no válido!', 
-                    text: 'Ingrese un código postal correcto para continuar con el proceso.', 
+                    icon: 'warning',
+                    title: '¡Código postal no válido!',
+                    text: 'Ingrese un código postal correcto para continuar con el proceso.',
                     confirmButtonText: 'Aceptar',
                     confirmButtonColor: '#152F4A',
                 });
@@ -571,9 +571,9 @@ function validarCP(input,select_estado,select_municipio,select_asentamiento){
         });
     }else{
         Swal.fire({
-            icon: 'warning', 
-            title: '¡Código postal no válido!', 
-            text: 'Ingrese un código postal correcto para continuar con el proceso.', 
+            icon: 'warning',
+            title: '¡Código postal no válido!',
+            text: 'Ingrese un código postal correcto para continuar con el proceso.',
             confirmButtonText: 'Aceptar',
             confirmButtonColor: '#152F4A',
         });
