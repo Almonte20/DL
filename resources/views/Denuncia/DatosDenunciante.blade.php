@@ -146,9 +146,9 @@
                 <label for="credencial" style="font-size: 7px;">Requerido</label>
     
             </div>
-            <input type="file" name="credencial" class="file_multi_image required" id="credencial" accept="image/*" required>
+            <input type="file" name="credencial" class="file_multi_image required credencial" id="credencial" accept="image/*" required>
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-4 text-center">
             <div id="preview_credencial"></div>
         </div>
     </div>

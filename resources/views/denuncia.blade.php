@@ -149,10 +149,11 @@
                                 se encuentren ingresados.</label>
                         </div>
                     </div>
-                    <fieldset id="datos-denunciante" {{-- class="d-none" --}}>
+                    <fieldset id="datos-denunciante" class="d-non">
                         @include('Denuncia.DatosDenunciante')
+                        {{-- @include('DenunciaDigital.DatosDenunciante') --}}
                     </fieldset>
-                    <fieldset class="d-block">
+                    <fieldset class="d-bloc">
 
                         <div class="row ">
                             <div class="col-md-12">
@@ -917,6 +918,7 @@ function alertas(msg)
         document.getElementById("credencial").onchange = function(e) {
             // Creamos el objeto de la clase FileReader
             let reader = new FileReader();
+            
 
             // Leemos el archivo subido y se lo pasamos a nuestro fileReader
             reader.readAsDataURL(e.target.files[0]);
@@ -927,11 +929,55 @@ function alertas(msg)
                     image = document.createElement('img');
 
                 image.src = reader.result;
+                image.style.maxWidth = '150px';
 
                 preview.innerHTML = '';
                 preview.append(image);
             };
         }
+
+        // document.getElementById("identificacion_victima").onchange = function(e) {
+        //     // Creamos el objeto de la clase FileReader
+        //     let reader = new FileReader();
+            
+
+        //     // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+        //     reader.readAsDataURL(e.target.files[0]);
+
+        //     // Le decimos que cuando este listo ejecute el código interno
+        //     reader.onload = function(){
+        //         let preview = document.getElementById('preview_identificacion_victima'),
+        //             image = document.createElement('img');
+
+        //         image.src = reader.result;
+        //         image.style.maxWidth = '150px';
+
+        //         preview.innerHTML = '';
+        //         preview.append(image);
+        //     };
+        // }
+
+        document.getElementById("identificacion_responsable").onchange = function(e) {
+            // Creamos el objeto de la clase FileReader
+            let reader = new FileReader();
+            
+
+            // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+            reader.readAsDataURL(e.target.files[0]);
+
+            // Le decimos que cuando este listo ejecute el código interno
+            reader.onload = function(){
+                let preview = document.getElementById('preview_identificacion_responsable'),
+                    image = document.createElement('img');
+
+                image.src = reader.result;
+                image.style.maxWidth = '150px';
+
+                preview.innerHTML = '';
+                preview.append(image);
+            };
+        }
+        
 
         // document.getElementById("audio").onchange = function(e) {
 

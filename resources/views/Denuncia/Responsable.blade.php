@@ -74,7 +74,7 @@
             <input type="file" name="identificacion_responsable" class="file_multi_image required" id="identificacion_responsable" accept="image/*"
                 required>
         </div>
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-4 text-center">
             <div id="preview_identificacion_responsable"></div>
         </div>
     </div>
