@@ -30,6 +30,9 @@
         background-size: cover;
     }
 
+    .input-denuncia {
+        background-color:rgba(230, 238, 250, 0.5);
+    }
     .txt-conclusion {
         font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) var(--unnamed-font-size-60)/var(--unnamed-line-spacing-69) var(--unnamed-font-family-labrador-a);
         letter-spacing: var(--unnamed-character-spacing-0);
@@ -55,6 +58,10 @@
 
     .custom-file-label::after {
         content: "Elegir";
+    }
+
+    .f1-step {
+        width: 50%;
     }
 </style>
 
@@ -120,21 +127,21 @@
                         <div class="f1-progress">
                             {{-- <div class="f1-progress-line" data-now-value="16.66" data-number-of-steps="3"
                                 style="width: 16.66%;"></div> --}}
-                            <div class="f1-progress-line" data-now-value="33.33" data-number-of-steps="3"
-                                style="width: 16.66%;"></div>
+                            <div class="f1-progress-line" data-now-value="50" data-number-of-steps="2"
+                                style="width: 50%;"></div>
                         </div>
                         <div class="f1-step active">
                             <div class="f1-step-icon"><i class="fal fa-user-circle"></i></div>
-                            <p>Generales</p>
+                            <p>Denunciante</p>
                         </div>
                         <div class="f1-step">
                             <div class="f1-step-icon"><i class="fal fa-pen-alt"></i></div>
                             <p>Hechos</p>
                         </div>
-                        <div class="f1-step ">
+                        {{-- <div class="f1-step ">
                             <div class="f1-step-icon"><i class="fal fa-fingerprint"></i></div>
                             <p>Evidencias/Testigos</p>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="form-row col-lg-12" id="campos_faltantes" style="display: none">
                         <div class="form-group col-md-6.5" style="background-color: #f8d7da;">
@@ -143,38 +150,65 @@
                         </div>
                     </div>
                     <fieldset class="d-none">
-                        @include('DenunciaDigital.DatosDenunciante')
-                    </fieldset>
-                    <fieldset class="">
-                        @include('DenunciaDigital.LugarHechos')
+                        @include('Denuncia.DatosDenunciante')
                     </fieldset>
                     <fieldset class="d-block">
-                        <h1>Evidencias:</h1>
-                        @include('DenunciaDigital.evidencia')
 
-                        <h1>Testigos:</h1>
-                        @include('DenunciaDigital.testigos')
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <h1 class="mb-2">¿Qué ha sucedido?</h1>
+                                <input class="form-control input-denuncia" placeholder="Descripción breve de qué ha sucedido">
+                            </div>
+                        </div>
+                        
+                        @include('Denuncia.Victima')
+                        @include('Denuncia.Responsable')
+                        @include('Denuncia.LugarFechaHecho')
+                        @include('Denuncia.Hecho')
+                        @include('Denuncia.Testigos')
+                       
 
 
+                        {{-- @include('Denuncia.Hechos') --}}
+                        {{-- @include('DenunciaDigital.LugarHechos') --}}
                         <div class="fa-4x d-none" id="div_spin">
                             <center>
                                 <i class="fas fa-circle-notch fa-spin" style="color:#002b49;"></i>
                             </center>
                         </div>
-
                         <div class="f1-buttons" id="botones_finalizacion">
                             <button type="button" class="btn btn-previous " id="btn_atras">Atrás</button>
                             <button type="button" onclick="guardarDenuncia(this)" class="btn btn-success"
                                 id="finalizar_denuncia"><i class="fa-solid fa-floppy-disk"></i> Registrar
                                 Denuncia</button>
-
                         </div>
+
 
                         {{-- <div class="f1-buttons">
                             <button type="button" class="btn btn-previous">Atrás</button>
                             <button type="button" class="btn btn-next">Siguiente</button>
                         </div> --}}
+                        
                     </fieldset>
+                    {{-- <fieldset class="">
+                        <h1>Evidencias:</h1>
+                        {{-- @include('DenunciaDigital.evidencia') --}}
+
+                        {{-- <h1>Testigos:</h1> --}}
+                        {{-- @include('DenunciaDigital.testigos') --}}
+
+
+                  
+
+                       
+
+                        {{-- </div> --}}
+
+                        {{-- <div class="f1-buttons">
+                            <button type="button" class="btn btn-previous">Atrás</button>
+                            <button type="button" class="btn btn-next">Siguiente</button>
+                        </div> --}}
+                    {{-- </fieldset>  --}}
 
 
                 </form>
@@ -861,24 +895,24 @@ function alertas(msg)
 
         }
 
-        document.getElementById("imagen").onchange = function(e) {
-            // Creamos el objeto de la clase FileReader
-            let reader = new FileReader();
+        // document.getElementById("imagen").onchange = function(e) {
+        //     // Creamos el objeto de la clase FileReader
+        //     let reader = new FileReader();
 
-            // Leemos el archivo subido y se lo pasamos a nuestro fileReader
-            reader.readAsDataURL(e.target.files[0]);
+        //     // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+        //     reader.readAsDataURL(e.target.files[0]);
 
-            // Le decimos que cuando este listo ejecute el código interno
-            reader.onload = function(){
-                let preview = document.getElementById('preview_imagen'),
-                    image = document.createElement('img');
+        //     // Le decimos que cuando este listo ejecute el código interno
+        //     reader.onload = function(){
+        //         let preview = document.getElementById('preview_imagen'),
+        //             image = document.createElement('img');
 
-                image.src = reader.result;
+        //         image.src = reader.result;
 
-                preview.innerHTML = '';
-                preview.append(image);
-            };
-        }
+        //         preview.innerHTML = '';
+        //         preview.append(image);
+        //     };
+        // }
 
         document.getElementById("credencial").onchange = function(e) {
             // Creamos el objeto de la clase FileReader
@@ -899,25 +933,25 @@ function alertas(msg)
             };
         }
 
-        document.getElementById("audio").onchange = function(e) {
+        // document.getElementById("audio").onchange = function(e) {
 
-            if($("#audio").val() == ''){
-                $("#preview_audio").css("display","none");
-            }else{
-                $("#preview_audio").css("display","");
-            }
+        //     if($("#audio").val() == ''){
+        //         $("#preview_audio").css("display","none");
+        //     }else{
+        //         $("#preview_audio").css("display","");
+        //     }
 
 
-        }
+        // }
 
-        document.getElementById("video").onchange = function(e) {
+        // document.getElementById("video").onchange = function(e) {
 
-            if($("#video").val() == ''){
-                $("#preview_video").css("display","none");
-            }else{
-                $("#preview_video").css("display","");
-            }
-        }
+        //     if($("#video").val() == ''){
+        //         $("#preview_video").css("display","none");
+        //     }else{
+        //         $("#preview_video").css("display","");
+        //     }
+        // }
 
         $('#boton-enviar').on('click', function(){
             $('#loaderdd').css('display', 'inline-block');
