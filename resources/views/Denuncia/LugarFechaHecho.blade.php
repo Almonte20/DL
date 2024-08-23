@@ -1,10 +1,25 @@
-<div class="row mt-3">
-    <div class="col-md-12">
-        <h1 class="mb-4">Indique lugar y fecha en que sucede el hecho a denunciar</h1>
-    </div>
+<div class="seccion text-center mb-3">
+    <h1>4 LUGAR Y FECHA DE LOS HECHOS:</h1>
 </div>
-<div id="ResponsableDiv" class="pl-3">
-    <div class="row">
+
+<div class="text-center mb-3">
+    <p class="m-0" style="font-weight: 400;">INDIQUE LUGAR Y FECHA EN QUE SUCEDIÓ EL HECHO A DENUNCIAR</p>
+    {{-- <div class="col-md text-center"> --}}
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="fechaintervalo" id="fecha" value="1" checked
+                onchange="fechaIntervalo(this)">
+            <label class="form-check-label" for="fecha">Fecha específica</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="fechaintervalo" id="intervalo" value="2"
+                onchange="fechaIntervalo(this)">
+            <label class="form-check-label" for="intervalo">Lapso de tiempo</label>
+        </div>
+    {{-- </div> --}}
+</div>
+
+<div id="ResponsableDiv" class="container pl-3">
+    {{-- <div class="row">
         <div class="col-md text-center">
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="fechaintervalo" id="fecha" value="1" checked
@@ -17,7 +32,7 @@
                 <label class="form-check-label" for="intervalo">Lapso de tiempo</label>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div class="row justify-content-center">
         <div class="col-md-4">
@@ -242,6 +257,7 @@
     </div>
 
 </div>
+
 <style>
     #map {
         height: 400px;
@@ -506,7 +522,7 @@
 				const numeroInput = document.getElementById("numext_hechos");
 
 
-                
+
 
 				const searchBox = new google.maps.places.SearchBox(searchInput, {
 					componentRestrictions: {
@@ -533,11 +549,11 @@
 								for (let i = 0; i < results[0].address_components.length; i++) {
 
                                     const component = results[0].address_components[i];
-                
+
                                     if (component.types.includes("route")) {
                                         street = component.long_name;
                                     }
-                                    
+
                                     if (component.types.includes("locality")) {
                                         municipality = component.long_name;
                                     }
@@ -545,11 +561,11 @@
                                     if (component.types.includes("street_number")) {
                                         number = component.long_name;
                                     }
-                                    
+
                                     if (component.types.includes("administrative_area_level_1")) {
                                         state = component.long_name;
                                     }
-                                    
+
                                     if (results[0].address_components[i].types.includes("postal_code")) {
                                         postalCodeInput.value = results[0].address_components[i].long_name;
                                         const blurEvent = new Event('blur');

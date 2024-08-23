@@ -169,42 +169,44 @@ jQuery(document).ready(function() {
             //     }
             // }
 
-            var elemento = $(this);
-            // Obtener el nombre del tipo de elemento HTML
+            //------------------------------
 
-            var nombreInput = elemento.attr('name');
-            var tipoElemento = elemento.prop("nodeName"); // O $elemento.attr("nodeName");
+            // var elemento = $(this);
+            // // Obtener el nombre del tipo de elemento HTML
+
+            // var nombreInput = elemento.attr('name');
+            // var tipoElemento = elemento.prop("nodeName"); // O $elemento.attr("nodeName");
 
 
 
-            if (elemento.val() == "" || (tipoElemento == "SELECT" && elemento.val() == "0")) {
-                $("#campos_faltantes").css("display", "flex");
-                $(this).addClass('input-error');
-                next_step = false;
-                msg = 'Faltan campos por llenar...';
-                errores_validacion += 1;
-            } else {
-                $(this).removeClass('input-error');
-            }
+            // if (elemento.val() == "" || (tipoElemento == "SELECT" && elemento.val() == "0")) {
+            //     $("#campos_faltantes").css("display", "flex");
+            //     $(this).addClass('input-error');
+            //     next_step = false;
+            //     msg = 'Faltan campos por llenar...';
+            //     errores_validacion += 1;
+            // } else {
+            //     $(this).removeClass('input-error');
+            // }
 
-            if (nombreInput == "correo") {
-                if (!validarFormatoCorreo(elemento.val())) {
-                    $(this).addClass('input-error');
-                    next_step = false;
-                    msg = 'El correo no cuenta con un formato válido';
-                    errores_validacion += 1;
-                }
-            } else if (nombreInput == "evidencias") {
-                var documento = $("#documento").val();
-                var audio = $("#audio").val();
-                var video = $("#video").val();
-                var imagen = $("#image").val();
-                if (elemento.val() == 1 && (documento == "" && audio == "" && video == "" && imagen == "")) {
-                    next_step = false;
-                    msg = 'Seleccionaste que cuentas con evidencias, agrega por lo menos una evidencia';
+            // if (nombreInput == "correo") {
+            //     if (!validarFormatoCorreo(elemento.val())) {
+            //         $(this).addClass('input-error');
+            //         next_step = false;
+            //         msg = 'El correo no cuenta con un formato válido';
+            //         errores_validacion += 1;
+            //     }
+            // } else if (nombreInput == "evidencias") {
+            //     var documento = $("#documento").val();
+            //     var audio = $("#audio").val();
+            //     var video = $("#video").val();
+            //     var imagen = $("#image").val();
+            //     if (elemento.val() == 1 && (documento == "" && audio == "" && video == "" && imagen == "")) {
+            //         next_step = false;
+            //         msg = 'Seleccionaste que cuentas con evidencias, agrega por lo menos una evidencia';
 
-                }
-            }
+            //     }
+            // }
 
 
 
@@ -226,90 +228,88 @@ jQuery(document).ready(function() {
                 let codigoVerificacion = generarCodigoVerificacion();
                 console.log(`Código verificación: ${codigoVerificacion}`);
                 // se envia codigo de verificacion
-                enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
+                // enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
 
                 Swal.fire({
                     title: "Código de verificación",
-                    html: `<b>Para continuar con el registro de Denuncia en Línea ingrese el código de verificación.</b> <br><br> Te hemos enviado un código de verificación que se compone de 6 números al correo ${$('[name="correo"]').val()} y al número de WhatsApp ${$('[name="telefono"]').val()}.`,
-                    input: "text",
+                    html: `
+                      <b>Para continuar con el registro de Denuncia en Línea ingrese el código de verificación.</b> <br><br>
+                      Se ha enviado un código de verificación el cual se compone de 6 números al correo ${correo} <br><br>
+                      <div style="display: flex; justify-content: space-between; gap: 10px; padding: 0 20px;">
+                      <input type="text" id="input1" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
+                      <input type="text" id="input2" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
+                      <input type="text" id="input3" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
+                      <input type="text" id="input4" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
+                      <input type="text" id="input5" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
+                      <input type="text" id="input6" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
+                      </div>
+                    `,
                     allowOutsideClick: false,
-                    inputAttributes: {
-                        autocapitalize: "off",
-                        maxlength: 6, // Limitar a 5 caracteres
-                        pattern: "[0-9]{6}", // Solo permitir 5 dígitos numéricos
-                        placeholder: "1 2 3 4 5 6"
-                    },
-                    // confirm btn
                     confirmButtonText: "Verificar código",
                     confirmButtonColor: "#008f39",
                     showLoaderOnConfirm: true,
-                    // confirm btn
                     showDenyButton: true,
                     denyButtonText: "Reenviar código",
                     denyButtonColor: "#142f4a",
-                    // confirm btn
                     showCancelButton: true,
                     cancelButtonText: "Editar datos",
                     cancelButtonColor: "#808080",
-                    preConfirm: (inputValue) => {
-                        /** VERIFICACIÓN DEL CÓDIGO */
+                    didOpen: () => {
+                        const inputs = ['input1', 'input2', 'input3', 'input4', 'input5', 'input6'];
 
-                        console.log( `código ingresado: ${inputValue}` );
-                        console.log(`código verificación a comparar: ${codigoVerificacion}`);
+                        inputs.forEach((inputId, index) => {
+                            const inputElement = document.getElementById(inputId);
 
-                        // Validar el código de verificación
-                        if (codigoVerificacion != inputValue) {
-                          Swal.showValidationMessage('El código ingresado es incorrecto.'); // Mostrar mensaje de error
-                          return false; // Evitar que se cierre el SweetAlert
-                        }
-
-
-                        // En caso de que el usuario regrese al "step" de los datos generales
-                        // comprobaremos si las via de notifiicacion las modifico comparando con las variables
-                        // correoNotiificacion y whatsappNotificion
-                        correoNotification = correo;
-                        whatsappNotification = whatsapp;
-
-
-                        Swal.fire({
-                            icon: "success",
-                            title: "Verificación exitosa",
-                            text: "El código es correcto."
+                            inputElement.addEventListener('input', () => {
+                            if (inputElement.value.length === 1 && index < inputs.length - 1) {
+                                document.getElementById(inputs[index + 1]).focus(); // Mover el foco al siguiente input
+                            }
+                            });
                         });
+                    },
+                    preConfirm: () => {
+                      const input1 = document.getElementById('input1').value;
+                      const input2 = document.getElementById('input2').value;
+                      const input3 = document.getElementById('input3').value;
+                      const input4 = document.getElementById('input4').value;
+                      const input5 = document.getElementById('input5').value;
+                      const input6 = document.getElementById('input6').value;
 
-                        parent_fieldset.fadeOut(400, function() {
-                            //quita el mensaje de error
-                            $("#campos_faltantes").css("display", "none");
-                            // change icons
-                            current_active_step.removeClass('active').addClass('activated').next().addClass('active');
-                            // progress bar
-                            bar_progress(progress_line, 'right');
-                            // show next step
-                            $(this).next().fadeIn();
-                            // scroll window to beginning of the form
-                            scroll_to_class($('.f1'), 20);
-                        });
+                      const codigoIngresado = `${input1}${input2}${input3}${input4}${input5}${input6}`;
 
-                        return true;
+                      // Validar el código de verificación
+                      if (codigoVerificacion !== codigoIngresado) {
+                        Swal.showValidationMessage('El código ingresado es incorrecto.');
+                        return false;
+                      }
 
+                      Swal.fire({
+                        icon: "success",
+                        title: "Verificación exitosa",
+                        text: "El código es correcto."
+                      });
+
+                      // Continuar con el flujo del formulario
+                      parent_fieldset.fadeOut(400, function() {
+                        $("#campos_faltantes").css("display", "none");
+                        current_active_step.removeClass('active').addClass('activated').next().addClass('active');
+                        bar_progress(progress_line, 'right');
+                        $(this).next().fadeIn();
+                        scroll_to_class($('.f1'), 20);
+                      });
+
+                      return true;
                     },
                     preDeny: () => {
-                        /** REENVIO DEL CÓDIGO DE VALIDACIÓN */
-                      // Lógica para reenviar el código
-                    //   Swal.fire("Código reenviado", "Hemos reenviado el código a tu correo y WhatsApp.", "info");
-                    console.log(`Código verificación antes: ${codigoVerificacion}`);
-                    codigoVerificacion = generarCodigoVerificacion();
-                    console.log(`Código verificación despues: ${codigoVerificacion}`);
-                    // se envia codigo de verificacion nuevamente
-                    enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
-
-                    toastr.success('Se reenvió el código de validacón con exito.')
-
-                      // Retorna false para evitar que el cuadro de diálogo se cierre
+                      // Reenvío del código de verificación
+                      console.log(`Código verificación antes: ${codigoVerificacion}`);
+                      codigoVerificacion = generarCodigoVerificacion();
+                      console.log(`Código verificación después: ${codigoVerificacion}`);
+                      enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
+                      toastr.success('Se reenvió el código de validación con éxito.');
                       return false;
                     },
-                    // allowOutsideClick: () => !Swal.isLoading()
-                });
+                  });
 
             } else {
                 parent_fieldset.fadeOut(400, function() {
