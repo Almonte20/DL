@@ -2,7 +2,7 @@
 
 <h1>Datos Generales del Denunciante:</h1>
 
-<div class="form-row col-lg-12 align-items-end justify-content-start">
+{{-- <div class="form-row col-lg-12 align-items-end justify-content-start">
     <div class="form-group col-md-4">
         <div class="form-ic-cmp">
             <i class="fad fa-id-card"></i>&nbsp;
@@ -43,11 +43,11 @@
         <img src="{{asset("img/denuncia/loading.gif")}}" class="img-responsive d-none" width="30%" id="imgLoading">
     </div>
 
-</div>
+</div> --}}
 
 
 
-<div id="DatosGenerales" class="d-none">
+<div id="DatosGenerales" class="">
 
     <div class="form-row col-lg-12">
         <div class="form-group col-md-4">

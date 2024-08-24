@@ -1166,7 +1166,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 }
 
 
-@media 
+@media
 (max-width: 768px) {
   #site-footer {
     height: 50px;
@@ -1972,3 +1972,103 @@ h2.default-description {
   .boton-url-busqueda:hover{
       color: #C09F77 !important;
   }
+
+
+/** nuevos estilos */
+
+div.seccion {
+    background-color: #F2F5FC;
+}
+
+div.seccion h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 800;
+    color: #152F4A;
+    letter-spacing: 2px;
+}
+
+.btn-next {
+    background-color: #1d2671; /* Degradado de color inicial */
+    background-image: linear-gradient(to right, #1d2671, #0165a5); /* Degradado de color final */
+    color: white; /* Color del texto */
+    font-weight: bold; /* Negrita para el texto */
+    padding: 5px 20px; /* Espaciado interno del botón */
+    border: 2px solid #ffffff; /* Borde del botón */
+    border-radius: 25px; /* Bordes redondeados */
+    display: inline-flex; /* Para alinear icono y texto */
+    align-items: center; /* Centrar contenido verticalmente */
+    justify-content: center; /* Centrar contenido horizontalmente */
+    cursor: pointer; /* Icono de puntero en el botón */
+    transition: all 0.3s ease; /* Efecto de transición */
+    letter-spacing: 1px;
+}
+
+  .btn-next:hover {
+    background-color: #0165a5; /* Cambio de color al pasar el cursor */
+    background-image: linear-gradient(to right, #0165a5, #1d2671); /* Degradado invertido al pasar el cursor */
+    color: #fff; /* Color del texto al pasar el cursor */
+    border-color: #0165a5; /* Color del borde al pasar el cursor */
+  }
+
+  .btn-search {
+    background-color: #152F4A; /* Degradado de color inicial */
+    /* background-image: linear-gradient(to right, #1d2671, #0165a5); Degradado de color final */
+    color: white; /* Color del texto */
+    font-weight: bold; /* Negrita para el texto */
+    padding: 5px 20px; /* Espaciado interno del botón */
+    border: 2px solid #ffffff; /* Borde del botón */
+    border-radius: 25px; /* Bordes redondeados */
+    display: inline-flex; /* Para alinear icono y texto */
+    align-items: center; /* Centrar contenido verticalmente */
+    justify-content: center; /* Centrar contenido horizontalmente */
+    cursor: pointer; /* Icono de puntero en el botón */
+    transition: all 0.3s ease; /* Efecto de transición */
+    letter-spacing: 1px;
+}
+
+.btn-success {
+    background-color: #1b8d5f; /* Degradado de color inicial */
+    background-image: linear-gradient(to right, #1b8d5f, #85c9ad); /* Degradado de color final */
+    color: white; /* Color del texto */
+    font-weight: bold; /* Negrita para el texto */
+    padding: 5px 20px; /* Espaciado interno del botón */
+    border: 2px solid #ffffff; /* Borde del botón */
+    border-radius: 25px; /* Bordes redondeados */
+    display: inline-flex; /* Para alinear icono y texto */
+    align-items: center; /* Centrar contenido verticalmente */
+    justify-content: center; /* Centrar contenido horizontalmente */
+    cursor: pointer; /* Icono de puntero en el botón */
+    transition: all 0.3s ease; /* Efecto de transición */
+    letter-spacing: 1px;
+}
+
+.btn-success:hover {
+    background-color: #85c9ad; /* Cambio de color al pasar el cursor */
+    background-image: linear-gradient(to right, #85c9ad, #1b8d5f); /* Degradado invertido al pasar el cursor */
+    color: #fff; /* Color del texto al pasar el cursor */
+    border-color: #85c9ad; /* Color del borde al pasar el cursor */
+}
+
+.btn-back {
+    background-color: #aaaaaa; /* Degradado de color inicial */
+    background-image: linear-gradient(to right, #aaaaaa, #898989); /* Degradado de color final */
+    color: white; /* Color del texto */
+    font-weight: bold; /* Negrita para el texto */
+    padding: 5px 20px; /* Espaciado interno del botón */
+    border: 2px solid #ffffff; /* Borde del botón */
+    border-radius: 25px; /* Bordes redondeados */
+    display: inline-flex; /* Para alinear icono y texto */
+    align-items: center; /* Centrar contenido verticalmente */
+    justify-content: center; /* Centrar contenido horizontalmente */
+    cursor: pointer; /* Icono de puntero en el botón */
+    transition: all 0.3s ease; /* Efecto de transición */
+    letter-spacing: 1px;
+}
+
+.btn-back:hover {
+    background-color: #898989; /* Cambio de color al pasar el cursor */
+    background-image: linear-gradient(to right, #898989, #aaaaaa); /* Degradado invertido al pasar el cursor */
+    color: #fff; /* Color del texto al pasar el cursor */
+    border-color: #898989; /* Color del borde al pasar el cursor */
+}

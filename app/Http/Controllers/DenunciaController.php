@@ -41,7 +41,7 @@ class DenunciaController extends Controller
 
      public function __construct()
     {
-        
+
         $this->fpdf = new Fpdf;
     }
 
@@ -52,7 +52,8 @@ class DenunciaController extends Controller
         $municipios = CatMunicipality::all();
         $lugares = CatPlaces::all();
         // dd($paises);
-       
+
+        return view('denuncia2',compact('countries','estados','lugares'));
         return view('denuncia',compact('countries','estados','lugares'));
     }
 
@@ -67,7 +68,7 @@ class DenunciaController extends Controller
         $PrimerApellido = "Almonte";
         $SegundoApellido = "Acosta";
         $correo = "sistemas.ingresos@gmail.com";
-    
+
         $info = new \stdClass;
         $info->nombre = $nombre.' '.$PrimerApellido.' '.$SegundoApellido;
         $info->email = $correo;
@@ -76,12 +77,12 @@ class DenunciaController extends Controller
         $info->mensaje = 'El registro de su Denuncia se realizó de forma correcta, asignándole el folio '.$folio.' y la clave de seguimiento '.$token.', Su denuncia en línea será analizada por el Agente de Ministerio Público Orientador Digital, quien la asignará a la Fiscalía correspondiente para su seguimiento, atención y comunicación con usted. Esté al pendiente del correo/teléfono proporcionado.';
         //$info->sede1 = $sede1;
         //$info->sede2 = $sede2;
-    
+
         setlocale(LC_TIME, 'spanish');
         $fecha = Carbon::now();
         $fecha = strftime("%A, %d de %B del %Y", strtotime($fecha));
         $info->fecha = $fecha;
-    
+
         app('App\Email\EmailController')->notificacionDenuncia($info);
         // // $token = "asfasfsa";
     }
@@ -90,24 +91,24 @@ class DenunciaController extends Controller
     public function generarPDF($id_denuncia)
     {
 
-       
+
         $denuncia = Denuncia::where('id', $id_denuncia)->first();
         $folio = $denuncia->folio_denuncia;
-        
+
         $Datos_Hellman = FirmasDigitales::where('Folio', $folio)->first();
-        
+
         if ($Datos_Hellman) {
             $firma_predenuncia = $Datos_Hellman->Llave;
         } else {
             $llave = Str::random(256);
             $firma_predenuncia = Crypt::encryptString($llave);
-            
+
             $Hellman = new FirmasDigitales();
             $Hellman->Llave = $firma_predenuncia;
             $Hellman->Folio = $folio;
             $Hellman->save();
         }
-        
+
         $this->Generaqr($firma_predenuncia, $id_denuncia);
         // dd($firma_predenuncia);
 
@@ -123,7 +124,7 @@ class DenunciaController extends Controller
         $pdf->AddFont('LabradorA-Black');
         $pdf->AddFont('LabradorA-Italic');
         $pdf->AddFont('LabradorA-ExtraBold');
-        
+
         $pdf->Image('img/PDF_Predenuncia/formato_predenuncia2.png',0,0,280,216);
 
         // Folio
@@ -131,7 +132,7 @@ class DenunciaController extends Controller
         $pdf->SetFont('LabradorA-ExtraBold','',25);
         $pdf->SetTextColor(241, 25, 25);
         $pdf->Cell(85,5,$folio,0,0,'L');
-        
+
         $pdf->SetFont('LabradorA-ExtraBold','',14);
         $pdf->SetTextColor(0, 0, 0);
 
@@ -153,7 +154,7 @@ class DenunciaController extends Controller
         $pdf->SetXY(13,114);
         $pdf->Cell(92,5,utf8_decode($Materno),0,0,'L');
 
- 
+
         //CURP
         $pdf->SetXY(13,138);
         $pdf->Cell(92,5,$denunciante->curp,0,0,'L');
@@ -211,7 +212,7 @@ class DenunciaController extends Controller
         }
 
     public function enviarCorreo($datos){
-        
+
     }
 
     /**
@@ -225,10 +226,10 @@ class DenunciaController extends Controller
 
         try{
 
-        
+
         // dd($request);
         // Concatenate date and time
-        
+
         $curp = $request->curp;
         $nacionalidad = $request->nacionalidad;
         $nombre = $request->nombre;
@@ -270,7 +271,7 @@ class DenunciaController extends Controller
         $asentamiento_hechos = $request->asentamiento_hechos;
         $evidencias = $request->evidencias;
         $arrayTestigos = $request->arrayTestigos;
-        
+
         //ARMADO DEL FOLIO
         $consecMax  = Denuncia::where("anio",date("Y"))->max('consecutivo');
         if (is_null($consecMax) || !is_numeric($consecMax)) {
@@ -282,7 +283,7 @@ class DenunciaController extends Controller
         //------
 
 
-       
+
         $denuncia = new Denuncia;
         $denuncia->folio_denuncia = $folio;
         $denuncia->consecutivo = $consecutivo;
@@ -311,7 +312,7 @@ class DenunciaController extends Controller
 
         $rutaGuardado = "DenunciaEnLinea/".$id_denuncia;
         if($request->hasfile('credencial')){
-          
+
             $fileImage = $request->file('credencial');
             $extension = $fileImage->getClientOriginalExtension();
             $name = "Identificacion.".$extension;
@@ -320,7 +321,7 @@ class DenunciaController extends Controller
         }
 
         $involucrado->save();
-      
+
 
 
         $involucrado_domicilio = new InvolucradoDomicilio;
@@ -336,7 +337,7 @@ class DenunciaController extends Controller
             $involucrado->otro_domicilio = $domicilio_extranjero;
         }
         $involucrado_domicilio->save();
-        
+
         // dd($involucrado_domicilio);
 
          //TESTIGOS
@@ -353,7 +354,7 @@ class DenunciaController extends Controller
                     $testigo->id_tipo_persona = 1;
                     $testigo->id_denuncia = $denuncia->id;
                     $testigo->save();
-                 
+
             }
         }
         //GUARDADO DE EVIDENCIAS
@@ -369,8 +370,8 @@ class DenunciaController extends Controller
             $Evidencia->url = $ruta;
             $Evidencia->id_denuncia = $denuncia->id;
             $Evidencia->save();
-                
-          
+
+
         }
         if($request->hasfile('video')){
             // try{
@@ -384,7 +385,7 @@ class DenunciaController extends Controller
                 // $Evidencia->save();
 
 
-                
+
                 $fileVideo = $request->file('video');
                 $extension = $fileVideo->getClientOriginalExtension();
                 $name = "video.".$extension;
@@ -395,7 +396,7 @@ class DenunciaController extends Controller
                 $Evidencia->url = $ruta;
                 $Evidencia->id_denuncia = $denuncia->id;
                 $Evidencia->save();
-              
+
             // }catch(\Exception $e){
             //     $debug = new Debug();
             //     $debug->controlador = 'DenunciaDigitalController';
@@ -454,7 +455,7 @@ class DenunciaController extends Controller
                 $Evidencia->url = $ruta;
                 $Evidencia->id_denuncia = $denuncia->id;
                 $Evidencia->save();
-                
+
             // }catch(\Exception $e){
             //     $debug = new Debug();
             //     $debug->controlador = 'DenunciaDigitalController';
@@ -466,7 +467,7 @@ class DenunciaController extends Controller
 
         $hechos = new Hecho;
         $hechos->id_denuncia = $denuncia->id;
-        
+
         if($carretera == 1){
             $hechos->es_tramo_carretero = 1;
             $hechos->km_carretero = $km_hechos;
@@ -490,12 +491,12 @@ class DenunciaController extends Controller
         $hechos->save();
         // dd($hechos);
 
-        
+
         // $token =Str::random(20);
         // $denuncia = 1112;
         // $folio = "PD/xxx55";
         $rutaAcuse = $this->generarPDF($id_denuncia);
-        
+
         $mensajeNotificacion = 'El registro de su Denuncia se realizó de forma correcta, asignándole el folio '.$folio.' y la clave de seguimiento '.$token.', Su denuncia en línea será analizada por el Agente de Ministerio Público Orientador Digital, quien la asignará a la Fiscalía correspondiente para su seguimiento, atención y comunicación con usted. Esté al pendiente del correo/teléfono proporcionado.';
         $info = new \stdClass;
         $info->nombre = $nombre.' '.$PrimerApellido.' '.$SegundoApellido;
@@ -506,7 +507,7 @@ class DenunciaController extends Controller
         $info->mensaje = $mensajeNotificacion;
         //$info->sede1 = $sede1;
         //$info->sede2 = $sede2;
-        
+
         setlocale(LC_TIME, 'spanish');
         $fecha = Carbon::now();
         $fecha = strftime("%A, %d de %B del %Y", strtotime($fecha));
@@ -514,7 +515,7 @@ class DenunciaController extends Controller
 		Mail::to($correo)->
 		send(new RegistroDenunciaMailable($info,$rutaAcuse));
         unlink($rutaAcuse);
-        
+
         $array = ["respuesta"=> true ,"token"=> $token, "denuncia" => Crypt::encrypt($denuncia->id) ,  "data"=>$denuncia, "folio" => $folio ];
         // $mensajeWhatsapp = "Denuncia en línea registrada '\n' con éxito, con el siguiente folio: $folio y clave de seguimiento: $token";
         $this->sendWhatsapp($mensajeNotificacion,$telefono);
@@ -551,14 +552,14 @@ class DenunciaController extends Controller
     {
         $folio = $request->folio;
         $token = $request->token;
-        
+
         // dd($folio);
 
         $expediente = Denuncia::where([['folio_denuncia',$folio],['token_denuncia',$token]])
                         ->get();
                         // dd($expediente);
                         // return $expediente;
-                        
+
         if($expediente->isNotEmpty())
         {
             $expediente = $expediente[0];
@@ -568,7 +569,7 @@ class DenunciaController extends Controller
             $denunciante = Involucrado::where("id_tipo_involucrado","4")->where("id_denuncia",$id_denuncia)->first();
             $hechos = Hecho::where("id_denuncia",$id_denuncia)->first();
             // return $denunciante;
-            
+
             // $hechos = DB::connection('sqlpredenuncia')->table('HechosDenunciante')
             //                 ->leftjoin('catalogos.dbo.Pais', 'catalogos.dbo.Pais.id','=', 'HechosDenunciante.Pais')
             //                 ->leftjoin('catalogos.dbo.ENTIDAD', 'catalogos.dbo.ENTIDAD.ID','=','HechosDenunciante.Entidad')
@@ -576,7 +577,7 @@ class DenunciaController extends Controller
             //                 ->select('Narrativa','FechaExacta','HoraExacta','catalogos.dbo.Pais.desc AS Pais','catalogos.dbo.ENTIDAD.DESCRIPCION AS Entidad','catalogos.dbo.MUNICIPIO.DESCRIPCION AS Municipio','Colonia','Calle','NumeroExt','NumeroInt','CodigoPostal','IdCarretera','KM','DescripcionHecho','TipoFecha')
             //                 ->where('IdExpediente',$expediente[0]->IdExpediente)
             //                 ->get();
-            
+
             // return $hechos;
             $delito = null;
             if(!empty($expediente->id_delito_clasificacion))
@@ -586,7 +587,7 @@ class DenunciaController extends Controller
         //                 ->select('catalogos_new.dbo.DelitosSIGI.cNombre as Delito','IdExpediente','IdModalidad')
         //                 ->where([['IdExpediente',$expediente[0]->IdExpediente],['EstadoDelito',1]])
         //                 ->get();
-        
+
         // return $delito;
 
         $delito_aux="";
@@ -604,9 +605,9 @@ class DenunciaController extends Controller
             //                 ->select('ruta')
             //                 ->where('IdExpediente',$expediente[0]->IdExpediente)
             //                 ->get();
-            
+
             // return $evidencias;
-            
+
             // $id_denuncia = 88;
             $testigos =  Involucrado::where("id_tipo_involucrado",5)->where("id_denuncia",$id_denuncia)->get();
             // dd($testigos);
@@ -616,7 +617,7 @@ class DenunciaController extends Controller
             //                 ->get();
 
                             // return $testigos;
-                            
+
             // $notificaciones = NotificacionUsuario::where("id_denuncia_linea")->get();
             $notificaciones = NotificacionUsuario::where("llave_modulo",$id_denuncia)->where("id_modulo",1)->whereNull("id_usuario_emisor")->get();
 
@@ -632,7 +633,7 @@ class DenunciaController extends Controller
         }
         else
         {
-            
+
             return redirect()->back()->with('fail','No es posible localizar la denuncia, favor de revisar los datos.');
         }
     }
@@ -642,14 +643,14 @@ class DenunciaController extends Controller
     {
         $folio = $request->folio;
         $token = $request->token;
-        
+
         // dd($folio);
 
         $expediente = Denuncia::where([['folio_denuncia',$folio],['token_denuncia',$token]])
                         ->get();
                         // dd($expediente);
                         // return $expediente;
-                        
+
         if($expediente->isNotEmpty())
         {
             $expediente = $expediente[0];
@@ -659,7 +660,7 @@ class DenunciaController extends Controller
             $denunciante = Involucrado::where("id_tipo_involucrado","4")->where("id_denuncia",$id_denuncia)->first();
             $hechos = Hecho::where("id_denuncia",$id_denuncia)->first();
             // return $denunciante;
-            
+
             // $hechos = DB::connection('sqlpredenuncia')->table('HechosDenunciante')
             //                 ->leftjoin('catalogos.dbo.Pais', 'catalogos.dbo.Pais.id','=', 'HechosDenunciante.Pais')
             //                 ->leftjoin('catalogos.dbo.ENTIDAD', 'catalogos.dbo.ENTIDAD.ID','=','HechosDenunciante.Entidad')
@@ -667,7 +668,7 @@ class DenunciaController extends Controller
             //                 ->select('Narrativa','FechaExacta','HoraExacta','catalogos.dbo.Pais.desc AS Pais','catalogos.dbo.ENTIDAD.DESCRIPCION AS Entidad','catalogos.dbo.MUNICIPIO.DESCRIPCION AS Municipio','Colonia','Calle','NumeroExt','NumeroInt','CodigoPostal','IdCarretera','KM','DescripcionHecho','TipoFecha')
             //                 ->where('IdExpediente',$expediente[0]->IdExpediente)
             //                 ->get();
-            
+
             // return $hechos;
             $delito = null;
             if(!empty($expediente->id_delito_clasificacion))
@@ -677,7 +678,7 @@ class DenunciaController extends Controller
         //                 ->select('catalogos_new.dbo.DelitosSIGI.cNombre as Delito','IdExpediente','IdModalidad')
         //                 ->where([['IdExpediente',$expediente[0]->IdExpediente],['EstadoDelito',1]])
         //                 ->get();
-        
+
         // return $delito;
 
         $delito_aux="";
@@ -695,9 +696,9 @@ class DenunciaController extends Controller
             //                 ->select('ruta')
             //                 ->where('IdExpediente',$expediente[0]->IdExpediente)
             //                 ->get();
-            
+
             // return $evidencias;
-            
+
             // $id_denuncia = 88;
             $testigos =  Involucrado::where("id_tipo_involucrado",5)->where("id_denuncia",$id_denuncia)->get();
             // dd($testigos);
@@ -707,7 +708,7 @@ class DenunciaController extends Controller
             //                 ->get();
 
                             // return $testigos;
-                            
+
             $notificaciones = NotificacionUsuario::where("llave_modulo",$id_denuncia)->where("id_modulo",1)->whereNull("id_usuario_emisor")->get();
             // $notificaciones = DB::connection('sqlpredenuncia')->table('Notificaciones')
             //                 ->select('FechaCita','Hora','TipoNotificacion','Asunto','Descripcion','created_at')
@@ -721,7 +722,7 @@ class DenunciaController extends Controller
         }
         else
         {
-            
+
             return redirect()->back()->with('fail','No es posible localizar la denuncia, favor de revisar los datos.');
         }
     }

@@ -1,5 +1,4 @@
-{{-- @extends('layouts.version2.modulos') --}}
-@extends('layouts.app')
+@extends('layouts.version2.modulos')
 @section('titulo','Denuncia Digital')
 
 @section('contenido')
@@ -103,7 +102,7 @@
 
 <div class="top-content">
 
-    <div class="container" style="font-weight: bold; color: Black;" id="registro">
+    <div {{-- class="container" --}} style="font-weight: bold; color: Black;" id="registro">
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-12 text-left ">
                 <img src="{{ asset('img/denuncia/logo.png') }}" height="150" width="auto"><br>
@@ -116,10 +115,9 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-sm-10 col-sm-offset-1 col-md-12 col-lg-12 col-lg-offset-0 form-box">
-                <form action="{{ route('denuncia.store') }}" method="POST" enctype="multipart/form-data" class="f1"
-                    id="form_denuncia">
+        {{-- <div class="row"> --}}
+            {{-- <div class="col-sm-10 col-sm-offset-1 col-md-12 col-lg-12 col-lg-offset-0 form-box"> --}}
+                <form action="{{ route('denuncia.store') }}" method="POST" enctype="multipart/form-data" class="f1 p-0" id="form_denuncia">
                     @csrf
                     <!-- <form role="form" action="" method="post" class="f1"> -->
                     <input type="hidden" name="id_policia" value="" class="form-control" maxlength="50"
@@ -150,55 +148,72 @@
                                 se encuentren ingresados.</label>
                         </div>
                     </div>
-                    <fieldset id="datos-denunciante" {{-- class="d-none" --}}>
+
+                    <!-- datos denunciante -->
+                    <section id="datos-denunciante" class="p-0 mt-5 mb-3" {{-- class="d-none" --}}>
                         @include('Denuncia.DatosDenunciante')
-                    </fieldset>
-                    <fieldset class="d-block">
+                    </section>
+                    {{-- <fieldset class="d-block"> --}}
 
-                        <div class="row ">
-                            <div class="col-md-12">
-                                <p class="mb-2" style="font-weight: 400;">¿QUÉ HA SUCEDIDO?</p>
-                                <input class="form-control input-denuncia" placeholder="Descripción breve de qué ha sucedido">
-                            </div>
-
-                            <div class="col-md-12 mt-3 text-center">
-                                <p class="mb-2" style="font-weight: 400;">¿QUIÉN ES LA VICTIMA?</p>
-                            {{-- </div>
-                            <div class="col-md-12"> --}}
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="radiodenunciante" name="victimadenunciante" class="custom-control-input"
-                                        value="1" checked onchange="otraPersona()">
-                                    <label class="custom-control-label" for="radiodenunciante">Yo: <span id="nombrevictimadenunciante"
-                                            class="text-info">Alejandro almonte </span></label>
+                    <section class="p-0 mt-5 mb-3">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="mb-2" style="font-weight: 400;">¿QUÉ HA SUCEDIDO?</p>
+                                    <input class="form-control input-denuncia" placeholder="Descripción breve de qué ha sucedido">
                                 </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" id="radiovictima" name="victimadenunciante" class="custom-control-input" value="0" onchange="otraPersona()">
-                                    <label class="custom-control-label" for="radiovictima">Otra persona</label>
+
+                                <div class="col-md-12 mt-3 text-center">
+                                    <p class="mb-2" style="font-weight: 400;">¿QUIÉN ES LA VICTIMA?</p>
+                                {{-- </div>
+                                <div class="col-md-12"> --}}
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="radiodenunciante" name="victimadenunciante" class="custom-control-input"
+                                            value="1" checked onchange="otraPersona()">
+                                        <label class="custom-control-label" for="radiodenunciante">Yo: <span id="nombrevictimadenunciante"
+                                                class="text-info">Alejandro almonte </span></label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" id="radiovictima" name="victimadenunciante" class="custom-control-input" value="0" onchange="otraPersona()">
+                                        <label class="custom-control-label" for="radiovictima">Otra persona</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </section>
 
+                    <section class="p-0 mt-5 mb-3">
                         @include('Denuncia.Victima')
+                    </section>
+
+                    <section class="p-0 mt-5 mb-3">
                         @include('Denuncia.Responsable')
+                    </section>
+
+                    <section class="p-0 mt-5 mb-3">
                         @include('Denuncia.LugarFechaHecho')
+                    </section>
+
+                    <section class="p-0 mt-5 mb-3">
                         @include('Denuncia.Hecho')
+                    </section>
+
+                    <section class="p-0 mt-5 mb-3">
                         @include('Denuncia.Testigos')
+                    </section>
 
-
-
-                        {{-- @include('Denuncia.Hechos') --}}
-                        {{-- @include('DenunciaDigital.LugarHechos') --}}
-                        <div class="fa-4x d-none" id="div_spin">
-                            <center>
-                                <i class="fas fa-circle-notch fa-spin" style="color:#002b49;"></i>
-                            </center>
-                        </div>
-                        <div class="f1-buttons" id="botones_finalizacion">
-                            <button type="button" class="btn btn-previous " id="btn_atras">Atrás</button>
-                            <button type="button" onclick="guardarDenuncia(this)" class="btn btn-success"
-                                id="finalizar_denuncia"><i class="fa-solid fa-floppy-disk"></i> Registrar
-                                Denuncia</button>
-                        </div>
+                    <div class="fa-4x d-none" id="div_spin">
+                        <center>
+                            <i class="fas fa-circle-notch fa-spin" style="color:#002b49;"></i>
+                        </center>
+                    </div>
+                    <div class="f1-buttons text-center mt-5 mb-3" id="botones_finalizacion">
+                        <button type="button" class="btn-sm btn-back " id="btn_atras">Atrás</button>
+                        <button type="button" onclick="guardarDenuncia(this)" class="btn-sm btn-success"
+                            id="finalizar_denuncia">
+                             REGISTRAR DENUNCIA
+                        </button>
+                    </div>
 
 
                         {{-- <div class="f1-buttons">
@@ -206,7 +221,7 @@
                             <button type="button" class="btn btn-next">Siguiente</button>
                         </div> --}}
 
-                    </fieldset>
+                    {{-- </fieldset> --}}
                     {{-- <fieldset class="">
                         <h1>Evidencias:</h1>
                         {{-- @include('DenunciaDigital.evidencia') --}}
@@ -229,9 +244,8 @@
 
 
                 </form>
-                <!-- </form> -->
-            </div>
-        </div>
+            {{-- </div> --}}
+        {{-- </div> --}}
 
 
     </div>{{-- container --}}

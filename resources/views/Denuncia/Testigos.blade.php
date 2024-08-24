@@ -1,24 +1,24 @@
-<div class="row mt-3">
-    <div class="col-md-12">
-        <h1 class="mb-4">¿Existen testigos del hecho?</h1>
+<div class="col-md-12 text-center">
+    <div>
+        <label>¿Existen testigos del hecho?</label>
+    </div>
+    <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" id="existentestigosS" name="existentestigos" class="custom-control-input" value="1" onchange="existenTestigos()">
+        <label class="custom-control-label" for="existentestigosS">Si </label>
+    </div>
+    <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" id="existentestigosN" name="existentestigos" class="custom-control-input" value="0" onchange="existenTestigos()">
+        <label class="custom-control-label" for="existentestigosN">No</label>
     </div>
 </div>
 
-<div id="testigosDiv" class="pl-3">
-
-    <div class="row ">
-        <div class="col-md-10 pl-5">
-            <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="existentestigosS" name="existentestigos" class="custom-control-input" value="1" onchange="existenTestigos()">
-                <label class="custom-control-label" for="existentestigosS">Si </label>
-            </div>
-            <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="existentestigosN" name="existentestigos" class="custom-control-input" value="0" onchange="existenTestigos()">
-                <label class="custom-control-label" for="existentestigosN">No</label>
-            </div>
-        </div>
+{{-- <div class="row mt-3">
+    <div class="col-md-12">
+        <h1 class="mb-4">¿Existen testigos del hecho?</h1>
     </div>
+</div> --}}
 
+<div id="testigosDiv" class="pl-3">
 
     <div id="DivTestigos" class="d-none">
 
@@ -136,7 +136,7 @@
         if(valor == 0){
             $("#DivTestigos").addClass("d-none");
         }else{
-            
+
             $("#DivTestigos").removeClass("d-none");
         }
     }
