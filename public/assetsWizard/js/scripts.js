@@ -39,7 +39,7 @@ const enviarCodigoVerificacion = async(correo, whatsapp, codigoVerificacion) => 
 
         // Verificar si la respuesta fue exitosa
         if (!response.ok) {
-          throw new Error('Error en la solicitud: ' + response.statusText);
+            throw new Error('Error en la solicitud: ' + response.statusText);
         }
 
         // Convertir la respuesta a JSON
@@ -86,7 +86,7 @@ jQuery(document).ready(function() {
 
 
         // fields validation
-        parent_fieldset.find('.required').each(function() {
+        parent_fieldset.find('.requirede').each(function() {
 
 
             // if ($('#pais').val() != '165') {
@@ -213,14 +213,14 @@ jQuery(document).ready(function() {
 
 
 
-        if ( (parent_fieldset.attr('id') === 'datos-denunciante') && (errores_validacion == 0)){
+        if ((parent_fieldset.attr('id') === 'datos-denunciantee') && (errores_validacion == 0)) {
             next_step = false;
 
             // medios de notificacion
             const correo = $('[name="correo"]').val();
             const whatsapp = $('[name="telefono"]').val();
 
-            if ( correoNotification != correo || whatsappNotification != whatsapp ) {
+            if (correoNotification != correo || whatsappNotification != whatsapp) {
 
                 // se genera numero aleatorio
                 let codigoVerificacion = generarCodigoVerificacion();
@@ -254,13 +254,13 @@ jQuery(document).ready(function() {
                     preConfirm: (inputValue) => {
                         /** VERIFICACIÓN DEL CÓDIGO */
 
-                        console.log( `código ingresado: ${inputValue}` );
+                        console.log(`código ingresado: ${inputValue}`);
                         console.log(`código verificación a comparar: ${codigoVerificacion}`);
 
                         // Validar el código de verificación
                         if (codigoVerificacion != inputValue) {
-                          Swal.showValidationMessage('El código ingresado es incorrecto.'); // Mostrar mensaje de error
-                          return false; // Evitar que se cierre el SweetAlert
+                            Swal.showValidationMessage('El código ingresado es incorrecto.'); // Mostrar mensaje de error
+                            return false; // Evitar que se cierre el SweetAlert
                         }
 
 
@@ -295,18 +295,18 @@ jQuery(document).ready(function() {
                     },
                     preDeny: () => {
                         /** REENVIO DEL CÓDIGO DE VALIDACIÓN */
-                      // Lógica para reenviar el código
-                    //   Swal.fire("Código reenviado", "Hemos reenviado el código a tu correo y WhatsApp.", "info");
-                    console.log(`Código verificación antes: ${codigoVerificacion}`);
-                    codigoVerificacion = generarCodigoVerificacion();
-                    console.log(`Código verificación despues: ${codigoVerificacion}`);
-                    // se envia codigo de verificacion nuevamente
-                    enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
+                        // Lógica para reenviar el código
+                        //   Swal.fire("Código reenviado", "Hemos reenviado el código a tu correo y WhatsApp.", "info");
+                        console.log(`Código verificación antes: ${codigoVerificacion}`);
+                        codigoVerificacion = generarCodigoVerificacion();
+                        console.log(`Código verificación despues: ${codigoVerificacion}`);
+                        // se envia codigo de verificacion nuevamente
+                        enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
 
-                    toastr.success('Se reenvió el código de validacón con exito.')
+                        toastr.success('Se reenvió el código de validacón con exito.')
 
-                      // Retorna false para evitar que el cuadro de diálogo se cierre
-                      return false;
+                        // Retorna false para evitar que el cuadro de diálogo se cierre
+                        return false;
                     },
                     // allowOutsideClick: () => !Swal.isLoading()
                 });
@@ -331,12 +331,19 @@ jQuery(document).ready(function() {
 
 
 
-        }else{
+        } else {
 
             // fields validation
 
             if (next_step) {
                 parent_fieldset.fadeOut(400, function() {
+                    var nombre = $("#Nombre_denunciante").val();
+                    var primerAp = $("#PrimerApellido_denunciante").val();
+                    var SegundoAp = $("#SegundoApellido_denunciante").val();
+
+                    $("#txt_nombre_victima").html(nombre);
+                    $("#txt_PrimerApellido_victima").html(primerAp);
+                    $("#txt_SegundoApellido_victima").html(SegundoAp);
                     //quita el mensaje de error
                     $("#campos_faltantes").css("display", "none");
                     // change icons

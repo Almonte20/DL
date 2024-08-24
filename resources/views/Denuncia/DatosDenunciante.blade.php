@@ -338,11 +338,15 @@
             if(divcurp == "divCurp_victima"){
                 $("#DatosGenerales_victima").addClass("d-none");
                 $("#btnConsultarCurp_victima").removeClass("d-none");
+                $('#btnConsultarCurp_victima').attr("disabled",false);
+
             }
         }else{
             $("#"+divcurp).addClass("d-none");
             if(divcurp == "divCurp_victima"){
                 $("#btnConsultarCurp_victima").addClass("d-none");
+                $('#btnConsultarCurp_victima').attr("disabled",true);
+
                 $("#DatosGenerales_victima").removeClass("d-none");
             }
         }
@@ -375,6 +379,7 @@
         }else{
             // $('#btnConsultarCurp').prop('disabled', true);
             $('#btnConsultarCurp_'+destino).addClass("d-none");
+            $('#btnConsultarCurp_'+destino).attr("disabled",true);
             $('#imgLoading_'+destino).removeClass("d-none");
 
             $('#nacionalidad_'+destino).attr('disabled',true);
@@ -392,6 +397,8 @@
                     // $('#btnConsultarCurp').remove();;
                     $('#imgLoading_'+destino).addClass("d-none");
                     $('#btnConsultarCurp_'+destino).removeClass("d-none");
+                    $('#btnConsultarCurp_'+destino).attr("disabled",true);
+
                     $('#nacionalidad_'+destino).attr('disabled',false);
                     $('#curp_'+destino).attr('readonly',false);
                 }
@@ -456,6 +463,8 @@
                     width: 450,
                 });
                 $('#btnConsultarCurp_'+destino).removeClass("d-none");
+                $('#btnConsultarCurp_'+destino).attr("disabled",false);
+
                 $('#imgLoading_'+destino).addClass("d-none");
                 $('#nacionalidad_'+destino).attr('disabled',false);
                 $('#curp_'+destino).attr('readonly',false);

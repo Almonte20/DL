@@ -66,7 +66,7 @@
             <div class="form-ic-cmp">
                 <i class="fad fa-id-card"></i>&nbsp;
                 <label for="PrimerApellido">Primer Apellido</label>
-                <label for="nombre" style="font-size: 7px;">Requerido</label>
+                <label for="PrimerApellido" style="font-size: 7px;">Requerido</label>
             </div>
             <input type="text" name="PrimerApellido" id="PrimerApellido" class=" form-control required "
                 value="{{ old('PrimerApellido') }}" maxlength="50" style="background-color:rgba(230, 238, 250, 0.5);"

@@ -1,4 +1,5 @@
-@extends('layouts.version2.modulos')
+{{-- @extends('layouts.version2.modulos') --}}
+@extends('layouts.app')
 @section('titulo','Denuncia Digital')
 
 @section('contenido')

@@ -1,3 +1,14 @@
+<style>
+    .txtVictima{
+        color: #000;
+        font-family: "Labrador A";
+        font-size: 32px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+    </style>
+
 <div class="row mt-3">
     <div class="col-md-12">
         <h1 class="mb-4">¿Quién es la víctima?</h1>
@@ -10,23 +21,48 @@
             <div class="custom-control custom-radio custom-control-inline">
                 <input type="radio" id="radiodenunciante" name="victimadenunciante" class="custom-control-input"
                     value="1" checked onchange="otraPersona()">
-                <label class="custom-control-label" for="radiodenunciante">Yo: <span id="nombrevictimadenunciante"
-                        class="text-info">Alejandro almonte </span></label>
+                <label class="custom-control-label" for="radiodenunciante">Yo</label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="radiovictima" name="victimadenunciante" class="custom-control-input" value="0" onchange="otraPersona()">
+                <input type="radio" id="radiovictima" name="victimadenunciante" class="custom-control-input" value="0"
+                    onchange="otraPersona()">
                 <label class="custom-control-label" for="radiovictima">Otra persona</label>
             </div>
         </div>
     </div>
+    <div class="row mt-3">
+        <div class="col-md-10 ">
+            <h3 class="h4"><label>Datos de la víctima:</label></h3>
+        </div>
+    </div>
+    <div id="YoVictimaDiv" class="">
+        <div class="form-row col-lg-12">
+            <div class="form-group col-md-4">
+                <div class="form-ic-cmp">
+                    <i class="fad fa-id-card"></i>&nbsp;
+                    <label class="mb-0" >Nombre (s)</label>
+                </div>
+                <span class="mt-0 txtVictima" id="txt_nombre_victima"></label>
 
-    <div id="OtraPersonaDiv" class="d-none">
-        <div class="row mt-3">
-            <div class="col-md-10 ">
-                <h3 class="h4"><label>Datos de la víctima:</label></h3>
+            </div>
+            <div class="form-group col-md-4">
+                <div class="form-ic-cmp">
+                    <i class="fad fa-id-card"></i>&nbsp;
+                    <label  class="mb-0">Primer Apellido</label>
+                </div>
+                <label class="mt-0 txtVictima" id="txt_PrimerApellido_victima"></label>
+            </div>
+            <div class="form-group col-md-4">
+                <div class="form-ic-cmp">
+                    <i class="fad fa-id-card"></i>&nbsp;
+                    <label class="mb-0">Segundo Apellido</label>&nbsp;
+                </div>
+                <label class="mt-0 txtVictima" id="txt_SegundoApellido_victima"></label>
+
             </div>
         </div>
-
+    </div>
+    <div id="OtraPersonaDiv" class="d-none">
 
 
         <div class="form-row col-lg-12 align-items-end justify-content-start">
@@ -36,8 +72,9 @@
                     <label for="nacionalidad_victima">Nacionalidad de la víctima</label>
                     <label for="nacionalidad_victima" style="font-size: 7px;">Requerido</label>
                 </div>
-                <select name="nacionalidad_victima" id="nacionalidad_victima" data-curp="divCurp_victima" onchange="validarNacionalidad(this)"
-                    class=" form-control " style="background-color:rgba(230, 238, 250, 0.5);">
+                <select name="nacionalidad_victima" id="nacionalidad_victima" data-curp="divCurp_victima"
+                    onchange="validarNacionalidad(this)" class=" form-control "
+                    style="background-color:rgba(230, 238, 250, 0.5);">
                     <option value="0">Seleccione la nacionalidad</option>
                     @foreach ($countries as $country)
 
@@ -60,7 +97,8 @@
                 <input type="text" name="curp_victima" id="curp_victima" class=" form-control "
                     value="AOAA960320HMNLCL04" maxlength="18" placeholder="CURP"
                     style="background-color:rgba(230, 238, 250, 0.5);">
-                {{-- <label for="curp" style="font-size: 8px;"><a target="_blank" href="https://www.gob.mx/curp/">Saber cuál
+                {{-- <label for="curp" style="font-size: 8px;"><a target="_blank" href="https://www.gob.mx/curp/">Saber
+                        cuál
                         es
                         mi CURP</a></label> --}}
 
@@ -72,7 +110,7 @@
             <div class="form-group col-md-2">
                 <button type="button" class="btn btn-sm align-bottom" onclick="consultarCurp(this,'victima')"
                     style="background: #002b49;" id="btnConsultarCurp_victima"> Buscar</button>
-                <img src="{{asset("img/denuncia/loading.gif")}}" class="img-responsive d-none" width="30%"
+                <img src="{{asset(" img/denuncia/loading.gif")}}" class="img-responsive d-none" width="30%"
                     id="imgLoading_victima">
             </div>
         </div>
@@ -146,8 +184,10 @@
         var valor = $('input:radio[name=victimadenunciante]:checked').val();
         if(valor == 0){
             $("#OtraPersonaDiv").removeClass("d-none");
+            $("#YoVictimaDiv").addClass("d-none");
         }else{
             $("#OtraPersonaDiv").addClass("d-none");
+            $("#YoVictimaDiv").removeClass("d-none");
 
         }
     }
