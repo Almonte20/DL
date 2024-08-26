@@ -182,8 +182,8 @@
                                         <div class="custom-control custom-radio custom-control-inline">
                                             <input type="radio" id="radiodenunciante" name="victimadenunciante" class="custom-control-input"
                                                 value="1" checked onchange="otraPersona()">
-                                            <label class="custom-control-label" for="radiodenunciante">Yo: <span id="nombrevictimadenunciante"
-                                                    class="text-info">Alejandro almonte </span></label>
+                                            <label class="custom-control-label" for="radiodenunciante">Yo:{{--  <span id="nombrevictimadenunciante"
+                                                    class="text-info">Alejandro almonte </span> --}}</label>
                                         </div>
                                         <div class="custom-control custom-radio custom-control-inline">
                                             <input type="radio" id="radiovictima" name="victimadenunciante" class="custom-control-input" value="0" onchange="otraPersona()">
