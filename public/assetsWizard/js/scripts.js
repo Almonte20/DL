@@ -71,6 +71,9 @@ $(this).removeClass('input-error');
 });
 
 $('#btn-atras').on('click', function() {
+    console.log('boton atras');
+
+
     $('#step-hechos').removeClass('active');
     $('#datos-hechos').addClass('d-none');
     $('#step-denunciante').addClass('active');
@@ -79,6 +82,9 @@ $('#btn-atras').on('click', function() {
 
 // next step
 $('.f1 .btn-next').on('click', function() {
+
+console.log('siguientte');
+
 
 var parent_fieldset = $(this).parents('section');
 console.log(parent_fieldset);
@@ -224,6 +230,10 @@ parent_fieldset.find('.required').each(function() {
 
 
 if ((parent_fieldset.attr('id') === 'datos-denunciante') && (errores_validacion == 0)) {
+    console.log(`Errores: ${errores_validacion}`);
+    console.log(`Correo: ${correoNotification}`);
+    console.log(`Telefono: ${whatsappNotification}`);
+
     next_step = false;
 
     // medios de notificacion
@@ -302,6 +312,9 @@ if ((parent_fieldset.attr('id') === 'datos-denunciante') && (errores_validacion 
                     return false;
                 }
 
+                correoNotification = correo;
+                whatsappNotification = whatsapp;
+
                 Swal.fire({
                     icon: "success",
                     title: "VERIFICACIÓN EXITOSA",
@@ -353,18 +366,24 @@ if ((parent_fieldset.attr('id') === 'datos-denunciante') && (errores_validacion 
         });
 
     } else {
-        parent_fieldset.fadeOut(400, function() {
-            //quita el mensaje de error
-            $("#campos_faltantes").css("display", "none");
-            // change icons
-            current_active_step.removeClass('active').addClass('activated').next().addClass('active');
-            // progress bar
-            bar_progress(progress_line, 'right');
-            // show next step
-            $(this).next().fadeIn();
-            // scroll window to beginning of the form
-            scroll_to_class($('.f1'), 20);
-        });
+        // parent_fieldset.fadeOut(400, function() {
+        //     //quita el mensaje de error
+        //     $("#campos_faltantes").css("display", "none");
+        //     // change icons
+        //     current_active_step.removeClass('active').addClass('activated').next().addClass('active');
+        //     // progress bar
+        //     bar_progress(progress_line, 'right');
+        //     // show next step
+        //     $(this).next().fadeIn();
+        //     // scroll window to beginning of the form
+        //     scroll_to_class($('.f1'), 20);
+
+
+        // });
+        $('#step-denunciante').removeClass('active');
+        $('#datos-denunciante').addClass('d-none');
+        $('#step-hechos').addClass('active');
+        $('#datos-hechos').removeClass('d-none');
     }
 
 
