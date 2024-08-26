@@ -46,7 +46,7 @@ const enviarCodigoVerificacion = async(correo, whatsapp, codigoVerificacion) => 
         const data = await response.json();
 
         // Trabajar con los datos recibidos
-        console.log(data);
+        // console.log(data);
 
     } catch (error) {
         // Manejar errores de red u otros
@@ -71,7 +71,7 @@ $(this).removeClass('input-error');
 });
 
 $('#btn-atras').on('click', function() {
-    console.log('boton atras');
+    // console.log('boton atras');
 
 
     $('#step-hechos').removeClass('active');
@@ -83,11 +83,11 @@ $('#btn-atras').on('click', function() {
 // next step
 $('.f1 .btn-next').on('click', function() {
 
-console.log('siguientte');
+// console.log('siguientte');
 
 
 var parent_fieldset = $(this).parents('section');
-console.log(parent_fieldset);
+// console.log(parent_fieldset);
 
 var next_step = true;
 // navigation steps / progress steps
@@ -230,9 +230,9 @@ parent_fieldset.find('.required').each(function() {
 
 
 if ((parent_fieldset.attr('id') === 'datos-denunciante') && (errores_validacion == 0)) {
-    console.log(`Errores: ${errores_validacion}`);
-    console.log(`Correo: ${correoNotification}`);
-    console.log(`Telefono: ${whatsappNotification}`);
+    // console.log(`Errores: ${errores_validacion}`);
+    // console.log(`Correo: ${correoNotification}`);
+    // console.log(`Telefono: ${whatsappNotification}`);
 
     next_step = false;
 
@@ -244,14 +244,14 @@ if ((parent_fieldset.attr('id') === 'datos-denunciante') && (errores_validacion 
 
         // se genera numero aleatorio
         let codigoVerificacion = generarCodigoVerificacion();
-        console.log(`Código verificación: ${codigoVerificacion}`);
+        // console.log(`Código verificación: ${codigoVerificacion}`);
         // se envia codigo de verificacion
         enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
 
         Swal.fire({
             title: "CÓDIGO DE VERIFICACIÓN",
             html: `
-                <p style="font-size: 22px;">PARA VALIDAR SU IDENTIDAD. SE HA ENVIADO UN <b>CÓDIGO DE VERIFICACIÓN</b> DE SEIS DÍGITOS AL CORREO <b>${correo}</b></p>
+                <p style="font-size: 22px;">PARA VALIDAR QUE TIENES ACCESO AL CORREO PROPORCIONADO, SE HA ENVIADO UN <b>CÓDIGO DE VERIFICACIÓN</b> DE SEIS DÍGITOS AL CORREO <b>${correo}</b></p>
                 <br>
                 <div style="display: flex; justify-content: space-between; gap: 10px; padding: 0 20px;">
                 <input type="text" id="input1" class="swal2-input" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
@@ -304,7 +304,7 @@ if ((parent_fieldset.attr('id') === 'datos-denunciante') && (errores_validacion 
                 const input6 = document.getElementById('input6').value;
 
                 const codigoIngresado = `${input1}${input2}${input3}${input4}${input5}${input6}`;
-                console.log(codigoIngresado);
+                // console.log(codigoIngresado);
 
                 // Validar el código de verificación
                 if (codigoVerificacion != codigoIngresado) {
@@ -334,6 +334,9 @@ if ((parent_fieldset.attr('id') === 'datos-denunciante') && (errores_validacion 
                 //     scroll_to_class($('.f1'), 20);
                 // });
 
+
+                $('#campos_faltantes').addClass('d-none');
+
                 $('#step-denunciante').removeClass('active');
                 $('#datos-denunciante').addClass('d-none');
                 $('#step-hechos').addClass('active');
@@ -353,9 +356,9 @@ if ((parent_fieldset.attr('id') === 'datos-denunciante') && (errores_validacion 
                 /** REENVIO DEL CÓDIGO DE VALIDACIÓN */
                 // Lógica para reenviar el código
                 //   Swal.fire("Código reenviado", "Hemos reenviado el código a tu correo y WhatsApp.", "info");
-                console.log(`Código verificación antes: ${codigoVerificacion}`);
+                // console.log(`Código verificación antes: ${codigoVerificacion}`);
                 codigoVerificacion = generarCodigoVerificacion();
-                console.log(`Código verificación despues: ${codigoVerificacion}`);
+                // console.log(`Código verificación despues: ${codigoVerificacion}`);
                 // se envia codigo de verificacion nuevamente
                 enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
 
