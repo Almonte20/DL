@@ -71,22 +71,10 @@
                 </div>
             </div>
         </div>
-        <div class="form-row col-lg-12 justify-content-center d-none" id="divIdentifiacionResponsable">
-
-            <div class="form-group col-md-8">
-                <div class="form-ic-cmp">
-                    <i class="fal fa-file"></i>&nbsp;
-                    <label for="identificacion_responsable">Identificación oficial del responsable<font style="font-size: 8px">Formato
-                            aceptado: .jpg/.jpeg/.png </font>*<font style="font-size: 8px">Tamaño máximo: 3mb </font>
-                        </label>
-                    <label class="mt-0" for="identificacion_responsable" style="font-size: 7px;">Requerido</label>
-
-                </div>
-                <input type="file" name="identificacion_responsable" class="file_multi_image required" id="identificacion_responsable" accept="image/*"
-                    required>
-            </div>
-            <div class="form-group col-md-4 text-center">
-                <div id="preview_identificacion_responsable"></div>
+        <div class="form-row col-lg-12 justify-content-center d-none mt-2" id="divIdentifiacionResponsable">
+            <div class="form-group col-md-12">
+                <textarea rows="6" class="form-control input-denuncia"
+                    placeholder="Ejemplos: Tatuajue en el rostro, cabello largo, ojos café claro, etc..."></textarea>
             </div>
         </div>
     </div>
