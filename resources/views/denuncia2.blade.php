@@ -219,6 +219,10 @@
                             @include('Denuncia.Testigos')
                         </section>
 
+                        <section class="p-0 mt-5 mb-3">
+                            @include('Denuncia.evidencias')
+                        </section>
+
                         <div class="fa-4x d-none" id="div_spin">
                             <center>
                                 <i class="fas fa-circle-notch fa-spin" style="color:#002b49;"></i>

@@ -18,7 +18,7 @@
     </div>
 </div> --}}
 
-<div id="testigosDiv" class="pl-3">
+<div id="testigosDiv" class="container pl-3">
 
     <div id="DivTestigos" class="d-none">
 
