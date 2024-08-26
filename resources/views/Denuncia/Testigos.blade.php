@@ -116,12 +116,12 @@
             </div>
 
             <div class="f1-buttons">
-                <button type="button" class="btn btn-danger" onclick="cancelar_testigo()"
-                    id="cancelarTestigo">Cancelar</button>
-                <button type="button" class="btn btn-success" style="display:none;" onclick="button_editar_testigo()"
-                    id="editarTestigo">Actualizar</button>
-                <button type="button" class="btn btn-success" onclick="registrar_testigo()"
-                    id="registrarTestigo">Agregar</button>
+                <button type="button" class="btn-sm btn-cancel" onclick="cancelar_testigo()"
+                    id="cancelarTestigo">CANCELAR</button>
+                <button type="button" class="btn-sm btn-success-two" style="display:none;" onclick="button_editar_testigo()"
+                    id="editarTestigo">ACTUALIZAR</button>
+                <button type="button" class="btn-sm btn-success-two" onclick="registrar_testigo()"
+                    id="registrarTestigo">AGREGAR</button>
             </div>
             <hr>
         </div>
