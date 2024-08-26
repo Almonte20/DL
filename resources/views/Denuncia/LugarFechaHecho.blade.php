@@ -240,7 +240,7 @@
                     </div>
                     <select name="lugar_descripcion" style="background-color:rgba(230, 238, 250, 0.5);"
                         id="select_lugar" class=" form-control required" data-show-subtext="true"
-                        data-live-search="true">
+                        data-live-search="true" onchange="lugarReferencia(this)">
                         <option value="0">Seleccione un lugar</option>
 
                         @foreach ($lugares as $lugar)
@@ -252,6 +252,15 @@
                     <div style="color:#FF0000;">
 
                     </div>
+                </div>
+
+                <div class="form-group col-md-8 d-none" id="referenciaLugar">
+                    <div class="form-ic-cmp">
+                        <i class="fal fa-home"></i>&nbsp;
+                        <label for="numext_hechos">Referencia de <span id="txt_lugar_referencia"></span></label>
+
+                    </div>
+                    <textarea class="input-denuncia form-control" placeholder="Referencia del lugar"></textarea>
                 </div>
 
             </div>
@@ -720,6 +729,18 @@
             $("#fecha_final").removeClass("required");
 
         }
+    }
+
+    function lugarReferencia(select){
+        var valor = $(select).val();
+        var texto = $(select).find('option:selected').text();
+        if(valor == 0){
+            $("#referenciaLugar").addClass("d-none");
+        }else{
+            $("#referenciaLugar").removeClass("d-none");
+            $("#txt_lugar_referencia").text(texto);
+        }
+
     }
 
 </script>
