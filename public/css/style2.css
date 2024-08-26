@@ -2004,14 +2004,14 @@ div.seccion h1 {
     letter-spacing: 1px;
 }
 
-  .btn-next:hover {
+.btn-next:hover {
     background-color: #0165a5; /* Cambio de color al pasar el cursor */
     background-image: linear-gradient(to right, #0165a5, #1d2671); /* Degradado invertido al pasar el cursor */
     color: #fff; /* Color del texto al pasar el cursor */
     border-color: #0165a5; /* Color del borde al pasar el cursor */
   }
 
-  .btn-search {
+.btn-search {
     background-color: #152F4A; /* Degradado de color inicial */
     /* background-image: linear-gradient(to right, #1d2671, #0165a5); Degradado de color final */
     color: white; /* Color del texto */
@@ -2072,3 +2072,136 @@ div.seccion h1 {
     color: #fff; /* Color del texto al pasar el cursor */
     border-color: #898989; /* Color del borde al pasar el cursor */
 }
+
+.btn-verificar-codigo {
+    background-color: #1b8d5f; /* Degradado de color inicial */
+    background-image: linear-gradient(to right, #1b8d5f, #85c9ad); /* Degradado de color final */
+    color: white; /* Color del texto */
+    font-weight: bold; /* Negrita para el texto */
+    padding: 5px 20px; /* Espaciado interno del botón */
+    border: 2px solid #ffffff; /* Borde del botón */
+    border-radius: 25px; /* Bordes redondeados */
+    display: inline-flex; /* Para alinear icono y texto */
+    align-items: center; /* Centrar contenido verticalmente */
+    justify-content: center; /* Centrar contenido horizontalmente */
+    cursor: pointer; /* Icono de puntero en el botón */
+    transition: all 0.3s ease; /* Efecto de transición */
+    letter-spacing: 1px;
+    font-size: 12px !important;
+}
+
+.btn-verificar-codigo:hover {
+    background-color: #85c9ad !importanr; /* Cambio de color al pasar el cursor */
+    background-image: linear-gradient(to right, #85c9ad, #1b8d5f) !important; /* Degradado invertido al pasar el cursor */
+    color: #fff !important; /* Color del texto al pasar el cursor */
+    border-color: #85c9ad !important; /* Color del borde al pasar el cursor */
+}
+
+.swal2-deny {
+    background-color: #152F4A; /* Degradado de color inicial */
+    /* background-image: linear-gradient(to right, #1d2671, #0165a5); Degradado de color final */
+    color: white; /* Color del texto */
+    font-weight: bold; /* Negrita para el texto */
+    padding: 5px 20px; /* Espaciado interno del botón */
+    border: 2px solid #ffffff; /* Borde del botón */
+    border-radius: 25px; /* Bordes redondeados */
+    display: inline-flex; /* Para alinear icono y texto */
+    align-items: center; /* Centrar contenido verticalmente */
+    justify-content: center; /* Centrar contenido horizontalmente */
+    cursor: pointer; /* Icono de puntero en el botón */
+    transition: all 0.3s ease; /* Efecto de transición */
+    letter-spacing: 1px;
+    font-size: 12px !important;
+}
+
+.swal2-cancel {
+    background-color: #aaaaaa; /* Degradado de color inicial */
+    background-image: linear-gradient(to right, #aaaaaa, #898989); /* Degradado de color final */
+    color: white; /* Color del texto */
+    font-weight: bold; /* Negrita para el texto */
+    padding: 5px 20px; /* Espaciado interno del botón */
+    border: 2px solid #ffffff; /* Borde del botón */
+    border-radius: 25px; /* Bordes redondeados */
+    display: inline-flex; /* Para alinear icono y texto */
+    align-items: center; /* Centrar contenido verticalmente */
+    justify-content: center; /* Centrar contenido horizontalmente */
+    cursor: pointer; /* Icono de puntero en el botón */
+    transition: all 0.3s ease; /* Efecto de transición */
+    letter-spacing: 1px;
+    font-size: 12px !important;
+}
+
+.swal2-cancel:hover {
+    background-color: #898989!important; /* Cambio de color al pasar el cursor */
+    background-image: linear-gradient(to right, #898989, #aaaaaa) !important; /* Degradado invertido al pasar el cursor */
+    color: #fff !important; /* Color del texto al pasar el cursor */
+    border-color: #898989 !important; /* Color del borde al pasar el cursor */
+}
+
+.swal2-title {
+    /* color: #2e5d8b !important; Cambiar el color del texto */
+    font-size: 28px !important; /* Cambiar el tamaño de la fuente */
+    font-weight: bold !important; /* Hacer el texto en negrita */
+    text-align: center !important; /* Alinear el texto al centro */
+    font-family: 'Arial', sans-serif !important; /* Cambiar la fuente */
+    text-shadow: 2px 2px 4px #aaa !important; /* Agregar sombra al texto */
+    margin-bottom: 20px !important; /* Añadir margen inferior */
+    letter-spacing: 1px !important;
+  }
+
+    /* Estilos personalizados para los inputs de SweetAlert2 */
+    .swal2-input {
+      border-radius: 5px !important; /* Hacer los bordes cuadrados */
+      border: 2px solid #ccc !important; /* Color y grosor del borde */
+      padding: 10px !important; /* Espaciado interior */
+      font-size: 16px !important; /* Tamaño de la fuente */
+      margin: 0 !important;
+    }
+
+    /* Opcional: cambiar el estilo del input al enfocarse */
+    .swal2-input:focus {
+      border-color: #152f4a !important; /* Cambiar el color del borde al enfocarse */
+      outline: none !important; /* Eliminar el contorno al enfocar */
+      box-shadow: none !important; /* Eliminar el sombreado al enfocar */
+    }
+
+.swal2-popup {
+    border-top: none !important; /* Quitar el borde superior */
+    -webkit-box-shadow: 0px 10px 15px -7px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 10px 15px -7px rgba(0,0,0,0.75);
+    box-shadow: 0px 10px 15px -7px rgba(0,0,0,0.75);
+    border-radius: 10px; /* Opcional: agregar un borde redondeado */
+}
+
+.custom-slider {
+    display: flex;
+    align-items: center; /* Centra verticalmente los elementos dentro del contenedor */
+    width: 300px; /* Ancho total del slider */
+    position: relative;
+    transform: translateY(-35px); Ajusta el valor negativo para subir el slider
+  }
+
+  .circle {
+    width: 20px; /* Ancho de los círculos */
+    height: 18px; /* Altura de los círculos */
+    background-color: #d3d3d3; /* Color de los círculos al inicio */
+    border-radius: 50%; /* Hace que los círculos sean redondos */
+    position: relative;
+    z-index: 1; /* Asegura que los círculos estén por encima de la línea */
+  }
+
+  .line {
+    height: 4px; /* Altura de la línea */
+    flex-grow: 1; /* Hace que la línea se expanda para llenar el espacio restante */
+    background: linear-gradient(to right, #d3d3d3, #152f4a); /* Degradado de la línea */
+    z-index: 0; /* Coloca la línea detrás de los círculos */
+    margin: 0 -10px; /* Ajusta el margen para que la línea esté alineada con los círculos */
+  }
+
+  .start {
+    background-color: #d3d3d3; /* Color del círculo inicial */
+  }
+
+  .end {
+    background-color: #152f4a; /* Color del círculo final */
+  }

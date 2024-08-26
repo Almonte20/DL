@@ -324,11 +324,13 @@
         </div>
     </div>
 
-    <div class="text-center mt-3 {{-- f1-buttons --}}">
+    <div class="text-center mt-3 {{-- f1-buttons --}} f1">
         <button type="button" class="btn-sm btn-next">
             SIGUIENTE {{-- <i class="fa-solid fa-chevron-right"></i> --}}
         </button>
     </div>
+
+
 </div>
 
 <script type="text/javascript">
@@ -541,6 +543,7 @@ function validarCP(input,select_estado,select_municipio,select_asentamiento){
         $('#'+select_municipio).append('<option>Municipio</option>');
         $('#'+select_asentamiento).append('<option value="0">Seleccione una colonia</option>');
     }else if(longitud == 5){
+        console.log('colonias');
         $.ajax(
             {
                 method: 'GET',

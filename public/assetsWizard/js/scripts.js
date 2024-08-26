@@ -70,16 +70,23 @@ $('.f1 input[type="text"], .f1 input[type="password"], .f1 textarea').on('focus'
 $(this).removeClass('input-error');
 });
 
+$('#btn-atras').on('click', function() {
+    $('#step-hechos').removeClass('active');
+    $('#datos-hechos').addClass('d-none');
+    $('#step-denunciante').addClass('active');
+    $('#datos-denunciante').removeClass('d-none');
+});
+
 // next step
 $('.f1 .btn-next').on('click', function() {
 
-var parent_fieldset = $(this).parents('fieldset');
+var parent_fieldset = $(this).parents('section');
 console.log(parent_fieldset);
 
 var next_step = true;
 // navigation steps / progress steps
 var current_active_step = $(this).parents('.f1').find('.f1-step.active');
-var progress_line = $(this).parents('.f1').find('.f1-progress-line');
+// var progress_line = $(this).parents('.f1').find('.f1-progress-line');
 
 let errores_validacion = 0;
 
@@ -180,10 +187,11 @@ parent_fieldset.find('.required').each(function() {
 
 
     // if (elemento.val() == "" || (tipoElemento == "SELECT" && elemento.val() == "0")) {
-    //     $("#campos_faltantes").css("display", "flex");
+    //     // $("#campos_faltantes").css("display", "flex");
+    //     $("#campos_faltantes").removeClass("d-none");
     //     $(this).addClass('input-error');
     //     next_step = false;
-    //     msg = 'Faltan campos por llenar...';
+    //     msg = 'FALTAN CAMPOS POR LLENAR...';
     //     errores_validacion += 1;
     // } else {
     //     $(this).removeClass('input-error');
@@ -231,29 +239,33 @@ if ((parent_fieldset.attr('id') === 'datos-denunciante') && (errores_validacion 
         // enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
 
         Swal.fire({
-            title: "Código de verificación",
+            title: "CÓDIGO DE VERIFICACIÓN",
             html: `
-                      <b>Para continuar con el registro de Denuncia en Línea ingrese el código de verificación.</b> <br><br>
-                      Se ha enviado un código de verificación el cual se compone de 6 números al correo ${correo} <br><br>
-                      <div style="display: flex; justify-content: space-between; gap: 10px; padding: 0 20px;">
-                      <input type="text" id="input1" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
-                      <input type="text" id="input2" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
-                      <input type="text" id="input3" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
-                      <input type="text" id="input4" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
-                      <input type="text" id="input5" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
-                      <input type="text" id="input6" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
-                      </div>
-                    `,
+                <p style="font-size: 22px;">PARA VALIDAR SU IDENTIDAD. SE HA ENVIADO UN <b>CÓDIGO DE VERIFICACIÓN</b> DE SEIS DÍGITOS AL CORREO <b>${correo}</b></p>
+                <br>
+                <div style="display: flex; justify-content: space-between; gap: 10px; padding: 0 20px;">
+                <input type="text" id="input1" class="swal2-input" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
+                <input type="text" id="input2" class="swal2-input" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
+                <input type="text" id="input3" class="swal2-input" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
+                <input type="text" id="input4" class="swal2-input" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
+                <input type="text" id="input5" class="swal2-input" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
+                <input type="text" id="input6" class="swal2-input" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
+                </div>
+                <br>
+            `,
             allowOutsideClick: false,
-            confirmButtonText: "Verificar código",
+            confirmButtonText: "VERIFICAR CÓDIGO",
             confirmButtonColor: "#008f39",
             showLoaderOnConfirm: true,
             showDenyButton: true,
-            denyButtonText: "Reenviar código",
+            denyButtonText: "REENVIAR CÓDIGO",
             denyButtonColor: "#142f4a",
             showCancelButton: true,
-            cancelButtonText: "Editar datos",
+            cancelButtonText: "EDITAR DATOS",
             cancelButtonColor: "#808080",
+            customClass: {
+                confirmButton: 'btn-verificar-codigo' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
+              },
             didOpen: () => {
                 const inputs = ['input1', 'input2', 'input3', 'input4', 'input5', 'input6'];
 
@@ -263,6 +275,12 @@ if ((parent_fieldset.attr('id') === 'datos-denunciante') && (errores_validacion 
                     inputElement.addEventListener('input', () => {
                         if (inputElement.value.length === 1 && index < inputs.length - 1) {
                             document.getElementById(inputs[index + 1]).focus(); // Mover el foco al siguiente input
+                        }
+                    });
+
+                    inputElement.addEventListener('keydown', (e) => {
+                        if (e.key === 'Backspace' && inputElement.value === '' && index > 0) {
+                          document.getElementById(inputs[index - 1]).focus(); // Mover el foco al input anterior
                         }
                     });
                 });
@@ -276,27 +294,37 @@ if ((parent_fieldset.attr('id') === 'datos-denunciante') && (errores_validacion 
                 const input6 = document.getElementById('input6').value;
 
                 const codigoIngresado = `${input1}${input2}${input3}${input4}${input5}${input6}`;
+                console.log(codigoIngresado);
 
                 // Validar el código de verificación
-                if (codigoVerificacion !== codigoIngresado) {
+                if (codigoVerificacion != codigoIngresado) {
                     Swal.showValidationMessage('El código ingresado es incorrecto.');
                     return false;
                 }
 
                 Swal.fire({
                     icon: "success",
-                    title: "Verificación exitosa",
-                    text: "El código es correcto."
+                    title: "VERIFICACIÓN EXITOSA",
+                    text: "EL CÓDIGO ES CORRECTO.",
+                    confirmButtonText: "ACEPTAR",
+                    customClass: {
+                        confirmButton: 'swal2-deny' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
+                    },
                 });
 
                 // Continuar con el flujo del formulario
-                parent_fieldset.fadeOut(400, function() {
-                    $("#campos_faltantes").css("display", "none");
-                    current_active_step.removeClass('active').addClass('activated').next().addClass('active');
-                    bar_progress(progress_line, 'right');
-                    $(this).next().fadeIn();
-                    scroll_to_class($('.f1'), 20);
-                });
+                // parent_fieldset.fadeOut(400, function() {
+                //     $("#campos_faltantes").css("display", "none");
+                //     current_active_step.removeClass('active').addClass('activated').next().addClass('active');
+                //     bar_progress(progress_line, 'right');
+                //     $(this).next().fadeIn();
+                //     scroll_to_class($('.f1'), 20);
+                // });
+
+                $('#step-denunciante').removeClass('active');
+                $('#datos-denunciante').addClass('d-none');
+                $('#step-hechos').addClass('active');
+                $('#datos-hechos').removeClass('d-none');
 
                 return true;
             },
@@ -370,9 +398,13 @@ if ((parent_fieldset.attr('id') === 'datos-denunciante') && (errores_validacion 
         });
     } else {
         Swal.fire({
-            title: "¡Cuidado!",
+            title: "¡CUIDADO!",
             text: msg,
-            icon: "error"
+            icon: "error",
+            confirmButtonText: "ACEPTAR",
+            customClass: {
+                confirmButton: 'swal2-deny' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
+            },
         });
         // alertas(msg);
     }
@@ -432,10 +464,6 @@ $(this).find('.required').each(function() {
 });
 // fields validation
 
-});
-
-
-});
 });
 
 

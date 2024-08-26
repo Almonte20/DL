@@ -104,15 +104,15 @@
 
     <div {{-- class="container" --}} style="font-weight: bold; color: Black;" id="registro">
         <div class="row">
-            <div class="col-lg-8 col-md-8 col-sm-12 text-left ">
+            <div class="col-lg-12 col-md-12 col-sm-12 text-center ">
                 <img src="{{ asset('img/denuncia/logo.png') }}" height="150" width="auto"><br>
             </div>
 
-            <div class="col-lg-4  col-md-4 col-sm-12 text-rigth ">
+            {{-- <div class="col-lg-4  col-md-4 col-sm-12 text-rigth ">
                 <a href="{{asset('documentos/Denuncia_ayuda.png')}}"><img src="{{ asset('img/denuncia/Ayuda.png') }}"
                         data-toggle="modal" data-target="#ModalAyuda" height="50" width="auto"
                         style="margin-top: 80px;"></a>
-            </div>
+            </div> --}}
         </div>
 
         {{-- <div class="row"> --}}
@@ -122,31 +122,42 @@
                     <!-- <form role="form" action="" method="post" class="f1"> -->
                     <input type="hidden" name="id_policia" value="" class="form-control" maxlength="50"
                         style="display: none;">
-                    <div class="f1-steps" style="text-align: center;">
-                        <div class="f1-progress">
-                            {{-- <div class="f1-progress-line" data-now-value="16.66" data-number-of-steps="3"
-                                style="width: 16.66%;"></div> --}}
+                    <div class="container f1-steps" style="text-align: center;">
+                        {{-- <div class="f1-progress">
                             <div class="f1-progress-line" data-now-value="50" data-number-of-steps="2"
                                 style="width: 50%;"></div>
-                        </div>
-                        <div class="f1-step active">
-                            <div class="f1-step-icon"><i class="fal fa-user-circle"></i></div>
-                            <p>Denunciante</p>
-                        </div>
-                        <div class="f1-step">
-                            <div class="f1-step-icon"><i class="fal fa-pen-alt"></i></div>
-                            <p>Hechos</p>
+                        </div> --}}
+                        <div class="row">
+                            <div id="step-denunciante" class="col f1-step active">
+                                <div class="f1-step-icon"><i class="fal fa-user-circle"></i></div>
+                                <p>DENUNCIANTE</p>
+                            </div>
+                            <div class="col custom-slider">
+                                <div class="circle start"></div>
+                                <div class="line"></div>
+                                <div class="circle end"></div>
+                              </div>
+                            <div id="step-hechos" class="col f1-step">
+                                <div class="f1-step-icon"><i class="fal fa-pen-alt"></i></div>
+                                <p>HECHOS</p>
+                            </div>
                         </div>
                         {{-- <div class="f1-step ">
                             <div class="f1-step-icon"><i class="fal fa-fingerprint"></i></div>
                             <p>Evidencias/Testigos</p>
                         </div> --}}
                     </div>
-                    <div class="form-row col-lg-12" id="campos_faltantes" style="display: none">
-                        <div class="form-group col-md-6.5" style="background-color: #f8d7da;">
-                            <label for="nombre" style="color: #721c24;">* Por favor verifique que los campos requeridos
+                    {{-- <div class="form-row col-lg-12 text-center" id="campos_faltantes" style="display: none">
+                        <div class="form-group col-md-6.5 text-center" style="background-color: #f8d7da;">
+                            <label for="nombre" style="color: #721c24;" class="text-center">* Por favor verifique que los campos requeridos
                                 se encuentren ingresados.</label>
                         </div>
+                    </div> --}}
+
+                    <div id="campos_faltantes" class="container text-center d-none">
+                        <p style="background-color: #f8d7da;">
+                            * Por favor verifique que los campos requeridos se encuentren ingresados.
+                        </p>
                     </div>
 
                     <!-- datos denunciante -->
@@ -155,64 +166,67 @@
                     </section>
                     {{-- <fieldset class="d-block"> --}}
 
-                    <section class="p-0 mt-5 mb-3">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p class="mb-2" style="font-weight: 400;">¿QUÉ HA SUCEDIDO?</p>
-                                    <input class="form-control input-denuncia" placeholder="Descripción breve de qué ha sucedido">
-                                </div>
-
-                                <div class="col-md-12 mt-3 text-center">
-                                    <p class="mb-2" style="font-weight: 400;">¿QUIÉN ES LA VICTIMA?</p>
-                                {{-- </div>
-                                <div class="col-md-12"> --}}
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="radiodenunciante" name="victimadenunciante" class="custom-control-input"
-                                            value="1" checked onchange="otraPersona()">
-                                        <label class="custom-control-label" for="radiodenunciante">Yo: <span id="nombrevictimadenunciante"
-                                                class="text-info">Alejandro almonte </span></label>
+                    <div id="datos-hechos" class="d-none">
+                        <section class="p-0 mt-5 mb-3">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p class="mb-2" style="font-weight: 400;">¿QUÉ HA SUCEDIDO?</p>
+                                        <input class="form-control input-denuncia" placeholder="Descripción breve de qué ha sucedido">
                                     </div>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="radiovictima" name="victimadenunciante" class="custom-control-input" value="0" onchange="otraPersona()">
-                                        <label class="custom-control-label" for="radiovictima">Otra persona</label>
+
+                                    <div class="col-md-12 mt-3 text-center">
+                                        <p class="mb-2" style="font-weight: 400;">¿QUIÉN ES LA VICTIMA?</p>
+                                    {{-- </div>
+                                    <div class="col-md-12"> --}}
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="radiodenunciante" name="victimadenunciante" class="custom-control-input"
+                                                value="1" checked onchange="otraPersona()">
+                                            <label class="custom-control-label" for="radiodenunciante">Yo: <span id="nombrevictimadenunciante"
+                                                    class="text-info">Alejandro almonte </span></label>
+                                        </div>
+                                        <div class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" id="radiovictima" name="victimadenunciante" class="custom-control-input" value="0" onchange="otraPersona()">
+                                            <label class="custom-control-label" for="radiovictima">Otra persona</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </section>
+
+                        <section class="p-0 mt-5 mb-3">
+                            @include('Denuncia.Victima')
+                        </section>
+
+                        <section class="p-0 mt-5 mb-3">
+                            @include('Denuncia.Responsable')
+                        </section>
+
+                        <section class="p-0 mt-5 mb-3">
+                            @include('Denuncia.LugarFechaHecho')
+                        </section>
+
+                        <section class="p-0 mt-5 mb-3">
+                            @include('Denuncia.Hecho')
+                        </section>
+
+                        <section class="p-0 mt-5 mb-3">
+                            @include('Denuncia.Testigos')
+                        </section>
+
+                        <div class="fa-4x d-none" id="div_spin">
+                            <center>
+                                <i class="fas fa-circle-notch fa-spin" style="color:#002b49;"></i>
+                            </center>
                         </div>
-                    </section>
 
-                    <section class="p-0 mt-5 mb-3">
-                        @include('Denuncia.Victima')
-                    </section>
-
-                    <section class="p-0 mt-5 mb-3">
-                        @include('Denuncia.Responsable')
-                    </section>
-
-                    <section class="p-0 mt-5 mb-3">
-                        @include('Denuncia.LugarFechaHecho')
-                    </section>
-
-                    <section class="p-0 mt-5 mb-3">
-                        @include('Denuncia.Hecho')
-                    </section>
-
-                    <section class="p-0 mt-5 mb-3">
-                        @include('Denuncia.Testigos')
-                    </section>
-
-                    <div class="fa-4x d-none" id="div_spin">
-                        <center>
-                            <i class="fas fa-circle-notch fa-spin" style="color:#002b49;"></i>
-                        </center>
-                    </div>
-                    <div class="f1-buttons text-center mt-5 mb-3" id="botones_finalizacion">
-                        <button type="button" class="btn-sm btn-back " id="btn_atras">Atrás</button>
-                        <button type="button" onclick="guardarDenuncia(this)" class="btn-sm btn-success"
-                            id="finalizar_denuncia">
-                             REGISTRAR DENUNCIA
-                        </button>
+                        <div class="f1-buttons text-center mt-5 mb-3" id="botones_finalizacion">
+                            <button type="button" class="btn-sm btn-back" id="btn-atras">ATRÁS</button>
+                            <button type="button" onclick="guardarDenuncia(this)" class="btn-sm btn-success"
+                                id="finalizar_denuncia">
+                                 REGISTRAR DENUNCIA
+                            </button>
+                        </div>
                     </div>
 
 

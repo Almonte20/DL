@@ -91,7 +91,7 @@ Que el día     (_____),     siendo aproximadamente las    (____),  encontrándo
         <div class="col-lg-8 col-md-8 col-sm-12 text-left ">
             <img src="{{ asset('img/denuncia/logo.png') }}" height="150" width="auto"><br>
         </div>
-         
+
         <div class="col-lg-4  col-md-4 col-sm-12 text-rigth ">
             <a href="{{asset('documentos/Denuncia_ayuda.png')}}" ><img src="{{ asset('img/denuncia/Ayuda.png') }}" data-toggle="modal" data-target="#ModalAyuda" height="50" width="auto" style="margin-top: 80px;"></a>
         </div>
@@ -254,7 +254,7 @@ Que el día     (_____),     siendo aproximadamente las    (____),  encontrándo
                         {!! Form::label('NombrePol', 'Nombre') !!}
                     </div>
                     {!! Form::text('NombrePol', '', ['class' => 'form-control', 'maxlength'=> '50','style' => 'background-color:rgba(230, 238, 250, 0.5);']) !!}
-                               
+
                 </div>
                 </div>
                 <div class="form-row col-lg-12">
@@ -264,7 +264,7 @@ Que el día     (_____),     siendo aproximadamente las    (____),  encontrándo
                         {!! Form::label('EmailPol', 'Correo') !!}
                     </div>
                     {!! Form::email('EmailPol', '', ['class' => 'form-control', 'maxlength'=> '50','style' => 'background-color:rgba(230, 238, 250, 0.5);']) !!}
-                               
+
                 </div>
                 <div class="form-group col-md-6">
                     <div class="form-ic-cmp" >
@@ -272,16 +272,16 @@ Que el día     (_____),     siendo aproximadamente las    (____),  encontrándo
                         {!! Form::label('TelPol', 'Teléfono') !!}
                     </div>
                     {!! Form::number('TelPol', '', ['class' => 'form-control', 'maxlength'=> '10','style' => 'background-color:rgba(230, 238, 250, 0.5);']) !!}
-                               
+
                 </div>
                 </div>
 
                 <div class="modal-footer d-flex justify-content-center">
 					<button class="btn btn-next" type="submit">Guardar</button>
-				</div>    
+				</div>
 
                 </div>
-				
+
 			</div>
 		</div>
         </form>
@@ -299,14 +299,14 @@ Que el día     (_____),     siendo aproximadamente las    (____),  encontrándo
 });
 
 $("#Respuestapolicia").on('change', function(){
-    var respuestapolicia = $('#Respuestapolicia').val();  
+    var respuestapolicia = $('#Respuestapolicia').val();
     if (respuestapolicia == 1){
         $("#modaldatospol").css("display","block");
     }else if(respuestapolicia == 2){
-        $("#modalpolicia").modal("hide"); 
+        $("#modalpolicia").modal("hide");
     } else{
-        $("#modaldatospol").css("display","none"); 
-    }  
+        $("#modaldatospol").css("display","none");
+    }
 });
 
 $("#video").on('change', function(){
