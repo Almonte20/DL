@@ -177,7 +177,9 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <p class="mb-2" style="font-weight: 400;">¿QUÉ HA SUCEDIDO?</p>
-                                        <input class="form-control input-denuncia" placeholder="Descripción breve de qué ha sucedido">
+                                        {{-- <input class="form-control input-denuncia" placeholder="Descripción breve de qué ha sucedido"> --}}
+                                        <textarea rows="2" class="form-control input-denuncia" placeholder="Descripción breve de qué ha sucedido. Ejemplos: Me asaltaron, me extorcionaron, me amenazaron de muerte, etc..."></textarea>
+
                                     </div>
 
                                     <div class="col-md-12 mt-3 text-center">
@@ -979,8 +981,9 @@ function alertas(msg)
             reader.onload = function(){
                 let preview = document.getElementById('preview_credencial'),
                     image = document.createElement('img');
-
+                
                 image.src = reader.result;
+                image.style.maxWidth = '150px';
 
                 preview.innerHTML = '';
                 preview.append(image);

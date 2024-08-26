@@ -25,7 +25,7 @@ const generarCodigoVerificacion = () => {
 const enviarCodigoVerificacion = async(correo, whatsapp, codigoVerificacion) => {
     try {
         // Realizar la solicitud usando fetch y esperar la respuesta
-        const response = await fetch('/api/enviar-codigo-verificacion', {
+        const response = await fetch('api/enviar-codigo-verificacion', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

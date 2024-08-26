@@ -429,6 +429,7 @@
                 }
             }else{
                 $("#DatosGenerales_"+destino).removeClass("d-none");
+                $('#imgLoading_'+destino).addClass("d-none");
             }
         }
     }
