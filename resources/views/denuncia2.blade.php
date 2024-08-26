@@ -598,12 +598,18 @@ function alertas(msg)
     console.log($("#form_denuncia").serializeArray());
     // alert(formData);
     Swal.fire({
-        title: "¿Está seguro de querer registrar la denuncia?",
+        icon: "question",
+        title: "¿ESTÁ SEGURO DE QUERER REGISTRAR LA DENUNCIA?",
         showDenyButton: true,
-        confirmButtonText: "Si, registrar",
-        denyButtonText: `No, cancelar`,
+        confirmButtonText: "SI, REGISTRAR DENUNCIA",
+        denyButtonText: `NO, CANCELAR`,
         reverseButtons: true,
-        confirmButtonColor: '#008000',
+        // confirmButtonColor: '#008000',
+        // confirmButtonText: "ACEPTAR",
+        customClass: {
+            confirmButton: 'btn-success',
+            denyButton: 'btn-cancel', // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
+        },
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
