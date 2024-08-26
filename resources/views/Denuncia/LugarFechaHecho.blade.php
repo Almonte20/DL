@@ -1,9 +1,15 @@
 <div class="row mt-3">
     <div class="col-md-12">
-        <h1 class="mb-4">Indique lugar y fecha en que sucede el hecho a denunciar</h1>
+        <h1 class="mb-4">Indica el lugar y fecha en que sucede el hecho a denunciar</h1>
     </div>
 </div>
-<div id="ResponsableDiv" class="pl-3">
+
+<div class="row mt-3">
+    <div class="col-md-12 text-center">
+        <label class="mb-4">¿El hecho sucedió en una fecha específica o un lapso de tiempo?</label>
+    </div>
+</div>
+<div id="LugarHechosDiv" class="pl-3">
     <div class="row">
         <div class="col-md text-center">
             <div class="form-check form-check-inline">
@@ -212,36 +218,45 @@
 
                 </div>
             </div>
+        </div>
 
-            <div class="form-row col-lg-12">
-                <div class="form-group col-md-4">
-                    <div class="form-ic-cmp">
-                        <i class="fal fa-home"></i>&nbsp;
-                        <label for="numext_hechos">Lugar</label>
+        <div class="form-row col-lg-12">
+            <div class="form-group col-md-4">
+                <div class="form-ic-cmp">
+                    <i class="fal fa-home"></i>&nbsp;
+                    <label for="numext_hechos">Lugar</label>
 
-                    </div>
-                    <select name="lugar_descripcion" style="background-color:rgba(230, 238, 250, 0.5);"
-                        id="select_lugar" class=" form-control required" data-show-subtext="true"
-                        data-live-search="true">
-                        <option value="0">Seleccione un lugar</option>
-
-                        @foreach ($lugares as $lugar)
-
-                        <option value="{{$lugar->id}}">{{$lugar->lugar}}</option>
-                        @endforeach
-
-                    </select>
-                    <div style="color:#FF0000;">
-
-                    </div>
                 </div>
+                <select name="lugar_descripcion" style="background-color:rgba(230, 238, 250, 0.5);" id="select_lugar"
+                    class=" form-control required" data-show-subtext="true" data-live-search="true"
+                    onchange="lugarReferencia(this)">
+                    <option value="0">Seleccione un lugar</option>
 
+                    @foreach ($lugares as $lugar)
+
+                    <option value="{{$lugar->id}}">{{$lugar->lugar}}</option>
+                    @endforeach
+
+                </select>
+                <div style="color:#FF0000;">
+
+                </div>
             </div>
 
-        </div>
-    </div>
+            <div class="form-group col-md-8 d-none" id="referenciaLugar">
+                <div class="form-ic-cmp">
+                    <i class="fal fa-home"></i>&nbsp;
+                    <label for="numext_hechos">Referencia de <span id="txt_lugar_referencia"></span></label>
 
+                </div>
+                <textarea class="input-denuncia form-control" placeholder="Referencia del lugar"></textarea>
+            </div>
+        </div>
+
+    </div>
 </div>
+
+
 <style>
     #map {
         height: 400px;
@@ -277,13 +292,6 @@
         color: #000000;
     }
 </style>
-
-
-
-
-
-
-
 
 
 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="display: none">
@@ -442,7 +450,6 @@
         </div>
     </div>
 </div>
-
 
 
 <script
@@ -703,4 +710,15 @@
         }
     }
 
+    function lugarReferencia(select){
+        var valor = $(select).val();
+        var texto = $(select).find('option:selected').text();
+        if(valor == 0){
+            $("#referenciaLugar").addClass("d-none");
+        }else{
+            $("#referenciaLugar").removeClass("d-none");
+            $("#txt_lugar_referencia").text(texto);
+        }
+       
+    }
 </script>
