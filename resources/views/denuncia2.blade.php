@@ -103,6 +103,11 @@
 <div class="top-content">
 
     <div {{-- class="container" --}} style="font-weight: bold; color: Black;" id="registro">
+        <div class="text-right">
+            <a href="{{asset('documentos/Denuncia_ayuda.png')}}">
+                <img src="{{ asset('img/denuncia/denuncia-ayuda.png') }}" data-toggle="modal" data-target="#ModalAyuda" height="60" width="auto">
+            </a>
+        </div>
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 text-center ">
                 <img src="{{ asset('img/denuncia/logo.png') }}" height="150" width="auto"><br>
@@ -129,8 +134,8 @@
                         </div> --}}
                         <div class="row">
                             <div id="step-denunciante" class="col f1-step active">
-                                <div class="f1-step-icon"><i class="fal fa-user-circle"></i></div>
-                                <p>DENUNCIANTE</p>
+                                <div class="f1-step-icon" style="margin-left: 260px !important;"><i class="fal fa-user-circle"></i></div>
+                                <p style="margin-left: 260px !important;">DENUNCIANTE</p>
                             </div>
                             <div class="col custom-slider">
                                 <div class="circle start"></div>
@@ -138,8 +143,8 @@
                                 <div class="circle end"></div>
                               </div>
                             <div id="step-hechos" class="col f1-step">
-                                <div class="f1-step-icon"><i class="fal fa-pen-alt"></i></div>
-                                <p>HECHOS</p>
+                                <div class="f1-step-icon" style="margin-right: 260px !important;"><i class="fal fa-pen-alt"></i></div>
+                                <p style="margin-right: 260px !important;">HECHOS</p>
                             </div>
                         </div>
                         {{-- <div class="f1-step ">
@@ -221,10 +226,10 @@
                         </div>
 
                         <div class="f1-buttons text-center mt-5 mb-3" id="botones_finalizacion">
-                            <button type="button" class="btn-sm btn-back" id="btn-atras">ATRÁS</button>
+                            <button type="button" class="btn-sm btn-back" id="btn-atras"><i class="fa-solid fa-chevron-left"></i> &nbsp;&nbsp; ATRÁS</button>
                             <button type="button" onclick="guardarDenuncia(this)" class="btn-sm btn-success"
                                 id="finalizar_denuncia">
-                                 REGISTRAR DENUNCIA
+                                 REGISTRAR DENUNCIA &nbsp;&nbsp; <i class="fa-solid fa-chevron-up"></i>
                             </button>
                         </div>
                     </div>

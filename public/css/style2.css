@@ -1977,6 +1977,10 @@ h2.default-description {
 /** nuevos estilos */
 
 div.seccion {
+    display: flex;
+            align-items: center; /* Centrar verticalmente */
+            justify-content: center; /* Centrar horizontalmente */
+            gap: 20px; /* Espacio entre los elementos */
     background-color: #F2F5FC;
 }
 
@@ -1993,7 +1997,7 @@ div.seccion h1 {
     background-image: linear-gradient(to right, #1d2671, #0165a5); /* Degradado de color final */
     color: white; /* Color del texto */
     font-weight: bold; /* Negrita para el texto */
-    padding: 5px 20px; /* Espaciado interno del botón */
+    padding: 8px 20px; /* Espaciado interno del botón */
     border: 2px solid #ffffff; /* Borde del botón */
     border-radius: 25px; /* Bordes redondeados */
     display: inline-flex; /* Para alinear icono y texto */
@@ -2013,10 +2017,10 @@ div.seccion h1 {
 
 .btn-search {
     background-color: #152F4A; /* Degradado de color inicial */
-    /* background-image: linear-gradient(to right, #1d2671, #0165a5); Degradado de color final */
-    color: white; /* Color del texto */
+    background-image: linear-gradient(to right, #1d2671, #0165a5); /* Degradado de color final */
+    color: white !important; /* Color del texto */
     font-weight: bold; /* Negrita para el texto */
-    padding: 5px 20px; /* Espaciado interno del botón */
+    padding: 8px 20px; /* Espaciado interno del botón */
     border: 2px solid #ffffff; /* Borde del botón */
     border-radius: 25px; /* Bordes redondeados */
     display: inline-flex; /* Para alinear icono y texto */
@@ -2032,7 +2036,7 @@ div.seccion h1 {
     background-image: linear-gradient(to right, #1b8d5f, #85c9ad); /* Degradado de color final */
     color: white; /* Color del texto */
     font-weight: bold; /* Negrita para el texto */
-    padding: 5px 20px; /* Espaciado interno del botón */
+    padding: 8px 20px; /* Espaciado interno del botón */
     border: 2px solid #ffffff; /* Borde del botón */
     border-radius: 25px; /* Bordes redondeados */
     display: inline-flex; /* Para alinear icono y texto */
@@ -2055,7 +2059,7 @@ div.seccion h1 {
     background-image: linear-gradient(to right, #aaaaaa, #898989); /* Degradado de color final */
     color: white; /* Color del texto */
     font-weight: bold; /* Negrita para el texto */
-    padding: 5px 20px; /* Espaciado interno del botón */
+    padding: 8px 20px; /* Espaciado interno del botón */
     border: 2px solid #ffffff; /* Borde del botón */
     border-radius: 25px; /* Bordes redondeados */
     display: inline-flex; /* Para alinear icono y texto */
@@ -2156,6 +2160,7 @@ div.seccion h1 {
       padding: 10px !important; /* Espaciado interior */
       font-size: 16px !important; /* Tamaño de la fuente */
       margin: 0 !important;
+      font-weight: 800;
     }
 
     /* Opcional: cambiar el estilo del input al enfocarse */
@@ -2205,3 +2210,22 @@ div.seccion h1 {
   .end {
     background-color: #152f4a; /* Color del círculo final */
   }
+
+
+  .circle-title {
+    width: 35px;
+    height: 35px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+}
+
+.circle-number {
+    font-size: 30px;
+    font-weight: bold;
+    font-family: Arial, sans-serif; /* Ajusta la fuente si es necesario */
+    color: #152f4a;
+}

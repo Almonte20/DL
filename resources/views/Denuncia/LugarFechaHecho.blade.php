@@ -1,5 +1,8 @@
 <div class="seccion text-center mb-3">
-    <h1>4 LUGAR Y FECHA DE LOS HECHOS:</h1>
+    <div class="circle-title">
+        <div class="circle-number ">5</div>
+    </div>
+    <h1>LUGAR Y FECHA DE LOS HECHOS:</h1>
 </div>
 
 <div class="text-center mb-3">

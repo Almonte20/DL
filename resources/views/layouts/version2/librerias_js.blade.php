@@ -74,3 +74,4 @@
   }
 </script>
 <!-- End Matomo Code -->
+<script src="https://kit.fontawesome.com/82351c736b.js" crossorigin="anonymous"></script>

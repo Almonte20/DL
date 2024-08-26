@@ -7,7 +7,10 @@
 </div> --}}
 
 <div class="seccion text-center mb-3">
-    <h1>3 DATOS DEL RESPONSABLE:</h1>
+    <div class="circle-title">
+        <div class="circle-number ">4</div>
+    </div>
+    <h1>DATOS DEL RESPONSABLE:</h1>
 </div>
 
 <div class="container">

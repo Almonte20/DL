@@ -1,6 +1,9 @@
 <div>
     <div class="seccion text-center mb-3">
-        <h1>3 DATOS DE LA VÍCTIMA:</h1>
+        <div class="circle-title">
+            <div class="circle-number ">3</div>
+        </div>
+        <h1>DATOS DE LA VÍCTIMA:</h1>
     </div>
 
     <div class="container">
@@ -11,7 +14,7 @@
                         <i class="fad fa-id-card"></i>&nbsp;
                         <label class="mb-0" >Nombre (s)</label>
                     </div>
-                    <span class="mt-0 txtVictima" id="txt_nombre_victima"></label>
+                    <label><span class="mt-0 txtVictima" id="nombre-victima"></label>
 
                 </div>
                 <div class="form-group col-md-4">
@@ -19,14 +22,14 @@
                         <i class="fad fa-id-card"></i>&nbsp;
                         <label  class="mb-0">Primer Apellido</label>
                     </div>
-                    <label class="mt-0 txtVictima" id="txt_PrimerApellido_victima"></label>
+                    <label class="mt-0 txtVictima" id="primer-apellido-victima"></label>
                 </div>
                 <div class="form-group col-md-4">
                     <div class="form-ic-cmp">
                         <i class="fad fa-id-card"></i>&nbsp;
                         <label class="mb-0">Segundo Apellido</label>&nbsp;
                     </div>
-                    <label class="mt-0 txtVictima" id="txt_SegundoApellido_victima"></label>
+                    <label class="mt-0 txtVictima" id="segundo-apellido-victima"></label>
                 </div>
             </div>
         </div>
@@ -77,8 +80,8 @@
                 </div>
 
                 <div class="form-group col-md-2">
-                    <button type="button" class="btn btn-sm align-bottom" onclick="consultarCurp(this,'victima')"
-                        style="background: #002b49;" id="btnConsultarCurp_victima"> Buscar</button>
+                    <button type="button" class="btn-sm btn-search" onclick="consultarCurp(this,'victima')"
+                        style="background: #002b49;" id="btnConsultarCurp_victima"> BUSCAR</button>
                     <img src="{{asset(" img/denuncia/loading.gif")}}" class="img-responsive d-none" width="30%"
                         id="imgLoading_victima">
                 </div>

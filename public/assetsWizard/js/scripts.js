@@ -339,6 +339,14 @@ if ((parent_fieldset.attr('id') === 'datos-denunciante') && (errores_validacion 
                 $('#step-hechos').addClass('active');
                 $('#datos-hechos').removeClass('d-none');
 
+                var nombre = $("#Nombre_denunciante").val();
+                    var primerAp = $("#PrimerApellido_denunciante").val();
+                    var SegundoAp = $("#SegundoApellido_denunciante").val();
+
+                    $("#nombre-victima").html(nombre);
+                    $("#primer-apellido-victima").html(primerAp);
+                    $("#segundo-apellido-victima").html(SegundoAp);
+
                 return true;
             },
             preDeny: () => {
@@ -380,6 +388,15 @@ if ((parent_fieldset.attr('id') === 'datos-denunciante') && (errores_validacion 
 
 
         // });
+
+        var nombre = $("#Nombre_denunciante").val();
+                    var primerAp = $("#PrimerApellido_denunciante").val();
+                    var SegundoAp = $("#SegundoApellido_denunciante").val();
+
+                    $("#nombre-victima").html(nombre);
+                    $("#primer-apellido-victima").html(primerAp);
+                    $("#segundo-apellido-victima").html(SegundoAp);
+
         $('#step-denunciante').removeClass('active');
         $('#datos-denunciante').addClass('d-none');
         $('#step-hechos').addClass('active');
@@ -401,9 +418,9 @@ if ((parent_fieldset.attr('id') === 'datos-denunciante') && (errores_validacion 
             var primerAp = $("#PrimerApellido_denunciante").val();
             var SegundoAp = $("#SegundoApellido_denunciante").val();
 
-            $("#txt_nombre_victima").html(nombre);
-            $("#txt_PrimerApellido_victima").html(primerAp);
-            $("#txt_SegundoApellido_victima").html(SegundoAp);
+            $("#nombre-victima-txt").html(nombre);
+            $("#primer-apellido-victima-txt").html(primerAp);
+            $("#segundo-apellido-victima-txt").html(SegundoAp);
             //quita el mensaje de error
             $("#campos_faltantes").css("display", "none");
             // change icons

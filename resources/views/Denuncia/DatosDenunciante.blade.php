@@ -1,7 +1,12 @@
 
 
 <div class="seccion text-center mb-3">
-    <h1>1 DATOS GENERALES DEL DENUNCIANTE:</h1>
+    <div class="circle-title">
+        <div class="circle-number ">1</div>
+    </div>
+    <h1 >
+        DATOS GENERALES DEL DENUNCIANTE:
+    </h1>
 </div>
 
 <div class="container">
@@ -42,8 +47,8 @@
         </div>
 
         <div class="form-group col-md-2">
-            <button class="btn-sm btn-search" onclick="consultarCurp(this,'denunciante')"
-                id="btnConsultarCurp_denunciante"> SIGUIENTE</button>
+            <button class="btn-sm btn-search btn-buscar-curp" onclick="consultarCurp(this,'denunciante')"
+                id="btnConsultarCurp_denunciante"> BUSCAR</button>
             <img src="{{asset("img/denuncia/loading.gif")}}" class="img-responsive d-none" width="30%" id="imgLoading_denunciante">
         </div>
 
@@ -160,7 +165,10 @@
     </div>
 
     <div class="seccion text-center mt-4 mb-3">
-        <h1>2 DOMICILIO DEL DENUNCIANTE:</h1>
+        <div class="circle-title">
+            <div class="circle-number ">2</div>
+        </div>
+        <h1>DOMICILIO DEL DENUNCIANTE:</h1>
     </div>
 
     <div class="container">
@@ -326,7 +334,7 @@
 
     <div class="text-center mt-3 {{-- f1-buttons --}} f1">
         <button type="button" class="btn-sm btn-next">
-            SIGUIENTE {{-- <i class="fa-solid fa-chevron-right"></i> --}}
+            SIGUIENTE &nbsp;&nbsp; <i class="fa-solid fa-chevron-right"></i>
         </button>
     </div>
 
@@ -354,6 +362,8 @@
                 $('#btnConsultarCurp_victima').attr("disabled",false);
 
             }
+
+            $('.btn-buscar-curp').text('BUSCAR');
         }else{
             $("#"+divcurp).addClass("d-none");
             if(divcurp == "divCurp_victima"){
@@ -362,6 +372,8 @@
 
                 $("#DatosGenerales_victima").removeClass("d-none");
             }
+
+            $('.btn-buscar-curp').html('SIGUIENTE &nbsp;&nbsp; <i class="fa-solid fa-chevron-right"></i>');
         }
     }
 
@@ -442,9 +454,12 @@
                     // imageUrl: "{{ asset('img/renapo.png') }}",
                     icon: 'success',
                     imageWidth: 200,
-                    html: 'CURP encontrada en el Registro Nacional de Población',
-                    confirmButtonText: 'Continuar',
-                    confirmButtonColor: '#152F4A',
+                    html: '<b>CURP encontrada en el Registro Nacional de Población</b>',
+                    confirmButtonText: 'CONTINIUAR',
+                    // confirmButtonColor: '#152F4A',
+                    customClass: {
+                        confirmButton: 'swal2-deny' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
+                    },
                     width: 450,
                 });
                 $('#imgLoading_'+destino).addClass("d-none");

@@ -406,9 +406,12 @@
                     // imageUrl: "{{ asset('img/renapo.png') }}",
                     icon: 'success',
                     imageWidth: 200,
-                    html: 'CURP encontrada en el Registro Nacional de Población',
-                    confirmButtonText: 'Continuar',
-                    confirmButtonColor: '#152F4A',
+                    html: '<b>CURP encontrada en el Registro Nacional de Población</b>',
+                    confirmButtonText: 'CONTINIUAR',
+                    // confirmButtonColor: '#152F4A',
+                    customClass: {
+                        confirmButton: 'swal2-deny' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
+                    },
                     width: 450,
                 });
                 $('#imgLoading').addClass("d-none");
