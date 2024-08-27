@@ -119,7 +119,7 @@
                     <label for="correo">Correo</label>
 
                     <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top"
-                        title="Capture un correo electrónico vigente, a esta cuenta llegará su acceso para poder realizar el seguimiento puntual a su denuncia"></i>&nbsp;
+                        title="Capture un correo electrónico vigente, a esta cuenta llegará su acceso para realizar el seguimiento puntual a su denuncia"></i>&nbsp;
                 <label for="nombre" style="font-size: 7px;">Requerido</label>
 
 
