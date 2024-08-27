@@ -2054,6 +2054,45 @@ div.seccion h1 {
     border-color: #85c9ad; /* Color del borde al pasar el cursor */
 }
 
+.btn-success-two {
+    background-color: #1b8d5f; /* Degradado de color inicial */
+    /* background-image: linear-gradient(to right, #1b8d5f, #85c9ad); Degradado de color final */
+    color: white; /* Color del texto */
+    font-weight: bold; /* Negrita para el texto */
+    padding: 8px 20px; /* Espaciado interno del botón */
+    border: 2px solid #ffffff; /* Borde del botón */
+    border-radius: 25px; /* Bordes redondeados */
+    display: inline-flex; /* Para alinear icono y texto */
+    align-items: center; /* Centrar contenido verticalmente */
+    justify-content: center; /* Centrar contenido horizontalmente */
+    cursor: pointer; /* Icono de puntero en el botón */
+    transition: all 0.3s ease; /* Efecto de transición */
+    letter-spacing: 1px;
+}
+
+.btn-success-two:hover {
+    background-color: #85c9ad; /* Cambio de color al pasar el cursor */
+    background-image: linear-gradient(to right, #85c9ad, #1b8d5f); /* Degradado invertido al pasar el cursor */
+    color: #fff; /* Color del texto al pasar el cursor */
+    border-color: #85c9ad; /* Color del borde al pasar el cursor */
+}
+
+.btn-cancel {
+    background-color: #BB354B; /* Degradado de color inicial */
+    background-image: linear-gradient(to right, #BB354B, #850002); /* Degradado de color final */
+    color: white; /* Color del texto */
+    font-weight: bold; /* Negrita para el texto */
+    padding: 8px 20px; /* Espaciado interno del botón */
+    border: 2px solid #ffffff; /* Borde del botón */
+    border-radius: 25px; /* Bordes redondeados */
+    display: inline-flex; /* Para alinear icono y texto */
+    align-items: center; /* Centrar contenido verticalmente */
+    justify-content: center; /* Centrar contenido horizontalmente */
+    cursor: pointer; /* Icono de puntero en el botón */
+    transition: all 0.3s ease; /* Efecto de transición */
+    letter-spacing: 1px;
+}
+
 .btn-back {
     background-color: #aaaaaa; /* Degradado de color inicial */
     background-image: linear-gradient(to right, #aaaaaa, #898989); /* Degradado de color final */

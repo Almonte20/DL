@@ -56,7 +56,7 @@
 
 </div>
 
-<div id="DatosGenerales_denunciante" class="{{-- d-none --}}">
+<div id="DatosGenerales_denunciante" class="d-none">
 
     <div class="container">
         <div class="form-row col-lg-12">
@@ -429,6 +429,7 @@
                 }
             }else{
                 $("#DatosGenerales_"+destino).removeClass("d-none");
+                $('#imgLoading_'+destino).addClass("d-none");
             }
         }
     }

@@ -175,9 +175,11 @@
                         <section class="p-0 mt-5 mb-3">
                             <div class="container">
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-12 text-center">
                                         <p class="mb-2" style="font-weight: 400;">¿QUÉ HA SUCEDIDO?</p>
-                                        <input class="form-control input-denuncia" placeholder="Descripción breve de qué ha sucedido">
+                                        {{-- <input class="form-control input-denuncia" placeholder="Descripción breve de qué ha sucedido"> --}}
+                                        <textarea rows="2" class="form-control input-denuncia" placeholder="Descripción breve de qué ha sucedido. Ejemplos: Me asaltaron, me extorcionaron, me amenazaron de muerte, etc..."></textarea>
+
                                     </div>
 
                                     <div class="col-md-12 mt-3 text-center">
@@ -598,12 +600,18 @@ function alertas(msg)
     console.log($("#form_denuncia").serializeArray());
     // alert(formData);
     Swal.fire({
-        title: "¿Está seguro de querer registrar la denuncia?",
+        icon: "question",
+        title: "¿ESTÁ SEGURO DE QUERER REGISTRAR LA DENUNCIA?",
         showDenyButton: true,
-        confirmButtonText: "Si, registrar",
-        denyButtonText: `No, cancelar`,
+        confirmButtonText: "SI, REGISTRAR DENUNCIA",
+        denyButtonText: `NO, CANCELAR`,
         reverseButtons: true,
-        confirmButtonColor: '#008000',
+        // confirmButtonColor: '#008000',
+        // confirmButtonText: "ACEPTAR",
+        customClass: {
+            confirmButton: 'btn-success',
+            denyButton: 'btn-cancel', // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
+        },
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
@@ -979,8 +987,9 @@ function alertas(msg)
             reader.onload = function(){
                 let preview = document.getElementById('preview_credencial'),
                     image = document.createElement('img');
-
+                
                 image.src = reader.result;
+                image.style.maxWidth = '150px';
 
                 preview.innerHTML = '';
                 preview.append(image);
