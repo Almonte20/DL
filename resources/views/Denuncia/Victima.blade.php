@@ -82,7 +82,7 @@
                 <div class="form-group col-md-2">
                     <button type="button" class="btn-sm btn-search" onclick="consultarCurp(this,'victima')"
                         style="background: #002b49;" id="btnConsultarCurp_victima"> BUSCAR</button>
-                    <img src="{{asset(" img/denuncia/loading.gif")}}" class="img-responsive d-none" width="30%"
+                    <img src="{{asset("img/denuncia/loading.gif")}}" class="img-responsive d-none" width="30%"
                         id="imgLoading_victima">
                 </div>
             </div>

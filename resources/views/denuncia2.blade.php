@@ -177,7 +177,9 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <p class="text-center mb-2" style="font-weight: bold; font-size: 22px;">¿QUÉ HA SUCEDIDO?</p>
-                                        <input class="form-control input-denuncia" placeholder="Descripción breve de qué ha sucedido">
+                                        {{-- <input class="form-control input-denuncia" placeholder="Descripción breve de qué ha sucedido"> --}}
+                                        <textarea rows="2" class="form-control input-denuncia" placeholder="Descripción breve de qué ha sucedido. Ejemplos: Me asaltaron, me extorcionaron, me amenazaron de muerte, etc..."></textarea>
+                                        
                                     </div>
 
                                     <div class="col-md-12 mt-3 text-center">

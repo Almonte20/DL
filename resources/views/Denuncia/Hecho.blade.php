@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 text-center">
-            <p class="mb-2" style="font-weight: bold; font-size: 22px;">EXPLIQUE DE QUÉ MANERA SE COMETIÓ LA VIOLENCIA</p>
+            <p class="mb-2" style="font-weight: bold; font-size: 22px;">INDIQUE DE QUÉ MANERA SE COMETIÓ EL HECHO</p>
         </div>
         <div class="col-md-12">
             <div class="form-group">
@@ -20,13 +20,32 @@
             </div>
             <div class="custom-control custom-radio custom-control-inline">
                 <input type="radio" id="existioviolenciaS" name="existioviolencia" class="custom-control-input"
-                    value="1">
-                <label class="custom-control-label" for="existioviolenciaS">SÍ </label>
+                    value="1" onchange="ExistioViolencia()">
+                <label class="custom-control-label" for="existioviolenciaS">Si </label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="existioviolenciaN" name="existioviolencia" class="custom-control-input" value="0">
-                <label class="custom-control-label" for="existioviolenciaN">NO</label>
+                <input type="radio" id="existioviolenciaN" name="existioviolencia" class="custom-control-input" value="0" onchange="ExistioViolencia()">
+                <label class="custom-control-label" for="existioviolenciaN">No</label>
             </div>
+        </div>
+
+        <div class="col-md-12 d-none text-center" id="ExplicacionViolencia">
+            <p class="mb-2" style="font-weight: bold; font-size: 22px;">EXPLIQUE DE QUÉ MANERA SE COMETIÓ LA VIOLENCIA</p>
+            <textarea rows="2" class="form-control input-denuncia" name="expliqueViolencia" placeholder="Explique de que manera fue la violencia"></textarea>
         </div>
     </div>
 </div>
+
+
+<script>
+    function ExistioViolencia(){
+        var valor = $('input:radio[name=existioviolencia]:checked').val();
+        if(valor == 0){
+            $("#ExplicacionViolencia").addClass("d-none");
+        }else{
+
+            $("#ExplicacionViolencia").removeClass("d-none");
+        }
+    }
+
+</script>
