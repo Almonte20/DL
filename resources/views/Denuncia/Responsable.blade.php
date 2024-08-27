@@ -54,7 +54,8 @@
         </div>
         <div class="row mt-3">
             <div class="col-md-12 text-center">
-                <label>¿Dispone usted de alguna información sobre rasgos físicos distintivos del responsable?</label>
+                <p class="mb-2" style="font-weight: bold; font-size: 22px;">¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?</p>
+                {{-- <label>¿Dispone usted de alguna información sobre rasgos físicos distintivos del responsable?</label> --}}
             </div>
         {{-- </div>
 
@@ -63,11 +64,11 @@
                 <div class="custom-control custom-radio custom-control-inline">
                     <input type="radio" id="radioIdentificacionResponsableS" name="radioIdentificacionResponsable" class="custom-control-input"
                         value="1"  onchange="identificacionResponsable()">
-                    <label class="custom-control-label" for="radioIdentificacionResponsableS">Si </label>
+                    <label class="custom-control-label" for="radioIdentificacionResponsableS">SÍ </label>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
                     <input type="radio" id="radioIdentificacionResponsableN" name="radioIdentificacionResponsable" class="custom-control-input" value="0"  onchange="identificacionResponsable()">
-                    <label class="custom-control-label" for="radioIdentificacionResponsableN">No</label>
+                    <label class="custom-control-label" for="radioIdentificacionResponsableN">NO</label>
                 </div>
             </div>
         </div>

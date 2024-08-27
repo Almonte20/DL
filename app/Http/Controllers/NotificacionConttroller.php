@@ -16,7 +16,8 @@ class NotificacionConttroller extends Controller
     }
 
     public function enviarCodigoVerificacion(Request $request) {
-        $this->enviarNotificacionWhatsapp($request->correo, $request->whatsapp);
+        dd($request->all());
+        // $this->enviarNotificacionWhatsapp($request->correo, $request->whatsapp);
         $this->sendNotificationMail($request->correo, ['codigo_verificacion' => $request->codigo]);
         return response()->json(['mensaje' => 'Datos enviados correctamente']);
     }

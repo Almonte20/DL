@@ -176,12 +176,12 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <p class="mb-2" style="font-weight: 400;">¿QUÉ HA SUCEDIDO?</p>
+                                        <p class="text-center mb-2" style="font-weight: bold; font-size: 22px;">¿QUÉ HA SUCEDIDO?</p>
                                         <input class="form-control input-denuncia" placeholder="Descripción breve de qué ha sucedido">
                                     </div>
 
                                     <div class="col-md-12 mt-3 text-center">
-                                        <p class="mb-2" style="font-weight: 400;">¿QUIÉN ES LA VICTIMA?</p>
+                                        <p class="mb-2" style="font-weight: bold; font-size: 22px;">¿QUIÉN ES LA VÍCTIMA?</p>
                                     {{-- </div>
                                     <div class="col-md-12"> --}}
                                         <div class="custom-control custom-radio custom-control-inline">

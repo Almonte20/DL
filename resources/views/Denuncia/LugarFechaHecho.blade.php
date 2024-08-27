@@ -6,7 +6,7 @@
 </div>
 
 <div class="text-center mb-3">
-    <p class="m-0" style="font-weight: 400;">INDIQUE LUGAR Y FECHA EN QUE SUCEDIÓ EL HECHO A DENUNCIAR</p>
+    <p class="mb-2" style="font-weight: bold; font-size: 22px;">INDIQUE LA FECHA EN QUE SUCEDIÓ EL HECHO A DENUNCIAR</p>
     {{-- <div class="col-md text-center"> --}}
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="fechaintervalo" id="fecha" value="1" checked
@@ -37,7 +37,7 @@
         </div>
     </div> --}}
 
-    <div class="row justify-content-center">
+    <div id="fecha-especifica" class="row justify-content-center">
         <div class="col-md-4">
             <div class="form-group">
                 <div class="form-ic-cmp">
@@ -46,14 +46,14 @@
                         hechos</label>
                     <label for="fecha_inicial" style="font-size: 7px;">Requerido</label>
                 </div>
-                <input type="date" class="form-control required" name="fecha_inicial" id="fecha_inicial">
+                <input type="datetime-local" class="form-control required" name="fecha_inicial" id="fecha_inicial">
                 <div style="color:#FF0000;">
                     {{ $errors->first('fechainicial') }}
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
+        {{-- <div class="col-md-4">
             <div class="form-group">
                 <div class="form-ic-cmp">
                     <i class="fal fa-file-alt"></i>&nbsp;
@@ -65,10 +65,24 @@
                     {{ $errors->first('hora_inicial') }}
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 
     <div class="row justify-content-center d-none" id="DivIntervalo">
+        <div class="col-md-4">
+            <div class="form-group">
+                <div class="form-ic-cmp">
+                    <i class="fal fa-file-alt"></i>&nbsp;
+                    <label for="fecha_inicial">Fecha <span class="spanintervalo d-none">inicial</span> de los
+                        hechos</label>
+                    <label for="fecha_inicial" style="font-size: 7px;">Requerido</label>
+                </div>
+                <input type="datetime-local" class="form-control required" name="fecha_inicial" id="fecha_inicial">
+                <div style="color:#FF0000;">
+                    {{ $errors->first('fechainicial') }}
+                </div>
+            </div>
+        </div>
         <div class="col-md-4">
             <div class="form-group">
                 <div class="form-ic-cmp">
@@ -77,14 +91,14 @@
                     <label for="fecha_final" style="font-size: 7px;">Requerido</label>
 
                 </div>
-                <input type="date" class="form-control" name="fecha_final" id="fecha_final">
+                <input type="datetime-local" class="form-control" name="fecha_final" id="fecha_final">
                 <div style="color:#FF0000;">
                     {{ $errors->first('fecha_final') }}
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
+        {{-- <div class="col-md-4">
             <div class="form-group">
                 <div class="form-ic-cmp">
                     <i class="fal fa-file-alt"></i>&nbsp;
@@ -95,7 +109,12 @@
                     {{ $errors->first('hora_final') }}
                 </div>
             </div>
-        </div>
+        </div> --}}
+    </div>
+
+
+    <div class="text-center mt-5">
+        <p class="mb-2" style="font-weight: bold; font-size: 22px;">INDIQUE EL LUGAR EN QUE SUCEDIÓ EL HECHO A DENUNCIAR</p>
     </div>
 
     <div id="lugarhechos_domicilio" class="d-non">
@@ -723,10 +742,14 @@
             $(".spanintervalo").removeClass("d-none");
 
             $("#fecha_final").addClass("required");
+
+            $('#fecha-especifica').addClass('d-none');
         }else{
             $("#DivIntervalo").addClass("d-none");
             $(".spanintervalo").addClass("d-none");
             $("#fecha_final").removeClass("required");
+
+            $('#fecha-especifica').removeClass('d-none');
 
         }
     }

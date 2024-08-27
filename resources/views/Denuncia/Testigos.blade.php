@@ -4,11 +4,11 @@
     </div>
     <div class="custom-control custom-radio custom-control-inline">
         <input type="radio" id="existentestigosS" name="existentestigos" class="custom-control-input" value="1" onchange="existenTestigos()">
-        <label class="custom-control-label" for="existentestigosS">Si </label>
+        <label class="custom-control-label" for="existentestigosS">SÍ </label>
     </div>
     <div class="custom-control custom-radio custom-control-inline">
         <input type="radio" id="existentestigosN" name="existentestigos" class="custom-control-input" value="0" onchange="existenTestigos()">
-        <label class="custom-control-label" for="existentestigosN">No</label>
+        <label class="custom-control-label" for="existentestigosN">NO</label>
     </div>
 </div>
 

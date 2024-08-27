@@ -5,12 +5,12 @@
     <div class="custom-control custom-radio custom-control-inline">
         <input type="radio" id="existenEvidenciasS" name="existenEvidencias" class="custom-control-input"
             value="1" onchange="existen_evidencias()">
-        <label class="custom-control-label" for="existenEvidenciasS">Si </label>
+        <label class="custom-control-label" for="existenEvidenciasS">SÍ </label>
     </div>
     <div class="custom-control custom-radio custom-control-inline">
         <input type="radio" id="existenEvidenciasN" name="existenEvidencias" class="custom-control-input"
             value="0" onchange="existen_evidencias()">
-        <label class="custom-control-label" for="existenEvidenciasN">No</label>
+        <label class="custom-control-label" for="existenEvidenciasN">NO</label>
     </div>
 </div>
 
