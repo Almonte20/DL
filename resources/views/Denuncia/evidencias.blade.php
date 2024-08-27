@@ -1,6 +1,6 @@
 <div class="col-md-12 text-center">
     <div>
-        <label>¿Cuenta con Evidencias?</label>
+        <p class="mb-2" style="font-weight: bold; font-size: 22px;">¿CUENTA CON EVIDENCIAS?</p>
     </div>
     <div class="custom-control custom-radio custom-control-inline">
         <input type="radio" id="existenEvidenciasS" name="existenEvidencias" class="custom-control-input"

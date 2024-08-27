@@ -16,7 +16,7 @@
         </div> --}}
         <div class="col-md-12 text-center">
             <div>
-                <label>¿Existió violencia?</label>
+                <p class="mb-2" style="font-weight: bold; font-size: 22px;">¿EXISTIÓ VIOLENCIA?</p>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
                 <input type="radio" id="existioviolenciaS" name="existioviolencia" class="custom-control-input"
@@ -30,7 +30,7 @@
         </div>
 
         <div class="col-md-12 d-none text-center" id="ExplicacionViolencia">
-            <p class="mb-2" style="font-weight: bold; font-size: 22px;">EXPLIQUE DE QUÉ MANERA SE COMETIÓ LA VIOLENCIA</p>
+            <p class="mb-2" style="font-weight: bold; font-size: 18px;">EXPLIQUE DE QUÉ MANERA SE COMETIÓ LA VIOLENCIA</p>
             <textarea rows="2" class="form-control input-denuncia" name="expliqueViolencia" placeholder="Explique de que manera fue la violencia"></textarea>
         </div>
     </div>

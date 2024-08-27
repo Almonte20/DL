@@ -1,6 +1,6 @@
 <div class="col-md-12 text-center">
     <div>
-        <label>¿Existen testigos del hecho?</label>
+        <p class="mb-2" style="font-weight: bold; font-size: 22px;">¿EXISTEN TESTIGOS DEL HECHO?</label>
     </div>
     <div class="custom-control custom-radio custom-control-inline">
         <input type="radio" id="existentestigosS" name="existentestigos" class="custom-control-input" value="1" onchange="existenTestigos()">
