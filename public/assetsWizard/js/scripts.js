@@ -57,402 +57,207 @@ const enviarCodigoVerificacion = async(correo, whatsapp, codigoVerificacion) => 
 var msg = "";
 
 jQuery(document).ready(function() {
-/*
-    Form
-*/
+    // variables para seter correo y telefono proporcionado y realizar comparaciones y acciones en caso de que el usuario los cambie
+    let correoNotification;
+    let whatsappNotification;
 
-let correoNotification;
-let whatsappNotification;
-
-$('.f1 fieldset:first').fadeIn('slow');
 
 $('.f1 input[type="text"], .f1 input[type="password"], .f1 textarea').on('focus', function() {
 $(this).removeClass('input-error');
 });
 
-$('#btn-atras').on('click', function() {
-    // console.log('boton atras');
 
+    $('#btn-atras').on('click', function() {
+        $('#step-hechos').removeClass('active');
+        $('#datos-hechos').addClass('d-none');
+        $('#step-denunciante').addClass('active');
+        $('#datos-denunciante').removeClass('d-none');
+    });
 
-    $('#step-hechos').removeClass('active');
-    $('#datos-hechos').addClass('d-none');
-    $('#step-denunciante').addClass('active');
-    $('#datos-denunciante').removeClass('d-none');
-});
+    $('#btn-step-one').on('click', function() {
+        let elementSection = $('#datos-denunciante'); // elemento section en donde estan los inputs a validar
+        let erroresValidacion = false; // bandera que define si hay campos sin llenar
+        var messageError; // mensaje de error a desplegar de acuerdo al input
 
-// next step
-$('.f1 .btn-next').on('click', function() {
+        // validación de inpiuts
+        elementSection.find('.required').each(function() {
+            let elemento = $(this);
+            let tipoElemento = elemento.prop("nodeName");
 
-// console.log('siguientte');
-
-
-var parent_fieldset = $(this).parents('section');
-// console.log(parent_fieldset);
-
-var next_step = true;
-// navigation steps / progress steps
-var current_active_step = $(this).parents('.f1').find('.f1-step.active');
-// var progress_line = $(this).parents('.f1').find('.f1-progress-line');
-
-let errores_validacion = 0;
-
-
-
-// fields validation
-parent_fieldset.find('.required').each(function() {
-
-
-    // if ($('#pais').val() != '165') {
-    //     parent_fieldset.find('#domicilio_extranjero').each(function() {
-    //         if ($(this).val() == "") {
-    //             $("#campos_faltantes").css("display", "flex");
-    //             $(this).addClass('input-error');
-    //             next_step = false;
-    //             msg = 'Faltan campos por llenar...';
-    //         } else {
-    //             $(this).removeClass('input-error');
-    //         }
-    //     });
-    // } else {
-    //     if ($('#pais').val() == '165') {
-    //         parent_fieldset.find('#entidad,#municipio,#calle,#numext,#CP').each(function() {
-    //             if ($(this).val() == "") {
-    //                 $("#campos_faltantes").css("display", "flex");
-    //                 $(this).addClass('input-error');
-    //                 next_step = false;
-    //                 msg = 'Faltan campos por llenar...';
-    //             } else {
-    //                 $(this).removeClass('input-error');
-    //             }
-    //         });
-    //     }
-    // }
-    // if ($('#fecha_hechos').val() == 1) {
-
-    //     parent_fieldset.find('#fecha_exacta,#hora_exacta').each(function() {
-    //         if ($(this).val() == "") {
-    //             $("#campos_faltantes").css("display", "flex");
-    //             $(this).addClass('input-error');
-    //             next_step = false;
-    //             msg = 'Faltan campos por llenar...';
-    //         } else {
-    //             $(this).removeClass('input-error');
-    //         }
-    //     });
-    // } //else{
-    // if($('#fecha_hechos').val() == 2){
-    // parent_fieldset.find('#fecha_inicio,#hora_inicio,#fecha_fin,#hora_fin').each(function() {
-    //     if( $(this).val() == "" ) {
-    //         $("#campos_faltantes").css("display","flex");
-    //         $(this).addClass('input-error');
-    //         next_step = false;
-    //     }
-    //     else {
-    //         $(this).removeClass('input-error');
-    //     }
-    // });
-    // }
-    //}
-
-    // // VALIDACION LUGAR DE LOS HECHOS
-    // if ($('#carretera').val() != 2) {
-    //     parent_fieldset.find('#descripcion_lugar').each(function() {
-    //         if ($(this).val() == "") {
-    //             $("#campos_faltantes").css("display", "flex");
-    //             $(this).addClass('input-error');
-    //             next_step = false;
-    //             msg = 'Faltan campos por llenar...';
-
-    //         } else {
-    //             $(this).removeClass('input-error');
-    //         }
-    //     });
-    // } else {
-    //     if ($('#carretera').val() == 2) {
-    //         parent_fieldset.find('#km_hechos').each(function() {
-    //             if ($(this).val() == "") {
-    //                 $("#campos_faltantes").css("display", "flex");
-    //                 $(this).addClass('input-error');
-    //                 next_step = false;
-    //                 msg = 'Faltan campos por llenar...';
-    //             } else {
-    //                 $(this).removeClass('input-error');
-    //             }
-    //         });
-    //     }
-    // }
-
-    //------------------------------
-
-    var elemento = $(this);
-    // Obtener el nombre del tipo de elemento HTML
-
-    var nombreInput = elemento.attr('name');
-    var tipoElemento = elemento.prop("nodeName"); // O $elemento.attr("nodeName");
-
-
-
-    if (elemento.val() == "" || (tipoElemento == "SELECT" && elemento.val() == "0")) {
-        // $("#campos_faltantes").css("display", "flex");
-        $("#campos_faltantes").removeClass("d-none");
-        $(this).addClass('input-error');
-        next_step = false;
-        msg = 'FALTAN DATOS POR LLENAR...';
-        errores_validacion += 1;
-    } else {
-        $(this).removeClass('input-error');
-    }
-
-    if (nombreInput == "correo") {
-        if (!validarFormatoCorreo(elemento.val())) {
-            $(this).addClass('input-error');
-            next_step = false;
-            msg = 'El correo no cuenta con un formato válido';
-            errores_validacion += 1;
-        }
-    } else if (nombreInput == "evidencias") {
-        var documento = $("#documento").val();
-        var audio = $("#audio").val();
-        var video = $("#video").val();
-        var imagen = $("#image").val();
-        if (elemento.val() == 1 && (documento == "" && audio == "" && video == "" && imagen == "")) {
-            next_step = false;
-            msg = 'Seleccionaste que cuentas con evidencias, agrega por lo menos una evidencia';
-
-        }
-    }
-
-
-
-
-});
-
-
-
-if ((parent_fieldset.attr('id') === 'datos-denunciante') && (errores_validacion == 0)) {
-    // console.log(`Errores: ${errores_validacion}`);
-    // console.log(`Correo: ${correoNotification}`);
-    // console.log(`Telefono: ${whatsappNotification}`);
-
-    next_step = false;
-
-    // medios de notificacion
-    const correo = $('[name="correo"]').val();
-    const whatsapp = $('[name="telefono"]').val();
-
-    if (correoNotification != correo || whatsappNotification != whatsapp) {
-
-        // se genera numero aleatorio
-        let codigoVerificacion = generarCodigoVerificacion();
-        // console.log(`Código verificación: ${codigoVerificacion}`);
-        // se envia codigo de verificacion
-        enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
-
-        Swal.fire({
-            title: "CÓDIGO DE VERIFICACIÓN",
-            html: `
-                <p style="font-size: 22px;">PARA VALIDAR QUE TIENES ACCESO AL CORREO PROPORCIONADO, SE HA ENVIADO UN <b>CÓDIGO DE VERIFICACIÓN</b> DE SEIS DÍGITOS AL CORREO <b>${correo}</b></p>
-                <br>
-                <div style="display: flex; justify-content: space-between; gap: 10px; padding: 0 20px;">
-                <input type="text" id="input1" class="swal2-input" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
-                <input type="text" id="input2" class="swal2-input" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
-                <input type="text" id="input3" class="swal2-input" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
-                <input type="text" id="input4" class="swal2-input" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
-                <input type="text" id="input5" class="swal2-input" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
-                <input type="text" id="input6" class="swal2-input" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
-                </div>
-                <br>
-            `,
-            allowOutsideClick: false,
-            confirmButtonText: "VERIFICAR CÓDIGO",
-            confirmButtonColor: "#008f39",
-            showLoaderOnConfirm: true,
-            showDenyButton: true,
-            denyButtonText: "REENVIAR CÓDIGO",
-            denyButtonColor: "#142f4a",
-            showCancelButton: true,
-            cancelButtonText: "EDITAR DATOS",
-            cancelButtonColor: "#808080",
-            customClass: {
-                confirmButton: 'btn-verificar-codigo' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
-              },
-            didOpen: () => {
-                const inputs = ['input1', 'input2', 'input3', 'input4', 'input5', 'input6'];
-
-                inputs.forEach((inputId, index) => {
-                    const inputElement = document.getElementById(inputId);
-
-                    inputElement.addEventListener('input', () => {
-                        if (inputElement.value.length === 1 && index < inputs.length - 1) {
-                            document.getElementById(inputs[index + 1]).focus(); // Mover el foco al siguiente input
-                        }
-                    });
-
-                    inputElement.addEventListener('keydown', (e) => {
-                        if (e.key === 'Backspace' && inputElement.value === '' && index > 0) {
-                          document.getElementById(inputs[index - 1]).focus(); // Mover el foco al input anterior
-                        }
-                    });
-                });
-            },
-            preConfirm: () => {
-                const input1 = document.getElementById('input1').value;
-                const input2 = document.getElementById('input2').value;
-                const input3 = document.getElementById('input3').value;
-                const input4 = document.getElementById('input4').value;
-                const input5 = document.getElementById('input5').value;
-                const input6 = document.getElementById('input6').value;
-
-                const codigoIngresado = `${input1}${input2}${input3}${input4}${input5}${input6}`;
-                // console.log(codigoIngresado);
-
-                // Validar el código de verificación
-                if (codigoVerificacion != codigoIngresado) {
-                    Swal.showValidationMessage('El código ingresado es incorrecto.');
-                    return false;
+            if (elemento.val() == "" || (tipoElemento == "SELECT" && elemento.val() == "0")) {
+                // al elemento se agrega la clase para mostar error
+                $(this).addClass('input-error');
+                // asignacion del primer mensaje de error y banderas de validación
+                if ( messageError == undefined ) {
+                    messageError = elemento.attr('data-message-error');
+                    nextStep = false;
+                    erroresValidacion = true;
                 }
+            } else {
+                $(this).removeClass('input-error');
+            }
+        });
 
-                correoNotification = correo;
-                whatsappNotification = whatsapp;
+        // sweetalert mostrar error
+        if ( erroresValidacion == true ) {
+            Swal.fire({
+                title: "¡FALTAN DATOS POR LLENAR!",
+                html: `<p style="font-size:26px !important;"><b>${messageError}</b></p>`,
+                icon: "error",
+                confirmButtonText: "ACEPTAR",
+                customClass: {
+                    confirmButton: 'swal2-deny' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
+                },
+            });
 
-                Swal.fire({
-                    icon: "success",
-                    title: "VERIFICACIÓN EXITOSA",
-                    text: "EL CÓDIGO ES CORRECTO.",
-                    confirmButtonText: "ACEPTAR",
-                    customClass: {
-                        confirmButton: 'swal2-deny' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
-                    },
-                });
+            return;
+        }
 
-                // Continuar con el flujo del formulario
-                // parent_fieldset.fadeOut(400, function() {
-                //     $("#campos_faltantes").css("display", "none");
-                //     current_active_step.removeClass('active').addClass('activated').next().addClass('active');
-                //     bar_progress(progress_line, 'right');
-                //     $(this).next().fadeIn();
-                //     scroll_to_class($('.f1'), 20);
-                // });
+        // medios de notificacion
+        const correo = $('[name="correo"]').val();
+        const whatsapp = $('[name="telefono"]').val();
 
+        // en caso de que el usuario cambie el correo se volvera a enviar el codigo de verificación
+        if (correoNotification != correo /* || whatsappNotification != whatsapp */) {
+            // se genera numero aleatorio
+            let codigoVerificacion = generarCodigoVerificacion();
+            console.log(`Código verificación: ${codigoVerificacion}`);
+            // se envia codigo de verificacion
+            // enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
 
-                $('#campos_faltantes').addClass('d-none');
+            // ventana para validar el codigo de verificacion enviado
+            Swal.fire({
+                title: "CÓDIGO DE VERIFICACIÓN",
+                html: `
+                    <p style="font-size: 22px;">PARA VALIDAR QUE TIENES ACCESO AL CORREO PROPORCIONADO, SE HA ENVIADO UN <b>CÓDIGO DE VERIFICACIÓN</b> DE SEIS DÍGITOS AL CORREO <b>${correo}</b></p>
+                    <br>
+                    <div style="display: flex; justify-content: space-between; gap: 10px; padding: 0 20px;">
+                    <input type="text" id="input1" class="swal2-input" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
+                    <input type="text" id="input2" class="swal2-input" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
+                    <input type="text" id="input3" class="swal2-input" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
+                    <input type="text" id="input4" class="swal2-input" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
+                    <input type="text" id="input5" class="swal2-input" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
+                    <input type="text" id="input6" class="swal2-input" maxlength="1" style="width: 45px; text-align: center; font-size: 24px;" />
+                    </div>
+                    <br>
+                `,
+                allowOutsideClick: false,
+                confirmButtonText: "VERIFICAR CÓDIGO",
+                confirmButtonColor: "#008f39",
+                showLoaderOnConfirm: true,
+                showDenyButton: true,
+                denyButtonText: "REENVIAR CÓDIGO",
+                denyButtonColor: "#142f4a",
+                showCancelButton: true,
+                cancelButtonText: "EDITAR DATOS",
+                cancelButtonColor: "#808080",
+                customClass: {
+                    confirmButton: 'btn-verificar-codigo' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
+                },
+                didOpen: () => {
+                    const inputs = ['input1', 'input2', 'input3', 'input4', 'input5', 'input6'];
 
-                $('#step-denunciante').removeClass('active');
-                $('#datos-denunciante').addClass('d-none');
-                $('#step-hechos').addClass('active');
-                $('#datos-hechos').removeClass('d-none');
+                    inputs.forEach((inputId, index) => {
+                        const inputElement = document.getElementById(inputId);
 
-                var nombre = $("#Nombre_denunciante").val();
-                    var primerAp = $("#PrimerApellido_denunciante").val();
-                    var SegundoAp = $("#SegundoApellido_denunciante").val();
+                        inputElement.addEventListener('input', () => {
+                            if (inputElement.value.length === 1 && index < inputs.length - 1) {
+                                document.getElementById(inputs[index + 1]).focus(); // Mover el foco al siguiente input
+                            }
+                        });
 
+                        inputElement.addEventListener('keydown', (e) => {
+                            if (e.key === 'Backspace' && inputElement.value === '' && index > 0) {
+                            document.getElementById(inputs[index - 1]).focus(); // Mover el foco al input anterior
+                            }
+                        });
+                    });
+                },
+                preConfirm: () => {
+                    const input1 = document.getElementById('input1').value;
+                    const input2 = document.getElementById('input2').value;
+                    const input3 = document.getElementById('input3').value;
+                    const input4 = document.getElementById('input4').value;
+                    const input5 = document.getElementById('input5').value;
+                    const input6 = document.getElementById('input6').value;
+
+                    const codigoIngresado = `${input1}${input2}${input3}${input4}${input5}${input6}`;
+
+                    // Validar el código de verificación
+                    if (codigoVerificacion != codigoIngresado) {
+                        Swal.showValidationMessage('El código ingresado es incorrecto.');
+                        return false;
+                    }
+
+                    // esta asignacion de variables se debe al que si el usuario regresa al step-1
+                    // y cuando quiere ir al step-2 se evalua que el correo o whatsapp sean los miismos
+                    // proporcionados al priincipio para no volver a mandar el codigo de verificacion
+                    correoNotification = correo;
+                    whatsappNotification = whatsapp;
+
+                    Swal.fire({
+                        icon: "success",
+                        title: "VERIFICACIÓN EXITOSA",
+                        text: "EL CÓDIGO ES CORRECTO.",
+                        confirmButtonText: "ACEPTAR",
+                        customClass: {
+                            confirmButton: 'swal2-deny' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
+                        },
+                    });
+
+                    // se establece el nombre del denunciante como nombre de opcion de victima
+                    let nombre = $("#Nombre_denunciante").val();
+                    let primerAp = $("#PrimerApellido_denunciante").val();
+                    let SegundoAp = $("#SegundoApellido_denunciante").val();
                     $("#nombre-victima").html(nombre);
                     $("#primer-apellido-victima").html(primerAp);
                     $("#segundo-apellido-victima").html(SegundoAp);
 
-                return true;
-            },
-            preDeny: () => {
-                /** REENVIO DEL CÓDIGO DE VALIDACIÓN */
-                // Lógica para reenviar el código
-                //   Swal.fire("Código reenviado", "Hemos reenviado el código a tu correo y WhatsApp.", "info");
-                // console.log(`Código verificación antes: ${codigoVerificacion}`);
-                codigoVerificacion = generarCodigoVerificacion();
-                // console.log(`Código verificación despues: ${codigoVerificacion}`);
-                // se envia codigo de verificacion nuevamente
-                enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
+                    // se oculta el primer step para mostrar el segundo step
+                    $('#step-denunciante').removeClass('active');
+                    $('#datos-denunciante').addClass('d-none');
+                    $('#step-hechos').addClass('active');
+                    $('#datos-hechos').removeClass('d-none');
 
-                toastr.success('Se reenvió el código de validacón con exito.')
+                    return true;
+                },
+                preDeny: () => {
+                    /** REENVIO DEL CÓDIGO DE VALIDACIÓN */
 
-                // Retorna false para evitar que el cuadro de diálogo se cierre
-                return false;
-                // Reenvío del código de verificación
-                console.log(`Código verificación antes: ${codigoVerificacion}`);
-                codigoVerificacion = generarCodigoVerificacion();
-                console.log(`Código verificación después: ${codigoVerificacion}`);
-                enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
-                toastr.success('Se reenvió el código de validación con éxito.');
-                return false;
-            },
-        });
+                    // se reenvia el código de verificación
+                    codigoVerificacion = generarCodigoVerificacion();
+                    // se envia codigo de verificacion nuevamente
+                    enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
 
-    } else {
-        // parent_fieldset.fadeOut(400, function() {
-        //     //quita el mensaje de error
-        //     $("#campos_faltantes").css("display", "none");
-        //     // change icons
-        //     current_active_step.removeClass('active').addClass('activated').next().addClass('active');
-        //     // progress bar
-        //     bar_progress(progress_line, 'right');
-        //     // show next step
-        //     $(this).next().fadeIn();
-        //     // scroll window to beginning of the form
-        //     scroll_to_class($('.f1'), 20);
+                    toastr.success('Se reenvió el código de validacón con exito.')
 
+                    // Retorna false para evitar que la ventana de sweetalert se cierre
+                    return false;
+                },
+            });
 
-        // });
+        } else {
+            /** SE PASA AL SEGUNDO STEP (HECHOS) */
 
-        var nombre = $("#Nombre_denunciante").val();
-                    var primerAp = $("#PrimerApellido_denunciante").val();
-                    var SegundoAp = $("#SegundoApellido_denunciante").val();
+            // se establece el nombre del denunciante como nombre de opcion de victima
+            let nombre = $("#Nombre_denunciante").val();
+            let primerAp = $("#PrimerApellido_denunciante").val();
+            let SegundoAp = $("#SegundoApellido_denunciante").val();
+            $("#nombre-victima").html(nombre);
+            $("#primer-apellido-victima").html(primerAp);
+            $("#segundo-apellido-victima").html(SegundoAp);
 
-                    $("#nombre-victima").html(nombre);
-                    $("#primer-apellido-victima").html(primerAp);
-                    $("#segundo-apellido-victima").html(SegundoAp);
-
-        $('#step-denunciante').removeClass('active');
-        $('#datos-denunciante').addClass('d-none');
-        $('#step-hechos').addClass('active');
-        $('#datos-hechos').removeClass('d-none');
-    }
+            // se oculta el primer step para mostrar el segundo step
+            $('#step-denunciante').removeClass('active');
+            $('#datos-denunciante').addClass('d-none');
+            $('#step-hechos').addClass('active');
+            $('#datos-hechos').removeClass('d-none');
+        }
 
 
-
-
-
-
-} else {
-
-    // fields validation
-
-    if (next_step) {
-        parent_fieldset.fadeOut(400, function() {
-            var nombre = $("#Nombre_denunciante").val();
-            var primerAp = $("#PrimerApellido_denunciante").val();
-            var SegundoAp = $("#SegundoApellido_denunciante").val();
-
-            $("#nombre-victima-txt").html(nombre);
-            $("#primer-apellido-victima-txt").html(primerAp);
-            $("#segundo-apellido-victima-txt").html(SegundoAp);
-            //quita el mensaje de error
-            $("#campos_faltantes").css("display", "none");
-            // change icons
-            current_active_step.removeClass('active').addClass('activated').next().addClass('active');
-            // progress bar
-            bar_progress(progress_line, 'right');
-            // show next step
-            $(this).next().fadeIn();
-            // scroll window to beginning of the form
-            scroll_to_class($('.f1'), 20);
-        });
-    } else {
-        Swal.fire({
-            title: "¡CUIDADO!",
-            text: msg,
-            icon: "error",
-            confirmButtonText: "ACEPTAR",
-            customClass: {
-                confirmButton: 'swal2-deny' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
-            },
-        });
-        // alertas(msg);
-    }
-}
-
-
-$('html,body').animate({ scrollTop: 0 }, 900);
-return false;
-});
+    $('html,body').animate({ scrollTop: 0 }, 900);
+    return false;
+    });
 
 function alertas(msg) {
 new PNotify({

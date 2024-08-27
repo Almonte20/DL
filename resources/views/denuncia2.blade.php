@@ -159,11 +159,11 @@
                         </div>
                     </div> --}}
 
-                    <div id="campos_faltantes" class="container text-center d-none">
+                    {{-- <div id="campos_faltantes" class="container text-center d-none">
                         <p style="background-color: #f8d7da;">
                             * Por favor verifique que los datos requeridos se encuentren ingresados.
                         </p>
-                    </div>
+                    </div> --}}
 
                     <!-- datos denunciante -->
                     <section id="datos-denunciante" class="p-0 mt-5 mb-3" {{-- class="d-none" --}}>
@@ -179,7 +179,7 @@
                                         <p class="text-center mb-2" style="font-weight: bold; font-size: 22px;">¿QUÉ HA SUCEDIDO?</p>
                                         {{-- <input class="form-control input-denuncia" placeholder="Descripción breve de qué ha sucedido"> --}}
                                         <textarea rows="2" class="form-control input-denuncia" placeholder="Descripción breve de qué ha sucedido. Ejemplos: Me asaltaron, me extorcionaron, me amenazaron de muerte, etc..."></textarea>
-                                        
+
                                     </div>
 
                                     <div class="col-md-12 mt-3 text-center">
