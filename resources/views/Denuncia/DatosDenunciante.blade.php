@@ -460,7 +460,7 @@
                     icon: 'success',
                     imageWidth: 200,
                     html: '<b>CURP encontrada en el Registro Nacional de Población</b>',
-                    confirmButtonText: 'CONTINIUAR',
+                    confirmButtonText: 'CONTINUAR',
                     // confirmButtonColor: '#152F4A',
                     customClass: {
                         confirmButton: 'swal2-deny' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
