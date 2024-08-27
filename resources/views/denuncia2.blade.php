@@ -161,7 +161,7 @@
 
                     <div id="campos_faltantes" class="container text-center d-none">
                         <p style="background-color: #f8d7da;">
-                            * Por favor verifique que los campos requeridos se encuentren ingresados.
+                            * Por favor verifique que los datos requeridos se encuentren ingresados.
                         </p>
                     </div>
 
