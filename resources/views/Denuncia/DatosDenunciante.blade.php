@@ -56,7 +56,7 @@
 
 </div>
 
-<div id="DatosGenerales_denunciante" class="{{-- d-none --}}">
+<div id="DatosGenerales_denunciante" class="d-none">
 
     <div class="container">
         <div class="form-row col-lg-12">
@@ -156,7 +156,12 @@
                     <label for="credencial" style="font-size: 7px;">Requerido</label>
 
                 </div>
-                <input type="file" name="credencial" class="file_multi_image required credencial" id="credencial" accept="image/*" required>
+                {{-- <input type="file" name="credencial" class="file_multi_image required credencial" id="credencial" accept="image/*" required> --}}
+                <div class="input-group mb-3" role='button'>
+                    <div class="input-group-prepend"> </div>
+                    <div class="custom-file"> <input style="cursor:pointer;" type="file" class="custom-file-input" id="credencial"
+                            name="credencial"> <label class="custom-file-label" for="inputGroupFile01">Buscar Archivo</label>  </div>
+                </div>
             </div>
             <div class="form-group col-md-4 text-center">
                 <div id="preview_credencial"></div>

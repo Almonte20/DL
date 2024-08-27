@@ -184,43 +184,43 @@ parent_fieldset.find('.required').each(function() {
 
     //------------------------------
 
-    // var elemento = $(this);
-    // // Obtener el nombre del tipo de elemento HTML
+    var elemento = $(this);
+    // Obtener el nombre del tipo de elemento HTML
 
-    // var nombreInput = elemento.attr('name');
-    // var tipoElemento = elemento.prop("nodeName"); // O $elemento.attr("nodeName");
+    var nombreInput = elemento.attr('name');
+    var tipoElemento = elemento.prop("nodeName"); // O $elemento.attr("nodeName");
 
 
 
-    // if (elemento.val() == "" || (tipoElemento == "SELECT" && elemento.val() == "0")) {
-    //     // $("#campos_faltantes").css("display", "flex");
-    //     $("#campos_faltantes").removeClass("d-none");
-    //     $(this).addClass('input-error');
-    //     next_step = false;
-    //     msg = 'FALTAN CAMPOS POR LLENAR...';
-    //     errores_validacion += 1;
-    // } else {
-    //     $(this).removeClass('input-error');
-    // }
+    if (elemento.val() == "" || (tipoElemento == "SELECT" && elemento.val() == "0")) {
+        // $("#campos_faltantes").css("display", "flex");
+        $("#campos_faltantes").removeClass("d-none");
+        $(this).addClass('input-error');
+        next_step = false;
+        msg = 'FALTAN CAMPOS POR LLENAR...';
+        errores_validacion += 1;
+    } else {
+        $(this).removeClass('input-error');
+    }
 
-    // if (nombreInput == "correo") {
-    //     if (!validarFormatoCorreo(elemento.val())) {
-    //         $(this).addClass('input-error');
-    //         next_step = false;
-    //         msg = 'El correo no cuenta con un formato válido';
-    //         errores_validacion += 1;
-    //     }
-    // } else if (nombreInput == "evidencias") {
-    //     var documento = $("#documento").val();
-    //     var audio = $("#audio").val();
-    //     var video = $("#video").val();
-    //     var imagen = $("#image").val();
-    //     if (elemento.val() == 1 && (documento == "" && audio == "" && video == "" && imagen == "")) {
-    //         next_step = false;
-    //         msg = 'Seleccionaste que cuentas con evidencias, agrega por lo menos una evidencia';
+    if (nombreInput == "correo") {
+        if (!validarFormatoCorreo(elemento.val())) {
+            $(this).addClass('input-error');
+            next_step = false;
+            msg = 'El correo no cuenta con un formato válido';
+            errores_validacion += 1;
+        }
+    } else if (nombreInput == "evidencias") {
+        var documento = $("#documento").val();
+        var audio = $("#audio").val();
+        var video = $("#video").val();
+        var imagen = $("#image").val();
+        if (elemento.val() == 1 && (documento == "" && audio == "" && video == "" && imagen == "")) {
+            next_step = false;
+            msg = 'Seleccionaste que cuentas con evidencias, agrega por lo menos una evidencia';
 
-    //     }
-    // }
+        }
+    }
 
 
 
@@ -244,9 +244,9 @@ if ((parent_fieldset.attr('id') === 'datos-denunciante') && (errores_validacion 
 
         // se genera numero aleatorio
         let codigoVerificacion = generarCodigoVerificacion();
-        console.log(`Código verificación: ${codigoVerificacion}`);
+        // console.log(`Código verificación: ${codigoVerificacion}`);
         // se envia codigo de verificacion
-        // enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
+        enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
 
         Swal.fire({
             title: "CÓDIGO DE VERIFICACIÓN",
