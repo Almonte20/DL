@@ -25,7 +25,7 @@ const generarCodigoVerificacion = () => {
 const enviarCodigoVerificacion = async(correo, whatsapp, codigoVerificacion) => {
     try {
         // Realizar la solicitud usando fetch y esperar la respuesta
-        const response = await fetch('/api/enviar-codigo-verificacion', {
+        const response = await fetch('api/enviar-codigo-verificacion', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -197,7 +197,7 @@ parent_fieldset.find('.required').each(function() {
         $("#campos_faltantes").removeClass("d-none");
         $(this).addClass('input-error');
         next_step = false;
-        msg = 'FALTAN CAMPOS POR LLENAR...';
+        msg = 'FALTAN DATOS POR LLENAR...';
         errores_validacion += 1;
     } else {
         $(this).removeClass('input-error');
