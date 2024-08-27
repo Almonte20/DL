@@ -1,5 +1,3 @@
-
-
 {{-- <div class="row mt-3">
     <div class="col-md-12">
         <h1 class="mb-4">¿Quién es el responsable?</h1>
@@ -15,8 +13,28 @@
 
 <div class="container">
     <div id="ResponsableDiv" class="pl-3">
-        <div class="form-row col-lg-12">
-            <div class="form-group col-md-4">
+        <div class="row ">
+            <div class="col-md-12 text-center">
+                <label>¿Conoce al responsable?</label>
+            </div>
+        </div>
+
+        <div class="row ">
+            <div class="col-md-12 text-center">
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="conozcoResponsableS" name="conozcoResponsable"
+                        class="custom-control-input" value="1" onchange="conozco_responsable()">
+                    <label class="custom-control-label" for="conozcoResponsableS">Si </label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="conozcoResponsableN" name="conozcoResponsable"
+                        class="custom-control-input" value="0" onchange="conozco_responsable()">
+                    <label class="custom-control-label" for="conozcoResponsableN">No</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-row col-lg-12 d-none" id="conozcoResponsableDiv">
+            <div class="form-group col-md-6">
                 <div class="form-ic-cmp">
                     <i class="fad fa-id-card"></i>&nbsp;
                     <label for="nombre">Nombre del responsable</label>
@@ -27,46 +45,58 @@
                     {{ $errors->first('nombre') }}
                 </div>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-6">
                 <div class="form-ic-cmp">
                     <i class="fad fa-id-card"></i>&nbsp;
                     <label for="PrimerApellido">Primer Apellido del responsable</label>
                 </div>
                 <input type="text" name="PrimerApellido" id="PrimerApellido" class=" form-control required "
-                    value="{{ old('PrimerApellido') }}" maxlength="50" style="background-color:rgba(230, 238, 250, 0.5);"
-                    placeholder="Primer apellido">
+                    value="{{ old('PrimerApellido') }}" maxlength="50"
+                    style="background-color:rgba(230, 238, 250, 0.5);" placeholder="Primer apellido">
                 <div style="color:#FF0000;">
                     {{ $errors->first('PrimerApellido') }}
                 </div>
             </div>
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-6">
                 <div class="form-ic-cmp">
                     <i class="fad fa-id-card"></i>&nbsp;
                     <label for="SegundoApellido">Segundo Apellido del responsable</label>
                 </div>
                 <input type="text" name="SegundoApellido" id="SegundoApellido" class=" form-control "
-                    value="{{ old('SegundoApellido') }}" maxlength="50" style="background-color:rgba(230, 238, 250, 0.5);"
-                    placeholder="Segundo apellido">
+                    value="{{ old('SegundoApellido') }}" maxlength="50"
+                    style="background-color:rgba(230, 238, 250, 0.5);" placeholder="Segundo apellido">
                 <div style="color:#FF0000;">
                     {{ $errors->first('SegundoApellido') }}
                 </div>
+            </div>
+            <div class="form-group col-md-6">
+                <div class="form-ic-cmp">
+                    <i class="fad fa-id-card"></i>&nbsp;
+                    <label for="SegundoApellido">Alias</label>
+                </div>
+                <input type="text" name="AliasResponsable" id="AliasResponsable" class=" form-control "
+                    value="" maxlength="50"
+                    style="background-color:rgba(230, 238, 250, 0.5);" placeholder="Alias">
+                
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-md-12 text-center">
                 <label>¿Dispone usted de alguna información sobre rasgos físicos distintivos del responsable?</label>
             </div>
-        {{-- </div>
+            {{--
+        </div>
 
         <div class="row "> --}}
             <div class="col-md-12 text-center">
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="radioIdentificacionResponsableS" name="radioIdentificacionResponsable" class="custom-control-input"
-                        value="1"  onchange="identificacionResponsable()">
+                    <input type="radio" id="radioIdentificacionResponsableS" name="radioIdentificacionResponsable"
+                        class="custom-control-input" value="1" onchange="identificacionResponsable()">
                     <label class="custom-control-label" for="radioIdentificacionResponsableS">Si </label>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="radioIdentificacionResponsableN" name="radioIdentificacionResponsable" class="custom-control-input" value="0"  onchange="identificacionResponsable()">
+                    <input type="radio" id="radioIdentificacionResponsableN" name="radioIdentificacionResponsable"
+                        class="custom-control-input" value="0" onchange="identificacionResponsable()">
                     <label class="custom-control-label" for="radioIdentificacionResponsableN">No</label>
                 </div>
             </div>
@@ -91,5 +121,17 @@
             $("#divIdentifiacionResponsable").removeClass("d-none");
         }
     }
+
+    function conozco_responsable(){
+        var valor = $('input:radio[name=conozcoResponsable]:checked').val();
+        if(valor == 0){
+            $("#conozcoResponsableDiv").addClass("d-none");
+        }else{
+
+            $("#conozcoResponsableDiv").removeClass("d-none");
+        }
+    }
+
+    
 
 </script>

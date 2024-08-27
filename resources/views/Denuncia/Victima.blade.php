@@ -165,4 +165,9 @@
         }
     }
 
+
+    function limpiarVictima(){
+        
+    }
+
 </script>
