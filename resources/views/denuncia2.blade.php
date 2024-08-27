@@ -989,6 +989,7 @@ function alertas(msg)
                     image = document.createElement('img');
 
                 image.src = reader.result;
+                image.style.maxWidth = '150px';
 
                 preview.innerHTML = '';
                 preview.append(image);

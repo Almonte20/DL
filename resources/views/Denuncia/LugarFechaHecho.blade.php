@@ -6,12 +6,12 @@
 </div>
 
 <div class="text-center mb-3">
-    <p class="mb-2" style="font-weight: bold; font-size: 22px;">INDIQUE LA FECHA EN QUE SUCEDIÓ EL HECHO A DENUNCIAR</p>
+    <p class="mb-2" style="font-weight: bold; font-size: 22px;">INDIQUE LA FECHA Y HORA EN QUE SUCEDIÓ EL HECHO A DENUNCIAR</p>
     {{-- <div class="col-md text-center"> --}}
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="fechaintervalo" id="fecha" value="1" checked
                 onchange="fechaIntervalo(this)">
-            <label class="form-check-label" for="fecha">Fecha específica</label>
+            <label class="form-check-label" for="fecha">Fecha y hora específica</label>
         </div>
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="fechaintervalo" id="intervalo" value="2"
@@ -42,7 +42,7 @@
             <div class="form-group">
                 <div class="form-ic-cmp">
                     <i class="fal fa-file-alt"></i>&nbsp;
-                    <label for="fecha_inicial">Fecha <span class="spanintervalo d-none">inicial</span> de los
+                    <label for="fecha_inicial">Fecha y hora <span class="spanintervalo d-none">inicial</span> de los
                         hechos</label>
                     <label for="fecha_inicial" style="font-size: 7px;">Requerido</label>
                 </div>
@@ -73,7 +73,7 @@
             <div class="form-group">
                 <div class="form-ic-cmp">
                     <i class="fal fa-file-alt"></i>&nbsp;
-                    <label for="fecha_inicial">Fecha <span class="spanintervalo d-none">inicial</span> de los
+                    <label for="fecha_inicial">Fecha y hora <span class="spanintervalo d-none">inicial</span> de los
                         hechos</label>
                     <label for="fecha_inicial" style="font-size: 7px;">Requerido</label>
                 </div>
@@ -87,7 +87,7 @@
             <div class="form-group">
                 <div class="form-ic-cmp">
                     <i class="fal fa-file-alt"></i>&nbsp;
-                    <label for="fecha_final">Fecha <span class="spaninicial">final de los hechos</label>
+                    <label for="fecha_final">Fecha y hora <span class="spaninicial">final de los hechos</label>
                     <label for="fecha_final" style="font-size: 7px;">Requerido</label>
 
                 </div>
@@ -114,7 +114,7 @@
 
 
     <div class="text-center mt-5">
-        <p class="mb-2" style="font-weight: bold; font-size: 22px;">INDIQUE EL LUGAR EN QUE SUCEDIÓ EL HECHO A DENUNCIAR</p>
+        <p class="mb-2" style="font-weight: bold; font-size: 22px;">INDIQUE EL LUGAR DONDE SUCEDIÓ EL HECHO A DENUNCIAR</p>
     </div>
 
     <div id="lugarhechos_domicilio" class="d-non">
