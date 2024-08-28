@@ -67,7 +67,7 @@
                     <label for="nombre" style="font-size: 7px;">Requerido</label>
                 </div>
                 <input type="text" name="nombre_denunciante" id="Nombre_denunciante" class=" form-control required" value="{{ old('nombre') }}"
-                    data-message-error='El campo "NOMBRE" es requerido.'
+                    data-message-error='El dato "NOMBRE" es requerido.'
                     required maxlength="50" style="background-color:rgba(230, 238, 250, 0.5);" placeholder="Nombre">
                 <div style="color:#FF0000;">
                     {{ $errors->first('nombre') }}
@@ -80,7 +80,7 @@
                     <label for="nombre" style="font-size: 7px;">Requerido</label>
                 </div>
                 <input type="text" name="PrimerApellido_denunciante" id="PrimerApellido_denunciante" class=" form-control required"
-                    data-message-error='El campo "PRIMER APELLIDO" es requerido.'
+                    data-message-error='El dato "PRIMER APELLIDO" es requerido.'
                     value="{{ old('PrimerApellido') }}" maxlength="50" style="background-color:rgba(230, 238, 250, 0.5);"
                     placeholder="Primer apellido">
                 <div style="color:#FF0000;">
@@ -110,7 +110,7 @@
 
                 </div>
                 <input type="date" name="fnacimiento_denunciante" id="fnacimiento_denunciante" class=" form-control required "
-                    data-message-error='El campo "FECHA DE NACIMIENTO" es requerido.'
+                    data-message-error='El dato "FECHA DE NACIMIENTO" es requerido.'
                     value="{{ old('fnacimiento') }}" style="background-color:rgba(230, 238, 250, 0.5);">
                 <div style="color:#FF0000;">
                     {{ $errors->first('fnacimiento') }}
@@ -128,7 +128,7 @@
 
                 </div>
                 <input type="email" name="correo" id="correo" class=" form-control required " value="{{ old('correo') }}"
-                    data-message-error='El campo "CORRECO ELECTRÓNICO" es requerido.'
+                    data-message-error='El dato "CORRECO ELECTRÓNICO" es requerido.'
                     maxlength="50" placeholder="correo@dominio.com" style="background-color:rgba(230, 238, 250, 0.5);">
                 <div style="color:#FF0000;">
                     {{ $errors->first('correo') }}
@@ -143,7 +143,7 @@
                         title="Capture un número celular que permita contactarlo vía WhatsApp"></i>&nbsp;
                 </div>
                 <input type="text" name="telefono" class=" form-control required" value="{{ old('telefono') }}"
-                    data-message-error='El campo "TELÉFONO (WHATSAPP)" es requerido.'
+                    data-message-error='El dato "TELÉFONO (WHATSAPP)" es requerido.'
                     maxlength="10" onkeypress="return justNumbers(event);" placeholder="1234567890"
                     style="background-color:rgba(230, 238, 250, 0.5);">
                 <div style="color:#FF0000;">
@@ -165,7 +165,7 @@
                 <div class="input-group mb-3" role='button'>
                     <div class="input-group-prepend"> </div>
                     <div class="custom-file"> <input style="cursor:pointer;" type="file" class="custom-file-input required" id="credencial"
-                            name="credencial" data-message-error='El campo "IDENTIFICACIÓN OFICIAL" es requerido.'> <label class="custom-file-label" for="inputGroupFile01">Buscar Archivo</label>  </div>
+                            name="credencial" data-message-error='El dato "IDENTIFICACIÓN OFICIAL" es requerido.'> <label class="custom-file-label" for="inputGroupFile01">Buscar Archivo</label>  </div>
                 </div>
             </div>
             <div class="form-group col-md-4 text-center">
@@ -229,7 +229,7 @@
 
                     </div>
                     <input class=" form-control required" value="" maxlength="5" onkeypress="return justNumbers(event);"
-                        data-message-error='El campo "CÓDIGO POSTAL" es requerido.'
+                        data-message-error='El dato "CÓDIGO POSTAL" es requerido.'
                         style="background-color:rgba(230, 238, 250, 0.5);" name="CP" type="text" id="CP"
                         placeholder="Ingrese CP" maxlength="5" onblur="validarCP(this,'entidad_residencia','municipio_residencia','asentamiento_residencia')">
 
@@ -290,7 +290,7 @@
 
                     </div>
                     <select class=" form-control required" value="<?php echo e(old('municipio')); ?>"
-                        data-message-error='El campo "COLONIA" es requerido.'
+                        data-message-error='El dato "COLONIA" es requerido.'
                         style="background-color:rgba(230, 238, 250, 0.5);" name="asentamiento_residencia"
                         id="asentamiento_residencia">
                         <option value="0">Seleccione una colonia</option>
@@ -309,7 +309,7 @@
 
                     </div>
                     <input class=" form-control required " value="" maxlength="250"
-                        data-message-error='El campo "CALLE" es requerido.'
+                        data-message-error='El dato "CALLE" es requerido.'
                         style="background-color:rgba(230, 238, 250, 0.5);" name="calle" type="text" id="calle"
                         placeholder="Ingrese la calle">
                     <div style="color:#FF0000;">
@@ -323,7 +323,7 @@
 
                     </div>
                     <input class=" form-control required" value="" maxlength="6"
-                        data-message-error='El campo "NÚMERO EXTERIOR" es requerido.'
+                        data-message-error='El dato "NÚMERO EXTERIOR" es requerido.'
                         style="background-color:rgba(230, 238, 250, 0.5);" name="numext" type="text" id="numext"
                         placeholder="Número exterior">
                     <div style="color:#FF0000;">

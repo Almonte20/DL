@@ -24,7 +24,7 @@
                   id="existioviolenciaS"
                   name="existio_violencia"
                   class="custom-control-input required"
-                  data-message-error='El campo "¿EXISTIÓ VIOLENCIA?" es requerido.'
+                  data-message-error='El dato "¿EXISTIÓ VIOLENCIA?" es requerido.'
                   value="1"
                   onchange="ExistioViolencia()">
                 <label class="custom-control-label" for="existioviolenciaS">Si </label>
@@ -36,7 +36,7 @@
                   name="existio_violencia"
                   class="custom-control-input required"
                   value="0"
-                  data-message-error='El campo "¿EXISTIÓ VIOLENCIA?" es requerido.'
+                  data-message-error='El dato "¿EXISTIÓ VIOLENCIA?" es requerido.'
                   onchange="ExistioViolencia()">
                 <label class="custom-control-label" for="existioviolenciaN">No</label>
             </div>

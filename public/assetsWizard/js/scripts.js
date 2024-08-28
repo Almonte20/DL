@@ -478,20 +478,20 @@ $(this).removeClass('input-error');
         // /** SWEETALERT */
         // // ¿QUÉ HA SUCEDIDO?
         // if ( $('#text-area-que-ha-sucedido').val() == '' ) {
-        //     mensajeError = 'El campo "¿QUÉ HA SUCEDIDO?" es requerido.'
+        //     mensajeError = 'El dato "¿QUÉ HA SUCEDIDO?" es requerido.'
         // }
         // // ¿QUIÉN ES LA VÍCTIMA?
         // if ( $('input[name="victimadenunciante"]:checked').length == 0 && !mensajeError ) {
-        //     mensajeError = 'El campo "¿QUIÉN ES LA VÍCTIMA?" es requerido.'
+        //     mensajeError = 'El dato "¿QUIÉN ES LA VÍCTIMA?" es requerido.'
         // }
         // // ¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?
         // if ( $('input[name="radio_rasgos_responsable"]:checked').length == 0 && !mensajeError ) {
-        //     mensajeError = 'El campo "¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?" es requerido.'
+        //     mensajeError = 'El dato "¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?" es requerido.'
         // }
         // // FECHA Y HORA DE LOS HECHOS
         // if ( !mensajeError ) {
         //     if ( $('input[name="radio_rasgos_responsable"]:checked').val() == 'fecha_especifica' && $('#input-fecha-inicial-hechos').val() == '' ) {
-        //         mensajeError = 'El campo "FECHA Y HORA DE LOS HECHOS" es requerido.'
+        //         mensajeError = 'El dato "FECHA Y HORA DE LOS HECHOS" es requerido.'
         //     }
         // }
 

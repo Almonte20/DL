@@ -92,7 +92,7 @@
                       name="radio-rasgos-responsable"
                       class="custom-control-input required"
                       value="1"
-                      data-message-error='El campo "¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?" es requerido.'
+                      data-message-error='El dato "¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?" es requerido.'
                       onchange="identificacionResponsable()">
                     <label class="custom-control-label" for="radioIdentificacionResponsableS">SÍ </label>
                 </div>
@@ -103,7 +103,7 @@
                       name="radio-rasgos-responsable"
                       class="custom-control-input required"
                       value="0"
-                      data-message-error='El campo "¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?" es requerido.'
+                      data-message-error='El dato "¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?" es requerido.'
                       onchange="identificacionResponsable()">
                     <label class="custom-control-label" for="radioIdentificacionResponsableN">NO</label>
                 </div>

@@ -181,7 +181,7 @@
                                           rows="2"
                                           id="text-area-que-ha-sucedido"
                                           class="form-control input-denuncia required"
-                                          data-message-error='El campo "¿QUÉ HA SUCEDIDO?" es requerido.'
+                                          data-message-error='El dato "¿QUÉ HA SUCEDIDO?" es requerido.'
                                           placeholder="Descripción breve de qué ha sucedido. Ejemplos: Me asaltaron, me extorcionaron, me amenazaron de muerte, etc..."></textarea>
                                     </div>
                                     <div class="col-md-12 mt-3 text-center">
@@ -193,7 +193,7 @@
                                               name="victimadenunciante"
                                               class="custom-control-input required"
                                               value="1"
-                                              data-message-error='El campo "¿QUIÉN ES LA VÍCTIMA?" es requerido.'
+                                              data-message-error='El dato "¿QUIÉN ES LA VÍCTIMA?" es requerido.'
                                               onchange="otraPersona()">
                                             <label class="custom-control-label" for="radiodenunciante">Yo</label>
                                         </div>
@@ -204,7 +204,7 @@
                                               name="victimadenunciante"
                                               class="custom-control-input required"
                                               value="0"
-                                              data-message-error='El campo "¿QUIÉN ES LA VÍCTIMA?" es requerido.'
+                                              data-message-error='El dato "¿QUIÉN ES LA VÍCTIMA?" es requerido.'
                                               onchange="otraPersona()">
                                             <label class="custom-control-label" for="radiovictima">Otra persona</label>
                                         </div>
