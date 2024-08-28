@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        <div id="OtraPersonaDiv" class="d-none">
+        <div id="OtraPersonaDiv" class="d-non">
 
 
             <div class="form-row col-lg-12 align-items-end justify-content-start">
@@ -87,7 +87,7 @@
                 </div>
             </div>
 
-            <div id="DatosGenerales_victima" class="d-none">
+            <div id="DatosGenerales_victima" class="d-non">
 
                 <div class="form-row col-lg-12">
                     <div class="form-group col-md-4">
@@ -139,10 +139,25 @@
 
                         </div>
                         <input type="date" name="fnacimiento_victima" id="fnacimiento_victima"
-                            class=" form-control required " value="{{ old('fnacimiento') }}"
+                            class=" form-control required " data-destino="victima" onchange="esMayorDeEdad(this)"
                             >
                         <div style="color:#FF0000;">
                             {{ $errors->first('fnacimiento') }}
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4 text-center">
+                            <label for="fnacimiento">¿Es Mayor de edad?</label>
+                        <div class="col-md-12 text-center">
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="mayor_edad_victimaS" name="mayor_edad_victima" class="custom-control-input"
+                                    value="1" >
+                                <label class="custom-control-label" for="mayor_edad_victimaS">Sí </label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="mayor_edad_victimaN" name="mayor_edad_victima" class="custom-control-input"
+                                    value="0" >
+                                <label class="custom-control-label" for="mayor_edad_victimaN">No</label>
+                            </div>
                         </div>
                     </div>
                 </div>

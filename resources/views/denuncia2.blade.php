@@ -903,6 +903,37 @@ function alertas(msg)
 
         }
 
+        function esMayorDeEdad(input){
+            var fechaNacimiento = $(input).val();
+            var destino = $(input).data("destino");
+           
+            if(fechaNacimiento != ""){
+                var edad = calcularEdad(fechaNacimiento);
+                
+                if(edad  >= 18){
+                   $("#mayor_edad_"+destino+"S").prop('checked', true);
+                   
+                }else{
+                    
+                    $("#mayor_edad_"+destino+"N").prop('checked', true);
+                }
+            }
+        }
+
+        function calcularEdad(fechaNacimiento) {
+            // Crear objetos Date para la fecha de nacimiento y la fecha actual
+            const nacimiento = new Date(fechaNacimiento);
+            const hoy = new Date();
+
+            // Calcular la diferencia en milisegundos
+            let diferencia = hoy - nacimiento;
+
+            // Convertir la diferencia a años (aproximado)
+            const edad = Math.floor(diferencia / (1000 * 60 * 60 * 24 * 365.25));
+
+            return edad;
+        }
+
         // $("#municipio_hechos").on('change', function(e){
         //     var municipio = $('#municipio_hechos').val();
         //     var calle = $('#calle_hechos').val();
