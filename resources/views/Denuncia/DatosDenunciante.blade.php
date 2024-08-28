@@ -19,7 +19,7 @@
                 <label for="nacionalidad" style="font-size: 7px;">Requerido</label>
             </div>
             <select name="nacionalidad_denunciante" id="nacionalidad_denunciante" onchange="validarNacionalidad(this)" class=" form-control "
-                style="background-color:rgba(230, 238, 250, 0.5);" data-curp="divCurp_denunciante">
+                 data-curp="divCurp_denunciante">
                 <option value="0">Seleccione la nacionalidad</option>
                 @foreach ($countries as $country)
 
@@ -40,7 +40,7 @@
                 <label for="nombre" style="font-size: 7px;">Requerido</label>
             </div>
             <input type="text" name="curp_denunciante" id="curp_denunciante" class=" form-control " value="{{ old('curp') }}AOAA960320HMNLCL04"
-                maxlength="18" placeholder="CURP" style="background-color:rgba(230, 238, 250, 0.5);">
+                maxlength="18" placeholder="CURP" >
             <div style="color:#FF0000;">
                 {{ $errors->first('curp') }}
             </div>
@@ -68,7 +68,7 @@
                 </div>
                 <input type="text" name="nombre_denunciante" id="Nombre_denunciante" class=" form-control required" value="{{ old('nombre') }}"
                     data-message-error='El campo "NOMBRE" es requerido.'
-                    required maxlength="50" style="background-color:rgba(230, 238, 250, 0.5);" placeholder="Nombre">
+                    required maxlength="50"  placeholder="Nombre">
                 <div style="color:#FF0000;">
                     {{ $errors->first('nombre') }}
                 </div>
@@ -81,7 +81,7 @@
                 </div>
                 <input type="text" name="PrimerApellido_denunciante" id="PrimerApellido_denunciante" class=" form-control required"
                     data-message-error='El campo "PRIMER APELLIDO" es requerido.'
-                    value="{{ old('PrimerApellido') }}" maxlength="50" style="background-color:rgba(230, 238, 250, 0.5);"
+                    value="{{ old('PrimerApellido') }}" maxlength="50" 
                     placeholder="Primer apellido">
                 <div style="color:#FF0000;">
                     {{ $errors->first('PrimerApellido') }}
@@ -93,7 +93,7 @@
                     <label for="SegundoApellido">Segundo Apellido</label>
                 </div>
                 <input type="text" name="SegundoApellido_denunciante" id="SegundoApellido_denunciante" class=" form-control "
-                    value="{{ old('SegundoApellido') }}" maxlength="50" style="background-color:rgba(230, 238, 250, 0.5);"
+                    value="{{ old('SegundoApellido') }}" maxlength="50" 
                     placeholder="Segundo apellido">
                 <div style="color:#FF0000;">
                     {{ $errors->first('SegundoApellido') }}
@@ -111,7 +111,7 @@
                 </div>
                 <input type="date" name="fnacimiento_denunciante" id="fnacimiento_denunciante" class=" form-control required "
                     data-message-error='El campo "FECHA DE NACIMIENTO" es requerido.'
-                    value="{{ old('fnacimiento') }}" style="background-color:rgba(230, 238, 250, 0.5);">
+                    value="{{ old('fnacimiento') }}" >
                 <div style="color:#FF0000;">
                     {{ $errors->first('fnacimiento') }}
                 </div>
@@ -129,7 +129,7 @@
                 </div>
                 <input type="email" name="correo" id="correo" class=" form-control required " value="{{ old('correo') }}"
                     data-message-error='El campo "CORRECO ELECTRÓNICO" es requerido.'
-                    maxlength="50" placeholder="correo@dominio.com" style="background-color:rgba(230, 238, 250, 0.5);">
+                    maxlength="50" placeholder="correo@dominio.com" >
                 <div style="color:#FF0000;">
                     {{ $errors->first('correo') }}
                 </div>
@@ -145,7 +145,7 @@
                 <input type="text" name="telefono" class=" form-control required" value="{{ old('telefono') }}"
                     data-message-error='El campo "TELÉFONO (WHATSAPP)" es requerido.'
                     maxlength="10" onkeypress="return justNumbers(event);" placeholder="1234567890"
-                    style="background-color:rgba(230, 238, 250, 0.5);">
+                    >
                 <div style="color:#FF0000;">
                     {{ $errors->first('telefono') }}
                 </div>
@@ -191,7 +191,7 @@
 
                 </div>
                 <select name="pais" id="pais" class=" form-control required"
-                    style="background-color:rgba(230, 238, 250, 0.5);">
+                    >
                     <option value="0">Seleccione un país</option>
                     @foreach ($countries as $country)
 
@@ -213,7 +213,7 @@
                 </div>
                 <input type="text" name="domicilio_extranjero" id="domicilio_extranjero" class=" form-control "
                     value="{{ old('domicilio_extranjero') }}" maxlength="250" placeholder="Ciudad Extrajera"
-                    style="background-color:rgba(230, 238, 250, 0.5);">
+                    >
                 <div style="color:#FF0000;">
                     {{ $errors->first('domicilio_extranjero') }}
                 </div>
@@ -230,7 +230,7 @@
                     </div>
                     <input class=" form-control required" value="" maxlength="5" onkeypress="return justNumbers(event);"
                         data-message-error='El campo "CÓDIGO POSTAL" es requerido.'
-                        style="background-color:rgba(230, 238, 250, 0.5);" name="CP" type="text" id="CP"
+                         name="CP" type="text" id="CP"
                         placeholder="Ingrese CP" maxlength="5" onblur="validarCP(this,'entidad_residencia','municipio_residencia','asentamiento_residencia')">
 
                     <div style="color:#FF0000;">
@@ -243,7 +243,7 @@
                         <label for="entidad">Estado de residencia</label>
                     </div>
                     <select class=" form-control " value="{{(old('entidad'))}}"
-                        style="background-color:rgba(230, 238, 250, 0.5);" id="entidad_residencia" name="entidad_residencia"
+                         id="entidad_residencia" name="entidad_residencia"
                         disabled>
                         <option value="0">Estado</option>
                     </select>
@@ -263,7 +263,7 @@
                         <label for="municipio">Municipio</label>
                     </div>
                     <select class=" form-control " value="<?php echo e(old('municipio')); ?>" id="municipio_residencia"
-                        style="background-color:rgba(230, 238, 250, 0.5);" name="municipio_residencia" disabled>
+                         name="municipio_residencia" disabled>
                         <option value="0">Municipio</option>
                         {{-- @foreach ($municipios as $country)
 
@@ -291,12 +291,12 @@
                     </div>
                     <select class=" form-control required" value="<?php echo e(old('municipio')); ?>"
                         data-message-error='El campo "COLONIA" es requerido.'
-                        style="background-color:rgba(230, 238, 250, 0.5);" name="asentamiento_residencia"
+                         name="asentamiento_residencia"
                         id="asentamiento_residencia">
                         <option value="0">Seleccione una colonia</option>
                     </select>
                     {{-- <input class=" form-control " maxlength="250" value=""
-                        style="background-color:rgba(230, 238, 250, 0.5);" name="colonia" type="text" id="colonia"> --}}
+                         name="colonia" type="text" id="colonia"> --}}
                     <div style="color:#FF0000;">
 
                     </div>
@@ -310,7 +310,7 @@
                     </div>
                     <input class=" form-control required " value="" maxlength="250"
                         data-message-error='El campo "CALLE" es requerido.'
-                        style="background-color:rgba(230, 238, 250, 0.5);" name="calle" type="text" id="calle"
+                         name="calle" type="text" id="calle"
                         placeholder="Ingrese la calle">
                     <div style="color:#FF0000;">
 
@@ -324,7 +324,7 @@
                     </div>
                     <input class=" form-control required" value="" maxlength="6"
                         data-message-error='El campo "NÚMERO EXTERIOR" es requerido.'
-                        style="background-color:rgba(230, 238, 250, 0.5);" name="numext" type="text" id="numext"
+                         name="numext" type="text" id="numext"
                         placeholder="Número exterior">
                     <div style="color:#FF0000;">
 
@@ -336,7 +336,7 @@
                         <label for="numint">Número Interior</label>
                     </div>
                     <input class=" form-control " placeholder="Opcional" value="" maxlength="6"
-                        style="background-color:rgba(230, 238, 250, 0.5);" name="numint" type="text" id="numint">
+                         name="numint" type="text" id="numint">
                     <div style="color:#FF0000;">
 
                     </div>

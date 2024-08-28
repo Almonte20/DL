@@ -141,7 +141,7 @@
 
                 </div>
                 <input class=" form-control required" value="" maxlength="5" onkeypress="return justNumbers(event);"
-                    style="background-color:rgba(230, 238, 250, 0.5);" name="CP_hechos" type="text" id="CP_hechos"
+                     name="CP_hechos" type="text" id="CP_hechos"
                     placeholder="Ingrese CP" maxlength="5"
                     onblur="validarCP(this,'entidad_hechos','municipio_hechos','asentamiento_hechos')"
                     onchange="validarCP(this,'entidad_hechos','municipio_hechos','asentamiento_hechos')">
@@ -156,8 +156,7 @@
                     <label for="entidad_hechos">Estado</label>
                 </div>
                 <select class=" form-control " value="{{(old('entidad'))}}"
-                    style="background-color:rgba(230, 238, 250, 0.5);" id="entidad_hechos" name="entidad_hechos"
-                    disabled>
+                    id="entidad_hechos" name="entidad_hechos" disabled>
                     <option value="0">Estado</option>
                 </select>
                 <div style="color:#FF0000;">
@@ -171,7 +170,7 @@
                     <label for="municipio_hechos">Municipio</label>
                 </div>
                 <select class=" form-control " value="<?php echo e(old('municipio')); ?>" id="municipio_hechos"
-                    style="background-color:rgba(230, 238, 250, 0.5);" name="municipio_hechos" disabled>
+                     name="municipio_hechos" disabled>
                     <option value="0">Municipio</option>
                     {{-- @foreach ($municipios as $country)
 
@@ -195,12 +194,12 @@
 
                 </div>
                 <select class=" form-control required" value="<?php echo e(old('municipio')); ?>"
-                    style="background-color:rgba(230, 238, 250, 0.5);" name="asentamiento_hechos"
+                     name="asentamiento_hechos"
                     id="asentamiento_hechos">
                     <option value="0">Seleccione una colonia</option>
                 </select>
                 {{-- <input class=" form-control " maxlength="250" value=""
-                    style="background-color:rgba(230, 238, 250, 0.5);" name="colonia" type="text" id="colonia"> --}}
+                     name="colonia" type="text" id="colonia"> --}}
                 <div style="color:#FF0000;">
 
                 </div>
@@ -213,7 +212,7 @@
 
                 </div>
                 <input class=" form-control required " value="" maxlength="250"
-                    style="background-color:rgba(230, 238, 250, 0.5);" name="calle_hechos" type="text" id="calle_hechos"
+                     name="calle_hechos" type="text" id="calle_hechos"
                     placeholder="Ingrese la calle">
                 <div style="color:#FF0000;">
 
@@ -227,7 +226,7 @@
 
                 </div>
                 <input class=" form-control required" value="" maxlength="6"
-                    style="background-color:rgba(230, 238, 250, 0.5);" name="numext_hechos" type="text"
+                    name="numext_hechos" type="text"
                     id="numext_hechos" placeholder="Número exterior">
                 <div style="color:#FF0000;">
 
@@ -243,7 +242,7 @@
                     <label for="numext_hechos">Número Interior</label>
 
                 </div>
-                <input class=" form-control" value="" maxlength="6" style="background-color:rgba(230, 238, 250, 0.5);"
+                <input class=" form-control" value="" maxlength="6" 
                     name="numint_hechos" type="text" id="numint_hechos" placeholder="Número interior">
                 <div style="color:#FF0000;">
 
@@ -257,7 +256,7 @@
                         <label for="numext_hechos">Lugar</label>
 
                     </div>
-                    <select name="lugar_descripcion" style="background-color:rgba(230, 238, 250, 0.5);"
+                    <select name="lugar_descripcion" 
                         id="select_lugar" class=" form-control required" data-show-subtext="true"
                         data-live-search="true" onchange="lugarReferencia(this)">
                         <option value="0">Seleccione un lugar</option>
@@ -279,7 +278,7 @@
                         <label for="numext_hechos">Referencia de <span id="txt_lugar_referencia"></span></label>
 
                     </div>
-                    <textarea class="input-denuncia form-control" placeholder="Referencia del lugar"></textarea>
+                    <textarea class="form-control" placeholder="Referencia del lugar"></textarea>
                 </div>
 
             </div>
@@ -366,8 +365,8 @@
                 <label for="colonia" style="font-size: 7px;">Requerido</label>
             </div>
             <textarea class="form-control" name="descripcion_lugar" id="descripcion_lugar" rows="7" maxlength="1990"
-                style="background-color:rgba(230, 238, 250, 0.5);"></textarea>
-            <!-- <textarea class="form-control" value="&lt;?php echo e(old(&#039;descripcion_lugar&#039;,&#039;&#039;)); ?&gt;" maxlength="4000" placeholder="Recuerda que debes ingresar una descripcion del lugar de los hechos." rows="7" style="background-color:rgba(230, 238, 250, 0.5);" name="descripcion_lugar" cols="50" id="descripcion_lugar"></textarea> -->
+                ></textarea>
+            <!-- <textarea class="form-control" value="&lt;?php echo e(old(&#039;descripcion_lugar&#039;,&#039;&#039;)); ?&gt;" maxlength="4000" placeholder="Recuerda que debes ingresar una descripcion del lugar de los hechos." rows="7"  name="descripcion_lugar" cols="50" id="descripcion_lugar"></textarea> -->
             <div style="color:#FF0000;">
 
             </div>

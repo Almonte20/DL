@@ -5,8 +5,8 @@
         </div>
         <div class="col-md-12">
             <div class="form-group">
-                <textarea class="form-control required" name="narrativa" id="narrativa" rows="7" maxlength="3980"
-                    style="background-color:rgba(230, 238, 250, 0.5);">{{ old('narrativa','') }}</textarea>
+                <textarea class="form-control required" name="narrativa" id="narrativa" rows="7" maxlength="3980" placeholder="Explica ampliamente lo sucedido"
+                    >{{ old('narrativa','') }}</textarea>
                 <div style="color:#FF0000;">
                     {{ $errors->first('narrativa') }}
                 </div>
@@ -21,7 +21,7 @@
             <div class="custom-control custom-radio custom-control-inline">
                 <input type="radio" id="existioviolenciaS" name="existioviolencia" class="custom-control-input"
                     value="1" onchange="ExistioViolencia()">
-                <label class="custom-control-label" for="existioviolenciaS">Si </label>
+                <label class="custom-control-label" for="existioviolenciaS">Sí </label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
                 <input type="radio" id="existioviolenciaN" name="existioviolencia" class="custom-control-input" value="0" onchange="ExistioViolencia()">
@@ -31,7 +31,7 @@
 
         <div class="col-md-12 d-none text-center" id="ExplicacionViolencia">
             <p class="mb-2" style="font-weight: bold; font-size: 18px;">EXPLIQUE DE QUÉ MANERA SE COMETIÓ LA VIOLENCIA</p>
-            <textarea rows="2" class="form-control input-denuncia" name="expliqueViolencia" placeholder="Explique de que manera fue la violencia"></textarea>
+            <textarea rows="2" class="form-control" name="expliqueViolencia" placeholder="Explique de qué manera se cometió la violencia"></textarea>
         </div>
     </div>
 </div>
