@@ -27,7 +27,7 @@
                   data-message-error='El dato "¿EXISTIÓ VIOLENCIA?" es requerido.'
                   value="1"
                   onchange="ExistioViolencia()">
-                <label class="custom-control-label" for="existioviolenciaS">Si </label>
+                <label class="custom-control-label" for="existioviolenciaS">SÍ </label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
                 <input
@@ -38,7 +38,7 @@
                   value="0"
                   data-message-error='El dato "¿EXISTIÓ VIOLENCIA?" es requerido.'
                   onchange="ExistioViolencia()">
-                <label class="custom-control-label" for="existioviolenciaN">No</label>
+                <label class="custom-control-label" for="existioviolenciaN">NO</label>
             </div>
             <div id="existio-violencia-mensaje-error" class="text-danger mt-1 d-none" style=" font-size: 14px;">
                 Indique una opción.

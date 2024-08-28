@@ -24,12 +24,12 @@
                 <div class="custom-control custom-radio custom-control-inline">
                     <input type="radio" id="conozcoResponsableS" name="conozcoResponsable"
                         class="custom-control-input" value="1" onchange="conozco_responsable()">
-                    <label class="custom-control-label" for="conozcoResponsableS">Si </label>
+                    <label class="custom-control-label" for="conozcoResponsableS">SÍ </label>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
                     <input type="radio" id="conozcoResponsableN" name="conozcoResponsable"
                         class="custom-control-input" value="0" onchange="conozco_responsable()">
-                    <label class="custom-control-label" for="conozcoResponsableN">No</label>
+                    <label class="custom-control-label" for="conozcoResponsableN">NO</label>
                 </div>
             </div>
         </div>
