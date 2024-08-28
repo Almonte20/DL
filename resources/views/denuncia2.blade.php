@@ -182,12 +182,10 @@
                                     <div class="col-md-12">
                                         <p class="text-center mb-2" style="font-weight: bold; font-size: 22px;">¿QUÉ HA SUCEDIDO?</p>
                                         {{-- <input class="form-control input-denuncia" placeholder="Descripción breve de qué ha sucedido"> --}}
-                                        <textarea rows="2" class="form-control" placeholder="Descripción breve de qué ha sucedido. Ejemplos: Me asaltaron, me extorcionaron, me amenazaron de muerte, etc..."></textarea>
-
                                         <textarea
                                           rows="2"
                                           id="text-area-que-ha-sucedido"
-                                          class="form-control input-denuncia required"
+                                          class="form-control"
                                           data-message-error='El dato "¿QUÉ HA SUCEDIDO?" es requerido.'
                                           placeholder="Descripción breve de qué ha sucedido. Ejemplos: Me asaltaron, me extorcionaron, me amenazaron de muerte, etc..."></textarea>
                                     </div>
