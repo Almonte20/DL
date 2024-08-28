@@ -132,7 +132,7 @@
 
 <script>
     function identificacionResponsable(){
-        var valor = $('input:radio[name=radioIdentificacionResponsable]:checked').val();
+        var valor = $('input:radio[name=conoce_rasgos_responsable]:checked').val();
         if(valor == 0){
             $("#divIdentifiacionResponsable").addClass("d-none");
         }else{
@@ -142,7 +142,7 @@
     }
 
     function conozco_responsable(){
-        var valor = $('input:radio[name=conozcoResponsable]:checked').val();
+        var valor = $('input:radio[name=conoce_responsable]:checked').val();
         if(valor == 0){
             $("#conozcoResponsableDiv").addClass("d-none");
         }else{
