@@ -22,14 +22,19 @@
         <div class="row ">
             <div class="col-md-12 text-center">
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="conozcoResponsableS" name="conozcoResponsable"
-                        class="custom-control-input" value="1" onchange="conozco_responsable()">
+                    <input type="radio" id="conozcoResponsableS" name="conoce_responsable"
+                        class="custom-control-input" value="1" onchange="conozco_responsable()"
+                        data-message-error='El campo "¿CONOCE AL RESPONSABLE?" es requerido.'>
                     <label class="custom-control-label" for="conozcoResponsableS">SÍ </label>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="conozcoResponsableN" name="conozcoResponsable"
-                        class="custom-control-input" value="0" onchange="conozco_responsable()">
+                    <input type="radio" id="conozcoResponsableN" name="conoce_responsable"
+                        class="custom-control-input" value="0" onchange="conozco_responsable()"
+                        data-message-error='El campo "¿CONOCE AL RESPONSABLE?" es requerido.'>
                     <label class="custom-control-label" for="conozcoResponsableN">NO</label>
+                </div>
+                <div id="conoce-responsable-mensaje-error" class="text-danger mt-1 d-none" style=" font-size: 14px;">
+                    Indique una opción.
                 </div>
             </div>
         </div>
@@ -89,8 +94,8 @@
                     <input
                       type="radio"
                       id="radioIdentificacionResponsableS"
-                      name="radio-rasgos-responsable"
                       class="custom-control-input required"
+                      name="conoce_rasgos_responsable"
                       value="1"
                       data-message-error='El dato "¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?" es requerido.'
                       onchange="identificacionResponsable()">
@@ -100,7 +105,7 @@
                     <input
                       type="radio"
                       id="radioIdentificacionResponsableN"
-                      name="radio-rasgos-responsable"
+                      name="conoce_rasgos_responsable"
                       class="custom-control-input required"
                       value="0"
                       data-message-error='El dato "¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?" es requerido.'
