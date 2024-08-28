@@ -55,21 +55,35 @@
         <div class="row mt-3">
             <div class="col-md-12 text-center">
                 <p class="mb-2" style="font-weight: bold; font-size: 22px;">¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?</p>
-                {{-- <label>¿Dispone usted de alguna información sobre rasgos físicos distintivos del responsable?</label> --}}
             </div>
-        {{-- </div>
-
-        <div class="row "> --}}
             <div class="col-md-12 text-center">
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="radioIdentificacionResponsableS" name="radioIdentificacionResponsable" class="custom-control-input"
-                        value="1"  onchange="identificacionResponsable()">
+                    <input
+                      type="radio"
+                      id="radioIdentificacionResponsableS"
+                      name="radio-rasgos-responsable"
+                      class="custom-control-input required"
+                      value="1"
+                      data-message-error='El campo "¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?" es requerido.'
+                      onchange="identificacionResponsable()">
                     <label class="custom-control-label" for="radioIdentificacionResponsableS">SÍ </label>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
-                    <input type="radio" id="radioIdentificacionResponsableN" name="radioIdentificacionResponsable" class="custom-control-input" value="0"  onchange="identificacionResponsable()">
+                    <input
+                      type="radio"
+                      id="radioIdentificacionResponsableN"
+                      name="radio-rasgos-responsable"
+                      class="custom-control-input required"
+                      value="0"
+                      data-message-error='El campo "¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?" es requerido.'
+                      onchange="identificacionResponsable()">
                     <label class="custom-control-label" for="radioIdentificacionResponsableN">NO</label>
                 </div>
+
+                <div id="rasgos-responsable-mensaje-error" class="text-danger mt-1 d-none" style=" font-size: 14px;">
+                    Indique una opción.
+                </div>
+
             </div>
         </div>
         <div class="form-row col-lg-12 justify-content-center d-none mt-2" id="divIdentifiacionResponsable">
@@ -78,6 +92,7 @@
                     placeholder="Ejemplos: Tatuajue en el rostro, cabello largo, ojos café claro, etc..."></textarea>
             </div>
         </div>
+
     </div>
 </div>
 

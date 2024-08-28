@@ -9,12 +9,12 @@
     <p class="mb-2" style="font-weight: bold; font-size: 22px;">INDIQUE LA FECHA EN QUE SUCEDIÓ EL HECHO A DENUNCIAR</p>
     {{-- <div class="col-md text-center"> --}}
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fechaintervalo" id="fecha" value="1" checked
+            <input class="form-check-input" type="radio" name="fecha-" id="fecha" value="fecha_especifica" checked
                 onchange="fechaIntervalo(this)">
             <label class="form-check-label" for="fecha">Fecha específica</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fechaintervalo" id="intervalo" value="2"
+            <input class="form-check-input" type="radio" name="fecha-" id="intervalo" value="fecha_intervalo"
                 onchange="fechaIntervalo(this)">
             <label class="form-check-label" for="intervalo">Lapso de tiempo</label>
         </div>
@@ -46,7 +46,7 @@
                         hechos</label>
                     <label for="fecha_inicial" style="font-size: 7px;">Requerido</label>
                 </div>
-                <input type="datetime-local" class="form-control required" name="fecha_inicial" id="fecha_inicial">
+                <input type="datetime-local" id="input-fecha-inicial-hechos" class="form-control required" name="fecha_inicial" id="fecha_inicial">
                 <div style="color:#FF0000;">
                     {{ $errors->first('fechainicial') }}
                 </div>
@@ -77,7 +77,7 @@
                         hechos</label>
                     <label for="fecha_inicial" style="font-size: 7px;">Requerido</label>
                 </div>
-                <input type="datetime-local" class="form-control required" name="fecha_inicial" id="fecha_inicial">
+                <input type="datetime-local" id="input-fecha-inicial-hechos" class="form-control required" name="fecha_inicial" id="fecha_inicial">
                 <div style="color:#FF0000;">
                     {{ $errors->first('fechainicial') }}
                 </div>
@@ -91,7 +91,7 @@
                     <label for="fecha_final" style="font-size: 7px;">Requerido</label>
 
                 </div>
-                <input type="datetime-local" class="form-control" name="fecha_final" id="fecha_final">
+                <input type="datetime-local" id="input-fecha-final-hechos" class="form-control" name="fecha_final" id="fecha_final">
                 <div style="color:#FF0000;">
                     {{ $errors->first('fecha_final') }}
                 </div>

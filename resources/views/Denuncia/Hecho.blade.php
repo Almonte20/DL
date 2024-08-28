@@ -19,13 +19,29 @@
                 <p class="mb-2" style="font-weight: bold; font-size: 22px;">¿EXISTIÓ VIOLENCIA?</p>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="existioviolenciaS" name="existioviolencia" class="custom-control-input"
-                    value="1" onchange="ExistioViolencia()">
+                <input
+                  type="radio"
+                  id="existioviolenciaS"
+                  name="existio_violencia"
+                  class="custom-control-input required"
+                  data-message-error='El campo "¿EXISTIÓ VIOLENCIA?" es requerido.'
+                  value="1"
+                  onchange="ExistioViolencia()">
                 <label class="custom-control-label" for="existioviolenciaS">Si </label>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="existioviolenciaN" name="existioviolencia" class="custom-control-input" value="0" onchange="ExistioViolencia()">
+                <input
+                  type="radio"
+                  id="existioviolenciaN"
+                  name="existio_violencia"
+                  class="custom-control-input required"
+                  value="0"
+                  data-message-error='El campo "¿EXISTIÓ VIOLENCIA?" es requerido.'
+                  onchange="ExistioViolencia()">
                 <label class="custom-control-label" for="existioviolenciaN">No</label>
+            </div>
+            <div id="existio-violencia-mensaje-error" class="text-danger mt-1 d-none" style=" font-size: 14px;">
+                Indique una opción.
             </div>
         </div>
 

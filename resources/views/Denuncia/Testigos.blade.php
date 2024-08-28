@@ -3,12 +3,30 @@
         <p class="mb-2" style="font-weight: bold; font-size: 22px;">¿EXISTEN TESTIGOS DEL HECHO?</label>
     </div>
     <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="existentestigosS" name="existentestigos" class="custom-control-input" value="1" onchange="existenTestigos()">
+        <input
+          type="radio"
+          id="existentestigosS"
+          name="existen_testigos"
+          class="custom-control-input required"
+          value="1"
+          data-message-error='El campo "¿EXISTEN TESTIGOS DEL HECHO?" es requerido.'
+          onchange="existenTestigos()">
         <label class="custom-control-label" for="existentestigosS">SÍ </label>
     </div>
     <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="existentestigosN" name="existentestigos" class="custom-control-input" value="0" onchange="existenTestigos()">
+        <input
+          type="radio"
+          id="existentestigosN"
+          name="existen_testigos"
+          class="custom-control-input required"
+          value="0"
+          data-message-error='El campo "¿EXISTEN TESTIGOS DEL HECHO?" es requerido.'
+          onchange="existenTestigos()">
         <label class="custom-control-label" for="existentestigosN">NO</label>
+    </div>
+    <!-- mensaje error -->
+    <div id="existen-testigos-mensaje-error" class="text-danger mt-1 d-none" style=" font-size: 14px;">
+        Indique una opción.
     </div>
 </div>
 
