@@ -3,14 +3,30 @@
         <p class="mb-2" style="font-weight: bold; font-size: 22px;">¿CUENTA CON EVIDENCIAS?</p>
     </div>
     <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="existenEvidenciasS" name="existenEvidencias" class="custom-control-input"
-            value="1" onchange="existen_evidencias()">
+        <input
+          type="radio"
+          id="existenEvidenciasS"
+          name="existen_evidencias"
+          class="custom-control-input required"
+          value="1"
+          data-message-error='El dato "¿CUENTA CON EVIDENCIAS?" es requerido.'
+          onchange="existen_evidencias()">
         <label class="custom-control-label" for="existenEvidenciasS">SÍ </label>
     </div>
     <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="existenEvidenciasN" name="existenEvidencias" class="custom-control-input"
-            value="0" onchange="existen_evidencias()">
+        <input
+          type="radio"
+          id="existenEvidenciasN"
+          name="existen_evidencias"
+          class="custom-control-input required"
+          value="0"
+          data-message-error='El dato "¿CUENTA CON EVIDENCIAS?" es requerido.'
+          onchange="existen_evidencias()">
         <label class="custom-control-label" for="existenEvidenciasN">NO</label>
+    </div>
+    <!-- mensaje de error -->
+    <div id="existen-evidencias-mensaje-error" class="text-danger mt-1 d-none" style=" font-size: 14px;">
+        Indique una opción.
     </div>
 </div>
 

@@ -74,6 +74,7 @@ $(this).removeClass('input-error');
         $('#datos-denunciante').removeClass('d-none');
     });
 
+    // validaciones DENUNCIANTE
     $('#btn-step-one').on('click', function() {
         let elementSection = $('#datos-denunciante'); // elemento section en donde estan los inputs a validar
         let erroresValidacion = false; // bandera que define si hay campos sin llenar
@@ -83,6 +84,9 @@ $(this).removeClass('input-error');
         elementSection.find('.required').each(function() {
             let elemento = $(this);
             let tipoElemento = elemento.prop("nodeName");
+
+            console.log( tipoElemento );
+
 
             if (elemento.val() == "" || (tipoElemento == "SELECT" && elemento.val() == "0")) {
                 // al elemento se agrega la clase para mostar error
@@ -123,7 +127,7 @@ $(this).removeClass('input-error');
             let codigoVerificacion = generarCodigoVerificacion();
             console.log(`Código verificación: ${codigoVerificacion}`);
             // se envia codigo de verificacion
-            // enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
+            enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
 
             // ventana para validar el codigo de verificacion enviado
             Swal.fire({
@@ -258,6 +262,256 @@ $(this).removeClass('input-error');
     $('html,body').animate({ scrollTop: 0 }, 900);
     return false;
     });
+
+    // validaciones HECHOS
+    $('#btn-step-two').on('click', function() {
+        console.log('que ondas');
+        let elementSection = $('#datos-hechos'); // elemento section en donde estan los inputs a validar
+        let erroresValidacion = false; // bandera que define si hay campos sin llenar
+        let mensajeError; // mensaje de error a desplegar de acuerdo al input
+
+        elementSection.find('.required').each(function() {
+            let elemento = $(this);
+            let tipoElemento = elemento.prop("nodeName");
+            let tipoInput = elemento.attr('type'); // Verificar el tipo de input
+
+            console.log(elemento);
+            console.log(tipoInput);
+
+
+            if (elemento.val() == "" ||
+                (tipoElemento == "SELECT" && elemento.val() == "0") ||
+                (tipoInput == "radio" && $('input[name="' + elemento.attr('name') + '"]:checked').length == 0)) { // Verificar si es radio button
+
+                if (tipoInput == "radio") { // Condición corregida para radio button
+                    console.log("Radio button no seleccionado:", elemento);
+                }
+
+                // Al elemento o contenedor se agrega la clase para mostrar error
+                $(this).addClass('input-error');
+
+                // Asignación del primer mensaje de error y banderas de validación
+                if (mensajeError == undefined) {
+                    mensajeError = elemento.attr('data-message-error');
+                    erroresValidacion = true;
+                }
+            } else {
+                $(this).removeClass('input-error');
+            }
+        });
+
+
+
+        /** radio-buttons */
+        // ¿QUIÉN ES LA VÍCTIMA?
+        let radios = document.getElementsByName('victimadenunciante');
+        let radioSeleccionado = false;
+
+        for (let i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                radioSeleccionado = true;
+                break;
+            }
+        }
+
+        // toggle para el mensaje de error
+        radioSeleccionado
+            ? $('#quien-es-victima-mensaje-error').addClass('d-none')
+            : $('#quien-es-victima-mensaje-error').removeClass('d-none');
+
+
+        // ¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?
+        radios = document.getElementsByName('radio_rasgos_responsable');
+        radioSeleccionado = false;
+
+        for (let i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                radioSeleccionado = true;
+                break;
+            }
+        }
+        // toggle para el mensaje de error
+        radioSeleccionado
+            ? $('#rasgos-responsable-mensaje-error').addClass('d-none')
+            : $('#rasgos-responsable-mensaje-error').removeClass('d-none');
+
+        // ¿EXISTIÓ VIOLENCIA?
+        radios = document.getElementsByName('existio_violencia');
+        radioSeleccionado = false;
+
+        for (let i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                radioSeleccionado = true;
+                break;
+            }
+        }
+        // toggle para el mensaje de error
+        radioSeleccionado
+            ? $('#existio-violencia-mensaje-error').addClass('d-none')
+            : $('#existio-violencia-mensaje-error').removeClass('d-none');
+
+        // ¿EXISTEN TESTIGOS DEL HECHO?
+        radios = document.getElementsByName('existen_testigos');
+        radioSeleccionado = false;
+
+        for (let i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                radioSeleccionado = true;
+                break;
+            }
+        }
+        // toggle para el mensaje de error
+        radioSeleccionado
+            ? $('#existen-testigos-mensaje-error').addClass('d-none')
+            : $('#existen-testigos-mensaje-error').removeClass('d-none');
+
+        // ¿CUENTA CON EVIDENCIAS?
+        radios = document.getElementsByName('existen_evidencias');
+        radioSeleccionado = false;
+
+        for (let i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                radioSeleccionado = true;
+                break;
+            }
+        }
+        // toggle para el mensaje de error
+        radioSeleccionado
+            ? $('#existen-evidencias-mensaje-error').addClass('d-none')
+            : $('#existen-evidencias-mensaje-error').removeClass('d-none');
+
+        // sweetalert mostrar error
+        if ( erroresValidacion == true ) {
+            console.log('entraasdsad');
+
+            Swal.fire({
+                title: "¡FALTAN DATOS POR LLENAR!",
+                html: `<p style="font-size:26px !important;"><b>${mensajeError}</b></p>`,
+                icon: "error",
+                confirmButtonText: "ACEPTAR",
+                customClass: {
+                    confirmButton: 'swal2-deny' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
+                },
+            });
+
+            return;
+        }
+
+        // /** radio-buttons */
+        // // ¿QUIÉN ES LA VÍCTIMA?
+        // let radios = document.getElementsByName('victimadenunciante');
+        // let radioSeleccionado = false;
+
+        // for (let i = 0; i < radios.length; i++) {
+        //     if (radios[i].checked) {
+        //         radioSeleccionado = true;
+        //         break;
+        //     }
+        // }
+
+        // // toggle para el mensaje de error
+        // radioSeleccionado
+        //     ? $('#quien-es-victima-mensaje-error').addClass('d-none')
+        //     : $('#quien-es-victima-mensaje-error').removeClass('d-none');
+
+
+        // // ¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?
+        // radios = document.getElementsByName('radio_rasgos_responsable');
+        // radioSeleccionado = false;
+
+        // for (let i = 0; i < radios.length; i++) {
+        //     if (radios[i].checked) {
+        //         radioSeleccionado = true;
+        //         break;
+        //     }
+        // }
+        // // toggle para el mensaje de error
+        // radioSeleccionado
+        //     ? $('#rasgos-responsable-mensaje-error').addClass('d-none')
+        //     : $('#rasgos-responsable-mensaje-error').removeClass('d-none');
+
+        // // ¿EXISTIÓ VIOLENCIA?
+        // radios = document.getElementsByName('existio_violencia');
+        // radioSeleccionado = false;
+
+        // for (let i = 0; i < radios.length; i++) {
+        //     if (radios[i].checked) {
+        //         radioSeleccionado = true;
+        //         break;
+        //     }
+        // }
+        // // toggle para el mensaje de error
+        // radioSeleccionado
+        //     ? $('#existio-violencia-mensaje-error').addClass('d-none')
+        //     : $('#existio-violencia-mensaje-error').removeClass('d-none');
+
+        // // ¿EXISTEN TESTIGOS DEL HECHO?
+        // radios = document.getElementsByName('existen_testigos');
+        // radioSeleccionado = false;
+
+        // for (let i = 0; i < radios.length; i++) {
+        //     if (radios[i].checked) {
+        //         radioSeleccionado = true;
+        //         break;
+        //     }
+        // }
+        // // toggle para el mensaje de error
+        // radioSeleccionado
+        //     ? $('#existen-testigos-mensaje-error').addClass('d-none')
+        //     : $('#existen-testigos-mensaje-error').removeClass('d-none');
+
+        // // ¿CUENTA CON EVIDENCIAS?
+        // radios = document.getElementsByName('existen_evidencias');
+        // radioSeleccionado = false;
+
+        // for (let i = 0; i < radios.length; i++) {
+        //     if (radios[i].checked) {
+        //         radioSeleccionado = true;
+        //         break;
+        //     }
+        // }
+        // // toggle para el mensaje de error
+        // radioSeleccionado
+        //     ? $('#existen-evidencias-mensaje-error').addClass('d-none')
+        //     : $('#existen-evidencias-mensaje-error').removeClass('d-none');
+
+        // /** SWEETALERT */
+        // // ¿QUÉ HA SUCEDIDO?
+        // if ( $('#text-area-que-ha-sucedido').val() == '' ) {
+        //     mensajeError = 'El dato "¿QUÉ HA SUCEDIDO?" es requerido.'
+        // }
+        // // ¿QUIÉN ES LA VÍCTIMA?
+        // if ( $('input[name="victimadenunciante"]:checked').length == 0 && !mensajeError ) {
+        //     mensajeError = 'El dato "¿QUIÉN ES LA VÍCTIMA?" es requerido.'
+        // }
+        // // ¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?
+        // if ( $('input[name="radio_rasgos_responsable"]:checked').length == 0 && !mensajeError ) {
+        //     mensajeError = 'El dato "¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?" es requerido.'
+        // }
+        // // FECHA Y HORA DE LOS HECHOS
+        // if ( !mensajeError ) {
+        //     if ( $('input[name="radio_rasgos_responsable"]:checked').val() == 'fecha_especifica' && $('#input-fecha-inicial-hechos').val() == '' ) {
+        //         mensajeError = 'El dato "FECHA Y HORA DE LOS HECHOS" es requerido.'
+        //     }
+        // }
+
+
+
+        // // sweetalert mensaje de error
+        // if (mensajeError) {
+        //     Swal.fire({
+        //         title: "¡FALTAN DATOS POR LLENAR!",
+        //         html: `<p style="font-size:26px !important;"><b>${mensajeError}</b></p>`,
+        //         icon: "error",
+        //         confirmButtonText: "ACEPTAR",
+        //         customClass: {
+        //             confirmButton: 'swal2-deny' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
+        //         },
+        //     });
+        // }
+    });
+
+
 
 function alertas(msg) {
 new PNotify({

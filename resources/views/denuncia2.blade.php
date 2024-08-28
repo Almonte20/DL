@@ -184,21 +184,40 @@
                                         {{-- <input class="form-control input-denuncia" placeholder="Descripción breve de qué ha sucedido"> --}}
                                         <textarea rows="2" class="form-control" placeholder="Descripción breve de qué ha sucedido. Ejemplos: Me asaltaron, me extorcionaron, me amenazaron de muerte, etc..."></textarea>
 
+                                        <textarea
+                                          rows="2"
+                                          id="text-area-que-ha-sucedido"
+                                          class="form-control input-denuncia required"
+                                          data-message-error='El dato "¿QUÉ HA SUCEDIDO?" es requerido.'
+                                          placeholder="Descripción breve de qué ha sucedido. Ejemplos: Me asaltaron, me extorcionaron, me amenazaron de muerte, etc..."></textarea>
                                     </div>
-
                                     <div class="col-md-12 mt-3 text-center">
                                         <p class="mb-2" style="font-weight: bold; font-size: 22px;">¿QUIÉN ES LA VÍCTIMA?</p>
-                                    {{-- </div>
-                                    <div class="col-md-12"> --}}
                                         <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" id="radiodenunciante" name="victimadenunciante" class="custom-control-input"
-                                                value="1" checked onchange="otraPersona()">
-                                            <label class="custom-control-label" for="radiodenunciante">Yo:{{--  <span id="nombrevictimadenunciante"
-                                                    class="text-info">Alejandro almonte </span> --}}</label>
+                                            <input
+                                              type="radio"
+                                              id="radiodenunciante"
+                                              name="victimadenunciante"
+                                              class="custom-control-input required"
+                                              value="1"
+                                              data-message-error='El dato "¿QUIÉN ES LA VÍCTIMA?" es requerido.'
+                                              onchange="otraPersona()">
+                                            <label class="custom-control-label" for="radiodenunciante">Yo</label>
                                         </div>
                                         <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" id="radiovictima" name="victimadenunciante" class="custom-control-input" value="0" onchange="otraPersona()">
+                                            <input
+                                              type="radio"
+                                              id="radiovictima"
+                                              name="victimadenunciante"
+                                              class="custom-control-input required"
+                                              value="0"
+                                              data-message-error='El dato "¿QUIÉN ES LA VÍCTIMA?" es requerido.'
+                                              onchange="otraPersona()">
                                             <label class="custom-control-label" for="radiovictima">Otra persona</label>
+                                        </div>
+                                        <!-- Aquí se agrega el mensaje de error -->
+                                        <div id="quien-es-victima-mensaje-error" class="text-danger mt-1 d-none" style=" font-size: 14px;">
+                                            Indique una opción.
                                         </div>
                                     </div>
                                 </div>
@@ -237,7 +256,7 @@
 
                         <div class="f1-buttons text-center mt-5 mb-3" id="botones_finalizacion">
                             <button type="button" class="btn-sm btn-back" id="btn-atras"><i class="fa-solid fa-chevron-left"></i> &nbsp;&nbsp; ATRÁS</button>
-                            <button type="button" onclick="guardarDenuncia(this)" class="btn-sm btn-success"
+                            <button type="button" id="btn-step-two" {{-- onclick="guardarDenuncia(this)" --}} class="btn-sm btn-success"
                                 id="finalizar_denuncia">
                                  REGISTRAR DENUNCIA &nbsp;&nbsp; <i class="fa-solid fa-chevron-up"></i>
                             </button>

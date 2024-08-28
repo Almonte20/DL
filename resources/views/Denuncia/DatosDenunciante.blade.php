@@ -56,7 +56,7 @@
 
 </div>
 
-<div id="DatosGenerales_denunciante" class="{{-- d-none --}}">
+<div id="DatosGenerales_denunciante" class="d-none">
 
     <div class="container">
         <div class="form-row col-lg-12">
@@ -67,8 +67,8 @@
                     <label for="nombre" style="font-size: 7px;">Requerido</label>
                 </div>
                 <input type="text" name="nombre_denunciante" id="Nombre_denunciante" class=" form-control required" value="{{ old('nombre') }}"
-                    data-message-error='El campo "NOMBRE" es requerido.'
-                    required maxlength="50"  placeholder="Nombre">
+                    data-message-error='El dato "NOMBRE" es requerido.'
+                    required maxlength="50" style="background-color:rgba(230, 238, 250, 0.5);" placeholder="Nombre">
                 <div style="color:#FF0000;">
                     {{ $errors->first('nombre') }}
                 </div>
@@ -80,8 +80,8 @@
                     <label for="nombre" style="font-size: 7px;">Requerido</label>
                 </div>
                 <input type="text" name="PrimerApellido_denunciante" id="PrimerApellido_denunciante" class=" form-control required"
-                    data-message-error='El campo "PRIMER APELLIDO" es requerido.'
-                    value="{{ old('PrimerApellido') }}" maxlength="50" 
+                    data-message-error='El dato "PRIMER APELLIDO" es requerido.'
+                    value="{{ old('PrimerApellido') }}" maxlength="50" style="background-color:rgba(230, 238, 250, 0.5);"
                     placeholder="Primer apellido">
                 <div style="color:#FF0000;">
                     {{ $errors->first('PrimerApellido') }}
@@ -143,7 +143,7 @@
                         title="Capture un número celular que permita contactarlo vía WhatsApp"></i>&nbsp;
                 </div>
                 <input type="text" name="telefono" class=" form-control required" value="{{ old('telefono') }}"
-                    data-message-error='El campo "TELÉFONO (WHATSAPP)" es requerido.'
+                    data-message-error='El dato "TELÉFONO (WHATSAPP)" es requerido.'
                     maxlength="10" onkeypress="return justNumbers(event);" placeholder="1234567890"
                     >
                 <div style="color:#FF0000;">
@@ -165,7 +165,7 @@
                 <div class="input-group mb-3" role='button'>
                     <div class="input-group-prepend"> </div>
                     <div class="custom-file"> <input style="cursor:pointer;" type="file" class="custom-file-input required" id="credencial"
-                            name="credencial" data-message-error='El campo "IDENTIFICACIÓN OFICIAL" es requerido.'> <label class="custom-file-label" for="inputGroupFile01">Buscar Archivo</label>  </div>
+                            name="credencial" data-message-error='El dato "IDENTIFICACIÓN OFICIAL" es requerido.'> <label class="custom-file-label" for="inputGroupFile01">Buscar Archivo</label>  </div>
                 </div>
             </div>
             <div class="form-group col-md-4 text-center">
