@@ -46,7 +46,8 @@
                         hechos</label>
                     <label for="fecha_inicial" style="font-size: 7px;">Requerido</label>
                 </div>
-                <input type="datetime-local" id="input-fecha-inicial-hechos" class="form-control required" name="fecha_inicial" id="fecha_inicial">
+                <input type="datetime-local" id="input-fecha-inicial-hechos" class="form-control required" name="fecha_inicial" max="{{ date('Y-m-d H:i') }}">
+
                 <div style="color:#FF0000;">
                     {{ $errors->first('fechainicial') }}
                 </div>
@@ -77,7 +78,7 @@
                         hechos</label>
                     <label for="fecha_inicial" style="font-size: 7px;">Requerido</label>
                 </div>
-                <input type="datetime-local" id="input-fecha-inicial-hechos" class="form-control required" name="fecha_inicial" id="fecha_inicial">
+                <input type="datetime-local" id="input-fecha-inicial-hechos" class="form-control required" name="fecha_inicial" id="fecha_inicial" max="{{ date('Y-m-d H:i') }}">
                 <div style="color:#FF0000;">
                     {{ $errors->first('fechainicial') }}
                 </div>
@@ -91,7 +92,7 @@
                     <label for="fecha_final" style="font-size: 7px;">Requerido</label>
 
                 </div>
-                <input type="datetime-local" id="input-fecha-final-hechos" class="form-control" name="fecha_final" id="fecha_final">
+                <input type="datetime-local" id="input-fecha-final-hechos" class="form-control" name="fecha_final" id="fecha_final" max="{{ date('Y-m-d H:i') }}">
                 <div style="color:#FF0000;">
                     {{ $errors->first('fecha_final') }}
                 </div>
@@ -242,7 +243,7 @@
                     <label for="numext_hechos">Número Interior</label>
 
                 </div>
-                <input class=" form-control" value="" maxlength="6" 
+                <input class=" form-control" value="" maxlength="6"
                     name="numint_hechos" type="text" id="numint_hechos" placeholder="Número interior">
                 <div style="color:#FF0000;">
 
@@ -256,7 +257,7 @@
                         <label for="numext_hechos">Lugar</label>
 
                     </div>
-                    <select name="lugar_descripcion" 
+                    <select name="lugar_descripcion"
                         id="select_lugar" class=" form-control required" data-show-subtext="true"
                         data-live-search="true" onchange="lugarReferencia(this)">
                         <option value="0">Seleccione un lugar</option>
