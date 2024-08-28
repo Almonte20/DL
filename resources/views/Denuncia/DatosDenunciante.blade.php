@@ -93,7 +93,7 @@
                     <label for="SegundoApellido">Segundo Apellido</label>
                 </div>
                 <input type="text" name="SegundoApellido_denunciante" id="SegundoApellido_denunciante" class=" form-control "
-                    value="{{ old('SegundoApellido') }}" maxlength="50" 
+                    value="{{ old('SegundoApellido') }}" maxlength="50"
                     placeholder="Segundo apellido">
                 <div style="color:#FF0000;">
                     {{ $errors->first('SegundoApellido') }}
@@ -119,7 +119,7 @@
             <div class="form-group col-md-4">
                 <div class="form-ic-cmp">
                     <i class="fal fa-at"></i>&nbsp;
-                    <label for="correo">Correo ELECTRÓNICO</label>
+                    <label for="correo">CORREO ELECTRÓNICO</label>
 
                     <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top"
                         title="Capture un correo electrónico vigente, a esta cuenta llegará su acceso para realizar el seguimiento puntual a su denuncia"></i>&nbsp;
@@ -128,7 +128,7 @@
 
                 </div>
                 <input type="email" name="correo" id="correo" class=" form-control required " value="{{ old('correo') }}"
-                    data-message-error='El campo "CORRECO ELECTRÓNICO" es requerido.'
+                    data-message-error='El campo "CORREO ELECTRÓNICO" es requerido.'
                     maxlength="50" placeholder="correo@dominio.com" >
                 <div style="color:#FF0000;">
                     {{ $errors->first('correo') }}
