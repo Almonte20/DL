@@ -319,9 +319,23 @@ $(this).removeClass('input-error');
             ? $('#quien-es-victima-mensaje-error').addClass('d-none')
             : $('#quien-es-victima-mensaje-error').removeClass('d-none');
 
+        // ¿CONOCE AL RESPONSABLE?
+        radios = document.getElementsByName('conoce_responsable');
+        radioSeleccionado = false;
+
+        for (let i = 0; i < radios.length; i++) {
+            if (radios[i].checked) {
+                radioSeleccionado = true;
+                break;
+            }
+        }
+        // toggle para el mensaje de error
+        radioSeleccionado
+            ? $('#conoce-responsable-mensaje-error').addClass('d-none')
+            : $('#conoce-responsable-mensaje-error').removeClass('d-none');
 
         // ¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?
-        radios = document.getElementsByName('radio_rasgos_responsable');
+        radios = document.getElementsByName('conoce_rasgos_responsable');
         radioSeleccionado = false;
 
         for (let i = 0; i < radios.length; i++) {
