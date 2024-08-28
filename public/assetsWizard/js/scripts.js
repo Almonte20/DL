@@ -127,7 +127,7 @@ $(this).removeClass('input-error');
             let codigoVerificacion = generarCodigoVerificacion();
             console.log(`Código verificación: ${codigoVerificacion}`);
             // se envia codigo de verificacion
-            // enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
+            enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
 
             // ventana para validar el codigo de verificacion enviado
             Swal.fire({
