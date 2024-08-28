@@ -170,11 +170,7 @@
                     </div> --}}
 
                     <!-- datos denunciante -->
-<<<<<<< HEAD
                     <section id="datos-denunciante" class="p-0 mt-5 mb-3 d-none">
-=======
-                    <section id="datos-denunciante" class="p-0 mt-5 mb-3 d-none" >
->>>>>>> c5187a24c49a144e27c4fd9ccc42ea8555737f06
                         @include('Denuncia.DatosDenunciante')
                     </section>
                     {{-- <fieldset class="d-block"> --}}
