@@ -46,7 +46,7 @@
                     </div>
                     <select name="nacionalidad_victima" id="nacionalidad_victima" data-curp="divCurp_victima"
                         onchange="validarNacionalidad(this)" class=" form-control "
-                        style="background-color:rgba(230, 238, 250, 0.5);">
+                        >
                         <option value="0">Seleccione la nacionalidad</option>
                         @foreach ($countries as $country)
 
@@ -68,7 +68,7 @@
                     </div>
                     <input type="text" name="curp_victima" id="curp_victima" class=" form-control "
                         value="AOAA960320HMNLCL04" maxlength="18" placeholder="CURP"
-                        style="background-color:rgba(230, 238, 250, 0.5);">
+                        >
                     {{-- <label for="curp" style="font-size: 8px;"><a target="_blank" href="https://www.gob.mx/curp/">Saber
                             cuál
                             es
@@ -98,7 +98,7 @@
                         </div>
                         <input type="text" name="nombre_victima" id="Nombre_victima" class=" form-control required"
                             value="{{ old('nombre') }}" required maxlength="50"
-                            style="background-color:rgba(230, 238, 250, 0.5);" placeholder="Nombre">
+                             placeholder="Nombre">
                         <div style="color:#FF0000;">
                             {{ $errors->first('nombre') }}
                         </div>
@@ -111,7 +111,7 @@
                         </div>
                         <input type="text" name="PrimerApellido_victima" id="PrimerApellido_victima"
                             class=" form-control required " value="{{ old('PrimerApellido') }}" maxlength="50"
-                            style="background-color:rgba(230, 238, 250, 0.5);" placeholder="Primer apellido">
+                             placeholder="Primer apellido">
                         <div style="color:#FF0000;">
                             {{ $errors->first('PrimerApellido') }}
                         </div>
@@ -123,7 +123,7 @@
                         </div>
                         <input type="text" name="SegundoApellido_victima" id="SegundoApellido_victima"
                             class=" form-control " value="{{ old('SegundoApellido') }}" maxlength="50"
-                            style="background-color:rgba(230, 238, 250, 0.5);" placeholder="Segundo apellido">
+                             placeholder="Segundo apellido">
                         <div style="color:#FF0000;">
                             {{ $errors->first('SegundoApellido') }}
                         </div>
@@ -140,7 +140,7 @@
                         </div>
                         <input type="date" name="fnacimiento_victima" id="fnacimiento_victima"
                             class=" form-control required " value="{{ old('fnacimiento') }}"
-                            style="background-color:rgba(230, 238, 250, 0.5);">
+                            >
                         <div style="color:#FF0000;">
                             {{ $errors->first('fnacimiento') }}
                         </div>

@@ -88,7 +88,7 @@
                         <label for="nombreTestigo">Nombre del testigo</label>
                     </div>
                     <input type="text" name="nombreTestigo" id="nombreTestigo" class="form-control" maxlength="50"
-                        style="background-color:rgba(230, 238, 250, 0.5);">
+                        >
                     <div style="color:#FF0000;">
                         <!-- Error message -->
                     </div>
@@ -99,7 +99,7 @@
                         <label for="paternoTestigo">Primer Apellido del testigo</label>
                     </div>
                     <input type="text" name="paternoTestigo" id="paternoTestigo" class="form-control" maxlength="50"
-                        style="background-color:rgba(230, 238, 250, 0.5);">
+                        >
                     <div style="color:#FF0000;">
                         <!-- Error message -->
                     </div>
@@ -110,7 +110,7 @@
                         <label for="maternoTestigo">Segundo Apellido del testigo</label>
                     </div>
                     <input type="text" name="maternoTestigo" id="maternoTestigo" class="form-control" maxlength="50"
-                        style="background-color:rgba(230, 238, 250, 0.5);">
+                        >
                     <div style="color:#FF0000;">
                         <!-- Error message -->
                     </div>
@@ -126,7 +126,7 @@
                     </div>
                     <textarea name="adicionalTestigo" id="adicionalTestigo" class="form-control" maxlength="1950"
                         placeholder="Ingrese información adicional del testigo como lo son: descripción de la persona, datos de localización, datos de contacto, etc."
-                        rows="4" style="background-color:rgba(230, 238, 250, 0.5);"></textarea>
+                        rows="4" ></textarea>
                     <div style="color:#FF0000;">
                         <!-- Error message -->
                     </div>

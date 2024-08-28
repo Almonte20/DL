@@ -63,6 +63,10 @@
     .f1-step {
         width: 50%;
     }
+
+    .form-control::placeholder {
+        color: #b4c1c1;
+    }
 </style>
 
 <div class="modal fade" id="ModalFormalizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -166,7 +170,11 @@
                     </div> --}}
 
                     <!-- datos denunciante -->
+<<<<<<< HEAD
                     <section id="datos-denunciante" class="p-0 mt-5 mb-3 d-none">
+=======
+                    <section id="datos-denunciante" class="p-0 mt-5 mb-3 d-none" >
+>>>>>>> c5187a24c49a144e27c4fd9ccc42ea8555737f06
                         @include('Denuncia.DatosDenunciante')
                     </section>
                     {{-- <fieldset class="d-block"> --}}
@@ -177,6 +185,9 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <p class="text-center mb-2" style="font-weight: bold; font-size: 22px;">¿QUÉ HA SUCEDIDO?</p>
+                                        {{-- <input class="form-control input-denuncia" placeholder="Descripción breve de qué ha sucedido"> --}}
+                                        <textarea rows="2" class="form-control" placeholder="Descripción breve de qué ha sucedido. Ejemplos: Me asaltaron, me extorcionaron, me amenazaron de muerte, etc..."></textarea>
+
                                         <textarea
                                           rows="2"
                                           id="text-area-que-ha-sucedido"
@@ -397,7 +408,7 @@
                                 <label for="NombrePol">Nombre</label>
                             </div>
                             <input type="text" id="NombrePol" name="NombrePol" class="form-control" maxlength="50"
-                                style="background-color:rgba(230, 238, 250, 0.5);">
+                                >
                         </div>
                     </div>
                     <div class="form-row col-lg-12">
@@ -407,7 +418,7 @@
                                 <label for="EmailPol">Correo</label>
                             </div>
                             <input type="email" id="EmailPol" name="EmailPol" class="form-control" maxlength="50"
-                                style="background-color:rgba(230, 238, 250, 0.5);">
+                                >
                         </div>
                         <div class="form-group col-md-6">
                             <div class="form-ic-cmp">
@@ -415,7 +426,7 @@
                                 <label for="TelPol">Teléfono</label>
                             </div>
                             <input type="number" id="TelPol" name="TelPol" class="form-control" maxlength="10"
-                                style="background-color:rgba(230, 238, 250, 0.5);">
+                                >
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
