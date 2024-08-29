@@ -116,7 +116,7 @@
                     {{ $errors->first('fnacimiento') }}
                 </div>
             </div>
-            <div class="form-group col-md-4">
+            {{-- <div class="form-group col-md-4">
                 <div class="form-ic-cmp">
                     <i class="fal fa-at"></i>&nbsp;
                     <label for="correo">CORREO ELECTRÓNICO</label>
@@ -133,7 +133,7 @@
                 <div style="color:#FF0000;">
                     {{ $errors->first('correo') }}
                 </div>
-            </div>
+            </div> --}}
             <div class="form-group col-md-4">
                 <div class="form-ic-cmp">
                     <i class="fal fa-phone-alt"></i>&nbsp;
@@ -148,6 +148,25 @@
                     >
                 <div style="color:#FF0000;">
                     {{ $errors->first('telefono') }}
+                </div>
+            </div>
+
+            <div class="form-group col-md-8">
+                <div class="form-ic-cmp">
+                    <i class="fal fa-at"></i>&nbsp;
+                    <label for="correo">CORREO ELECTRÓNICO</label>
+
+                    <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top"
+                        title="Capture un correo electrónico vigente, a esta cuenta llegará su acceso para realizar el seguimiento puntual a su denuncia"></i>&nbsp;
+                <label for="nombre" style="font-size: 7px;">Requerido</label>
+
+
+                </div>
+                <input type="email" name="correo" id="correo" class=" form-control required " value="{{ old('correo') }}"
+                    data-message-error='El campo "CORREO ELECTRÓNICO" es requerido.'
+                    maxlength="50" placeholder="correo@dominio.com" >
+                <div style="color:#FF0000;">
+                    {{ $errors->first('correo') }}
                 </div>
             </div>
         </div>

@@ -267,13 +267,15 @@ $(this).removeClass('input-error');
                         },
                     });
 
+                    $('#btn-consultar-otra-curp').addClass('d-none');
+
                     // se establece el nombre del denunciante como nombre de opcion de victima
                     let nombre = $("#Nombre_denunciante").val();
                     let primerAp = $("#PrimerApellido_denunciante").val();
                     let SegundoAp = $("#SegundoApellido_denunciante").val();
-                    $("#nombre-victima").html(nombre);
-                    $("#primer-apellido-victima").html(primerAp);
-                    $("#segundo-apellido-victima").html(SegundoAp);
+                    $("#nombre-victima-denunciante").html(nombre);
+                    $("#primer-apellido-victima-denunciante").html(primerAp);
+                    $("#segundo-apellido-victima-denunciante").html(SegundoAp);
 
                     // se oculta el primer step para mostrar el segundo step
                     $('#step-denunciante').removeClass('active');
