@@ -13,42 +13,43 @@
     <!-- curp api -->
     <div class="form-row col-lg-12 align-items-end justify-content-start">
         <div class="form-group col-md-4">
-            <div class="form-ic-cmp">
+            <div class="">
                 <i class="fad fa-id-card"></i>&nbsp;
-                <label for="nacionalidad">Nacionalidad</label>
-                <label for="nacionalidad" style="font-size: 7px;">Requerido</label>
+                <label for="nacionalidad">Nacionalidad <span style="font-size: 7px;">REQUERIDO</span></label>
             </div>
-            <select name="nacionalidad_denunciante" id="nacionalidad_denunciante" onchange="validarNacionalidad(this)" class=" form-control "
-                 data-curp="divCurp_denunciante">
+            {{-- <select name="nacionalidad_denunciante" id="nacionalidad_denunciante" onchange="validarNacionalidad(this)" class=" form-control" data-curp="divCurp_denunciante"> --}}
+            <select x-model="selectDenuncianteNacionalidad" class=" form-control">
                 <option value="0">Seleccione la nacionalidad</option>
                 @foreach ($countries as $country)
-
-                <option @if ($country->id == 118)
-                    {{'selected'}}
-                    @endif value="{{$country->id}}">{{$country->nacionalidad}}</option>
+                    <option value="{{$country->id}}">{{$country->nacionalidad}}</option>
                 @endforeach
             </select>
-            <div style="color:#FF0000;">
-                {{ $errors->first('nacionalidad') }}
-            </div>
         </div>
 
-        <div class="form-group col-md-4 " id="divCurp_denunciante">
+        <div class="form-group col-md-4 " x-show="selectDenuncianteNacionalidad == '118'">
             <div class="form-ic-cmp">
                 <i class="fad fa-id-card"></i>&nbsp;
-                <label for="curp">CURP</label>
-                <label for="nombre" style="font-size: 7px;">Requerido</label>
+                <label for="curp">CURP <span style="font-size: 7px;">REQUERIDO</span></label>
             </div>
-            <input type="text" name="curp_denunciante" id="curp_denunciante" class=" form-control " value="{{ old('curp') }}AOAA960320HMNLCL04"
-                maxlength="18" placeholder="CURP" >
-            <div style="color:#FF0000;">
-                {{ $errors->first('curp') }}
-            </div>
+            <input
+              type="text"
+              class=" form-control "
+              maxlength="18"
+              placeholder="CURP"
+              x-model="inputDenuncianteCURP"
+             >
         </div>
 
         <div class="form-group col-md-2">
-            <button class="btn-sm btn-search btn-buscar-curp" onclick="consultarCurp(this,'denunciante')"
-                id="btnConsultarCurp_denunciante"> BUSCAR</button>
+            <button
+              class="btn-sm btn-search btn-buscar-curp"
+              {{-- onclick="consultarCurp(this,'denunciante')"
+              id="btnConsultarCurp_denunciante" --}}
+              x-text="selectDenuncianteNacionalidad == '118' ? 'BUSCAR' : 'SIGUIENTE'"
+              x-show="!denuncianteDatosMostrar"
+              x-on:click="denuncianteConsultarCURP"
+            >
+                BUSCAR</button>
             <img src="{{asset("img/denuncia/loading.gif")}}" class="img-responsive d-none" width="30%" id="imgLoading_denunciante">
         </div>
 
@@ -56,8 +57,7 @@
 
 </div>
 
-<div id="DatosGenerales_denunciante" class="d-none">
-
+<div x-show="denuncianteDatosMostrar">
     <div class="container">
         <div class="form-row col-lg-12">
             <div class="form-group col-md-4">
@@ -365,8 +365,13 @@
         </div>
     </div>
 
-    <div class="text-center mt-3 {{-- f1-buttons --}} f1">
-        <button type="button" id="btn-step-one" class="btn-sm btn-next">
+    <div class="text-center mt-3 mb-5">
+        <button
+          type="button"
+          {{-- id="btn-step-one" --}}
+          class="btn-sm btn-next"
+          x-on:click="denuncianteValidarDatos"
+        >
             SIGUIENTE &nbsp;&nbsp; <i class="fa-solid fa-chevron-right"></i>
         </button>
     </div>
