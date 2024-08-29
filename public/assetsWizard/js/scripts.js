@@ -565,7 +565,7 @@ $(this).removeClass('input-error');
             icon: "question",
             title: "¿ESTÁ SEGURO DE QUERER REGISTRAR LA DENUNCIA?",
             showDenyButton: true,
-            confirmButtonText: "SI, REGISTRAR DENUNCIA",
+            confirmButtonText: "SÍ, REGISTRAR DENUNCIA",
             denyButtonText: `NO, CANCELAR`,
             reverseButtons: true,
             // confirmButtonColor: '#008000',
