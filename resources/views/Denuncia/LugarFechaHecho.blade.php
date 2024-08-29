@@ -22,21 +22,6 @@
 </div>
 
 <div id="ResponsableDiv" class="container pl-3">
-    {{-- <div class="row">
-        <div class="col-md text-center">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="fechaintervalo" id="fecha" value="1" checked
-                    onchange="fechaIntervalo(this)">
-                <label class="form-check-label" for="fecha">Fecha específica</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="fechaintervalo" id="intervalo" value="2"
-                    onchange="fechaIntervalo(this)">
-                <label class="form-check-label" for="intervalo">Lapso de tiempo</label>
-            </div>
-        </div>
-    </div> --}}
-
     <div id="fecha-especifica" class="row justify-content-center">
         <div class="col-md-4">
             <div class="form-group">
@@ -55,20 +40,6 @@
                 </div>
             </div>
         </div>
-
-        {{-- <div class="col-md-4">
-            <div class="form-group">
-                <div class="form-ic-cmp">
-                    <i class="fal fa-file-alt"></i>&nbsp;
-                    <label for="hora_inicial">Hora <span class="spanintervalo d-none">inicial</span> de los
-                        hechos</label>
-                </div>
-                <input type="time" class="form-control" name="hora_inicial">
-                <div style="color:#FF0000;">
-                    {{ $errors->first('hora_inicial') }}
-                </div>
-            </div>
-        </div> --}}
     </div>
 
     <div class="row justify-content-center d-none" id="DivIntervalo">
@@ -80,7 +51,8 @@
                         hechos</label>
                     <label for="fecha_inicial" style="font-size: 7px;">Requerido</label>
                 </div>
-                <input type="datetime-local" id="input-fecha-inicial-hechos" class="form-control" name="fecha_inicial" id="fecha_inicial" max="{{ date('Y-m-d H:i') }}">
+                <input type="datetime-local" id="input-fecha-inicial-hechos" class="form-control" name="fecha_inicial" id="fecha_inicial" max="{{ date('Y-m-d H:i') }}"
+                data-message-error='El dato "FECHA Y HORA INICIAL DE LOS HECHOS" es requerido.'>
                 <div style="color:#FF0000;">
                     {{ $errors->first('fechainicial') }}
                 </div>
@@ -94,7 +66,8 @@
                     <label for="fecha_final" style="font-size: 7px;">Requerido</label>
 
                 </div>
-                <input type="datetime-local" id="input-fecha-final-hechos" class="form-control" name="fecha_final" id="fecha_final" max="{{ date('Y-m-d H:i') }}">
+                <input type="datetime-local" id="input-fecha-final-hechos" class="form-control" name="fecha_final" id="fecha_final" max="{{ date('Y-m-d H:i') }}"
+                data-message-error='El dato "FECHA Y HORA FINAL DE LOS HECHOS" es requerido.'>
                 <div style="color:#FF0000;">
                     {{ $errors->first('fecha_final') }}
                 </div>
@@ -750,9 +723,9 @@
         var valor = $(radio).val();
         if(valor == 'fecha_intervalo'){
             $("#DivIntervalo").removeClass("d-none");
-            $(".spanintervalo").removeClass("d-none");
+            // $(".spanintervalo").removeClass("d-none");
 
-            $("#fecha_final").addClass("required");
+            // $("#fecha_final").addClass("required");
 
             $('#fecha-especifica').addClass('d-none');
 
@@ -763,15 +736,15 @@
 
         }else{
             $("#DivIntervalo").addClass("d-none");
-            $(".spanintervalo").addClass("d-none");
-            $("#fecha_final").removeClass("required");
+            // $(".spanintervalo").addClass("d-none");
+            // $("#fecha_final").removeClass("required");
 
             $('#fecha-especifica').removeClass('d-none');
 
 
-            // $('#input-fecha-especifica-hechos')addClass('required');
-            // $('#input-fecha-inicial-hechos').removeClass('required');
-            // $('#input-fecha-final-hechos').removeClass('required');
+            $('#input-fecha-especifica-hechos').addClass('required');
+            $('#input-fecha-inicial-hechos').removeClass('required');
+            $('#input-fecha-final-hechos').removeClass('required');
 
 
         }

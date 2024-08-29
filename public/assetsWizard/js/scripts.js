@@ -479,6 +479,24 @@ $(this).removeClass('input-error');
             return;
         }
 
+        if ( $('input[name="victimadenunciante"]:checked').val() == '0' ) {
+
+            if ( $('#nacionalidad_victima').val() == '118' && $('#Nombre_victima').val() == '' ) {
+                Swal.fire({
+                    title: "¡FALTAN DATOS POR LLENAR!",
+                    html: `<p style="font-size:26px !important;"><b>En "datos de la víctima" dé click en botón "BUSCAR" para agregar el nombre de la víctima.</b></p>`,
+                    icon: "error",
+                    confirmButtonText: "ACEPTAR",
+                    customClass: {
+                        confirmButton: 'swal2-deny' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
+                    },
+                });
+                return;
+            }
+
+
+        }
+
         if ( $('#narrativa-hecho').val().length < 150 ) {
             Swal.fire({
                 title: "¡FALTAN DATOS POR LLENAR!",

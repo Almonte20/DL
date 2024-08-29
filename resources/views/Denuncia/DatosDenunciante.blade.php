@@ -378,6 +378,10 @@
             }
 
             $('.btn-buscar-curp').text('BUSCAR');
+
+            $('#Nombre_victima').removeClass('required')
+            $('#PrimerApellido_victima').removeClass('required')
+            $('#fnacimiento_victima').removeClass('required')
         }else{
             $("#"+divcurp).addClass("d-none");
             if(divcurp == "divCurp_victima"){
@@ -386,6 +390,10 @@
 
                 $("#DatosGenerales_victima").removeClass("d-none");
             }
+
+            $('#Nombre_victima').addClass('required')
+            $('#PrimerApellido_victima').addClass('required')
+            $('#fnacimiento_victima').addClass('required')
 
             $('.btn-buscar-curp').html('SIGUIENTE &nbsp;&nbsp; <i class="fa-solid fa-chevron-right"></i>');
         }
@@ -447,7 +455,7 @@
         }
     }
 
-    
+
 
     function RenapoCURP(curp,destino){
 
@@ -496,6 +504,8 @@
 
                 $("#DatosGenerales_"+destino).removeClass("d-none");
 
+
+                $('#btn-consultar-otra-curp').removeClass('d-none');
 
             }else{
                 Swal.fire({

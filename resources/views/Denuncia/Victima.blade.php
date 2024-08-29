@@ -14,7 +14,7 @@
                         <i class="fad fa-id-card"></i>&nbsp;
                         <label class="mb-0" >Nombre (s)</label>
                     </div>
-                    <label><span class="mt-0 txtVictima" id="nombre-victima"></label>
+                    <label><span class="mt-0 txtVictima" id="nombre-victima-denunciante"></label>
 
                 </div>
                 <div class="form-group col-md-4">
@@ -22,19 +22,19 @@
                         <i class="fad fa-id-card"></i>&nbsp;
                         <label  class="mb-0">Primer Apellido</label>
                     </div>
-                    <label class="mt-0 txtVictima" id="primer-apellido-victima"></label>
+                    <label class="mt-0 txtVictima" id="primer-apellido-victima-denunciante"></label>
                 </div>
                 <div class="form-group col-md-4">
                     <div class="form-ic-cmp">
                         <i class="fad fa-id-card"></i>&nbsp;
                         <label class="mb-0">Segundo Apellido</label>&nbsp;
                     </div>
-                    <label class="mt-0 txtVictima" id="segundo-apellido-victima"></label>
+                    <label class="mt-0 txtVictima" id="segundo-apellido-victima-denunciante"></label>
                 </div>
             </div>
         </div>
 
-        <div id="OtraPersonaDiv" class="d-non">
+        <div id="OtraPersonaDiv" class="d-none">
 
 
             <div class="form-row col-lg-12 align-items-end justify-content-start">
@@ -79,15 +79,17 @@
                     </div>
                 </div>
 
-                <div class="form-group col-md-2">
+                <div class="form-group col-md-4">
                     <button type="button" class="btn-sm btn-search" onclick="consultarCurp(this,'victima')"
                         style="background: #002b49;" id="btnConsultarCurp_victima"> BUSCAR</button>
-                    <img src="{{asset("img/denuncia/loading.gif")}}" class="img-responsive d-none" width="30%"
+                    <button type="button" class="btn-sm btn-search d-none" onclick="consultarOtraCurp()"
+                        style="background: #002b49;" id="btn-consultar-otra-curp"> CAMBIAR DATOS DE LA VÍCTIMA</button>
+                    <img src="{{asset("img/denuncia/loading.gif")}}" class="img-responsive d-none" width="10%"
                         id="imgLoading_victima">
                 </div>
             </div>
 
-            <div id="DatosGenerales_victima" class="d-non">
+            <div id="DatosGenerales_victima" class="d-none">
 
                 <div class="form-row col-lg-12">
                     <div class="form-group col-md-4">
@@ -112,6 +114,7 @@
                         </div>
                         <input type="text" name="PrimerApellido_victima" id="PrimerApellido_victima"
                             class=" form-control" value="{{ old('PrimerApellido') }}" maxlength="50"
+                            data-message-error='El dato "PRIMER APELLIDO DE LA VÍCTIMA" es requerido.'
                              placeholder="Primer apellido">
                         <div style="color:#FF0000;">
                             {{ $errors->first('PrimerApellido') }}
@@ -140,7 +143,8 @@
 
                         </div>
                         <input type="date" name="fnacimiento_victima" id="fnacimiento_victima"
-                            class=" form-control required " data-destino="victima" onchange="esMayorDeEdad(this)"
+                            class=" form-control" data-destino="victima" onchange="esMayorDeEdad(this)"
+                            data-message-error='El dato "FECHA DE NACIMIENTO DE LA VÍCTIMA" es requerido.'
                             >
                         <div style="color:#FF0000;">
                             {{ $errors->first('fnacimiento') }}
@@ -179,6 +183,30 @@
             $("#YoVictimaDiv").removeClass("d-none");
 
         }
+    }
+
+    const consultarOtraCurp = () => {
+        $('#nacionalidad_victima').prop('disabled', false);
+        $('#curp_victima').prop('readonly', false);
+
+        $('#btn-consultar-otra-curp').addClass('d-none');
+        $('#DatosGenerales_victima').addClass('d-none');
+
+        $('#btnConsultarCurp_victima').removeClass('d-none');
+
+        $('#Nombre_victima').val('');
+        $('#Nombre_victima').prop('readonly', false);
+
+        $('#PrimerApellido_victima').val('');
+        $('#PrimerApellido_victima').prop('readonly', false);
+
+        $('#SegundoApellido_victima').val('');
+        $('#SegundoApellido_victima').prop('readonly', false);
+
+        $('#fnacimiento_victima').val('');
+        $('#fnacimiento_victima').prop('readonly', false);
+
+        $('input[name="mayor_edad_victima"]').prop('checked', false);
     }
 
 </script>

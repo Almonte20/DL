@@ -198,6 +198,7 @@
                                               name="victimadenunciante"
                                               class="custom-control-input required"
                                               value="1"
+                                              checked
                                               data-message-error='El dato "¿QUIÉN ES LA VÍCTIMA?" es requerido.'
                                               onchange="otraPersona()">
                                             <label class="custom-control-label" for="radiodenunciante">Yo</label>
@@ -906,15 +907,15 @@ function alertas(msg)
         function esMayorDeEdad(input){
             var fechaNacimiento = $(input).val();
             var destino = $(input).data("destino");
-           
+
             if(fechaNacimiento != ""){
                 var edad = calcularEdad(fechaNacimiento);
-                
+
                 if(edad  >= 18){
                    $("#mayor_edad_"+destino+"S").prop('checked', true);
-                   
+
                 }else{
-                    
+
                     $("#mayor_edad_"+destino+"N").prop('checked', true);
                 }
             }
