@@ -170,12 +170,12 @@
                     </div> --}}
 
                     <!-- datos denunciante -->
-                    <section id="datos-denunciante" class="p-0 mt-5 mb-3 d-non" >
+                    <section id="datos-denunciante" class="p-0 mt-5 mb-3 d-none" >
                         @include('Denuncia.DatosDenunciante')
                     </section>
                     {{-- <fieldset class="d-block"> --}}
 
-                    <div id="datos-hechos" class="d-none">
+                    <div id="datos-hechos" class="{{-- d-none --}}">
                         <section class="p-0 mt-5 mb-3">
                             <div class="container">
                                 <div class="row">
@@ -185,7 +185,7 @@
                                         <textarea
                                           rows="2"
                                           id="text-area-que-ha-sucedido"
-                                          class="form-control"
+                                          class="form-control required"
                                           data-message-error='El dato "¿QUÉ HA SUCEDIDO?" es requerido.'
                                           placeholder="Descripción breve de qué ha sucedido. Ejemplos: Me asaltaron, me extorcionaron, me amenazaron de muerte, etc..."></textarea>
                                     </div>

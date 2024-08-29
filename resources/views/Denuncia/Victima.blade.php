@@ -96,9 +96,10 @@
                             <label for="nombre">Nombre (s)</label>
                             <label for="nombre" style="font-size: 7px;">Requerido</label>
                         </div>
-                        <input type="text" name="nombre_victima" id="Nombre_victima" class=" form-control required"
+                        <input type="text" name="nombre_victima" id="Nombre_victima" class=" form-control"
                             value="{{ old('nombre') }}" required maxlength="50"
-                             placeholder="Nombre">
+                             placeholder="Nombre"
+                             data-message-error='El dato "NOMBRE DE LA VÍCTIMA" es requerido.'>
                         <div style="color:#FF0000;">
                             {{ $errors->first('nombre') }}
                         </div>
@@ -110,7 +111,7 @@
                             <label for="nombre" style="font-size: 7px;">Requerido</label>
                         </div>
                         <input type="text" name="PrimerApellido_victima" id="PrimerApellido_victima"
-                            class=" form-control required " value="{{ old('PrimerApellido') }}" maxlength="50"
+                            class=" form-control" value="{{ old('PrimerApellido') }}" maxlength="50"
                              placeholder="Primer apellido">
                         <div style="color:#FF0000;">
                             {{ $errors->first('PrimerApellido') }}
@@ -139,7 +140,7 @@
 
                         </div>
                         <input type="date" name="fnacimiento_victima" id="fnacimiento_victima"
-                            class=" form-control required " value="{{ old('fnacimiento') }}"
+                            class=" form-control" value="{{ old('fnacimiento') }}"
                             >
                         <div style="color:#FF0000;">
                             {{ $errors->first('fnacimiento') }}

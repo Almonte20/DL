@@ -150,7 +150,7 @@
 
 <script>
     function existenTestigos(){
-        var valor = $('input:radio[name=existentestigos]:checked').val();
+        var valor = $('input:radio[name=existen_testigos]:checked').val();
         if(valor == 0){
             $("#DivTestigos").addClass("d-none");
         }else{

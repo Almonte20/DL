@@ -10,7 +10,7 @@
           class="custom-control-input required"
           value="1"
           data-message-error='El dato "¿CUENTA CON EVIDENCIAS?" es requerido.'
-          onchange="existen_evidencias()">
+          onchange="existenEvidencias()">
         <label class="custom-control-label" for="existenEvidenciasS">SÍ </label>
     </div>
     <div class="custom-control custom-radio custom-control-inline">
@@ -21,7 +21,7 @@
           class="custom-control-input required"
           value="0"
           data-message-error='El dato "¿CUENTA CON EVIDENCIAS?" es requerido.'
-          onchange="existen_evidencias()">
+          onchange="existenEvidencias()">
         <label class="custom-control-label" for="existenEvidenciasN">NO</label>
     </div>
     <!-- mensaje de error -->
@@ -169,10 +169,10 @@
     var btn_evidencias = "";
 
 
-    function existen_evidencias(){
-        var valor = $('input:radio[name=existenEvidencias]:checked').val();
+    function existenEvidencias(){
+        var valor = $('input:radio[name=existen_evidencias]:checked').val();
         // alert(valor);
-        if(valor == 0){
+        if(valor == '0'){
             $("#DivEvidencias").addClass("d-none");
         }else{
 

@@ -46,7 +46,9 @@
                         hechos</label>
                     <label for="fecha_inicial" style="font-size: 7px;">Requerido</label>
                 </div>
-                <input type="datetime-local" id="input-fecha-inicial-hechos" class="form-control required" name="fecha_inicial" max="{{ date('Y-m-d H:i') }}">
+                <input type="datetime-local" id="input-fecha-especifica-hechos" class="form-control required" name="fecha_inicial" max="{{ date('Y-m-d H:i') }}"
+                data-message-error='El dato "FECHA Y HORA DE LOS HECHOS" es requerido.'
+                >
 
                 <div style="color:#FF0000;">
                     {{ $errors->first('fechainicial') }}
@@ -78,7 +80,7 @@
                         hechos</label>
                     <label for="fecha_inicial" style="font-size: 7px;">Requerido</label>
                 </div>
-                <input type="datetime-local" id="input-fecha-inicial-hechos" class="form-control required" name="fecha_inicial" id="fecha_inicial" max="{{ date('Y-m-d H:i') }}">
+                <input type="datetime-local" id="input-fecha-inicial-hechos" class="form-control" name="fecha_inicial" id="fecha_inicial" max="{{ date('Y-m-d H:i') }}">
                 <div style="color:#FF0000;">
                     {{ $errors->first('fechainicial') }}
                 </div>
@@ -143,7 +145,8 @@
                 </div>
                 <input class=" form-control required" value="" maxlength="5" onkeypress="return justNumbers(event);"
                      name="CP_hechos" type="text" id="CP_hechos"
-                    placeholder="Ingrese CP" maxlength="5"
+                    placeholder="Ingrese C.P." maxlength="5"
+                    data-message-error='El dato "CÓDIGO POSTAL DONDE SUCEDIÓ EL HECHO" es requerido.'
                     onblur="validarCP(this,'entidad_hechos','municipio_hechos','asentamiento_hechos')"
                     onchange="validarCP(this,'entidad_hechos','municipio_hechos','asentamiento_hechos')">
 
@@ -196,7 +199,9 @@
                 </div>
                 <select class=" form-control required" value="<?php echo e(old('municipio')); ?>"
                      name="asentamiento_hechos"
+                     data-message-error='El dato "COLIONIA DONDE SUCEDIÓ EL HECHO" es requerido.'
                     id="asentamiento_hechos">
+
                     <option value="0">Seleccione una colonia</option>
                 </select>
                 {{-- <input class=" form-control " maxlength="250" value=""
@@ -214,6 +219,7 @@
                 </div>
                 <input class=" form-control required " value="" maxlength="250"
                      name="calle_hechos" type="text" id="calle_hechos"
+                     data-message-error='El dato "CALLE DONDE SUCEDIÓ EL HECHO" es requerido.'
                     placeholder="Ingrese la calle">
                 <div style="color:#FF0000;">
 
@@ -228,6 +234,7 @@
                 </div>
                 <input class=" form-control required" value="" maxlength="6"
                     name="numext_hechos" type="text"
+                    data-message-error='El dato "NÚMERO EXTERIOR DONDE SUCEDIÓ EL HECHO" es requerido.'
                     id="numext_hechos" placeholder="Número exterior">
                 <div style="color:#FF0000;">
 
@@ -259,7 +266,8 @@
                     </div>
                     <select name="lugar_descripcion"
                         id="select_lugar" class=" form-control required" data-show-subtext="true"
-                        data-live-search="true" onchange="lugarReferencia(this)">
+                        data-live-search="true" onchange="lugarReferencia(this)"
+                        data-message-error='El dato "LUGAR DONDE SUCEDIÓ EL HECHO" es requerido.'>
                         <option value="0">Seleccione un lugar</option>
 
                         @foreach ($lugares as $lugar)
@@ -279,7 +287,8 @@
                         <label for="numext_hechos">Referencia de <span id="txt_lugar_referencia"></span></label>
 
                     </div>
-                    <textarea class="form-control" placeholder="Referencia del lugar"></textarea>
+                    <textarea class="form-control" placeholder="Referencia del lugar" id="descripcion-referencia-lugar"
+                    data-message-error='El dato "REFERENCIA DEL LUGAR DONDE SUCEDIÓ EL HECHO" es requerido.'></textarea>
                 </div>
 
             </div>
@@ -736,20 +745,34 @@
     }
 
     function fechaIntervalo(radio){
+        console.log('llega');
+
         var valor = $(radio).val();
-        if(valor == 2){
+        if(valor == 'fecha_intervalo'){
             $("#DivIntervalo").removeClass("d-none");
             $(".spanintervalo").removeClass("d-none");
 
             $("#fecha_final").addClass("required");
 
             $('#fecha-especifica').addClass('d-none');
+
+
+            $('#input-fecha-especifica-hechos').removeClass('required');
+            $('#input-fecha-inicial-hechos').addClass('required');
+            $('#input-fecha-final-hechos').addClass('required');
+
         }else{
             $("#DivIntervalo").addClass("d-none");
             $(".spanintervalo").addClass("d-none");
             $("#fecha_final").removeClass("required");
 
             $('#fecha-especifica').removeClass('d-none');
+
+
+            // $('#input-fecha-especifica-hechos')addClass('required');
+            // $('#input-fecha-inicial-hechos').removeClass('required');
+            // $('#input-fecha-final-hechos').removeClass('required');
+
 
         }
     }
@@ -762,6 +785,8 @@
         }else{
             $("#referenciaLugar").removeClass("d-none");
             $("#txt_lugar_referencia").text(texto);
+            $('#descripcion-referencia-lugar').addClass('required');
+            $('#descripcion-referencia-lugar').attr('required');
         }
 
     }
