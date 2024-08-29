@@ -447,6 +447,8 @@
         }
     }
 
+    
+
     function RenapoCURP(curp,destino){
 
 
@@ -483,7 +485,7 @@
                 $('#Nombre_'+destino).val( res.nombres );
                 $('#PrimerApellido_'+destino).val( res.apellido1);
                 $('#SegundoApellido_'+destino).val( res.apellido2 );
-                $('#fnacimiento_'+destino).val( res.fechaNacF );
+                $('#fnacimiento_'+destino).val( res.fechaNacF ).trigger('change');
 
 
                 $('#Nombre_'+destino).attr('readonly',true);
