@@ -193,6 +193,7 @@
         $('#DatosGenerales_victima').addClass('d-none');
 
         $('#btnConsultarCurp_victima').removeClass('d-none');
+        $('#btnConsultarCurp_victima').prop('disabled', false);
 
         $('#Nombre_victima').val('');
         $('#Nombre_victima').prop('readonly', false);
