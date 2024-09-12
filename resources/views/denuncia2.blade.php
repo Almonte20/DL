@@ -181,7 +181,7 @@
                     </section>
                     {{-- <fieldset class="d-block"> --}}
 
-                        <div id="datos-hechos" class="d-non">
+                        <div id="datos-hechos" class="d-none">
                             <section class="p-0 mt-5 mb-3">
                                 <div class="container">
                                     <div class="row">
