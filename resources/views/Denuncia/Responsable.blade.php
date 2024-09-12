@@ -106,7 +106,7 @@
             </div>
         </div>
 
-        <div class="form-row col-lg-12 justify-content-center d-none mt-2" id="divIdentifiacionResponsable">
+        <div class="form-row col-lg-12 justify-content-center d-none mt-2" id="divIdentificacionResponsable">
             <div class="form-group col-md-12">
                 <textarea id="rasgos-distintivos-responsable" rows="6" class="form-control" name="rasgos_fisicos_responsable"
                     placeholder="Ejemplos: Tatuajue en el rostro, cabello largo, ojos café claro, etc..."
@@ -139,7 +139,7 @@
                     Indique una opción.
                 </div>
             </div>
-        </div>
+        
 
         <div class="form-row col-lg-12 justify-content-center d-none mt-2" id="divDireccionResponsable">
             <div class="form-group col-md-12">
@@ -149,6 +149,7 @@
                     data-message-error='El dato "DIRECCIÓN DEL RESPONSABLE" es requerido.'></textarea>
             </div>
         </div>
+    </div>
 
     </div>
 </div>
@@ -159,10 +160,13 @@
     function identificacionResponsable(){
         var valor = $('input:radio[name=conoce_rasgos_responsable]:checked').val();
         if(valor == 0){
-            $("#divIdentifiacionResponsable").addClass("d-none");
+            $("#divIdentificacionResponsable").addClass("d-none");
+            $('input[name="conoce_direccion_responsable"]').prop('checked', false);
+            $("#divDireccionResponsable").addClass("d-none");
+            $("#direccion-responsable").removeClass("required");
         }else{
 
-            $("#divIdentifiacionResponsable").removeClass("d-none");
+            $("#divIdentificacionResponsable").removeClass("d-none");
         }
     }
 
@@ -171,7 +175,6 @@
         if(valor == 0){
             $("#conozcoResponsableDiv").addClass("d-none");
         }else{
-
             $("#conozcoResponsableDiv").removeClass("d-none");
         }
     }
@@ -180,10 +183,10 @@
         var valor = $('input:radio[name=conoce_direccion_responsable]:checked').val();
         if(valor == 0){
             $("#divDireccionResponsable").addClass("d-none");
-            $("#direccioonResponsable").removeClass("required");
+            $("#direccion-responsable").removeClass("required");
         }else{
             $("#divDireccionResponsable").removeClass("d-none");
-            $("#direccioonResponsable").addClass("required");
+            $("#direccion-responsable").addClass("required");
         }
     }
 
