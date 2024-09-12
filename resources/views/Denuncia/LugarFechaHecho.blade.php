@@ -9,12 +9,12 @@
     <p class="mb-2" style="font-weight: bold; font-size: 22px;">INDIQUE LA FECHA Y HORA EN QUE SUCEDIÓ EL HECHO A DENUNCIAR</p>
     {{-- <div class="col-md text-center"> --}}
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fecha-" id="fecha" value="fecha_especifica" checked
+            <input class="form-check-input" type="radio" name="fecha_especifica_lapso" id="fecha" value="0" checked
                 onchange="fechaIntervalo(this)">
             <label class="form-check-label" for="fecha">Fecha y hora específica</label>
         </div>
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fecha-" id="intervalo" value="fecha_intervalo"
+            <input class="form-check-input" type="radio" name="fecha_especifica_lapso" id="intervalo" value="1"
                 onchange="fechaIntervalo(this)">
             <label class="form-check-label" for="intervalo">Lapso de tiempo</label>
         </div>
@@ -22,7 +22,7 @@
 </div>
 
 <div id="ResponsableDiv" class="container pl-3">
-    <div id="fecha-especifica" class="row justify-content-center">
+    {{-- <div id="fecha-especifica" class="row justify-content-center">
         <div class="col-md-4">
             <div class="form-group">
                 <div class="form-ic-cmp">
@@ -40,14 +40,14 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
-    <div class="row justify-content-center d-none" id="DivIntervalo">
+    <div class="row justify-content-center" id="">
         <div class="col-md-4">
             <div class="form-group">
                 <div class="form-ic-cmp">
                     <i class="fal fa-file-alt"></i>&nbsp;
-                    <label for="fecha_inicial">Fecha y hora <span class="spanintervalo d-none">inicial</span> de los
+                    <label for="fecha_inicial">Fecha y hora <span class="spaninicial d-none">inicial</span> de los
                         hechos</label>
                     <label for="fecha_inicial" style="font-size: 7px;">Requerido</label>
                 </div>
@@ -58,11 +58,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 d-none" id="DivIntervalo">
             <div class="form-group">
                 <div class="form-ic-cmp">
                     <i class="fal fa-file-alt"></i>&nbsp;
-                    <label for="fecha_final">Fecha y hora <span class="spaninicial">final de los hechos</label>
+                    <label for="fecha_final">Fecha y hora final de los hechos</label>
                     <label for="fecha_final" style="font-size: 7px;">Requerido</label>
 
                 </div>
@@ -234,7 +234,7 @@
                 <div class="form-group col-md-4">
                     <div class="form-ic-cmp">
                         <i class="fal fa-home"></i>&nbsp;
-                        <label for="numext_hechos">Lugar</label>
+                        <label for="select_lugar">Lugar</label>
 
                     </div>
                     <select name="lugar_descripcion"
@@ -257,10 +257,10 @@
                 <div class="form-group col-md-8 d-none" id="referenciaLugar">
                     <div class="form-ic-cmp">
                         <i class="fal fa-home"></i>&nbsp;
-                        <label for="numext_hechos">Referencia de <span id="txt_lugar_referencia"></span></label>
+                        <label for="numext_hechos">Referencia del lugar (<span id="txt_lugar_referencia"></span>)</label>
 
                     </div>
-                    <textarea class="form-control" placeholder="Referencia del lugar" id="descripcion-referencia-lugar"
+                    <textarea name="referencia_lugar" class="form-control" placeholder="Referencia del lugar" id="descripcion-referencia-lugar"
                     data-message-error='El dato "REFERENCIA DEL LUGAR DONDE SUCEDIÓ EL HECHO" es requerido.'></textarea>
                 </div>
 
@@ -721,30 +721,31 @@
         console.log('llega');
 
         var valor = $(radio).val();
-        if(valor == 'fecha_intervalo'){
+        if(valor == 1){
             $("#DivIntervalo").removeClass("d-none");
             // $(".spanintervalo").removeClass("d-none");
 
             // $("#fecha_final").addClass("required");
 
-            $('#fecha-especifica').addClass('d-none');
+            $('.spaninicial').removeClass('d-none');
 
 
-            $('#input-fecha-especifica-hechos').removeClass('required');
-            $('#input-fecha-inicial-hechos').addClass('required');
-            $('#input-fecha-final-hechos').addClass('required');
+            // $('#input-fecha-especifica-hechos').removeClass('required');
+            // $('#input-fecha-inicial-hechos').addClass('required');
+            // $('#input-fecha-final-hechos').addClass('required');
 
         }else{
             $("#DivIntervalo").addClass("d-none");
             // $(".spanintervalo").addClass("d-none");
             // $("#fecha_final").removeClass("required");
 
-            $('#fecha-especifica').removeClass('d-none');
+            // $('#fecha-especifica').removeClass('d-none');
+            $('.spaninicial').addClass('d-none');
 
 
-            $('#input-fecha-especifica-hechos').addClass('required');
-            $('#input-fecha-inicial-hechos').removeClass('required');
-            $('#input-fecha-final-hechos').removeClass('required');
+            // $('#input-fecha-especifica-hechos').addClass('required');
+            // $('#input-fecha-inicial-hechos').removeClass('required');
+            // $('#input-fecha-final-hechos').removeClass('required');
 
 
         }

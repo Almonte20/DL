@@ -49,7 +49,7 @@
             <p class="mb-2" style="font-weight: bold; font-size: 18px;">EXPLIQUE DE QUÉ MANERA SE COMETIÓ LA VIOLENCIA</p>
             <textarea rows="2" id="narrativa-violencia"
             data-message-error='El dato "EXPLIQUE DE QUÉ MANERA SE COMETIÓ LA VIOLENCIA" es requerido.'
-            class="form-control" name="expliqueViolencia" minlength="50" placeholder="Explique de qué manera se cometió la violencia"></textarea>
+            class="form-control" name="descripcion_violencia" minlength="50" placeholder="Explique de qué manera se cometió la violencia"></textarea>
         </div>
     </div>
 </div>

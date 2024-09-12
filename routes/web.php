@@ -6,8 +6,12 @@ use App\Models\Catalogs\CatCountries;
 use App\Models\Catalogs\CatMunicipality;
 use App\Models\Catalogs\CatState;
 use App\Mail\RegistroDenunciaMailable;
+use App\Models\Denuncia;
+use App\Models\FirmasDigitales;
+use App\Models\Involucrado;
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
@@ -34,7 +38,7 @@ Route::get('consulta', [DenunciaController::class, 'show'] )->name('denuncia.con
 Route::post('consultaDenuncia', [DenunciaController::class, 'consultaDenuncia'] )->name('denuncia.consultaDenuncia');
 Route::get('denuncia/consulta/{folio}', [DenunciaController::class, 'consultaD'] )->name('denuncia.consultaD');
 Route::get('prueba', [DenunciaController::class, 'AcuseRegistro'] )->name('denuncia.prueba');
-Route::get('generarPDF/{folio}', [DenunciaController::class, 'generarPDF'])->name('denuncia.generarPDF');
+Route::get('generarPDF/{id_denuncia}', [DenunciaController::class, 'generarPreSigi'])->name('denuncia.generarPDF');
 Route::get('pruebaw', function(){
 
 	$recipients = '524431401809'; // Asigna el valor de la variable
@@ -105,6 +109,8 @@ echo $response;
 
 
 Route::get('prueba', function(){
+
+		$ruta = DenunciaController::generarPDF(210);
 		$folio = "PD/XXX55";
         $token = "Pasffefeasfs";
         $nombre = "Alejandro";
@@ -131,6 +137,124 @@ Route::get('prueba', function(){
 		send(new RegistroDenunciaMailable($info,$rutaAcuse));
 		//unlink($rutaAcuse);
 		// return $correo;
+})->name('denuncia.prueba');
+
+
+Route::get('generarPDF', function(){
+
+	$id_denuncia = 210;
+	$denuncia = Denuncia::where('id', $id_denuncia)->first();
+	$folio = $denuncia->folio_denuncia;
+
+	$Datos_Hellman = FirmasDigitales::where('Folio', $folio)->first();
+
+	if ($Datos_Hellman) {
+		$firma_predenuncia = $Datos_Hellman->Llave;
+	} else {
+		$llave = Str::random(256);
+		$firma_predenuncia = Crypt::encryptString($llave);
+
+		$Hellman = new FirmasDigitales();
+		$Hellman->Llave = $firma_predenuncia;
+		$Hellman->Folio = $folio;
+		$Hellman->save();
+	}
+
+	// $this->Generaqr($firma_predenuncia, $id_denuncia);
+	// dd($firma_predenuncia);
+
+	// $denunciante = Involucrado::where("id_tipo_involucrado","4")->where("id_denuncia",$id_denuncia)->first();
+
+	// $pdf = new Fpdf();
+	// Resto del código para generar el PDF
+	$pdf = $this->fpdf;
+	$pdf->AddPage('L', 'letter');
+	// $pdf->AddFont('LabradorA-Black');
+	$pdf->SetAutoPageBreak(true,1);
+
+	$pdf->AddFont('LabradorA-Black');
+	$pdf->AddFont('LabradorA-Italic');
+	$pdf->AddFont('LabradorA-ExtraBold');
+
+	$pdf->Image('img/PDF_Predenuncia/formato_predenuncia2.png',0,0,280,216);
+
+	// // Folio
+	// $pdf->SetXY(155,18);
+	// $pdf->SetFont('LabradorA-ExtraBold','',25);
+	// $pdf->SetTextColor(241, 25, 25);
+	// $pdf->Cell(85,5,$folio,0,0,'L');
+
+	// $pdf->SetFont('LabradorA-ExtraBold','',14);
+	// $pdf->SetTextColor(0, 0, 0);
+
+	// //Nombre
+	// $pdf->SetXY(13,65);
+	// $pdf->Cell(92,5,utf8_decode($denunciante->nombre),0,0,'L');
+
+	// //Paterno
+	// $pdf->SetXY(13,90);
+	// $pdf->Cell(92,5,utf8_decode($denunciante->primer_apellido),0,0,'L');
+
+	// //Materno
+	// IF($denunciante->segundo_apellido != ''){
+	// 	$Materno = $denunciante->segundo_apellido;
+	// }else{
+	// 	$Materno = '-';
+	// }
+
+	// $pdf->SetXY(13,114);
+	// $pdf->Cell(92,5,utf8_decode($Materno),0,0,'L');
+
+
+	// //CURP
+	// $pdf->SetXY(13,138);
+	// $pdf->Cell(92,5,$denunciante->curp,0,0,'L');
+	// // dd($denunciante->address()->first()->colony()->first()->nombre_asentamiento);
+	// //Calle
+	// IF($denunciante->address()->first()->id_pais != 118){
+	// 	$Calle = $denunciante->otro_domicilio;
+	// 	$Colonia = '-';
+	// 	$NumExt = '-';
+	// 	$CP = '-';
+	// }else{
+	// 	$Calle =  $denunciante->address()->first()->calle;
+	// 	$Colonia = $denunciante->address()->first()->colony()->first()->nombre_asentamiento;
+	// 	$NumExt = $denunciante->address()->first()->numero_exterior;
+	// 	$CP = $denunciante->address()->first()->colony()->first()->codigo_postal;
+	// }
+
+	// $pdf->SetXY(115,65);
+	// $pdf->Cell(92,5,utf8_decode($Calle),0,0,'L');
+
+
+	// //Colonia
+	// $pdf->SetXY(115,90);
+	// $pdf->Cell(92,5,utf8_decode($Colonia),0,0,'L');
+
+	// //Numero Ext
+	// $pdf->SetXY(115,114);
+	// $pdf->Cell(92,5,$NumExt,0,0,'L');
+
+	// //CP
+	// $pdf->SetXY(115,138);
+	// $pdf->Cell(92,5,$CP,0,0,'L');
+
+	// //Firma
+	// $pdf->SetXY(13,158);
+	// $pdf->SetFont('LabradorA-Black','',12);
+	// $pdf->MultiCell(195,4,$firma_predenuncia,0);
+
+	// $pdf->Image(public_path("acuse/QR_".$id_denuncia.".png"),225,144,50,50);
+	// unlink(public_path("acuse/QR_".$id_denuncia.".png"));
+	// Resto del código para configurar el PDF
+	$pdf->Output("");
+	// $rutaArchivo = public_path('acuse/acuse_'.$id_denuncia.'.pdf');
+	// $this->fpdf->Output('F', $rutaArchivo);
+	// $rutaGuardado = "DenunciaEnLinea/".$id_denuncia;
+	// $ruta = Storage::disk('buffalo')->putFileAs($rutaGuardado, $fileImage, $name);
+	// return $rutaArchivo;
+	// exit;
+	// return response()->download(public_path('acuse/'.$id_denuncia.'.pdf'));
 })->name('denuncia.prueba');
 
 

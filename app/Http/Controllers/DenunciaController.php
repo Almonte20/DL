@@ -87,6 +87,84 @@ class DenunciaController extends Controller
         // // $token = "asfasfsa";
     }
 
+    public function generarPreSigi($id_denuncia)
+    {
+
+        date_default_timezone_set('America/Mexico_City');
+        $denuncia = Denuncia::where('id', $id_denuncia)->first();
+        $folio = $denuncia->folio_denuncia;
+        $pdf = $this->fpdf;
+        $pdf->AddPage('P', 'letter');
+        // $pdf->AddFont('LabradorA-Black');
+        $pdf->SetAutoPageBreak(true,1);
+
+        $pdf->AddFont('LabradorA-Black');
+        $pdf->AddFont('LabradorA-Italic');
+        $pdf->AddFont('LabradorA-ExtraBold');
+
+        $pdf->SetFont('Arial','B',10);
+        
+        $pdf->Image('img\denuncia\Titulo_fisca.jpg',10,16,180);
+        
+        $pdf->SetXY(110,55);
+        $pdf->Rect(110,55 ,50 ,14 );
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(50,14,utf8_decode("Número Único de caso:"),0,0,'L');
+        $pdf->Rect(160,55,35,14 );
+        $pdf->SetFont('Arial','',10);
+        $pdf->Cell(35,14,utf8_decode("Sin asignar"),0,0,'L');
+        
+        
+        $pdf->SetXY(110,69);
+        $pdf->Rect(110,69 ,50 ,14 );
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(50,14,utf8_decode("Número de expediente:"),0,0,'L');
+        $pdf->Rect(160,69,35,14 );
+        $pdf->SetFont('Arial','',10);
+        $pdf->Cell(35,14,$folio,0,0,'L');
+        
+        
+        $pdf->SetFont('Arial','B',10);
+        $dia = sprintf("%02d", date('d'));
+        $mes = $this->nombreMes(date('n')-1);
+        $anio = date("Y");
+        $hora = date("H:i");
+        
+        $pdf->SetY(85);
+        $pdf->Cell(0,14,utf8_decode("Morelia, Michoacán a $dia de $mes del $anio"),0,0,'R');
+        
+        $pdf->SetY(95);
+        $pdf->Cell(0,14,utf8_decode("DENUNCIA"),0,0,'C');
+        
+        $pdf->SetFont('Arial','B',11);
+        $pdf->SetY(110);
+        $pdf->MultiCell(0,4.5,utf8_decode("En la Ciudad de Morelia, Michoacán de Ocampo, a las $hora horas , del día $dia, del mes de $mes, del año $anio, dos mil veinticuatro, se presenta ante el/la Lic. GONZALEZ VENEGAS JORGE ALBERTO Agente del Ministerio Público, de la Unidad de Investigación, de conformidad a las facultades que confieren los artículos 21 constitucional; 109, 212, 213, 217, 218, 221, 222 y 223 del Código Nacional de Procedimientos Penales, y de conformidad al apartado C. del artículo 20 constitucional que a la letra establece: De los derechos de la víctima o del ofendido:"),0,'J');
+        $pdf->SetFont('Arial','',11);
+        $pdf->MultiCell(0,4.5,utf8_decode("I. Recibir asesoría jurídica; ser informado de los derechos que en su favor establece la Constitución y, cuando lo solicite, ser informado del desarrollo del procedimiento penal. II. Coadyuvar con el Ministerio Público; a que se le reciban todos los datos o elementos de prueba con los que cuente, tanto en la investigación como en el proceso a que se desahoguen las diligencias correspondientes, y a intervenir en el juicio e interponer los recursos en los términos que prevea la ley. Cuando el Ministerio Público considere que no es necesario el desahogo de la diligencia, deberá fundar y motivar su negativa. III. Recibir, desde la comisión del delito, atención médica y psicológica de urgencia. IV. Que se le repare el daño. En los casos en que sea procedente, El Ministerio Público estará obligado a solicitar la reparación del daño, sin menoscabo de que la víctima u ofendido lo pueda solicitar directamente, y el juzgador no podrá absolver al sentenciado de dicha reparación si ha emitido una sentencia condenatoria. La ley fijará procedimientos ágiles para ejecutar las sentencias en materia de reparación del daño. V. Al resguardo de su identidad y otros datos personales en los siguientes casos: cuando sean menores de edad; cuando se trate de delitos de violación, trata de personas, secuestro o delincuencia organizada; y cuando a juicio del juzgador sea necesario para su protección, salvaguardando en todo caso los derechos de la defensa. El Ministerio Público deberá garantizar la protección de víctimas, ofendidos, testigos y en general todos los sujetos que intervengan en el proceso. Los jueces deberán vigilar el buen cumplimiento de esta obligación. VI. Solicitar las medidas cautelares y providencias necesarias para la protección y restitución de sus derechos, y VII. Impugnar ante autoridad judicial las omisiones del Ministerio Público en la investigación de los delitos, así como las resoluciones de reserva, no ejercicio, desistimiento de la acción penal o suspensión del procedimiento cuando no está satisfecha la reparación del daño."),0,'J');
+        
+        $pdf->Ln("2");
+        $pdf->SetFont('Arial','B',11);
+        $pdf->Cell(0,14,utf8_decode("Quien enterado de lo anterior, proporciona la siguiente información: "),0,0,'L');
+
+
+
+        $victima = Involucrado::where("id_tipo_involucrado","4")->where("id_denuncia",$id_denuncia)->first();
+        if(empty($victima)){
+            $victima = Involucrado::where("id_tipo_involucrado","3")->where("id_denuncia",$id_denuncia)->first();
+        }
+        
+        // $pdf->WriteHTML($html);
+        $pdf->Output("");
+        // return true;
+
+    }
+
+    public function nombreMes($mes){
+        $meses = array(
+            "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO",
+            "JULIO", "AGOSTO", "SEPTIEMBRE", "OCTUBRE", "NOVIEMBRE", "DICIEMBRE");
+        return $meses[$mes];
+    }
 
     public function generarPDF($id_denuncia)
     {
@@ -111,8 +189,11 @@ class DenunciaController extends Controller
 
         $this->Generaqr($firma_predenuncia, $id_denuncia);
         // dd($firma_predenuncia);
-
-        $denunciante = Involucrado::where("id_tipo_involucrado","4")->where("id_denuncia",$id_denuncia)->first();
+        
+        $victima = Involucrado::where("id_tipo_involucrado","4")->where("id_denuncia",$id_denuncia)->first();
+        if(empty($victima)){
+            $victima = Involucrado::where("id_tipo_involucrado","3")->where("id_denuncia",$id_denuncia)->first();
+        }
 
         // $pdf = new Fpdf();
         // Resto del código para generar el PDF
@@ -138,15 +219,15 @@ class DenunciaController extends Controller
 
         //Nombre
         $pdf->SetXY(13,65);
-        $pdf->Cell(92,5,utf8_decode($denunciante->nombre),0,0,'L');
+        $pdf->Cell(92,5,utf8_decode($victima->nombre),0,0,'L');
 
         //Paterno
         $pdf->SetXY(13,90);
-        $pdf->Cell(92,5,utf8_decode($denunciante->primer_apellido),0,0,'L');
+        $pdf->Cell(92,5,utf8_decode($victima->primer_apellido),0,0,'L');
 
         //Materno
-        IF($denunciante->segundo_apellido != ''){
-            $Materno = $denunciante->segundo_apellido;
+        if($victima->segundo_apellido != ''){
+            $Materno = $victima->segundo_apellido;
         }else{
             $Materno = '-';
         }
@@ -157,19 +238,19 @@ class DenunciaController extends Controller
 
         //CURP
         $pdf->SetXY(13,138);
-        $pdf->Cell(92,5,$denunciante->curp,0,0,'L');
-        // dd($denunciante->address()->first()->colony()->first()->nombre_asentamiento);
+        $pdf->Cell(92,5,$victima->curp,0,0,'L');
+        // dd($victima->address()->first()->colony()->first()->nombre_asentamiento);
         //Calle
-        IF($denunciante->address()->first()->id_pais != 118){
-            $Calle = $denunciante->otro_domicilio;
+        if($victima->address()->first()->id_pais != 118){
+            $Calle = $victima->otro_domicilio;
             $Colonia = '-';
             $NumExt = '-';
             $CP = '-';
         }else{
-            $Calle =  $denunciante->address()->first()->calle;
-            $Colonia = $denunciante->address()->first()->colony()->first()->nombre_asentamiento;
-            $NumExt = $denunciante->address()->first()->numero_exterior;
-            $CP = $denunciante->address()->first()->colony()->first()->codigo_postal;
+            $Calle =  $victima->address()->first()->calle;
+            $Colonia = $victima->address()->first()->colony()->first()->nombre_asentamiento;
+            $NumExt = $victima->address()->first()->numero_exterior;
+            $CP = $victima->address()->first()->colony()->first()->codigo_postal;
         }
 
         $pdf->SetXY(115,65);
@@ -212,7 +293,7 @@ class DenunciaController extends Controller
         }
 
     public function enviarCorreo($datos){
-
+        
     }
 
     /**
@@ -220,59 +301,24 @@ class DenunciaController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
-        // dd($request->hasFile('evidencias'));
-        DB::beginTransaction();
+        
 
-        try{
+        // dd($request);
+        // dd($request->hasFile('evidencias'));
+        // DB::beginTransaction();
+
+        // try{
 
 
         // dd($request);
         // Concatenate date and time
 
-        $curp = $request->curp;
-        $nacionalidad = $request->nacionalidad;
-        $nombre = $request->nombre;
-        $PrimerApellido = $request->PrimerApellido;
-        $SegundoApellido = $request->SegundoApellido;
-        $fnacimiento = $request->fnacimiento;
-        $correo = $request->correo;
-        $telefono = $request->telefono;
-        $pais = $request->pais;
-        $domicilio_extranjero = $request->domicilio_extranjero;
-        $CP = $request->CP;
-        $municipio = $request->municipio;
-        $ciudadId = $request->ciudadId;
-        $municipio_residencia = $request->municipio_residencia;
-        $asentamiento_residencia = $request->asentamiento_residencia;
-        $calle = $request->calle;
-        $numext = $request->numext;
-        $numint = $request->numint;
-        $fechaintervalo = $request->fechaintervalo;
-        $fecha_inicial = $request->fecha_inicial;
-        $hora_inicial = $request->hora_inicial;
-        $fecha_final = $request->fecha_final;
-        $hora_final = $request->hora_final;
-        $narrativa = $request->narrativa;
-        $coordenadas = $request->coordenadas;
-        $carretera = $request->carretera;
-        $km_hechos = $request->km_hechos;
-        $descripcion_lugar = $request->descripcion_lugar;
-        $codigo_postal = $request->codigo_postal;
-        $latitud = $request->latitud;
-        $longitud = $request->longitud;
-        $domicilio_mapa = $request->domicilio_mapa;
+     
 
-        $CP_hechos = $request->CP_hechos;
-        $calle_hechos = $request->calle_hechos;
-        $municipio_hechos = $request->municipio_hechos;
-        $estado_hechos = $request->estado_hechos;
-        $numero_hechos = $request->numext_hechos;
-        $asentamiento_hechos = $request->asentamiento_hechos;
-        $evidencias = $request->evidencias;
-        $arrayTestigos = $request->arrayTestigos;
+        //*********************** DATOS DE LA DENUNCIA ******************************
 
         //ARMADO DEL FOLIO
+
         $consecMax  = Denuncia::where("anio",date("Y"))->max('consecutivo');
         if (is_null($consecMax) || !is_numeric($consecMax)) {
             $consecMax = 0;
@@ -280,69 +326,153 @@ class DenunciaController extends Controller
         $consecutivo = $consecMax+1;
         $folio =  "PD/".date('Y').$consecutivo;
 
-        //------
-
-
-
         $denuncia = new Denuncia;
         $denuncia->folio_denuncia = $folio;
         $denuncia->consecutivo = $consecutivo;
         $denuncia->anio = date('Y');
         $denuncia->id_tipo_denunciante = 1;
         $denuncia->id_estatus = 5;
-        $token =Str::random(20);
+        $token = Str::random(20);
         $denuncia->token_denuncia = $token;
         $denuncia->save();
 
 
         $id_denuncia = $denuncia->id;
-
-        $involucrado = new Involucrado();
-        $involucrado->curp = $curp;
-        $involucrado->nombre = $nombre;
-        $involucrado->primer_apellido = $PrimerApellido;
-        $involucrado->segundo_apellido = $SegundoApellido;
-        $involucrado->fecha_nacimiento = $fnacimiento;
-        $involucrado->id_nacionalidad = $nacionalidad;
-        $involucrado->email = $correo;
-        $involucrado->telefono = $telefono;
-        $involucrado->id_tipo_involucrado = 4;
-        $involucrado->id_tipo_persona = 1;
-        $involucrado->id_denuncia =  $id_denuncia;
-
         $rutaGuardado = "DenunciaEnLinea/".$id_denuncia;
+        //*********************** DATOS DENUNCIANTE ******************************
+        
+        $denunciante = new Involucrado();
+        $denunciante->curp = $request->curp_denunciante;
+        $denunciante->nombre = $request->nombre_denunciante;
+        $denunciante->primer_apellido = $request->PrimerApellido_denunciante;
+        $denunciante->segundo_apellido = $request->SegundoApellido_denunciante;
+        $denunciante->fecha_nacimiento = $request->fnacimiento_denunciante;
+        $denunciante->id_nacionalidad = $request->nacionalidad_denunciante;
+        $denunciante->email = $request->correo;
+        $denunciante->telefono = $request->telefono;
+        $denunciante->id_tipo_persona = 1;
+        $denunciante->id_denuncia =  $id_denuncia;
+        if($request->victimadenunciante == 1){
+            $denunciante->id_tipo_involucrado = 4;
+        }else{
+            $denunciante->id_tipo_involucrado = 3;
+        }
+        
         if($request->hasfile('credencial')){
-
             $fileImage = $request->file('credencial');
             $extension = $fileImage->getClientOriginalExtension();
             $name = "Identificacion.".$extension;
             $ruta = Storage::disk('buffalo')->putFileAs($rutaGuardado, $fileImage, $name);
-            $involucrado->url_identificacion = $ruta;
+            $denunciante->url_identificacion = $ruta;
         }
-
-        $involucrado->save();
-
-
-
-        $involucrado_domicilio = new InvolucradoDomicilio;
-        $involucrado_domicilio->id_involucrado = $involucrado->id;
-        $involucrado_domicilio->id_pais = $pais;
-        if($pais == 118){
-            $involucrado_domicilio->codigo_postal = $CP;
-            $involucrado_domicilio->calle = $calle;
-            $involucrado_domicilio->numero_exterior = $numext;
-            $involucrado_domicilio->numero_interior = $numint;
-            $involucrado_domicilio->id_asentamiento = $asentamiento_residencia;
+        
+        $denunciante->save();
+        
+        $denunciante_domicilio = new InvolucradoDomicilio;
+        $denunciante_domicilio->id_involucrado = $denunciante->id;
+        $denunciante_domicilio->id_pais = $request->pais;
+        if($request->pais == 118){
+            $denunciante_domicilio->codigo_postal = $request->CP;
+            $denunciante_domicilio->calle = $request->calle;
+            $denunciante_domicilio->numero_exterior = $request->numext;
+            $denunciante_domicilio->numero_interior = $request->numint;
+            $denunciante_domicilio->id_asentamiento = $request->asentamiento_residencia;
         }else{
-            $involucrado->otro_domicilio = $domicilio_extranjero;
+            $denunciante->otro_domicilio = $request->domicilio_extranjero;
         }
-        $involucrado_domicilio->save();
+        $denunciante_domicilio->save();
+        
+        
+        //*********************** DATOS DE LA VICTIMA ******************************
+        
+        if($request->victimadenunciante == 0){
+            $victima = new Involucrado();
+            $victima->nombre = $request->nombre_victima;
+            $victima->primer_apellido = $request->PrimerApellido_victima;
+            $victima->segundo_apellido = $request->SegundoApellido_victima;
+            $victima->fecha_nacimiento = $request->fnacimiento_victima;
+            $victima->id_nacionalidad = $request->nacionalidad_victima;
+            $victima->id_tipo_persona = 1;
+            $victima->id_denuncia =  $id_denuncia;
+            $victima->id_tipo_involucrado = 1;
+            
+            if($request->nacionalidad_victima == 118){
+                $victima->curp = $request->curp_victima;
+            }
 
-        // dd($involucrado_domicilio);
+            $victima->save();
+        }
+        
+        //*********************** DATOS DEL RESPONSABLE ******************************
+        
+        if($request->conoce_responsable == 1 || $request->conoce_rasgos_responsable == 1){
+            $responsable = new Involucrado();
+            if($request->conoce_responsable == 1){
+                $responsable->nombre = $request->nombre_alias_responsable;
+            }else{
+                $responsable->nombre = "Desconocido";
+            }
+            $responsable->id_tipo_persona = 1;
+            $responsable->id_denuncia =  $id_denuncia;
+            $responsable->id_tipo_involucrado = 2;
 
-         //TESTIGOS
-         if(!empty($request->input('arrayTestigos'))) {
-            $arrayTestigos = JSON_decode($request->input('arrayTestigos'));
+            if($request->conoce_rasgos_responsable == 1){
+                $responsable->descripcion_involucrado = $request->rasgos_fisicos_responsable;
+            }
+            
+            $responsable->save();
+            
+            if($request->conoce_direccion_responsable == 1 && $request->conoce_rasgos_responsable == 1){
+                $responsable_domicilio = new InvolucradoDomicilio;
+                $responsable_domicilio->otro_domicilio = $request->direccionResponsable;
+                $responsable_domicilio->id_pais = 0;
+                $responsable_domicilio->id_involucrado = $responsable->id;
+                $responsable_domicilio->save();
+            }
+            
+            
+        }
+        // dd($denunciante_domicilio->id);
+        
+        //***************************  HECHOS  ********************************************
+        
+        
+        $hechos = new Hecho;
+        $hechos->id_denuncia = $denuncia->id;
+        $hechos->domicilio_mapa = $request->domicilio_mapa;
+        $hechos->latitud = $request->latitud;
+        $hechos->longitud = $request->longitud;
+        $hechos->calle = $request->calle_hechos;
+        $hechos->codigo_postal = $request->CP_hechos;
+        $hechos->numero_exterior = $request->numext_hechos;
+        $hechos->numero_interior = $request->numint_hechos;
+        $hechos->id_asentamiento = $request->asentamiento_hechos;
+        $fecha_inicial = Carbon::parse($request->fecha_inicial)->format('Y-m-d H:i:s');
+        $hechos->fecha_inicial = $fecha_inicial;
+        
+        if($request->fecha_especifica_lapso == 1){
+            $fecha_final = Carbon::parse($request->fecha_final)->format('Y-m-d H:i:s');
+            $hechos->fecha_final =$fecha_final;
+        }
+        
+        $hechos->suceso = $request->suceso;
+        $hechos->narrativa = $request->narrativa;
+        $hechos->id_lugar = $request->lugar_descripcion;
+        $hechos->referencia_lugar = $request->referencia_lugar;
+        $hechos->existio_evidencia = $request->existio_violencia;
+        if( $request->existio_violencia == 1){
+            $hechos->descripcion_violencia = $request->descripcion_violencia;
+        }
+        $hechos->save();
+        
+        // dd($total_evidencias);
+        
+        //***************************** TESTIGOS *********************************
+        
+        $arrayTestigos = $request->arrayTestigos;
+
+         if(!empty($request->input('arrayTestigos')) && $request->existen_testigos == 1) {
+             $arrayTestigos = JSON_decode($request->input('arrayTestigos'));
             foreach ($arrayTestigos as $key => $value) {
 
                     $testigo = new Involucrado();
@@ -354,160 +484,52 @@ class DenunciaController extends Controller
                     $testigo->id_tipo_persona = 1;
                     $testigo->id_denuncia = $denuncia->id;
                     $testigo->save();
-
+                    
+                }
             }
-        }
-        //GUARDADO DE EVIDENCIAS
+            
+            
+            //***************************** EVIDENCIAS *********************************
 
         // $ruta = "DenunciaEnLinea/$folio/";
-        if($request->hasfile('image')){
-            $fileImage = $request->file('image');
-            $extension = $fileImage->getClientOriginalExtension();
-            $name = "imagen.".$extension;
-            $ruta = Storage::disk('buffalo')->putFileAs($rutaGuardado, $fileImage, $name);
-            $Evidencia = new Evidencia();
-            $Evidencia->id_tipo_evidencia = 1;
-            $Evidencia->url = $ruta;
-            $Evidencia->id_denuncia = $denuncia->id;
-            $Evidencia->save();
-
-
-        }
-        if($request->hasfile('video')){
-            // try{
-                // $file = $request->file('video');
-                // $name = $file->getClientOriginalName();
-                // $file->move(public_path().'/Predenuncias/'.$IdExp, $name);
-                // $ruta = '/Predenuncias/'.$IdExp.'/'.$name;
-                // $Evidencia = new Evidencias();
-                // $Evidencia->Ruta = $ruta;
-                // $Evidencia->IdExpediente = $IdExp;
-                // $Evidencia->save();
-
-
-
-                $fileVideo = $request->file('video');
-                $extension = $fileVideo->getClientOriginalExtension();
-                $name = "video.".$extension;
-                $ruta = Storage::disk('buffalo')->putFileAs($rutaGuardado, $fileVideo, $name);
-
-                $Evidencia = new Evidencia();
-                $Evidencia->id_tipo_evidencia = 3;
-                $Evidencia->url = $ruta;
-                $Evidencia->id_denuncia = $denuncia->id;
-                $Evidencia->save();
-
-            // }catch(\Exception $e){
-            //     $debug = new Debug();
-            //     $debug->controlador = 'DenunciaDigitalController';
-            //     $debug->funcion = 'store->video';
-            //     $debug->log = $e->getMessage();
-            // }
-        }
-        if($request->hasfile('audio')){
-            // try{
-                // $file = $request->file('audio');
-                // $name = $file->getClientOriginalName();
-                // $file->move(public_path().'/Predenuncias/'.$IdExp, $name);
-                // $ruta = '/Predenuncias/'.$IdExp.'/'.$name;
-                // $Evidencia = new Evidencias();
-                // $Evidencia->Ruta = $ruta;
-                // $Evidencia->IdExpediente = $IdExp;
-                // $Evidencia->save();
-
-                $fileaudio = $request->file('audio');
-                $extension = $fileaudio->getClientOriginalExtension();
-                $name = "audio.".$extension;
-                $ruta = Storage::disk('buffalo')->putFileAs($rutaGuardado, $fileaudio, $name);
-
-                $Evidencia = new Evidencia();
-                $Evidencia->id_tipo_evidencia = 2;
-                $Evidencia->url = $ruta;
-                $Evidencia->id_denuncia = $denuncia->id;
-                $Evidencia->save();
-                // dd($Evidencia);
-            // }catch(\Exception $e){
-            //     $debug = new Debug();
-            //     $debug->controlador = 'DenunciaDigitalController';
-            //     $debug->funcion = 'store->audio';
-            //     $debug->log = $e->getMessage();
-            // }
-        }
-        if($request->hasfile('documento')){
-            // try{
-                // $file = $request->file('documento');
-                // $name = $file->getClientOriginalName();
-                // $file->move(public_path().'/Predenuncias/'.$IdExp, $name);
-                // $ruta = '/Predenuncias/'.$IdExp.'/'.$name;
-                // $Evidencia = new Evidencias();
-                // $Evidencia->Ruta = $ruta;
-                // $Evidencia->IdExpediente = $IdExp;
-                // $Evidencia->save();
-
-
-                $filedocumento = $request->file('documento');
-                $extension = $filedocumento->getClientOriginalExtension();
-                $name = "documento.".$extension;
-                $ruta = Storage::disk('buffalo')->putFileAs($rutaGuardado, $filedocumento, $name);
-
-                $Evidencia = new Evidencia();
-                $Evidencia->id_tipo_evidencia = 4;
-                $Evidencia->url = $ruta;
-                $Evidencia->id_denuncia = $denuncia->id;
-                $Evidencia->save();
-
-            // }catch(\Exception $e){
-            //     $debug = new Debug();
-            //     $debug->controlador = 'DenunciaDigitalController';
-            //     $debug->funcion = 'store->document';
-            //     $debug->log = $e->getMessage();
-            // }
-        }
-
-
-        $hechos = new Hecho;
-        $hechos->id_denuncia = $denuncia->id;
-
-        if($carretera == 1){
-            $hechos->es_tramo_carretero = 1;
-            $hechos->km_carretero = $km_hechos;
-            $hechos->descripcion_lugar = $descripcion_lugar;
+        if(!$request->hasFile('evidencias') || $request->existen_evidencias == 0){
+            $total_evidencias = 0;
         }else{
-            $hechos->es_tramo_carretero = 0;
-            $hechos->calle = $calle_hechos;
-            $hechos->codigo_postal = $CP_hechos;
-            $hechos->numero_exterior = $numero_hechos;
-            $hechos->id_asentamiento = $asentamiento_hechos;
-            // $hechos->latitud = $latitud;
-            // $hechos->longitud = $longitud;
-            // $hechos->domicilio_mapa = $domicilio_mapa;
+            $total_evidencias = count($request->file('evidencias'));
         }
 
-        $hechos->fecha_inicial = Carbon::parse($fecha_inicial . ' ' . $hora_inicial);
-        if($fechaintervalo == 2){
-            $hechos->fecha_final = Carbon::parse($fecha_final . ' ' . $hora_final);
+        if($total_evidencias > 0){
+            for ($i=0; $i < $total_evidencias; $i++) {
+                $fileImage = $request->file('evidencias')[$i];
+                $extension = $fileImage->getClientOriginalExtension();
+                $numeroEvidencia = $i+1;
+                $name = "Evidencia_$numeroEvidencia.".$extension;
+                $ruta = Storage::disk('buffalo')->putFileAs($rutaGuardado, $fileImage, $name);
+                $Evidencia = new Evidencia();
+                $Evidencia->id_tipo_evidencia = 1;
+                $Evidencia->url = $ruta;
+                $Evidencia->id_denuncia = $denuncia->id;
+                $Evidencia->save();
+            }
         }
-        $hechos->narrativa = $narrativa;
-        $hechos->save();
-        // dd($hechos);
-
-
-        // $token =Str::random(20);
-        // $denuncia = 1112;
-        // $folio = "PD/xxx55";
+        //*************************************** GENERACIÓN DE ACUSE */
         $rutaAcuse = $this->generarPDF($id_denuncia);
-
+        
+        // ************************************** NOTIFICACIONES */
+        $nombre = $request->nombre_denunciante;
+        $PrimerApellido = $request->PrimerApellido_denunciante;
+        $SegundoApellido = $request->SegundoApellido_denunciante;
+        $correo = $request->correo;
+        $telefono = $request->telefono;
         $mensajeNotificacion = 'El registro de su Denuncia se realizó de forma correcta, asignándole el folio '.$folio.' y la clave de seguimiento '.$token.', Su denuncia en línea será analizada por el Agente de Ministerio Público Orientador Digital, quien la asignará a la Fiscalía correspondiente para su seguimiento, atención y comunicación con usted. Esté al pendiente del correo/teléfono proporcionado.';
         $info = new \stdClass;
-        $info->nombre = $nombre.' '.$PrimerApellido.' '.$SegundoApellido;
+        $info->nombre = $request->nombre.' '.$PrimerApellido.' '.$SegundoApellido;
         $info->folio = $folio;
         $info->email = $correo;
         $info->asunto = 'Denuncia en Línea FGE';
         $info->token = $token;
         $info->mensaje = $mensajeNotificacion;
-        //$info->sede1 = $sede1;
-        //$info->sede2 = $sede2;
-
+        
         setlocale(LC_TIME, 'spanish');
         $fecha = Carbon::now();
         $fecha = strftime("%A, %d de %B del %Y", strtotime($fecha));
@@ -519,7 +541,7 @@ class DenunciaController extends Controller
         $array = ["respuesta"=> true ,"token"=> $token, "denuncia" => Crypt::encrypt($denuncia->id) ,  "data"=>$denuncia, "folio" => $folio ];
         // $mensajeWhatsapp = "Denuncia en línea registrada '\n' con éxito, con el siguiente folio: $folio y clave de seguimiento: $token";
         $this->sendWhatsapp($mensajeNotificacion,$telefono);
-
+        
         $notificacion = new NotificacionUsuario;
         $notificacion->nombre_involucrado = $nombre." ".$PrimerApellido." ".$SegundoApellido;
         $notificacion->correo_electronico = $correo;
@@ -527,17 +549,18 @@ class DenunciaController extends Controller
         $notificacion->id_modulo = 1;
         $notificacion->llave_modulo = $denuncia->id;
         $notificacion->mensaje = $mensajeNotificacion;
-        $notificacion->id_usuario_receptor = $involucrado->id;
+        $notificacion->id_usuario_receptor = $denunciante->id;
         $notificacion->save();
 
-        DB::commit();
+        // DB::commit();
         return response()->json($array);
 
-        }catch(\Exception $e){
-            DB::rollBack();
-            $array = ["respuesta"=> false ,"error"=> "Error al intentar registrar la denuncia: ".$e->getMessage() ];
-        }
+        // }catch(\Exception $e){
+        //     DB::rollBack();
+        //     $array = ["respuesta"=> false ,"error"=> "Error al intentar registrar la denuncia: ".$e->getMessage() ];
+        // }
     }
+
 
     /**
      * Display the specified resource.

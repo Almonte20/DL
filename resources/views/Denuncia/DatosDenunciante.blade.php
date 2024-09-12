@@ -1,10 +1,8 @@
-
-
 <div class="seccion text-center mb-3">
     <div class="circle-title">
         <div class="circle-number ">1</div>
     </div>
-    <h1 >
+    <h1>
         DATOS GENERALES DEL DENUNCIANTE:
     </h1>
 </div>
@@ -15,11 +13,11 @@
         <div class="form-group col-md-4">
             <div class="form-ic-cmp">
                 <i class="fad fa-id-card"></i>&nbsp;
-                <label for="nacionalidad">Nacionalidad</label>
-                <label for="nacionalidad" style="font-size: 7px;">Requerido</label>
+                <label for="nacionalidad_denunciante">Nacionalidad</label>
+                <label for="nacionalidad_denunciante" style="font-size: 7px;">Requerido</label>
             </div>
-            <select name="nacionalidad_denunciante" id="nacionalidad_denunciante" onchange="validarNacionalidad(this)" class=" form-control "
-                 data-curp="divCurp_denunciante">
+            <select name="nacionalidad_denunciante" id="nacionalidad_denunciante" onchange="validarNacionalidad(this)"
+                class=" form-control " data-curp="divCurp_denunciante">
                 <option value="0">Seleccione la nacionalidad</option>
                 @foreach ($countries as $country)
 
@@ -39,8 +37,8 @@
                 <label for="curp">CURP</label>
                 <label for="nombre" style="font-size: 7px;">Requerido</label>
             </div>
-            <input type="text" name="curp_denunciante" id="curp_denunciante" class=" form-control " value="{{ old('curp') }}AOAA960320HMNLCL04"
-                maxlength="18" placeholder="CURP" >
+            <input type="text" name="curp_denunciante" id="curp_denunciante" class=" form-control "
+                value="{{ old('curp') }}AOAA960320HMNLCL04" maxlength="18" placeholder="CURP">
             <div style="color:#FF0000;">
                 {{ $errors->first('curp') }}
             </div>
@@ -49,7 +47,8 @@
         <div class="form-group col-md-2">
             <button class="btn-sm btn-search btn-buscar-curp" onclick="consultarCurp(this,'denunciante')"
                 id="btnConsultarCurp_denunciante"> BUSCAR</button>
-            <img src="{{asset("img/denuncia/loading.gif")}}" class="img-responsive d-none" width="30%" id="imgLoading_denunciante">
+            <img src="{{asset("img/denuncia/loading.gif")}}" class="img-responsive d-none" width="30%"
+                id="imgLoading_denunciante">
         </div>
 
     </div>
@@ -66,9 +65,9 @@
                     <label for="nombre">Nombre (s)</label>
                     <label for="nombre" style="font-size: 7px;">Requerido</label>
                 </div>
-                <input type="text" name="nombre_denunciante" id="Nombre_denunciante" class=" form-control required" value="{{ old('nombre') }}"
-                    data-message-error='El dato "NOMBRE" es requerido.'
-                    required maxlength="50" style="background-color:rgba(230, 238, 250, 0.5);" placeholder="Nombre">
+                <input type="text" name="nombre_denunciante" id="Nombre_denunciante" class=" form-control required"
+                    value="{{ old('nombre') }}" data-message-error='El dato "NOMBRE" es requerido.' required
+                    maxlength="50" style="background-color:rgba(230, 238, 250, 0.5);" placeholder="Nombre">
                 <div style="color:#FF0000;">
                     {{ $errors->first('nombre') }}
                 </div>
@@ -79,10 +78,10 @@
                     <label for="PrimerApellido">Primer Apellido</label>
                     <label for="nombre" style="font-size: 7px;">Requerido</label>
                 </div>
-                <input type="text" name="PrimerApellido_denunciante" id="PrimerApellido_denunciante" class=" form-control required"
-                    data-message-error='El dato "PRIMER APELLIDO" es requerido.'
-                    value="{{ old('PrimerApellido') }}" maxlength="50" style="background-color:rgba(230, 238, 250, 0.5);"
-                    placeholder="Primer apellido">
+                <input type="text" name="PrimerApellido_denunciante" id="PrimerApellido_denunciante"
+                    class=" form-control required" data-message-error='El dato "PRIMER APELLIDO" es requerido.'
+                    value="{{ old('PrimerApellido') }}" maxlength="50"
+                    style="background-color:rgba(230, 238, 250, 0.5);" placeholder="Primer apellido">
                 <div style="color:#FF0000;">
                     {{ $errors->first('PrimerApellido') }}
                 </div>
@@ -92,8 +91,8 @@
                     <i class="fad fa-id-card"></i>&nbsp;
                     <label for="SegundoApellido">Segundo Apellido</label>
                 </div>
-                <input type="text" name="SegundoApellido_denunciante" id="SegundoApellido_denunciante" class=" form-control "
-                    value="{{ old('SegundoApellido') }}" maxlength="50"
+                <input type="text" name="SegundoApellido_denunciante" id="SegundoApellido_denunciante"
+                    class=" form-control " value="{{ old('SegundoApellido') }}" maxlength="50"
                     placeholder="Segundo apellido">
                 <div style="color:#FF0000;">
                     {{ $errors->first('SegundoApellido') }}
@@ -106,12 +105,12 @@
                 <div class="form-ic-cmp">
                     <i class="fal fa-calendar"></i>&nbsp;
                     <label for="fnacimiento">Fecha de Nacimiento</label>
-                <label for="nombre" style="font-size: 7px;">Requerido</label>
+                    <label for="nombre" style="font-size: 7px;">Requerido</label>
 
                 </div>
-                <input type="date" name="fnacimiento_denunciante" id="fnacimiento_denunciante" class=" form-control required "
-                    data-message-error='El campo "FECHA DE NACIMIENTO" es requerido.'
-                    value="{{ old('fnacimiento') }}" >
+                <input type="date" name="fnacimiento_denunciante" id="fnacimiento_denunciante"
+                    class=" form-control required " data-message-error='El campo "FECHA DE NACIMIENTO" es requerido.'
+                    value="{{ old('fnacimiento') }}">
                 <div style="color:#FF0000;">
                     {{ $errors->first('fnacimiento') }}
                 </div>
@@ -123,13 +122,13 @@
 
                     <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top"
                         title="Capture un correo electrónico vigente, a esta cuenta llegará su acceso para realizar el seguimiento puntual a su denuncia"></i>&nbsp;
-                <label for="nombre" style="font-size: 7px;">Requerido</label>
+                    <label for="nombre" style="font-size: 7px;">Requerido</label>
 
 
                 </div>
-                <input type="email" name="correo" id="correo" class=" form-control required " value="{{ old('correo') }}"
-                    data-message-error='El campo "CORREO ELECTRÓNICO" es requerido.'
-                    maxlength="50" placeholder="correo@dominio.com" >
+                <input type="email" name="correo" id="correo" class=" form-control required "
+                    value="{{ old('correo') }}" data-message-error='El campo "CORREO ELECTRÓNICO" es requerido.'
+                    maxlength="50" placeholder="correo@dominio.com">
                 <div style="color:#FF0000;">
                     {{ $errors->first('correo') }}
                 </div>
@@ -143,9 +142,8 @@
                         title="Capture un número celular que permita contactarlo vía WhatsApp"></i>&nbsp;
                 </div>
                 <input type="text" name="telefono" class=" form-control required" value="{{ old('telefono') }}"
-                    data-message-error='El dato "TELÉFONO (WHATSAPP)" es requerido.'
-                    maxlength="10" onkeypress="return justNumbers(event);" placeholder="1234567890"
-                    >
+                    data-message-error='El dato "TELÉFONO (WHATSAPP)" es requerido.' maxlength="10"
+                    onkeypress="return justNumbers(event);" placeholder="1234567890">
                 <div style="color:#FF0000;">
                     {{ $errors->first('telefono') }}
                 </div>
@@ -158,13 +156,13 @@
 
                     <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top"
                         title="Capture un correo electrónico vigente, a esta cuenta llegará su acceso para realizar el seguimiento puntual a su denuncia"></i>&nbsp;
-                <label for="nombre" style="font-size: 7px;">Requerido</label>
+                    <label for="nombre" style="font-size: 7px;">Requerido</label>
 
 
                 </div>
-                <input type="email" name="correo" id="correo" class=" form-control required " value="{{ old('correo') }}"
-                    data-message-error='El campo "CORREO ELECTRÓNICO" es requerido.'
-                    maxlength="50" placeholder="correo@dominio.com" >
+                <input type="email" name="correo" id="correo" class=" form-control required "
+                    value="{{ old('correo') }}" data-message-error='El campo "CORREO ELECTRÓNICO" es requerido.'
+                    maxlength="50" placeholder="correo@dominio.com">
                 <div style="color:#FF0000;">
                     {{ $errors->first('correo') }}
                 </div>
@@ -176,15 +174,22 @@
             <div class="form-group col-md-8">
                 <div class="form-ic-cmp">
                     <i class="fal fa-file"></i>&nbsp;
-                    <label for="credencial">Identificación oficial (INE o Pasaporte) *<font style="font-size: 8px">Formato aceptado: .jpg/.jpeg/.png </font>*<font style="font-size: 8px">Tamaño máximo: 3mb </font></label>
+                    <label for="credencial">Identificación oficial (INE o Pasaporte) *<font style="font-size: 8px">
+                            Formato aceptado: .jpg/.jpeg/.png </font>*<font style="font-size: 8px">Tamaño máximo: 3mb
+                        </font></label>
                     <label for="credencial" style="font-size: 7px;">Requerido</label>
 
                 </div>
-                {{-- <input type="file" name="credencial" class="file_multi_image required credencial" id="credencial" accept="image/*" required> --}}
+                {{-- <input type="file" name="credencial" class="file_multi_image required credencial" id="credencial"
+                    accept="image/*" required> --}}
                 <div class="input-group mb-3" role='button'>
                     <div class="input-group-prepend"> </div>
-                    <div class="custom-file"> <input style="cursor:pointer;" type="file" class="custom-file-input required" id="credencial"
-                            name="credencial" data-message-error='El dato "IDENTIFICACIÓN OFICIAL" es requerido.'> <label class="custom-file-label" for="inputGroupFile01">Buscar Archivo</label>  </div>
+                    <div class="custom-file">
+                        <input style="cursor:pointer;" type="file" class="custom-file-input required" id="credencial"
+                            name="credencial" data-message-error='El dato "IDENTIFICACIÓN OFICIAL" es requerido.'>
+                        <label class="custom-file-label" id="custom-file-label-credencial" for="inputGroupFile01">Buscar
+                            Archivo</label>  
+                    </div>
                 </div>
             </div>
             <div class="form-group col-md-4 text-center">
@@ -206,11 +211,10 @@
                 <div class="form-ic-cmp">
                     <i class="fal fa-globe-americas"></i>&nbsp;
                     <label for="pais">País de residencia</label>
-                <label for="nombre" style="font-size: 7px;">Requerido</label>
+                    <label for="nombre" style="font-size: 7px;">Requerido</label>
 
                 </div>
-                <select name="pais" id="pais" class=" form-control required"
-                    >
+                <select name="pais" id="pais" class=" form-control required">
                     <option value="0">Seleccione un país</option>
                     @foreach ($countries as $country)
 
@@ -231,8 +235,7 @@
 
                 </div>
                 <input type="text" name="domicilio_extranjero" id="domicilio_extranjero" class=" form-control "
-                    value="{{ old('domicilio_extranjero') }}" maxlength="250" placeholder="Ciudad Extrajera"
-                    >
+                    value="{{ old('domicilio_extranjero') }}" maxlength="250" placeholder="Ciudad Extrajera">
                 <div style="color:#FF0000;">
                     {{ $errors->first('domicilio_extranjero') }}
                 </div>
@@ -248,9 +251,9 @@
 
                     </div>
                     <input class=" form-control required" value="" maxlength="5" onkeypress="return justNumbers(event);"
-                        data-message-error='El campo "CÓDIGO POSTAL" es requerido.'
-                         name="CP" type="text" id="CP"
-                        placeholder="Ingrese CP" maxlength="5" onblur="validarCP(this,'entidad_residencia','municipio_residencia','asentamiento_residencia')">
+                        data-message-error='El campo "CÓDIGO POSTAL" es requerido.' name="CP" type="text" id="CP"
+                        placeholder="Ingrese CP" maxlength="5"
+                        onblur="validarCP(this,'entidad_residencia','municipio_residencia','asentamiento_residencia')">
 
                     <div style="color:#FF0000;">
 
@@ -261,9 +264,8 @@
                         <i class="fal fa-map"></i>&nbsp;
                         <label for="entidad">Estado de residencia</label>
                     </div>
-                    <select class=" form-control " value="{{(old('entidad'))}}"
-                         id="entidad_residencia" name="entidad_residencia"
-                        disabled>
+                    <select class=" form-control " value="{{(old('entidad'))}}" id="entidad_residencia"
+                        name="entidad_residencia" disabled>
                         <option value="0">Estado</option>
                     </select>
                     <div style="color:#FF0000;">
@@ -282,7 +284,7 @@
                         <label for="municipio">Municipio</label>
                     </div>
                     <select class=" form-control " value="<?php echo e(old('municipio')); ?>" id="municipio_residencia"
-                         name="municipio_residencia" disabled>
+                        name="municipio_residencia" disabled>
                         <option value="0">Municipio</option>
                         {{-- @foreach ($municipios as $country)
 
@@ -309,13 +311,12 @@
 
                     </div>
                     <select class=" form-control required" value="<?php echo e(old('municipio')); ?>"
-                        data-message-error='El campo "COLONIA" es requerido.'
-                         name="asentamiento_residencia"
+                        data-message-error='El campo "COLONIA" es requerido.' name="asentamiento_residencia"
                         id="asentamiento_residencia">
                         <option value="0">Seleccione una colonia</option>
                     </select>
-                    {{-- <input class=" form-control " maxlength="250" value=""
-                         name="colonia" type="text" id="colonia"> --}}
+                    {{-- <input class=" form-control " maxlength="250" value="" name="colonia" type="text" id="colonia">
+                    --}}
                     <div style="color:#FF0000;">
 
                     </div>
@@ -328,8 +329,7 @@
 
                     </div>
                     <input class=" form-control required " value="" maxlength="250"
-                        data-message-error='El campo "CALLE" es requerido.'
-                         name="calle" type="text" id="calle"
+                        data-message-error='El campo "CALLE" es requerido.' name="calle" type="text" id="calle"
                         placeholder="Ingrese la calle">
                     <div style="color:#FF0000;">
 
@@ -342,9 +342,8 @@
 
                     </div>
                     <input class=" form-control required" value="" maxlength="6"
-                        data-message-error='El campo "NÚMERO EXTERIOR" es requerido.'
-                         name="numext" type="text" id="numext"
-                        placeholder="Número exterior">
+                        data-message-error='El campo "NÚMERO EXTERIOR" es requerido.' name="numext" type="text"
+                        id="numext" placeholder="Número exterior">
                     <div style="color:#FF0000;">
 
                     </div>
@@ -354,8 +353,8 @@
                         <i class="fal fa-hashtag"></i>&nbsp;
                         <label for="numint">Número Interior</label>
                     </div>
-                    <input class=" form-control " placeholder="Opcional" value="" maxlength="6"
-                         name="numint" type="text" id="numint">
+                    <input class=" form-control " placeholder="Opcional" value="" maxlength="6" name="numint"
+                        type="text" id="numint">
                     <div style="color:#FF0000;">
 
                     </div>

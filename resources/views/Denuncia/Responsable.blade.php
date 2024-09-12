@@ -108,7 +108,7 @@
 
         <div class="form-row col-lg-12 justify-content-center d-none mt-2" id="divIdentifiacionResponsable">
             <div class="form-group col-md-12">
-                <textarea id="rasgos-distintivos-responsable" rows="6" class="form-control"
+                <textarea id="rasgos-distintivos-responsable" rows="6" class="form-control" name="rasgos_fisicos_responsable"
                     placeholder="Ejemplos: Tatuajue en el rostro, cabello largo, ojos café claro, etc..."
                     data-message-error='El dato "DESCRIPCIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE" es requerido.'></textarea>
             </div>
@@ -143,7 +143,7 @@
 
         <div class="form-row col-lg-12 justify-content-center d-none mt-2" id="divDireccionResponsable">
             <div class="form-group col-md-12">
-                Dirección del Responsable
+                <label for="direccion-responsable">Dirección del Responsable</label >
                 <textarea name="direccionResponsable" id="direccion-responsable" rows="6" class="form-control"
                     placeholder="Ejemplos: Calle Madero #556, Col. Centro, Morelia, Michoacán."
                     data-message-error='El dato "DIRECCIÓN DEL RESPONSABLE" es requerido.'></textarea>

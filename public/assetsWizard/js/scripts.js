@@ -61,7 +61,7 @@ jQuery(document).ready(function() {
     $('input[name="conoce_responsable"]').on('change', () => {
         $('#conoce-responsable-mensaje-error').addClass('d-none');
 
-        if( $('input[name="conoce_responsable"]:checked').val() == '1')
+        if ($('input[name="conoce_responsable"]:checked').val() == '1')
             $('#nombre-alias-responsable').addClass('required');
         else
             $('#nombre-alias-responsable').removeClass('required');
@@ -91,7 +91,7 @@ jQuery(document).ready(function() {
     $('input[name="conoce_direccion_responsable"]').on('change', () => {
         $('#conoce-direccion-responsable-mensaje-error').addClass('d-none');
 
-        if($('input[name="conoce_direccion_responsable"]:checked').val() == '1')
+        if ($('input[name="conoce_direccion_responsable"]:checked').val() == '1')
             $('#direccion-responsable').addClass('required')
         else
             $('#direccion-responsable').removeClass('required')
@@ -100,7 +100,7 @@ jQuery(document).ready(function() {
     $('input[name="existio_violencia"]').on('change', () => {
         $('#existio-violencia-mensaje-error').addClass('d-none');
 
-        if($('input[name="existio_violencia"]:checked').val() == '1')
+        if ($('input[name="existio_violencia"]:checked').val() == '1')
             $('#narrativa-violencia').addClass('required')
         else
             $('#narrativa-violencia').removeClass('required')
@@ -120,9 +120,9 @@ jQuery(document).ready(function() {
     let whatsappNotification;
 
 
-$('.f1 input[type="text"], .f1 input[type="password"], .f1 textarea').on('focus', function() {
-$(this).removeClass('input-error');
-});
+    $('.f1 input[type="text"], .f1 input[type="password"], .f1 textarea').on('focus', function() {
+        $(this).removeClass('input-error');
+    });
 
 
     $('#btn-atras').on('click', function() {
@@ -143,14 +143,14 @@ $(this).removeClass('input-error');
             let elemento = $(this);
             let tipoElemento = elemento.prop("nodeName");
 
-            console.log( tipoElemento );
+            console.log(tipoElemento);
 
 
             if (elemento.val() == "" || (tipoElemento == "SELECT" && elemento.val() == "0")) {
                 // al elemento se agrega la clase para mostar error
                 $(this).addClass('input-error');
                 // asignacion del primer mensaje de error y banderas de validación
-                if ( messageError == undefined ) {
+                if (messageError == undefined) {
                     messageError = elemento.attr('data-message-error');
                     nextStep = false;
                     erroresValidacion = true;
@@ -161,7 +161,7 @@ $(this).removeClass('input-error');
         });
 
         // sweetalert mostrar error
-        if ( erroresValidacion == true ) {
+        if (erroresValidacion == true) {
             Swal.fire({
                 title: "¡FALTAN DATOS POR LLENAR!",
                 html: `<p style="font-size:26px !important;"><b>${messageError}</b></p>`,
@@ -180,7 +180,7 @@ $(this).removeClass('input-error');
         const whatsapp = $('[name="telefono"]').val();
 
         // en caso de que el usuario cambie el correo se volvera a enviar el codigo de verificación
-        if (correoNotification != correo /* || whatsappNotification != whatsapp */) {
+        if (correoNotification != correo /* || whatsappNotification != whatsapp */ ) {
             // se genera numero aleatorio
             let codigoVerificacion = generarCodigoVerificacion();
             console.log(`Código verificación: ${codigoVerificacion}`);
@@ -230,7 +230,7 @@ $(this).removeClass('input-error');
 
                         inputElement.addEventListener('keydown', (e) => {
                             if (e.key === 'Backspace' && inputElement.value === '' && index > 0) {
-                            document.getElementById(inputs[index - 1]).focus(); // Mover el foco al input anterior
+                                document.getElementById(inputs[index - 1]).focus(); // Mover el foco al input anterior
                             }
                         });
                     });
@@ -319,8 +319,8 @@ $(this).removeClass('input-error');
         }
 
 
-    $('html,body').animate({ scrollTop: 0 }, 900);
-    return false;
+        $('html,body').animate({ scrollTop: 0 }, 900);
+        return false;
     });
 
     // validaciones HECHOS
@@ -329,78 +329,84 @@ $(this).removeClass('input-error');
         let elementSection = $('#datos-hechos'); // elemento section en donde estan los inputs a validar
         let erroresValidacion = false; // bandera que define si hay campos sin llenar
         let mensajeError; // mensaje de error a desplegar de acuerdo al input
+        let banderaValidacion = false;
 
-        elementSection.find('.required').each(function() {
-            let elemento = $(this);
-            let tipoElemento = elemento.prop("nodeName");
-            let tipoInput = elemento.attr('type'); // Verificar el tipo de input
+        if (banderaValidacion) {
 
-            if (elemento.val() == "" ||
-                (tipoElemento == "SELECT" && elemento.val() == "0") ||
-                (tipoInput == "radio" && $('input[name="' + elemento.attr('name') + '"]:checked').length == 0)) { // Verificar si es radio button
+            elementSection.find('.required').each(function() {
+                let elemento = $(this);
+                let tipoElemento = elemento.prop("nodeName");
+                let tipoInput = elemento.attr('type'); // Verificar el tipo de input
 
-                // Al elemento o contenedor se agrega la clase para mostrar error
-                $(this).addClass('input-error');
+                if (elemento.val() == "" ||
+                    (tipoElemento == "SELECT" && elemento.val() == "0") ||
+                    (tipoInput == "radio" && $('input[name="' + elemento.attr('name') + '"]:checked').length == 0)) { // Verificar si es radio button
 
-                // Asignación del primer mensaje de error y banderas de validación
-                if (mensajeError == undefined) {
-                    console.log("elemento error:", elemento);
-                    mensajeError = elemento.attr('data-message-error');
-                    erroresValidacion = true;
+                    // Al elemento o contenedor se agrega la clase para mostrar error
+                    $(this).addClass('input-error');
+
+                    // Asignación del primer mensaje de error y banderas de validación
+                    if (mensajeError == undefined) {
+                        console.log("elemento error:", elemento);
+                        mensajeError = elemento.attr('data-message-error');
+                        erroresValidacion = true;
+                    }
+                } else {
+                    $(this).removeClass('input-error');
                 }
-            } else {
-                $(this).removeClass('input-error');
+            });
+
+
+
+            /** radio-buttons */
+            // ¿QUIÉN ES LA VÍCTIMA?
+            let radios = document.getElementsByName('victimadenunciante');
+            let radioSeleccionado = false;
+
+            for (let i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    radioSeleccionado = true;
+                    break;
+                }
             }
-        });
 
+            // toggle para el mensaje de error
+            radioSeleccionado
+                ?
+                $('#quien-es-victima-mensaje-error').addClass('d-none') :
+                $('#quien-es-victima-mensaje-error').removeClass('d-none');
 
+            // ¿CONOCE AL RESPONSABLE?
+            radios = document.getElementsByName('conoce_responsable');
+            radioSeleccionado = false;
 
-        /** radio-buttons */
-        // ¿QUIÉN ES LA VÍCTIMA?
-        let radios = document.getElementsByName('victimadenunciante');
-        let radioSeleccionado = false;
-
-        for (let i = 0; i < radios.length; i++) {
-            if (radios[i].checked) {
-                radioSeleccionado = true;
-                break;
+            for (let i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    radioSeleccionado = true;
+                    break;
+                }
             }
-        }
+            // toggle para el mensaje de error
+            radioSeleccionado
+                ?
+                $('#conoce-responsable-mensaje-error').addClass('d-none') :
+                $('#conoce-responsable-mensaje-error').removeClass('d-none');
 
-        // toggle para el mensaje de error
-        radioSeleccionado
-            ? $('#quien-es-victima-mensaje-error').addClass('d-none')
-            : $('#quien-es-victima-mensaje-error').removeClass('d-none');
+            // ¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?
+            radios = document.getElementsByName('conoce_rasgos_responsable');
+            radioSeleccionado = false;
 
-        // ¿CONOCE AL RESPONSABLE?
-        radios = document.getElementsByName('conoce_responsable');
-        radioSeleccionado = false;
-
-        for (let i = 0; i < radios.length; i++) {
-            if (radios[i].checked) {
-                radioSeleccionado = true;
-                break;
+            for (let i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    radioSeleccionado = true;
+                    break;
+                }
             }
-        }
-        // toggle para el mensaje de error
-        radioSeleccionado
-            ? $('#conoce-responsable-mensaje-error').addClass('d-none')
-            : $('#conoce-responsable-mensaje-error').removeClass('d-none');
-
-        // ¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?
-        radios = document.getElementsByName('conoce_rasgos_responsable');
-        radioSeleccionado = false;
-
-        for (let i = 0; i < radios.length; i++) {
-            if (radios[i].checked) {
-                radioSeleccionado = true;
-                break;
-            }
-        }
-        // toggle para el mensaje de error
-        radioSeleccionado
-            ? $('#rasgos-responsable-mensaje-error').addClass('d-none')
-            : $('#rasgos-responsable-mensaje-error').removeClass('d-none');
+            // toggle para el mensaje de error
+            radioSeleccionado
+                ?
+                $('#rasgos-responsable-mensaje-error').addClass('d-none') :
+                $('#rasgos-responsable-mensaje-error').removeClass('d-none');
 
             // ¿CONOCE LA DIRECCIÓN DEL RESPONSABLE?
             radios = document.getElementsByName('conoce_direccion_responsable');
@@ -414,110 +420,67 @@ $(this).removeClass('input-error');
             }
             // toggle para el mensaje de error
             radioSeleccionado
-                ? $('#conoce-direccion-responsable-mensaje-error').addClass('d-none')
-                : $('#conoce-direccion-responsable-mensaje-error').removeClass('d-none');
+                ?
+                $('#conoce-direccion-responsable-mensaje-error').addClass('d-none') :
+                $('#conoce-direccion-responsable-mensaje-error').removeClass('d-none');
 
 
 
-        // ¿EXISTIÓ VIOLENCIA?
-        radios = document.getElementsByName('existio_violencia');
-        radioSeleccionado = false;
+            // ¿EXISTIÓ VIOLENCIA?
+            radios = document.getElementsByName('existio_violencia');
+            radioSeleccionado = false;
 
-        for (let i = 0; i < radios.length; i++) {
-            if (radios[i].checked) {
-                radioSeleccionado = true;
-                break;
+            for (let i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    radioSeleccionado = true;
+                    break;
+                }
             }
-        }
-        // toggle para el mensaje de error
-        radioSeleccionado
-            ? $('#existio-violencia-mensaje-error').addClass('d-none')
-            : $('#existio-violencia-mensaje-error').removeClass('d-none');
+            // toggle para el mensaje de error
+            radioSeleccionado
+                ?
+                $('#existio-violencia-mensaje-error').addClass('d-none') :
+                $('#existio-violencia-mensaje-error').removeClass('d-none');
 
-        // ¿EXISTEN TESTIGOS DEL HECHO?
-        radios = document.getElementsByName('existen_testigos');
-        radioSeleccionado = false;
+            // ¿EXISTEN TESTIGOS DEL HECHO?
+            radios = document.getElementsByName('existen_testigos');
+            radioSeleccionado = false;
 
-        for (let i = 0; i < radios.length; i++) {
-            if (radios[i].checked) {
-                radioSeleccionado = true;
-                break;
+            for (let i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    radioSeleccionado = true;
+                    break;
+                }
             }
-        }
-        // toggle para el mensaje de error
-        radioSeleccionado
-            ? $('#existen-testigos-mensaje-error').addClass('d-none')
-            : $('#existen-testigos-mensaje-error').removeClass('d-none');
+            // toggle para el mensaje de error
+            radioSeleccionado
+                ?
+                $('#existen-testigos-mensaje-error').addClass('d-none') :
+                $('#existen-testigos-mensaje-error').removeClass('d-none');
 
-        // ¿CUENTA CON EVIDENCIAS?
-        radios = document.getElementsByName('existen_evidencias');
-        radioSeleccionado = false;
+            // ¿CUENTA CON EVIDENCIAS?
+            radios = document.getElementsByName('existen_evidencias');
+            radioSeleccionado = false;
 
-        for (let i = 0; i < radios.length; i++) {
-            if (radios[i].checked) {
-                radioSeleccionado = true;
-                break;
+            for (let i = 0; i < radios.length; i++) {
+                if (radios[i].checked) {
+                    radioSeleccionado = true;
+                    break;
+                }
             }
-        }
-        // toggle para el mensaje de error
-        radioSeleccionado
-            ? $('#existen-evidencias-mensaje-error').addClass('d-none')
-            : $('#existen-evidencias-mensaje-error').removeClass('d-none');
+            // toggle para el mensaje de error
+            radioSeleccionado
+                ?
+                $('#existen-evidencias-mensaje-error').addClass('d-none') :
+                $('#existen-evidencias-mensaje-error').removeClass('d-none');
 
-        // sweetalert mostrar error
-        if ( erroresValidacion == true ) {
-            console.log('entraasdsad');
+            // sweetalert mostrar error
+            if (erroresValidacion == true) {
+                console.log('entraasdsad');
 
-            Swal.fire({
-                title: "¡FALTAN DATOS POR LLENAR!",
-                html: `<p style="font-size:26px !important;"><b>${mensajeError}</b></p>`,
-                icon: "error",
-                confirmButtonText: "ACEPTAR",
-                customClass: {
-                    confirmButton: 'swal2-deny' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
-                },
-            });
-
-            return;
-        }
-
-        if ( $('input[name="victimadenunciante"]:checked').val() == '0' ) {
-
-            if ( $('#nacionalidad_victima').val() == '118' && $('#Nombre_victima').val() == '' ) {
                 Swal.fire({
                     title: "¡FALTAN DATOS POR LLENAR!",
-                    html: `<p style="font-size:26px !important;"><b>En "datos de la víctima" dé click en botón "BUSCAR" para agregar el nombre de la víctima.</b></p>`,
-                    icon: "error",
-                    confirmButtonText: "ACEPTAR",
-                    customClass: {
-                        confirmButton: 'swal2-deny' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
-                    },
-                });
-                return;
-            }
-
-
-        }
-
-        if ( $('#narrativa-hecho').val().length < 150 ) {
-            Swal.fire({
-                title: "¡FALTAN DATOS POR LLENAR!",
-                html: `<p style="font-size:26px !important;"><b>AMPLIÉ UN POCO MÁS LA MANERA EN QUE SE COMETIÓ EL HECHO</b></p>`,
-                icon: "error",
-                confirmButtonText: "ACEPTAR",
-                customClass: {
-                    confirmButton: 'swal2-deny' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
-                },
-            });
-
-            return;
-        }
-
-        if($('input[name="existio_violencia"]:checked').val() == '1'){
-            if ( $('#narrativa-violencia').val().length < 50 ) {
-                Swal.fire({
-                    title: "¡FALTAN DATOS POR LLENAR!",
-                    html: `<p style="font-size:26px !important;"><b>AMPLIÉ UN POCO MÁS LA MANERA EN QUE SE COMETIÓ LA VIOLENCIA</b></p>`,
+                    html: `<p style="font-size:26px !important;"><b>${mensajeError}</b></p>`,
                     icon: "error",
                     confirmButtonText: "ACEPTAR",
                     customClass: {
@@ -527,13 +490,29 @@ $(this).removeClass('input-error');
 
                 return;
             }
-        }
 
-        if($('input[name="existen_testigos"]:checked').val() == '1'){
-            if($('#tablaTestigo tbody tr td').length < 2){
+            if ($('input[name="victimadenunciante"]:checked').val() == '0') {
+
+                if ($('#nacionalidad_victima').val() == '118' && $('#Nombre_victima').val() == '') {
+                    Swal.fire({
+                        title: "¡FALTAN DATOS POR LLENAR!",
+                        html: `<p style="font-size:26px !important;"><b>En "datos de la víctima" dé click en botón "BUSCAR" para agregar el nombre de la víctima.</b></p>`,
+                        icon: "error",
+                        confirmButtonText: "ACEPTAR",
+                        customClass: {
+                            confirmButton: 'swal2-deny' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
+                        },
+                    });
+                    return;
+                }
+
+
+            }
+
+            if ($('#narrativa-hecho').val().length < 150) {
                 Swal.fire({
                     title: "¡FALTAN DATOS POR LLENAR!",
-                    html: `<p style="font-size:26px !important;"><b>AGREGUE EL REGISTRO DEL TESTIGO </b></p>`,
+                    html: `<p style="font-size:26px !important;"><b>AMPLIÉ UN POCO MÁS LA MANERA EN QUE SE COMETIÓ EL HECHO</b></p>`,
                     icon: "error",
                     confirmButtonText: "ACEPTAR",
                     customClass: {
@@ -543,23 +522,57 @@ $(this).removeClass('input-error');
 
                 return;
             }
-        }
 
-        if($('input[name="existen_evidencias"]:checked').val() == '1'){
-            if($('#tablaEvidencia tbody tr td').length < 2){
-                Swal.fire({
-                    title: "¡FALTAN DATOS POR LLENAR!",
-                    html: `<p style="font-size:26px !important;"><b>AGREGUE EL REGISTRO DE EVIDENCIA </b></p>`,
-                    icon: "error",
-                    confirmButtonText: "ACEPTAR",
-                    customClass: {
-                        confirmButton: 'swal2-deny' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
-                    },
-                });
+            if ($('input[name="existio_violencia"]:checked').val() == '1') {
+                if ($('#narrativa-violencia').val().length < 50) {
+                    Swal.fire({
+                        title: "¡FALTAN DATOS POR LLENAR!",
+                        html: `<p style="font-size:26px !important;"><b>AMPLIÉ UN POCO MÁS LA MANERA EN QUE SE COMETIÓ LA VIOLENCIA</b></p>`,
+                        icon: "error",
+                        confirmButtonText: "ACEPTAR",
+                        customClass: {
+                            confirmButton: 'swal2-deny' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
+                        },
+                    });
 
-                return;
+                    return;
+                }
+            }
+
+            if ($('input[name="existen_testigos"]:checked').val() == '1') {
+                if ($('#tablaTestigo tbody tr td').length < 2) {
+                    Swal.fire({
+                        title: "¡FALTAN DATOS POR LLENAR!",
+                        html: `<p style="font-size:26px !important;"><b>AGREGUE EL REGISTRO DEL TESTIGO </b></p>`,
+                        icon: "error",
+                        confirmButtonText: "ACEPTAR",
+                        customClass: {
+                            confirmButton: 'swal2-deny' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
+                        },
+                    });
+
+                    return;
+                }
+            }
+
+            if ($('input[name="existen_evidencias"]:checked').val() == '1') {
+                if ($('#tablaEvidencia tbody tr td').length < 2) {
+                    Swal.fire({
+                        title: "¡FALTAN DATOS POR LLENAR!",
+                        html: `<p style="font-size:26px !important;"><b>AGREGUE EL REGISTRO DE EVIDENCIA </b></p>`,
+                        icon: "error",
+                        confirmButtonText: "ACEPTAR",
+                        customClass: {
+                            confirmButton: 'swal2-deny' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
+                        },
+                    });
+
+                    return;
+                }
             }
         }
+
+
 
         Swal.fire({
             icon: "question",
@@ -574,62 +587,70 @@ $(this).removeClass('input-error');
                 confirmButton: 'btn-success',
                 denyButton: 'btn-cancel', // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
             },
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                guardarDenuncia(this);
+            } else {
+                $(this).attr("disabled", false);
+            }
         });
+
 
     });
 
 
 
-function alertas(msg) {
-new PNotify({
-    title: 'Error:',
-    text: msg,
-    type: 'error',
-    addclass: "stack-bottomright"
-});
-}
-
-function validarFormatoCorreo(correo) {
-// Expresión regular para validar el formato del correo electrónico
-var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-// Verificar si el correo cumple con la expresión regular
-return regex.test(correo);
-}
-
-// previous step
-$('.f1 .btn-previous').on('click', function() {
-// navigation steps / progress steps
-var current_active_step = $(this).parents('.f1').find('.f1-step.active');
-var progress_line = $(this).parents('.f1').find('.f1-progress-line');
-
-$(this).parents('fieldset').fadeOut(400, function() {
-    // change icons
-    current_active_step.removeClass('active').prev().removeClass('activated').addClass('active');
-    // progress bar
-    bar_progress(progress_line, 'left');
-    // show previous step
-    $(this).prev().fadeIn();
-    // scroll window to beginning of the form
-    scroll_to_class($('.f1'), 20);
-});
-});
-
-// submit
-$('.f1').on('submit', function(e) {
-e.preventDefault();
-
-// fields validation
-$(this).find('.required').each(function() {
-    if ($(this).val() == "") {
-        $(this).addClass('input-error');
-    } else {
-        $(this).removeClass('input-error');
+    function alertas(msg) {
+        new PNotify({
+            title: 'Error:',
+            text: msg,
+            type: 'error',
+            addclass: "stack-bottomright"
+        });
     }
-});
-// fields validation
 
-});
+    function validarFormatoCorreo(correo) {
+        // Expresión regular para validar el formato del correo electrónico
+        var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        // Verificar si el correo cumple con la expresión regular
+        return regex.test(correo);
+    }
+
+    // previous step
+    $('.f1 .btn-previous').on('click', function() {
+        // navigation steps / progress steps
+        var current_active_step = $(this).parents('.f1').find('.f1-step.active');
+        var progress_line = $(this).parents('.f1').find('.f1-progress-line');
+
+        $(this).parents('fieldset').fadeOut(400, function() {
+            // change icons
+            current_active_step.removeClass('active').prev().removeClass('activated').addClass('active');
+            // progress bar
+            bar_progress(progress_line, 'left');
+            // show previous step
+            $(this).prev().fadeIn();
+            // scroll window to beginning of the form
+            scroll_to_class($('.f1'), 20);
+        });
+    });
+
+    // submit
+    $('.f1').on('submit', function(e) {
+        e.preventDefault();
+
+        // fields validation
+        $(this).find('.required').each(function() {
+            if ($(this).val() == "") {
+                $(this).addClass('input-error');
+            } else {
+                $(this).removeClass('input-error');
+            }
+        });
+        // fields validation
+
+    });
 
 
 });
