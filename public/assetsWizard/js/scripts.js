@@ -329,7 +329,7 @@ jQuery(document).ready(function() {
         let elementSection = $('#datos-hechos'); // elemento section en donde estan los inputs a validar
         let erroresValidacion = false; // bandera que define si hay campos sin llenar
         let mensajeError; // mensaje de error a desplegar de acuerdo al input
-        let banderaValidacion = false;
+        let banderaValidacion = true;
 
         if (banderaValidacion) {
 
