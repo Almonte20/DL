@@ -318,9 +318,8 @@
 
                     <input type="hidden" id="token" name="token"><br><br>
                 </div>
-                <button class="btn btn-info" style="
-                background-color: #c09f77;
-                font-family: Labrador A;  font-size: x-large;" type="submit">Consultar denuncia</button>
+                 <button class="btn-sm btn-back" type="submit"><i class="fa-solid fa-search"></i>&nbsp; CONSULTAR DENUNCIA</button>
+                 <button class="btn-sm btn-next" type="button" onclick="location.reload()"><i class="fa-solid fa-file-circle-plus"></i>&nbsp; REGISTRAR NUEVA DENUNCIA</button>
             </form>
 
         </div>
