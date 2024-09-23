@@ -14,14 +14,16 @@ class RegistroDenunciaMailable extends Mailable
 {
     use Queueable, SerializesModels;
     public $data;
-    public $pdfPath;
+    public $pdfPathAcuse;
+    public $pdfPathDenuncia;
     /**
      * Create a new message instance.
      */
-    public function __construct($data,$rutaAcuse)
+    public function __construct($data,$rutaAcuse,$rutaDenuncia)
     {
         $this->data = $data;
-        $this->pdfPath = $rutaAcuse;
+        $this->pdfPathAcuse = $rutaAcuse;
+        $this->pdfPathDenuncia = $rutaDenuncia;
     }
 
     /**
@@ -57,9 +59,12 @@ class RegistroDenunciaMailable extends Mailable
     public function attachments(): array
     {
         return [
-            Attachment::fromPath($this->pdfPath)
-                ->as('acuse_denuncia.pdf')
-                ->withMime('application/pdf'),
+            Attachment::fromPath($this->pdfPathAcuse)
+            ->as('Acuse.pdf')
+            ->withMime('application/pdf'),
+        Attachment::fromPath($this->pdfPathDenuncia)
+            ->as('Denuncia.pdf')
+            ->withMime('application/pdf'),
         ];
     }
 
