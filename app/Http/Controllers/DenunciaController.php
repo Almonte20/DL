@@ -95,6 +95,7 @@ class DenunciaController extends Controller
         date_default_timezone_set('America/Mexico_City');
         $denuncia = Denuncia::where('id', $id_denuncia)->first();
         $hechos = Hecho::where('id_denuncia', $id_denuncia)->first();
+        $NumeroCaso = Caso::where("id_denuncia_linea",$id_denuncia)->first();
         
         $folio = $denuncia->folio_denuncia;
         $pdf = $this->fpdf_denuncia;
@@ -112,20 +113,20 @@ class DenunciaController extends Controller
         
         $pdf->SetXY(110,45);
         $pdf->Rect(110,45 ,50 ,14 );
-        $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(50,14,utf8_decode("Número Único de caso:"),0,0,'L');
-        $pdf->Rect(160,45,35,14 );
         $pdf->SetFont('Arial','',10);
-        $pdf->Cell(35,14,utf8_decode("Sin asignar"),0,0,'L');
+        $pdf->Cell(50,14,utf8_decode("Número Único de caso:"),0,0,'C');
+        $pdf->Rect(160,45,46,14 );
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(0,14,utf8_decode(!empty($NumeroCaso) ? $NumeroCaso->caso : 'Sin asignar'),0,0,'C');
         
         
         $pdf->SetXY(110,59);
         $pdf->Rect(110,59 ,50 ,14 );
-        $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(50,14,utf8_decode("Número de expediente:"),0,0,'L');
-        $pdf->Rect(160,59,35,14 );
         $pdf->SetFont('Arial','',10);
-        $pdf->Cell(35,14,$folio,0,0,'L');
+        $pdf->Cell(50,14,utf8_decode("Número de expediente:"),0,0,'C');
+        $pdf->Rect(160,59,46,14 );
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(0,14,$folio,0,0,'C');
         
         
         $pdf->SetFont('Arial','B',10);
@@ -293,14 +294,14 @@ class DenunciaController extends Controller
         $pdf->MultiCell(0,5,utf8_decode("\n  \n $hechos->narrativa  \n  \n"),1,'J');
         
         $pdf->Ln(40);
-        $pdf->SetFont('Arial','B',11);
+        $pdf->SetFont('Arial','',11);
         $pdf->Line($pdf->GetX(),$pdf->GetY(),$pdf->GetX()+80,$pdf->GetY());
         $pdf->Cell(80,7,utf8_decode("AGENTE DEL MINISTERIO PÚBLICO"),0,0,'C');
         $pdf->SetX($pdf->GetX()+36);
         $pdf->Line($pdf->GetX(),$pdf->GetY(),$pdf->GetX()+80,$pdf->GetY());
         $pdf->Cell(80,7,utf8_decode("DENUNCIANTE"),0,1,'C');
 
-        $pdf->SetFont('Arial','',11);
+        $pdf->SetFont('Arial','B',11);
         $pdf->Ln(1);
         $x = $pdf->GetX();
         $y = $pdf->GetY();
