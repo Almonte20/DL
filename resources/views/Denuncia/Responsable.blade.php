@@ -16,7 +16,7 @@
     <div id="ResponsableDiv" class="pl-3">
         <div class="row ">
             <div class="col-md-12 text-center">
-                <p class="mb-2" style="font-weight: bold; font-size: 22px;">¿CONOCE AL RESPONSABLE?</p>
+                <p class="mb-2 txt-preguntas">¿CONOCE AL RESPONSABLE?</p>
             </div>
         </div>
 
@@ -72,7 +72,7 @@
         </div>
         <div class="row mt-3">
             <div class="col-md-12 text-center">
-                <p class="mb-2" style="font-weight: bold; font-size: 22px;">¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE
+                <p class="mb-2  txt-preguntas">¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE
                     RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?</p>
             </div>
             <div class="col-md-12 text-center">
@@ -116,7 +116,7 @@
 
 
             <div class="col-md-12 text-center">
-                <p class="mb-2" style="font-weight: bold; font-size: 22px;">¿CONOCE LA DIRECCIÓN DEL RESPONSABLE?
+                <p class="mb-2 txt-preguntas" >¿CONOCE LA DIRECCIÓN DEL RESPONSABLE?
                 </p>
             </div>
 

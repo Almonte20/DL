@@ -6,7 +6,7 @@
 </div>
 
 <div class="text-center mb-3">
-    <p class="mb-2" style="font-weight: bold; font-size: 22px;">INDIQUE LA FECHA Y HORA EN QUE SUCEDIÓ EL HECHO A DENUNCIAR</p>
+    <p class="mb-2 txt-preguntas">INDIQUE LA FECHA Y HORA EN QUE SUCEDIÓ EL HECHO A DENUNCIAR</p>
     {{-- <div class="col-md text-center"> --}}
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="fecha_especifica_lapso" id="fecha" value="0" checked
@@ -90,7 +90,7 @@
 
 
     <div class="text-center mt-5">
-        <p class="mb-2" style="font-weight: bold; font-size: 22px;">INDIQUE EL LUGAR DONDE SUCEDIÓ EL HECHO A DENUNCIAR</p>
+        <p class="mb-2 txt-preguntas">INDIQUE EL LUGAR DONDE SUCEDIÓ EL HECHO A DENUNCIAR</p>
     </div>
 
     <div id="lugarhechos_domicilio" class="d-non">

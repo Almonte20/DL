@@ -8,13 +8,13 @@
 
     <div class="container">
         <div id="YoVictimaDiv" class="">
-            <div class="form-row col-lg-12">
+            <div class="form-row col-lg-12 text-center">
                 <div class="form-group col-md-4">
                     <div class="form-ic-cmp">
                         <i class="fad fa-id-card"></i>&nbsp;
                         <label class="mb-0" >Nombre (s)</label>
                     </div>
-                    <label><span class="mt-0 txtVictima" id="nombre-victima-denunciante"></label>
+                    <label class="mt-0 txtVictima" id="nombre-victima-denunciante"></label>
 
                 </div>
                 <div class="form-group col-md-4">
@@ -155,15 +155,39 @@
                         <div class="col-md-12 text-center">
                             <div class="custom-control custom-radio custom-control-inline">
                                 <input type="radio" id="mayor_edad_victimaS" name="mayor_edad_victima" class="custom-control-input"
-                                    value="1" >
+                                    value="1" onchange="mayoriaEdad()">
                                 <label class="custom-control-label" for="mayor_edad_victimaS">Sí </label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input type="radio" id="mayor_edad_victimaN" name="mayor_edad_victima" class="custom-control-input"
-                                    value="0" >
+                                <input type="radio" id="mayor_edad_victimaN" name="mayor_edad_victima" class="custom-control-input" value="0" onchange="mayoriaEdad()">
                                 <label class="custom-control-label" for="mayor_edad_victimaN">No</label>
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                <div class="form-row col-lg-12 justify-content-center d-non" id="div_identificación_victima">
+
+                    <div class="form-group col-md-8">
+                        <div class="form-ic-cmp">
+                            <i class="fal fa-file"></i>
+                            <label for="credencial">&nbsp; Identificación oficial de la víctima (INE o Pasaporte)</label>
+                            <label for="credencial" style="font-size: 7px;">Requerido</label>
+        
+                        </div>
+                        {{-- <input type="file" name="credencial" class="file_multi_image required credencial" id="credencial"
+                            accept="image/*" required> --}}
+                        <div class="input-group mb-3" role='button'>
+                            <div class="input-group-prepend"> </div>
+                            <div class="custom-file">
+                                <input style="cursor:pointer;" type="file" class="custom-file-input" id="identificacion_victima" name="identificacion_victima" data-message-error='El dato "IDENTIFICACIÓN OFICIAL DE LA VÍCTIMA" es requerido.'>
+                                <label class="custom-file-label" id="custom-file-label-identificacion-victima" for="identificacion_victima">Buscar
+                                    Archivo</label>  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4 text-center">
+                        <div class="preview_victima" id="preview_identificacion_victima"></div>
                     </div>
                 </div>
             </div>
@@ -181,7 +205,20 @@
         }else{
             $("#OtraPersonaDiv").addClass("d-none");
             $("#YoVictimaDiv").removeClass("d-none");
+            $("#mayor_edad_victimaN").prop('checked', true).trigger("change");
+        }
+    }
 
+
+    function mayoriaEdad(){
+        var valor = $('input:radio[name=mayor_edad_victima]:checked').val();
+        alert(valor);
+        if(valor == 0){
+            $("#div_identificación_victima").addClass("d-none");
+            $("#identificacion_victima").removeClass("required");
+        }else{
+            $("#div_identificación_victima").removeClass("d-none");
+            $("#identificacion_victima").addClass("required");
         }
     }
 

@@ -65,10 +65,10 @@
         <div id="preview_imagen"></div>
     </div>
     <div class="form-group col-md-4" id="preview_video" style="display: none">
-        <img src="{{asset(" img/denuncia/video_adjunto.png")}}" alt="Video Adjunto">
+        <img src="{{asset("img/denuncia/video_adjunto.png")}}" alt="Video Adjunto">
     </div>
     <div class="form-group col-md-4" id="preview_audio" style="display: none">
-        <img src="{{asset(" img/denuncia/audio_adjunto.png")}}" alt="Audio Adjunto">
+        <img src="{{asset("img/denuncia/audio_adjunto.png")}}" alt="Audio Adjunto">
     </div>
 </div>
 <div class="row justify-content-end">
@@ -141,10 +141,10 @@
                         <div id="preview_imagen"></div>
                     </div>
                     <div class="form-group col-md-4 d-none text-center" id="preview_video">
-                        <img src="{{asset(" img/denuncia/video_adjunto.png")}}" alt="Video Adjunto">
+                        <img src="{{asset("img/denuncia/video_adjunto.png")}}" alt="Video Adjunto">
                     </div>
                     <div class="form-group col-md-4 d-none" id="preview_audio">
-                        <img src="{{asset(" img/denuncia/audio_adjunto.png")}}" alt="Audio Adjunto">
+                        <img src="{{asset("img/denuncia/audio_adjunto.png")}}" alt="Audio Adjunto">
                     </div>
                 </div>
 

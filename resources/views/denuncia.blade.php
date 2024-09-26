@@ -263,7 +263,7 @@
         <div class="row justify-content-center">
             <div class="col-md">
                 <div class="card  bg-light border-dark mt-5">
-                    <img class="card-img" src="{{asset(" img/denuncia/Tarjeta Registro Exitoso.png")}}"
+                    <img class="card-img" src="{{asset("img/denuncia/Tarjeta Registro Exitoso.png")}}"
                         alt="Card image cap">
 
 

@@ -1,22 +1,11 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-12 text-center">
-            <p class="mb-2" style="font-weight: bold; font-size: 22px;">INDIQUE DE QUÉ MANERA SE COMETIÓ EL HECHO</p>
-        </div>
-        <div class="col-md-12">
-            <div class="form-group">
-                <textarea class="form-control required" name="narrativa" id="narrativa-hecho" rows="7" minlength="150" placeholder="Explica ampliamente lo sucedido"
-                data-message-error='El dato "INDIQUE DE QUÉ MANERA SE COMETIÓ EL HECHO" es requerido.'>{{ old('narrativa','') }}</textarea>
-                <div style="color:#FF0000;">
-                    {{ $errors->first('narrativa') }}
-                </div>
-            </div>
-        </div>
+       
         {{-- <div class="col-md-12 text-center">
         </div> --}}
         <div class="col-md-12 text-center">
             <div>
-                <p class="mb-2" style="font-weight: bold; font-size: 22px;">¿EXISTIÓ VIOLENCIA?</p>
+                <p class="mb-2 txt-preguntas">¿EXISTIÓ VIOLENCIA?</p>
             </div>
             <div class="custom-control custom-radio custom-control-inline">
                 <input

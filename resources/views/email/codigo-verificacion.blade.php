@@ -28,8 +28,12 @@
                   <center style="font-family:Arial; font-size: 12px;">
                     {{-- <h2 class="justificar_texto"><strong>Código de verdificacion para continuar registro de Denuncia en Línea</strong></h2> --}}
                     <p class="justificar_texto" style="font-size: 18px;">
-                        El código de verificación para continuar el registro de Denuncia en Línea es: <b>{{ $data['codigo_verificacion'] }}</b>
+                        El código de verificación para continuar el registro de Denuncia en Línea es: 
                     </p>
+                    <p class="justificar_texto" style="font-size: 30px; margin-top:5%">
+                      <b>{{ $data['codigo_verificacion'] }}</b>
+                    </p>
+
                     <br>
                     <br>
                     {{-- <p>Atentamente: <strong>{{ $data->nombre }}</strong><br>[ {{ $data->email }} ] </p> --}}

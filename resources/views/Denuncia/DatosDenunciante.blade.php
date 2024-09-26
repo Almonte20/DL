@@ -67,7 +67,7 @@
                 </div>
                 <input type="text" name="nombre_denunciante" id="Nombre_denunciante" class=" form-control required"
                     value="{{ old('nombre') }}" data-message-error='El dato "NOMBRE" es requerido.' required
-                    maxlength="50" style="background-color:rgba(230, 238, 250, 0.5);" placeholder="Nombre">
+                    maxlength="50"  placeholder="Nombre">
                 <div style="color:#FF0000;">
                     {{ $errors->first('nombre') }}
                 </div>
@@ -81,7 +81,7 @@
                 <input type="text" name="PrimerApellido_denunciante" id="PrimerApellido_denunciante"
                     class=" form-control required" data-message-error='El dato "PRIMER APELLIDO" es requerido.'
                     value="{{ old('PrimerApellido') }}" maxlength="50"
-                    style="background-color:rgba(230, 238, 250, 0.5);" placeholder="Primer apellido">
+                    placeholder="Primer apellido">
                 <div style="color:#FF0000;">
                     {{ $errors->first('PrimerApellido') }}
                 </div>
@@ -148,25 +148,6 @@
                     {{ $errors->first('telefono') }}
                 </div>
             </div>
-
-            <div class="form-group col-md-8">
-                <div class="form-ic-cmp">
-                    <i class="fal fa-at"></i>&nbsp;
-                    <label for="correo">CORREO ELECTRÓNICO</label>
-
-                    <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top"
-                        title="Capture un correo electrónico vigente, a esta cuenta llegará su acceso para realizar el seguimiento puntual a su denuncia"></i>&nbsp;
-                    <label for="nombre" style="font-size: 7px;">Requerido</label>
-
-
-                </div>
-                <input type="email" name="correo" id="correo" class=" form-control required "
-                    value="{{ old('correo') }}" data-message-error='El campo "CORREO ELECTRÓNICO" es requerido.'
-                    maxlength="50" placeholder="correo@dominio.com">
-                <div style="color:#FF0000;">
-                    {{ $errors->first('correo') }}
-                </div>
-            </div>
         </div>
 
         <div class="form-row col-lg-12 justify-content-center">
@@ -196,179 +177,212 @@
                 <div id="preview_credencial"></div>
             </div>
         </div>
-    </div>
 
-    <div class="seccion text-center mt-4 mb-3">
-        <div class="circle-title">
-            <div class="circle-number ">2</div>
+
+        <div class="card alert alert-warning w-100">
+
+            <div class="card-body pb-0">
+                <div class="form-row col-lg-12 mb-0">
+                    <div class="form-group col-md-8">
+                        <div class="form-ic-cmp">
+                            <i class="fal fa-at"></i>&nbsp;
+                            <label for="correo">CORREO ELECTRÓNICO</label>
+
+                            <label for="nombre" style="font-size: 7px;">Requerido</label>
+
+                        </div>
+                        <input type="email" name="correo" id="correo" class=" form-control required "
+                            value="{{ old('correo') }}" data-message-error='El campo "CORREO ELECTRÓNICO" es requerido.'
+                            maxlength="50" placeholder="correo@dominio.com">
+                        <div style="color:#FF0000;">
+                            {{ $errors->first('correo') }}
+                        </div>
+                    </div>
+                </div>
+                
+              
+            </div>
+            <div class="card-footer">
+                <h6 class="h6" for="correo">Capture un correo electrónico vigente, a esta cuenta llegará su acceso
+                    para
+                    realizar el seguimiento puntual a su denuncia</h6>
+              </div>
         </div>
-        <h1>DOMICILIO DEL DENUNCIANTE:</h1>
-    </div>
 
-    <div class="container">
+    {{-- </div> --}}
+</div>
+
+<div class="seccion text-center mt-4 mb-3">
+    <div class="circle-title">
+        <div class="circle-number ">2</div>
+    </div>
+    <h1>DOMICILIO DEL DENUNCIANTE:</h1>
+</div>
+
+<div class="container">
+    <div class="form-row col-lg-12">
+        <div class="form-group col-md-4">
+            <div class="form-ic-cmp">
+                <i class="fal fa-globe-americas"></i>&nbsp;
+                <label for="pais">País de residencia</label>
+                <label for="nombre" style="font-size: 7px;">Requerido</label>
+
+            </div>
+            <select name="pais" id="pais" class=" form-control required">
+                <option value="0">Seleccione un país</option>
+                @foreach ($countries as $country)
+
+                <option @if ($country->id == 118)
+                    {{'selected'}}
+                    @endif value="{{$country->id}}">{{$country->pais}}</option>
+                @endforeach
+            </select>
+            <div style="color:#FF0000;">
+                {{ $errors->first('pais') }}
+            </div>
+        </div>
+        <div class="form-group col-md-8" id="extranjero">
+            <div class="form-ic-cmp">
+                <i class="fal fa-home"></i>&nbsp;
+                <label for="domicilio_extranjero">Domicilio</label>
+                <label for="nombre" style="font-size: 7px;">Requerido</label>
+
+            </div>
+            <input type="text" name="domicilio_extranjero" id="domicilio_extranjero" class=" form-control "
+                value="{{ old('domicilio_extranjero') }}" maxlength="250" placeholder="Ciudad Extrajera">
+            <div style="color:#FF0000;">
+                {{ $errors->first('domicilio_extranjero') }}
+            </div>
+        </div>
+    </div>
+    <div id="mexico">
         <div class="form-row col-lg-12">
             <div class="form-group col-md-4">
                 <div class="form-ic-cmp">
-                    <i class="fal fa-globe-americas"></i>&nbsp;
-                    <label for="pais">País de residencia</label>
+                    <i class="fal fa-envelope"></i>&nbsp;
+                    <label for="CP">Código Postal</label>
                     <label for="nombre" style="font-size: 7px;">Requerido</label>
 
                 </div>
-                <select name="pais" id="pais" class=" form-control required">
-                    <option value="0">Seleccione un país</option>
-                    @foreach ($countries as $country)
+                <input class=" form-control required" value="" maxlength="5" onkeypress="return justNumbers(event);"
+                    data-message-error='El campo "CÓDIGO POSTAL" es requerido.' name="CP" type="text" id="CP"
+                    placeholder="Ingrese CP" maxlength="5"
+                    onblur="validarCP(this,'entidad_residencia','municipio_residencia','asentamiento_residencia')">
+
+                <div style="color:#FF0000;">
+
+                </div>
+            </div>
+            <div class="form-group col-md-4">
+                <div class="form-ic-cmp">
+                    <i class="fal fa-map"></i>&nbsp;
+                    <label for="entidad">Estado de residencia</label>
+                </div>
+                <select class=" form-control " value="{{(old('entidad'))}}" id="entidad_residencia"
+                    name="entidad_residencia" disabled>
+                    <option value="0">Estado</option>
+                </select>
+                <div style="color:#FF0000;">
+
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="display: none">
+                <input class=" form-control " id="municipio" name="municipio" type="text" value="">
+            </div>
+
+            <input class=" form-control " id="ciudadId" value="" name="ciudadId" type="hidden">
+
+            <div class="form-group col-md-4">
+                <div class="form-ic-cmp">
+                    <i class="fad fa-map-marker-alt"></i>&nbsp;
+                    <label for="municipio">Municipio</label>
+                </div>
+                <select class=" form-control " value="<?php echo e(old('municipio')); ?>" id="municipio_residencia"
+                    name="municipio_residencia" disabled>
+                    <option value="0">Municipio</option>
+                    {{-- @foreach ($municipios as $country)
 
                     <option @if ($country->id == 118)
                         {{'selected'}}
                         @endif value="{{$country->id}}">{{$country->pais}}</option>
-                    @endforeach
+                    @endforeach --}}
                 </select>
                 <div style="color:#FF0000;">
-                    {{ $errors->first('pais') }}
+
                 </div>
             </div>
-            <div class="form-group col-md-8" id="extranjero">
+
+
+
+        </div>
+
+        <div class="form-row col-lg-12">
+            <div class="form-group col-md-4">
                 <div class="form-ic-cmp">
-                    <i class="fal fa-home"></i>&nbsp;
-                    <label for="domicilio_extranjero">Domicilio</label>
-                    <label for="nombre" style="font-size: 7px;">Requerido</label>
+                    <i class="fal fa-map-pin"></i>&nbsp;
+                    <label for="colonia">Colonia</label>
+                    <label for="colonia" style="font-size: 7px;">Requerido</label>
 
                 </div>
-                <input type="text" name="domicilio_extranjero" id="domicilio_extranjero" class=" form-control "
-                    value="{{ old('domicilio_extranjero') }}" maxlength="250" placeholder="Ciudad Extrajera">
+                <select class=" form-control required" value="<?php echo e(old('municipio')); ?>"
+                    data-message-error='El campo "COLONIA" es requerido.' name="asentamiento_residencia"
+                    id="asentamiento_residencia">
+                    <option value="0">Seleccione una colonia</option>
+                </select>
+                {{-- <input class=" form-control " maxlength="250" value="" name="colonia" type="text" id="colonia">
+                --}}
                 <div style="color:#FF0000;">
-                    {{ $errors->first('domicilio_extranjero') }}
+
                 </div>
             </div>
-        </div>
-        <div id="mexico">
-            <div class="form-row col-lg-12">
-                <div class="form-group col-md-4">
-                    <div class="form-ic-cmp">
-                        <i class="fal fa-envelope"></i>&nbsp;
-                        <label for="CP">Código Postal</label>
-                        <label for="nombre" style="font-size: 7px;">Requerido</label>
+            <div class="form-group col-md-4">
+                <div class="form-ic-cmp">
+                    <i class="fas fa-map-signs"></i>&nbsp;
+                    <label for="calle">Calle</label>
+                    <label for="calle" style="font-size: 7px;">Requerido</label>
 
-                    </div>
-                    <input class=" form-control required" value="" maxlength="5" onkeypress="return justNumbers(event);"
-                        data-message-error='El campo "CÓDIGO POSTAL" es requerido.' name="CP" type="text" id="CP"
-                        placeholder="Ingrese CP" maxlength="5"
-                        onblur="validarCP(this,'entidad_residencia','municipio_residencia','asentamiento_residencia')">
-
-                    <div style="color:#FF0000;">
-
-                    </div>
                 </div>
-                <div class="form-group col-md-4">
-                    <div class="form-ic-cmp">
-                        <i class="fal fa-map"></i>&nbsp;
-                        <label for="entidad">Estado de residencia</label>
-                    </div>
-                    <select class=" form-control " value="{{(old('entidad'))}}" id="entidad_residencia"
-                        name="entidad_residencia" disabled>
-                        <option value="0">Estado</option>
-                    </select>
-                    <div style="color:#FF0000;">
+                <input class=" form-control required " value="" maxlength="250"
+                    data-message-error='El campo "CALLE" es requerido.' name="calle" type="text" id="calle"
+                    placeholder="Ingrese la calle">
+                <div style="color:#FF0000;">
 
-                    </div>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" style="display: none">
-                    <input class=" form-control " id="municipio" name="municipio" type="text" value="">
+            </div>
+            <div class="form-group col-md-2">
+                <div class="form-ic-cmp">
+                    <i class="fal fa-hashtag"></i>&nbsp;
+                    <label for="numext">Número Exterior</label>
+
                 </div>
+                <input class=" form-control required" value="" maxlength="6"
+                    data-message-error='El campo "NÚMERO EXTERIOR" es requerido.' name="numext" type="text" id="numext"
+                    placeholder="Número exterior">
+                <div style="color:#FF0000;">
 
-                <input class=" form-control " id="ciudadId" value="" name="ciudadId" type="hidden">
-
-                <div class="form-group col-md-4">
-                    <div class="form-ic-cmp">
-                        <i class="fad fa-map-marker-alt"></i>&nbsp;
-                        <label for="municipio">Municipio</label>
-                    </div>
-                    <select class=" form-control " value="<?php echo e(old('municipio')); ?>" id="municipio_residencia"
-                        name="municipio_residencia" disabled>
-                        <option value="0">Municipio</option>
-                        {{-- @foreach ($municipios as $country)
-
-                        <option @if ($country->id == 118)
-                            {{'selected'}}
-                            @endif value="{{$country->id}}">{{$country->pais}}</option>
-                        @endforeach --}}
-                    </select>
-                    <div style="color:#FF0000;">
-
-                    </div>
                 </div>
+            </div>
+            <div class="form-group col-md-2">
+                <div class="form-ic-cmp">
+                    <i class="fal fa-hashtag"></i>&nbsp;
+                    <label for="numint">Número Interior</label>
+                </div>
+                <input class=" form-control " placeholder="Opcional" value="" maxlength="6" name="numint" type="text"
+                    id="numint">
+                <div style="color:#FF0000;">
 
-
-
+                </div>
             </div>
 
-            <div class="form-row col-lg-12">
-                <div class="form-group col-md-4">
-                    <div class="form-ic-cmp">
-                        <i class="fal fa-map-pin"></i>&nbsp;
-                        <label for="colonia">Colonia</label>
-                        <label for="colonia" style="font-size: 7px;">Requerido</label>
-
-                    </div>
-                    <select class=" form-control required" value="<?php echo e(old('municipio')); ?>"
-                        data-message-error='El campo "COLONIA" es requerido.' name="asentamiento_residencia"
-                        id="asentamiento_residencia">
-                        <option value="0">Seleccione una colonia</option>
-                    </select>
-                    {{-- <input class=" form-control " maxlength="250" value="" name="colonia" type="text" id="colonia">
-                    --}}
-                    <div style="color:#FF0000;">
-
-                    </div>
-                </div>
-                <div class="form-group col-md-4">
-                    <div class="form-ic-cmp">
-                        <i class="fas fa-map-signs"></i>&nbsp;
-                        <label for="calle">Calle</label>
-                        <label for="calle" style="font-size: 7px;">Requerido</label>
-
-                    </div>
-                    <input class=" form-control required " value="" maxlength="250"
-                        data-message-error='El campo "CALLE" es requerido.' name="calle" type="text" id="calle"
-                        placeholder="Ingrese la calle">
-                    <div style="color:#FF0000;">
-
-                    </div>
-                </div>
-                <div class="form-group col-md-2">
-                    <div class="form-ic-cmp">
-                        <i class="fal fa-hashtag"></i>&nbsp;
-                        <label for="numext">Número Exterior</label>
-
-                    </div>
-                    <input class=" form-control required" value="" maxlength="6"
-                        data-message-error='El campo "NÚMERO EXTERIOR" es requerido.' name="numext" type="text"
-                        id="numext" placeholder="Número exterior">
-                    <div style="color:#FF0000;">
-
-                    </div>
-                </div>
-                <div class="form-group col-md-2">
-                    <div class="form-ic-cmp">
-                        <i class="fal fa-hashtag"></i>&nbsp;
-                        <label for="numint">Número Interior</label>
-                    </div>
-                    <input class=" form-control " placeholder="Opcional" value="" maxlength="6" name="numint"
-                        type="text" id="numint">
-                    <div style="color:#FF0000;">
-
-                    </div>
-                </div>
-
-            </div>
         </div>
     </div>
+</div>
 
-    <div class="text-center mt-3 {{-- f1-buttons --}} f1">
-        <button type="button" id="btn-step-one" class="btn-sm btn-next">
-            SIGUIENTE &nbsp;&nbsp; <i class="fa-solid fa-chevron-right"></i>
-        </button>
-    </div>
+<div class="text-center mt-3 {{-- f1-buttons --}} f1">
+    <button type="button" id="btn-step-one" class="btn-sm btn-next">
+        SIGUIENTE &nbsp;&nbsp; <i class="fa-solid fa-chevron-right"></i>
+    </button>
+</div>
 
 
 </div>

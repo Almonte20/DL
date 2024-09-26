@@ -68,6 +68,20 @@
     .form-control::placeholder {
         color: #b4c1c1;
     }
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Ajusta los valores según tus preferencias */
+    }
+    .card-footer {
+        background-color: rgb(0 0 0 / 0%);
+    }
+    .txtVictima{
+        font-size: 22px;
+    }
+
+    .txt-preguntas{
+        font-weight: bold; 
+        font-size: 27px;
+    }
 </style>
 
 <div class="modal fade" id="ModalFormalizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -186,18 +200,19 @@
                                 <div class="container">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <p class="text-center mb-2" style="font-weight: bold; font-size: 22px;">¿QUÉ
-                                                HA SUCEDIDO?</p>
-                                            {{-- <input class="form-control input-denuncia"
-                                                placeholder="Descripción breve de qué ha sucedido"> --}}
-                                            <textarea rows="2" id="text-area-que-ha-sucedido"
-                                                class="form-control required"
-                                                name="suceso"
-                                                data-message-error='El dato "¿QUÉ HA SUCEDIDO?" es requerido.'
-                                                placeholder="Descripción breve de qué ha sucedido. Ejemplos: Me asaltaron, me extorcionaron, me amenazaron de muerte, etc..."></textarea>
+                                            <p class="text-center mb-2 txt-preguntas">¿QUÉ HA SUCEDIDO?</p>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <textarea class="form-control required" name="narrativa" id="narrativa-hecho" rows="7" minlength="150" placeholder="Explica ampliamente qué y como sucedió el hecho"
+                                                        data-message-error='El dato "QUÉ HA SUCEDIDO" es requerido.'>{{ old('narrativa','') }}</textarea>
+                                                        <div style="color:#FF0000;">
+                                                            {{ $errors->first('narrativa') }}
+                                                        </div>
+                                                    </div>
+                                                </div>
                                         </div>
                                         <div class="col-md-12 mt-3 text-center">
-                                            <p class="mb-2" style="font-weight: bold; font-size: 22px;">¿QUIÉN ES LA
+                                            <p class="mb-2 txt-preguntas">¿QUIÉN ES LA
                                                 VÍCTIMA?</p>
                                             <div class="custom-control custom-radio custom-control-inline">
                                                 <input type="radio" id="radiodenunciante" name="victimadenunciante"
@@ -883,27 +898,30 @@ function alertas(msg)
                 var edad = calcularEdad(fechaNacimiento);
 
                 if(edad  >= 18){
-                   $("#mayor_edad_"+destino+"S").prop('checked', true);
-
+                   $("#mayor_edad_"+destino+"S").prop('checked', true).trigger("change");
                 }else{
-
-                    $("#mayor_edad_"+destino+"N").prop('checked', true);
+                    $("#mayor_edad_"+destino+"N").prop('checked', true).trigger("change");
                 }
             }
         }
 
         function calcularEdad(fechaNacimiento) {
-            // Crear objetos Date para la fecha de nacimiento y la fecha actual
+         
+            // Convertir la fecha de nacimiento a un objeto Date
             const nacimiento = new Date(fechaNacimiento);
             const hoy = new Date();
 
-            // Calcular la diferencia en milisegundos
-            let diferencia = hoy - nacimiento;
+            // Calcular la edad inicial
+            let edad = hoy.getFullYear() - nacimiento.getFullYear();
+            const mesDif = hoy.getMonth() - nacimiento.getMonth();
 
-            // Convertir la diferencia a años (aproximado)
-            const edad = Math.floor(diferencia / (1000 * 60 * 60 * 24 * 365.25));
+            // Ajustar la edad si el cumpleaños no ha ocurrido aún este año
+            if (mesDif < 0 || (mesDif === 0 && hoy.getDate() < nacimiento.getDate())) {
+                edad--;
+            }
 
             return edad;
+
         }
 
         // $("#municipio_hechos").on('change', function(e){
@@ -1015,6 +1033,27 @@ function alertas(msg)
                     image.src = reader.result;
                     image.style.maxWidth = '150px';
                     document.getElementById('custom-file-label-credencial').innerHTML = fileName;
+
+                preview.innerHTML = '';
+                preview.append(image);
+            };
+        }
+        
+        document.getElementById("identificacion_victima").onchange = function(e) {
+            // Creamos el objeto de la clase FileReader
+            let reader = new FileReader();
+
+            // Leemos el archivo subido y se lo pasamos a nuestro fileReader
+            reader.readAsDataURL(e.target.files[0]);
+
+            // Le decimos que cuando este listo ejecute el código interno
+            reader.onload = function(){
+                let preview = document.getElementById('preview_identificacion_victima'),
+                    image = document.createElement('img');
+                    fileName = e.target.files[0].name;
+                    image.src = reader.result;
+                    image.style.maxWidth = '150px';
+                    document.getElementById('custom-file-label-identificacion-victima').innerHTML = fileName;
 
                 preview.innerHTML = '';
                 preview.append(image);

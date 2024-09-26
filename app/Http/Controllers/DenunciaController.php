@@ -523,7 +523,7 @@ class DenunciaController extends Controller
         if($request->hasfile('credencial')){
             $fileImage = $request->file('credencial');
             $extension = $fileImage->getClientOriginalExtension();
-            $name = "Identificacion.".$extension;
+            $name = "Identificacion_denunciante.".$extension;
             $ruta = Storage::disk('buffalo')->putFileAs($rutaGuardado, $fileImage, $name);
             $denunciante->url_identificacion = $ruta;
         }
@@ -557,6 +557,14 @@ class DenunciaController extends Controller
             $victima->id_tipo_persona = 1;
             $victima->id_denuncia =  $id_denuncia;
             $victima->id_tipo_involucrado = 1;
+
+            if($request->hasfile('identificacion_victima') && $request->mayor_edad_victima == 1){
+                $fileImage = $request->file('identificacion_victima');
+                $extension = $fileImage->getClientOriginalExtension();
+                $name = "Identificacion_victima.".$extension;
+                $ruta = Storage::disk('buffalo')->putFileAs($rutaGuardado, $fileImage, $name);
+                $victima->url_identificacion = $ruta;
+            }
             
             if($request->nacionalidad_victima == 118){
                 $victima->curp = $request->curp_victima;

@@ -1,6 +1,6 @@
 <div class="col-md-12 text-center">
     <div>
-        <p class="mb-2" style="font-weight: bold; font-size: 22px;">¿EXISTEN TESTIGOS DEL HECHO?</label>
+        <p class="mb-2 txt-preguntas" >¿EXISTEN TESTIGOS DEL HECHO?</label>
     </div>
     <div class="custom-control custom-radio custom-control-inline">
         <input
@@ -87,7 +87,7 @@
                         <i class="fad fa-id-card"></i>&nbsp;
                         <label for="nombreTestigo">Nombre del testigo</label>
                     </div>
-                    <input type="text" name="nombreTestigo" id="nombreTestigo" class="form-control" maxlength="50"
+                    <input type="text" placeholder="Nombre" name="nombreTestigo" id="nombreTestigo" class="form-control" maxlength="50"
                         >
                     <div style="color:#FF0000;">
                         <!-- Error message -->
@@ -98,7 +98,7 @@
                         <i class="fad fa-id-card"></i>&nbsp;
                         <label for="paternoTestigo">Primer Apellido del testigo</label>
                     </div>
-                    <input type="text" name="paternoTestigo" id="paternoTestigo" class="form-control" maxlength="50"
+                    <input type="text" placeholder="Primer apellido" name="paternoTestigo" id="paternoTestigo" class="form-control" maxlength="50"
                         >
                     <div style="color:#FF0000;">
                         <!-- Error message -->
@@ -109,7 +109,7 @@
                         <i class="fad fa-id-card"></i>&nbsp;
                         <label for="maternoTestigo">Segundo Apellido del testigo</label>
                     </div>
-                    <input type="text" name="maternoTestigo" id="maternoTestigo" class="form-control" maxlength="50"
+                    <input type="text" placeholder="Segundo apellido" name="maternoTestigo" id="maternoTestigo" class="form-control" maxlength="50"
                         >
                     <div style="color:#FF0000;">
                         <!-- Error message -->

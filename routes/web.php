@@ -1,6 +1,7 @@
 <?php
 namespace pwf\Http\Controllers;
 use App\Http\Controllers\DenunciaController;
+use App\Mail\CodigoVerificacionMailable;
 use App\Models\Catalogs\CatAsentamientos;
 use App\Models\Catalogs\CatCountries;
 use App\Models\Catalogs\CatMunicipality;
@@ -40,6 +41,9 @@ Route::get('denuncia/consulta/{folio}', [DenunciaController::class, 'consultaD']
 Route::get('prueba', [DenunciaController::class, 'AcuseRegistro'] )->name('denuncia.prueba');
 Route::get('generarPDF/{id_denuncia}', [DenunciaController::class, 'generarPreSigi'])->name('denuncia.generarPDF');
 Route::get('pruebaw', function(){
+	$data = ['codigo_verificacion' => "555666"];
+	$email = 'sistemas.ingresos@gmail.com';
+	Mail::to(trim($email))->send(new CodigoVerificacionMailable($data));
 
 	$recipients = '524431401809'; // Asigna el valor de la variable
 	// $data = array(
@@ -71,60 +75,28 @@ Route::get('pruebaw', function(){
 	// curl_close($curl);
 	// echo $response;
 
-	$message = "Mensaje personalizado";
-	$curl = curl_init();
-	$data = array(
-		"recipients" => $recipients,
-		"template_id" => "ab9c3c57-4828-46dd-ad87-0277f155fc73",
-		"contact_type" => "phone",
-		"body_vars" => array(
-			array(
-				"text" => "{{1}}",
-				"val" => $message
-			)
-		)
-	);
-curl_setopt_array($curl, array(
-    CURLOPT_URL => 'https://api.wasapi.io/prod/api/v1/whatsapp-messages/send-template',
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_ENCODING => '',
-    CURLOPT_MAXREDIRS => 10,
-    CURLOPT_TIMEOUT => 0,
-    CURLOPT_FOLLOWLOCATION => true,
-    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    CURLOPT_CUSTOMREQUEST => 'POST',
-	CURLOPT_POSTFIELDS => json_encode($data),
-    CURLOPT_HTTPHEADER => array(
-        'accept: application/json',
-        'Authorization: Bearer 8178|09aFInEo2NKoZLg9270oou2PXTA10jbwtFkQrT63',
-        'Content-Type: application/json'
-    ),
-));
-
-$response = curl_exec($curl);
-
-curl_close($curl);
-echo $response;
+	
 });
 
 
 Route::get('prueba', function(){
 
-		$ruta = DenunciaController::generarPDF(210);
+		
 		$folio = "PD/XXX55";
         $token = "Pasffefeasfs";
         $nombre = "Alejandro";
         $PrimerApellido = "Almonte";
         $SegundoApellido = "Acosta";
         $correo = "sistemas.ingresos@gmail.com";
-        $rutaAcuse = "C:\PLANTILLAS FGE\Denuncia\public\acuse/acuse_112.pdf";
+        $rutaAcuse = "C:\PLANTILLAS FGE\Denuncia - copia\Denuncia\public\acuse\acuse_210.pdf";
+        $rutaDenuncia = "C:\PLANTILLAS FGE\Denuncia - copia\Denuncia\public\acuse\acuse_210.pdf";
     
         $info = new \stdClass;
         $info->nombre = $nombre.' '.$PrimerApellido.' '.$SegundoApellido;
         $info->folio = $folio;
+        $info->token = $token;
         $info->email = $correo;
         $info->asunto = 'Denuncia en Línea FGE';
-        $info->token = $token;
         $info->mensaje = 'El registro de su Denuncia se realizó de forma correcta, asignándole el folio '.$folio.' y la clave de seguimiento '.$token.', Su denuncia en línea será analizada por el Agente de Ministerio Público Orientador Digital, quien la asignará a la Fiscalía correspondiente para su seguimiento, atención y comunicación con usted. Esté al pendiente del correo/teléfono proporcionado.';
         //$info->sede1 = $sede1;
         //$info->sede2 = $sede2;
@@ -134,7 +106,7 @@ Route::get('prueba', function(){
         $fecha = strftime("%A, %d de %B del %Y", strtotime($fecha));
         $info->fecha = utf8_encode($fecha);
 		Mail::to($correo)->
-		send(new RegistroDenunciaMailable($info,$rutaAcuse));
+		send(new RegistroDenunciaMailable($info,$rutaAcuse,$rutaDenuncia));
 		//unlink($rutaAcuse);
 		// return $correo;
 })->name('denuncia.prueba');
