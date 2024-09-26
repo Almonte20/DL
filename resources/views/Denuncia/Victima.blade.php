@@ -212,7 +212,6 @@
 
     function mayoriaEdad(){
         var valor = $('input:radio[name=mayor_edad_victima]:checked').val();
-        alert(valor);
         if(valor == 0){
             $("#div_identificación_victima").addClass("d-none");
             $("#identificacion_victima").removeClass("required");
