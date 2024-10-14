@@ -29,10 +29,10 @@
                     <i class="fal fa-file-alt"></i>&nbsp;
                     <label for="fecha_inicial">Fecha y hora <span class="spanintervalo d-none">inicial</span> de los
                         hechos</label>
-                    <label for="fecha_inicial" style="font-size: 7px;">Requerido</label>
+                    <label for="fecha_inicial" style="font-size: 7px;" class="text-danger">Requerido</label>
                 </div>
                 <input type="datetime-local" id="input-fecha-especifica-hechos" class="form-control required" name="fecha_inicial" max="{{ date('Y-m-d H:i') }}"
-                data-message-error='El dato "FECHA Y HORA DE LOS HECHOS" es requerido.'
+                data-message-error='"FECHA Y HORA DE LOS HECHOS" es requerido.'
                 >
 
                 <div style="color:#FF0000;">
@@ -49,10 +49,10 @@
                     <i class="fal fa-file-alt"></i>&nbsp;
                     <label for="fecha_inicial">Fecha y hora <span class="spaninicial d-none">inicial</span> de los
                         hechos</label>
-                    <label for="fecha_inicial" style="font-size: 7px;">Requerido</label>
+                    <label for="fecha_inicial" style="font-size: 7px;" class="text-danger">Requerido</label>
                 </div>
-                <input type="datetime-local" id="input-fecha-inicial-hechos" class="form-control" name="fecha_inicial" id="fecha_inicial" max="{{ date('Y-m-d H:i') }}"
-                data-message-error='El dato "FECHA Y HORA INICIAL DE LOS HECHOS" es requerido.'>
+                <input type="datetime-local" class="form-control" name="fecha_inicial" id="fecha_inicial" max="{{ date('Y-m-d H:i') }}"
+                data-message-error='"FECHA Y HORA INICIAL DE LOS HECHOS" es requerido.' onchange="validarFechas()">
                 <div style="color:#FF0000;">
                     {{ $errors->first('fechainicial') }}
                 </div>
@@ -63,11 +63,11 @@
                 <div class="form-ic-cmp">
                     <i class="fal fa-file-alt"></i>&nbsp;
                     <label for="fecha_final">Fecha y hora final de los hechos</label>
-                    <label for="fecha_final" style="font-size: 7px;">Requerido</label>
+                    <label for="fecha_final" style="font-size: 7px;" class="text-danger">Requerido</label>
 
                 </div>
-                <input type="datetime-local" id="input-fecha-final-hechos" class="form-control" name="fecha_final" id="fecha_final" max="{{ date('Y-m-d H:i') }}"
-                data-message-error='El dato "FECHA Y HORA FINAL DE LOS HECHOS" es requerido.'>
+                <input type="datetime-local" class="form-control" name="fecha_final" id="fecha_final" max="{{ date('Y-m-d H:i') }}"
+                data-message-error='"FECHA Y HORA FINAL DE LOS HECHOS" es requerido.' onchange="validarFechas()">
                 <div style="color:#FF0000;">
                     {{ $errors->first('fecha_final') }}
                 </div>
@@ -113,13 +113,13 @@
                 <div class="form-ic-cmp">
                     <i class="fal fa-envelope"></i>&nbsp;
                     <label for="CP_hechos">Código Postal</label>
-                    <label for="CP_hechos" style="font-size: 7px;">Requerido</label>
+                    <label for="CP_hechos" style="font-size: 7px;" class="text-danger">Requerido</label>
 
                 </div>
                 <input class=" form-control required" value="" maxlength="5" onkeypress="return justNumbers(event);"
                      name="CP_hechos" type="text" id="CP_hechos"
                     placeholder="Ingrese C.P." maxlength="5"
-                    data-message-error='El dato "CÓDIGO POSTAL DONDE SUCEDIÓ EL HECHO" es requerido.'
+                    data-message-error='"CÓDIGO POSTAL DONDE SUCEDIÓ EL HECHO" es requerido.'
                     onblur="validarCP(this,'entidad_hechos','municipio_hechos','asentamiento_hechos')"
                     onchange="validarCP(this,'entidad_hechos','municipio_hechos','asentamiento_hechos')">
 
@@ -167,12 +167,12 @@
                 <div class="form-ic-cmp">
                     <i class="fal fa-map-pin"></i>&nbsp;
                     <label for="colonia">Colonia</label>
-                    <label for="colonia" style="font-size: 7px;">Requerido</label>
+                    <label for="colonia" style="font-size: 7px;" class="text-danger">Requerido</label>
 
                 </div>
                 <select class=" form-control required" value="<?php echo e(old('municipio')); ?>"
                      name="asentamiento_hechos"
-                     data-message-error='El dato "COLIONIA DONDE SUCEDIÓ EL HECHO" es requerido.'
+                     data-message-error='"COLIONIA DONDE SUCEDIÓ EL HECHO" es requerido.'
                     id="asentamiento_hechos">
 
                     <option value="0">Seleccione una colonia</option>
@@ -187,12 +187,12 @@
                 <div class="form-ic-cmp">
                     <i class="fas fa-map-signs"></i>&nbsp;
                     <label for="calle_hechos">Calle</label>
-                    <label for="calle_hechos" style="font-size: 7px;">Requerido</label>
+                    <label for="calle_hechos" style="font-size: 7px;" class="text-danger">Requerido</label>
 
                 </div>
                 <input class=" form-control required " value="" maxlength="250"
                      name="calle_hechos" type="text" id="calle_hechos"
-                     data-message-error='El dato "CALLE DONDE SUCEDIÓ EL HECHO" es requerido.'
+                     data-message-error='"CALLE DONDE SUCEDIÓ EL HECHO" es requerido.'
                     placeholder="Ingrese la calle">
                 <div style="color:#FF0000;">
 
@@ -202,12 +202,12 @@
             <div class="form-group col-md-2">
                 <div class="form-ic-cmp">
                     <i class="fal fa-hashtag"></i>&nbsp;
-                    <label for="numext_hechos">Número Exterior</label>
+                    <label for="numext_hechos">No. Exterior <span style="font-size: 7px;" class="text-danger">Requerido</span></label>
 
                 </div>
                 <input class=" form-control required" value="" maxlength="6"
                     name="numext_hechos" type="text"
-                    data-message-error='El dato "NÚMERO EXTERIOR DONDE SUCEDIÓ EL HECHO" es requerido.'
+                    data-message-error='"NÚMERO EXTERIOR DONDE SUCEDIÓ EL HECHO" es requerido.'
                     id="numext_hechos" placeholder="Número exterior">
                 <div style="color:#FF0000;">
 
@@ -220,7 +220,7 @@
             <div class="form-group col-md-2">
                 <div class="form-ic-cmp">
                     <i class="fal fa-hashtag"></i>&nbsp;
-                    <label for="numext_hechos">Número Interior</label>
+                    <label for="numint_hechos">No. Interior</label>
 
                 </div>
                 <input class=" form-control" value="" maxlength="6"
@@ -235,12 +235,12 @@
                     <div class="form-ic-cmp">
                         <i class="fal fa-home"></i>&nbsp;
                         <label for="select_lugar">Lugar</label>
-
+                        <label for="fecha_inicial" style="font-size: 7px;" class="text-danger">Requerido</label>
                     </div>
                     <select name="lugar_descripcion"
                         id="select_lugar" class=" form-control required" data-show-subtext="true"
                         data-live-search="true" onchange="lugarReferencia(this)"
-                        data-message-error='El dato "LUGAR DONDE SUCEDIÓ EL HECHO" es requerido.'>
+                        data-message-error='"LUGAR DONDE SUCEDIÓ EL HECHO" es requerido.'>
                         <option value="0">Seleccione un lugar</option>
 
                         @foreach ($lugares as $lugar)
@@ -261,7 +261,7 @@
 
                     </div>
                     <textarea name="referencia_lugar" class="form-control" placeholder="Referencia del lugar" id="descripcion-referencia-lugar"
-                    data-message-error='El dato "REFERENCIA DEL LUGAR DONDE SUCEDIÓ EL HECHO" es requerido.'></textarea>
+                    data-message-error='"REFERENCIA DEL LUGAR DONDE SUCEDIÓ EL HECHO" es requerido.'></textarea>
                 </div>
 
             </div>
@@ -329,7 +329,7 @@
             <div class="form-ic-cmp">
                 <i class="fas fa-road"></i>&nbsp;
                 <label for="km_hechos">Km donde ocurrieron los hechos</label>
-                <label for="colonia" style="font-size: 7px;">Requerido</label>
+                <label for="colonia" style="font-size: 7px;" class="text-danger">Requerido</label>
             </div>
             <input class="form-control" name="km_hechos" type="text" id="km_hechos">
             <div style="color:#FF0000;">
@@ -345,7 +345,7 @@
                 <label for="descripcion_lugar">Descripcion del lugar de los hechos</label>
                 <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top" title=""
                     data-original-title="Recuerda colocar todos los datos conocidos del lugar donde sucedieron los hechos. Ej. municipio más cerc, lugar conocido más cerca, etc."></i>&nbsp;
-                <label for="colonia" style="font-size: 7px;">Requerido</label>
+                <label for="colonia" style="font-size: 7px;" class="text-danger">Requerido</label>
             </div>
             <textarea class="form-control" name="descripcion_lugar" id="descripcion_lugar" rows="7" maxlength="1990"
                 ></textarea>
@@ -685,6 +685,21 @@
 <script>
     function LlenadoHechos(){
         $("#ModalInstrucciones").modal("show");
+    }
+
+    function validarFechas(){
+        var fechaInicial = $("#fecha_inicial").val();
+        var fechaFinal = $("#fecha_final").val();
+        if (fechaInicial > fechaFinal && fechaFinal != "") {
+            $("#fecha_final").val("");
+            Swal.fire({
+            icon: "warning",
+            title: "¡Cuidado!",
+            html: '<p style="font-size:26px !important;"><b>La "FECHA Y HORA INICIAL DE LOS HECHOS" <br> no puede ser mayor a la <br>"FECHA Y HORA FINAL DE LOS HECHOS"</b></p>',
+            });
+        } 
+        // alert(fechaInicial);
+        $('#fecha_final').attr('min', fechaInicial);
     }
 
     function LugarHechos(select){

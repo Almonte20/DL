@@ -13,7 +13,7 @@
                   id="existioviolenciaS"
                   name="existio_violencia"
                   class="custom-control-input required"
-                  data-message-error='El dato "¿EXISTIÓ VIOLENCIA?" es requerido.'
+                  data-message-error='"¿EXISTIÓ VIOLENCIA?" es requerido.'
                   value="1"
                   onchange="ExistioViolencia()">
                 <label class="custom-control-label" for="existioviolenciaS">SÍ </label>
@@ -25,7 +25,7 @@
                   name="existio_violencia"
                   class="custom-control-input required"
                   value="0"
-                  data-message-error='El dato "¿EXISTIÓ VIOLENCIA?" es requerido.'
+                  data-message-error='"¿EXISTIÓ VIOLENCIA?" es requerido.'
                   onchange="ExistioViolencia()">
                 <label class="custom-control-label" for="existioviolenciaN">NO</label>
             </div>
@@ -37,7 +37,7 @@
         <div class="col-md-12 d-none text-center" id="ExplicacionViolencia">
             <p class="mb-2" style="font-weight: bold; font-size: 18px;">EXPLIQUE DE QUÉ MANERA SE COMETIÓ LA VIOLENCIA</p>
             <textarea rows="2" id="narrativa-violencia"
-            data-message-error='El dato "EXPLIQUE DE QUÉ MANERA SE COMETIÓ LA VIOLENCIA" es requerido.'
+            data-message-error='"EXPLIQUE DE QUÉ MANERA SE COMETIÓ LA VIOLENCIA" es requerido.'
             class="form-control" name="descripcion_violencia" minlength="50" placeholder="Explique de qué manera se cometió la violencia"></textarea>
         </div>
     </div>

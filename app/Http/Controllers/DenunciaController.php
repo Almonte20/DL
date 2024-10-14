@@ -56,7 +56,7 @@ class DenunciaController extends Controller
         // dd($paises);
 
         return view('denuncia2',compact('countries','estados','lugares'));
-        return view('denuncia',compact('countries','estados','lugares'));
+        // return view('denuncia',compact('countries','estados','lugares'));
     }
 
     /**
@@ -454,9 +454,6 @@ class DenunciaController extends Controller
             QrCode::format('png')->merge('img/PDF_Predenuncia/fge.png', 0.2, true)->size(500)->margin(0)->generate($firma_predenuncia, public_path('acuse/QR_'.$IdExpediente.'.png'));
         }
 
-    public function enviarCorreo($datos){
-        
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -524,6 +521,7 @@ class DenunciaController extends Controller
             $fileImage = $request->file('credencial');
             $extension = $fileImage->getClientOriginalExtension();
             $name = "Identificacion_denunciante.".$extension;
+            dd($fileImage);
             $ruta = Storage::disk('buffalo')->putFileAs($rutaGuardado, $fileImage, $name);
             $denunciante->url_identificacion = $ruta;
         }
@@ -743,16 +741,60 @@ class DenunciaController extends Controller
         return view('consulta.vista');
     }
 
+    public function edit(Request $request){
+        return view("Modificacion.vista");
+    }
+
+    public function editarDenuncia(Request $request)
+    {
+        $folio = $request->folio;
+        $token = $request->token;
+
+        
+        $expediente = Denuncia::where([['folio_denuncia',$folio],['token_denuncia',$token]]);
+
+        if($expediente->get()->isNotEmpty())
+        {
+            $id_denuncia = $expediente->first()->id;
+            // dd($id_denuncia);
+            $countries = CatalogsCatCountries::all();
+            $estados = CatState::all();
+            $municipios = CatMunicipality::all();
+            $lugares = CatPlaces::all();
+
+            $hechos = Hecho::where('id_denuncia', $id_denuncia)->first();
+            $denunciante = Involucrado::where("id_tipo_involucrado","4")->where("id_denuncia",$id_denuncia)->first();
+            if(empty($denunciante)){
+                $victima = Involucrado::where("id_tipo_involucrado","1")->where("id_denuncia",$id_denuncia)->first();
+                $denunciante = Involucrado::where("id_tipo_involucrado","3")->where("id_denuncia",$id_denuncia)->first();
+                $victimaDenunciante = 0;
+            }else{
+                $victimaDenunciante = 1;
+            }
+            $domicilio_denunciante =  InvolucradoDomicilio::where("id_involucrado",$denunciante->id)->first();
+            
+            $testigos = Involucrado::where("id_tipo_involucrado","5")->where("id_denuncia",$id_denuncia)->get();
+            $responsable = Involucrado::where("id_tipo_involucrado","2")->where("id_denuncia",$id_denuncia)->get();
+            $evidencias = Evidencia::where("id_denuncia",$id_denuncia)->get();
+      
+
+            return view("modificacion",compact('expediente','countries','estados','municipios','lugares'));
+        }else{
+            return redirect()->back()->with('fail','No es posible localizar la denuncia, favor de revisar los datos.');
+        }
+
+    }
+
 
     public function consultaDenuncia(Request $request)
     {
         $folio = $request->folio;
         $token = $request->token;
 
-        // dd($folio);
-
+        
         $expediente = Denuncia::where([['folio_denuncia',$folio],['token_denuncia',$token]])
-                        ->get();
+        ->get();
+        // dd($expediente);
                         // dd($expediente);
                         // return $expediente;
 
@@ -923,14 +965,7 @@ class DenunciaController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
+    
     /**
      * Update the specified resource in storage.
      */

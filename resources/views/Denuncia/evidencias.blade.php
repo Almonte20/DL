@@ -9,7 +9,7 @@
           name="existen_evidencias"
           class="custom-control-input required"
           value="1"
-          data-message-error='El dato "¿CUENTA CON EVIDENCIAS?" es requerido.'
+          data-message-error='"¿CUENTA CON EVIDENCIAS?" es requerido.'
           onchange="existenEvidencias()">
         <label class="custom-control-label" for="existenEvidenciasS">SÍ </label>
     </div>
@@ -20,7 +20,7 @@
           name="existen_evidencias"
           class="custom-control-input required"
           value="0"
-          data-message-error='El dato "¿CUENTA CON EVIDENCIAS?" es requerido.'
+          data-message-error='"¿CUENTA CON EVIDENCIAS?" es requerido.'
           onchange="existenEvidencias()">
         <label class="custom-control-label" for="existenEvidenciasN">NO</label>
     </div>

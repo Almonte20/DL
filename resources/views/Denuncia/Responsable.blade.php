@@ -30,7 +30,7 @@
                       name="conoce_responsable"
                       value="1"
                       onchange="conozco_responsable()"
-                      data-message-error='El dato "¿CONOCE AL RESPONSABLE?" es requerido.'>
+                      data-message-error='"¿CONOCE AL RESPONSABLE?" es requerido.'>
                     <label class="custom-control-label" for="conozcoResponsableS">SÍ </label>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
@@ -41,7 +41,7 @@
                       class="custom-control-input required"
                       value="0"
                       onchange="conozco_responsable()"
-                      data-message-error='El dato "¿CONOCE AL RESPONSABLE?" es requerido.'>
+                      data-message-error='"¿CONOCE AL RESPONSABLE?" es requerido.'>
                     <label class="custom-control-label" for="conozcoResponsableN">NO</label>
                 </div>
                 <div id="conoce-responsable-mensaje-error" class="text-danger mt-1 d-none" style=" font-size: 14px;">
@@ -63,7 +63,7 @@
                   required
                   maxlength="50"
                   name="nombre_alias_responsable"
-                  data-message-error='El dato "NOMBRE Y/O ALIAS DEL RESPONSALE" es requerido.'
+                  data-message-error='"NOMBRE Y/O ALIAS DEL RESPONSALE" es requerido.'
                   placeholder="Nombre y/o alias del responsable">
                 <div style="color:#FF0000;">
                     {{ $errors->first('nombre') }}
@@ -83,7 +83,7 @@
                       class="custom-control-input required"
                       name="conoce_rasgos_responsable"
                       value="1"
-                      data-message-error='El dato "¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?" es requerido.'
+                      data-message-error='"¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?" es requerido.'
                       onchange="identificacionResponsable()">
                     <label class="custom-control-label" for="radioIdentificacionResponsableS">SÍ </label>
                 </div>
@@ -94,7 +94,7 @@
                       name="conoce_rasgos_responsable"
                       class="custom-control-input required"
                       value="0"
-                      data-message-error='El dato "¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?" es requerido.'
+                      data-message-error='"¿DISPONE USTED DE ALGUNA INFORMACIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE?" es requerido.'
                       onchange="identificacionResponsable()">
                     <label class="custom-control-label" for="radioIdentificacionResponsableN">NO</label>
                 </div>
@@ -110,7 +110,7 @@
             <div class="form-group col-md-12">
                 <textarea id="rasgos-distintivos-responsable" rows="6" class="form-control" name="rasgos_fisicos_responsable"
                     placeholder="Ejemplos: Tatuajue en el rostro, cabello largo, ojos café claro, etc..."
-                    data-message-error='El dato "DESCRIPCIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE" es requerido.'></textarea>
+                    data-message-error='"DESCRIPCIÓN SOBRE RASGOS FÍSICOS DISTINTIVOS DEL RESPONSABLE" es requerido.'></textarea>
             </div>
 
 
@@ -126,13 +126,13 @@
                 <div class="custom-control custom-radio custom-control-inline">
                     <input type="radio" id="radioDireccionS" name="conoce_direccion_responsable" class="custom-control-input"
                         value="1" onchange="direccion_responsable()"
-                        data-message-error='El dato "¿CONOCE LA DIRECCIÓN DEL RESPONSABLE?" es requerido.'>
+                        data-message-error='"¿CONOCE LA DIRECCIÓN DEL RESPONSABLE?" es requerido.'>
                     <label class="custom-control-label" for="radioDireccionS">Sí </label>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
                     <input type="radio" id="radioDireccionN" name="conoce_direccion_responsable" class="custom-control-input"
                         value="0" onchange="direccion_responsable()"
-                        data-message-error='El dato "¿CONOCE LA DIRECCIÓN DEL RESPONSABLE?" es requerido.'>
+                        data-message-error='"¿CONOCE LA DIRECCIÓN DEL RESPONSABLE?" es requerido.'>
                     <label class="custom-control-label" for="radioDireccionN">No</label>
                 </div>
                 <div id="conoce-direccion-responsable-mensaje-error" class="text-danger mt-1 d-none" style=" font-size: 14px;">
@@ -146,7 +146,7 @@
                 <label for="direccion-responsable">Dirección del Responsable</label >
                 <textarea name="direccionResponsable" id="direccion-responsable" rows="6" class="form-control"
                     placeholder="Ejemplos: Calle Madero #556, Col. Centro, Morelia, Michoacán."
-                    data-message-error='El dato "DIRECCIÓN DEL RESPONSABLE" es requerido.'></textarea>
+                    data-message-error='"DIRECCIÓN DEL RESPONSABLE" es requerido.'></textarea>
             </div>
         </div>
     </div>

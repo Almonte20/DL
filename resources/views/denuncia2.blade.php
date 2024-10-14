@@ -203,8 +203,8 @@
                                             <p class="text-center mb-2 txt-preguntas">¿QUÉ HA SUCEDIDO?</p>
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <textarea class="form-control required" name="narrativa" id="narrativa-hecho" rows="7" minlength="150" placeholder="Explica ampliamente qué y como sucedió el hecho"
-                                                        data-message-error='El dato "QUÉ HA SUCEDIDO" es requerido.'>{{ old('narrativa','') }}</textarea>
+                                                        <textarea class="form-control required" name="narrativa" id="narrativa-hecho" rows="7" minlength="150" placeholder="Explica ampliamente qué y cómo sucedió el hecho"
+                                                        data-message-error='"QUÉ HA SUCEDIDO" es requerido.'>{{ old('narrativa','') }}</textarea>
                                                         <div style="color:#FF0000;">
                                                             {{ $errors->first('narrativa') }}
                                                         </div>
@@ -217,14 +217,14 @@
                                             <div class="custom-control custom-radio custom-control-inline">
                                                 <input type="radio" id="radiodenunciante" name="victimadenunciante"
                                                     class="custom-control-input required" value="1" checked
-                                                    data-message-error='El dato "¿QUIÉN ES LA VÍCTIMA?" es requerido.'
+                                                    data-message-error='"¿QUIÉN ES LA VÍCTIMA?" es requerido.'
                                                     onchange="otraPersona()">
                                                 <label class="custom-control-label" for="radiodenunciante">Yo</label>
                                             </div>
                                             <div class="custom-control custom-radio custom-control-inline">
                                                 <input type="radio" id="radiovictima" name="victimadenunciante"
                                                     class="custom-control-input required" value="0"
-                                                    data-message-error='El dato "¿QUIÉN ES LA VÍCTIMA?" es requerido.'
+                                                    data-message-error='"¿QUIÉN ES LA VÍCTIMA?" es requerido.'
                                                     onchange="otraPersona()">
                                                 <label class="custom-control-label" for="radiovictima">Otra
                                                     persona</label>

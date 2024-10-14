@@ -30,7 +30,7 @@
             <label for="curp">CURP</label>
             <label for="nombre" style="font-size: 7px;">Requerido</label>
         </div>
-        <input type="text" name="curp" id="curp" class=" form-control " value="{{ old('curp') }}AOAA960320HMNLCL04"
+        <input type="text" name="curp" id="curp" class=" form-control " value="{{ old('curp') }}"
             maxlength="18" placeholder="CURP" style="background-color:rgba(230, 238, 250, 0.5);">
         <div style="color:#FF0000;">
             {{ $errors->first('curp') }}

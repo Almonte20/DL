@@ -42,7 +42,7 @@
                     <div class="form-ic-cmp">
                         <i class="fad fa-id-card"></i>&nbsp;
                         <label for="nacionalidad_victima">Nacionalidad de la víctima</label>
-                        <label for="nacionalidad_victima" style="font-size: 7px;">Requerido</label>
+                        <label for="nacionalidad_victima" style="font-size: 7px;" class="text-danger">Requerido</label>
                     </div>
                     <select name="nacionalidad_victima" id="nacionalidad_victima" data-curp="divCurp_victima"
                         onchange="validarNacionalidad(this)" class=" form-control "
@@ -63,11 +63,11 @@
                     <div class="form-ic-cmp">
                         <i class="fad fa-id-card"></i>&nbsp;
                         <label for="curp">CURP de la víctima</label>
-                        <label for="nombre" style="font-size: 7px;">Requerido</label>
+                        <label for="nombre" style="font-size: 7px;" class="text-danger">Requerido</label>
                         <br>
                     </div>
                     <input type="text" name="curp_victima" id="curp_victima" class=" form-control "
-                        value="AOAA960320HMNLCL04" maxlength="18" placeholder="CURP"
+                        value="" maxlength="18" placeholder="CURP"
                         >
                     {{-- <label for="curp" style="font-size: 8px;"><a target="_blank" href="https://www.gob.mx/curp/">Saber
                             cuál
@@ -96,12 +96,12 @@
                         <div class="form-ic-cmp">
                             <i class="fad fa-id-card"></i>&nbsp;
                             <label for="nombre">Nombre (s)</label>
-                            <label for="nombre" style="font-size: 7px;">Requerido</label>
+                            <label for="nombre" style="font-size: 7px;" class="text-danger">Requerido</label>
                         </div>
                         <input type="text" name="nombre_victima" id="Nombre_victima" class=" form-control"
                             value="{{ old('nombre') }}" required maxlength="50"
                              placeholder="Nombre"
-                             data-message-error='El dato "NOMBRE DE LA VÍCTIMA" es requerido.'>
+                             data-message-error='"NOMBRE DE LA VÍCTIMA" es requerido.'>
                         <div style="color:#FF0000;">
                             {{ $errors->first('nombre') }}
                         </div>
@@ -110,11 +110,11 @@
                         <div class="form-ic-cmp">
                             <i class="fad fa-id-card"></i>&nbsp;
                             <label for="PrimerApellido">Primer Apellido</label>
-                            <label for="nombre" style="font-size: 7px;">Requerido</label>
+                            <label for="nombre" style="font-size: 7px;" class="text-danger">Requerido</label>
                         </div>
                         <input type="text" name="PrimerApellido_victima" id="PrimerApellido_victima"
                             class=" form-control" value="{{ old('PrimerApellido') }}" maxlength="50"
-                            data-message-error='El dato "PRIMER APELLIDO DE LA VÍCTIMA" es requerido.'
+                            data-message-error='"PRIMER APELLIDO DE LA VÍCTIMA" es requerido.'
                              placeholder="Primer apellido">
                         <div style="color:#FF0000;">
                             {{ $errors->first('PrimerApellido') }}
@@ -139,12 +139,12 @@
                         <div class="form-ic-cmp">
                             <i class="fal fa-calendar"></i>&nbsp;
                             <label for="fnacimiento">Fecha de Nacimiento</label>
-                            <label for="nombre" style="font-size: 7px;">Requerido</label>
+                            <label for="nombre" style="font-size: 7px;" class="text-danger">Requerido</label>
 
                         </div>
                         <input type="date" name="fnacimiento_victima" id="fnacimiento_victima"
                             class=" form-control" data-destino="victima" onchange="esMayorDeEdad(this)"
-                            data-message-error='El dato "FECHA DE NACIMIENTO DE LA VÍCTIMA" es requerido.'
+                            data-message-error='"FECHA DE NACIMIENTO DE LA VÍCTIMA" es requerido.'
                             >
                         <div style="color:#FF0000;">
                             {{ $errors->first('fnacimiento') }}
@@ -172,7 +172,7 @@
                         <div class="form-ic-cmp">
                             <i class="fal fa-file"></i>
                             <label for="credencial">&nbsp; Identificación oficial de la víctima (INE o Pasaporte)</label>
-                            <label for="credencial" style="font-size: 7px;">Requerido</label>
+                            <label for="credencial" style="font-size: 7px;" class="text-danger">Requerido</label>
         
                         </div>
                         {{-- <input type="file" name="credencial" class="file_multi_image required credencial" id="credencial"
@@ -180,7 +180,7 @@
                         <div class="input-group mb-3" role='button'>
                             <div class="input-group-prepend"> </div>
                             <div class="custom-file">
-                                <input style="cursor:pointer;" type="file" class="custom-file-input" id="identificacion_victima" name="identificacion_victima" data-message-error='El dato "IDENTIFICACIÓN OFICIAL DE LA VÍCTIMA" es requerido.'>
+                                <input style="cursor:pointer;" type="file" class="custom-file-input" id="identificacion_victima" name="identificacion_victima" data-message-error='"IDENTIFICACIÓN OFICIAL DE LA VÍCTIMA" es requerido.'>
                                 <label class="custom-file-label" id="custom-file-label-identificacion-victima" for="identificacion_victima">Buscar
                                     Archivo</label>  
                             </div>

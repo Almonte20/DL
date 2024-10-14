@@ -9,7 +9,7 @@
           name="existen_testigos"
           class="custom-control-input required"
           value="1"
-          data-message-error='El dato "¿EXISTEN TESTIGOS DEL HECHO?" es requerido.'
+          data-message-error='"¿EXISTEN TESTIGOS DEL HECHO?" es requerido.'
           onchange="existenTestigos()">
         <label class="custom-control-label" for="existentestigosS">SÍ </label>
     </div>
@@ -20,7 +20,7 @@
           name="existen_testigos"
           class="custom-control-input required"
           value="0"
-          data-message-error='El dato "¿EXISTEN TESTIGOS DEL HECHO?" es requerido.'
+          data-message-error='"¿EXISTEN TESTIGOS DEL HECHO?" es requerido.'
           onchange="existenTestigos()">
         <label class="custom-control-label" for="existentestigosN">NO</label>
     </div>

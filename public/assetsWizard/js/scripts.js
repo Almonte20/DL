@@ -496,7 +496,7 @@ jQuery(document).ready(function() {
                 if ($('#nacionalidad_victima').val() == '118' && $('#Nombre_victima').val() == '') {
                     Swal.fire({
                         title: "¡FALTAN DATOS POR LLENAR!",
-                        html: `<p style="font-size:26px !important;"><b>En "datos de la víctima" dé click en botón "BUSCAR" para agregar el nombre de la víctima.</b></p>`,
+                        html: `<p style="font-size:26px !important;"><b>En "DATOS DE LA VÍCTIMA" presiona el botón "BUSCAR" para agregar el nombre de la víctima.</b></p>`,
                         icon: "error",
                         confirmButtonText: "ACEPTAR",
                         customClass: {
@@ -576,7 +576,7 @@ jQuery(document).ready(function() {
 
         Swal.fire({
             icon: "question",
-            title: "¿ESTÁ SEGURO DE QUERER REGISTRAR LA DENUNCIA?",
+            title: "¿ESTÁ SEGURO DE REGISTRAR LA DENUNCIA?",
             showDenyButton: true,
             confirmButtonText: "SÍ, REGISTRAR DENUNCIA",
             denyButtonText: `NO, CANCELAR`,
