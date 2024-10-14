@@ -733,20 +733,16 @@
     }
 
     function fechaIntervalo(radio){
-        console.log('llega');
-
+      
         var valor = $(radio).val();
         if(valor == 1){
             $("#DivIntervalo").removeClass("d-none");
-            // $(".spanintervalo").removeClass("d-none");
-
-            // $("#fecha_final").addClass("required");
 
             $('.spaninicial').removeClass('d-none');
+            $('#fecha_final').addClass('required');
 
 
             // $('#input-fecha-especifica-hechos').removeClass('required');
-            // $('#input-fecha-inicial-hechos').addClass('required');
             // $('#input-fecha-final-hechos').addClass('required');
 
         }else{
@@ -756,6 +752,7 @@
 
             // $('#fecha-especifica').removeClass('d-none');
             $('.spaninicial').addClass('d-none');
+            $('#fecha_final').removeClass('required');
 
 
             // $('#input-fecha-especifica-hechos').addClass('required');
