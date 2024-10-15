@@ -247,7 +247,7 @@
                         </li>
                         <li class="menu-has-children nav-menu-item"><a href="#">Trámites</a>
                             <ul>
-                            <li><a href="{{ url('/denuncia') }}"><img src="{{ asset('img/iconos/denuncia_digital.png/') }}" height="30px">&nbsp&nbspDenuncia en Línea</a></li>
+                            <li><a href="{{ route("denuncia.index")}}"><img src="{{ asset('img/iconos/denuncia_digital.png/') }}" height="30px">&nbsp&nbspDenuncia en Línea</a></li>
                             <li><a href="{{ url('/cartas') }}" target="_blank"><img src="{{ asset('img/cartas/icono_cartas_menu.png/') }}" height="30px">&nbsp;&nbsp;Cartas en Línea</a></li>
                                 <li><a href="{{ url('/tramites') }}" target="_blank"><img src="{{ asset('img/iconos/tramites_b.png/') }}" height="30px">&nbsp&nbspTrámites</a></li>
                                 <li><a href="/VehiculosRecuperados" target="_blank"><img src="{{ asset('img/iconos/vehículos_b.png/') }}" height="30px">&nbsp&nbspVehículos Recuperados</a></li>
@@ -323,9 +323,9 @@
 
                         <li class="menu-has-children nav-menu-item" style="float: right;"><a style="color: white !important;"> <img src="{{ asset('img/denuncia/logo_blanco.png') }}" alt="" height="30px;" style="margin-top: -5px;"> Denuncia en Línea&nbsp;&nbsp;</a>
                             <ul>
-                                <li><a href="/denuncia" target="_blank"><img src="{{ asset('img/denuncia/logo_blanco.png') }}" height="30px">&nbsp;&nbsp;Presentar Denuncia</a></li>
+                                <li><a href="{{route("denuncia.index")}}}}" target="_blank"><img src="{{ asset('img/denuncia/logo_blanco.png') }}" height="30px">&nbsp;&nbsp;Presentar Denuncia</a></li>
                                 <li><a href="{{asset('documentos/ayuda_denuncia.pdf')}}" target="_blank"><img src="{{ asset('img/iconos/help2.png') }}" height="30px">&nbsp;&nbsp;¿Cómo Presentar Denuncia?</a></li>
-                                <li><a href="/consulta" target="_blank"><img src="{{ asset('img/iconos/consulta_digital.png') }}" height="30px">&nbsp;&nbsp;Consultar Denuncia</a></li>
+                                <li><a href="{{route('denuncia.consulta')}}" target="_blank"><img src="{{ asset('img/iconos/consulta_digital.png') }}" height="30px">&nbsp;&nbsp;Consultar Denuncia</a></li>
                                 <li><a href="{{ url('/login') }}" ><img src="{{ asset('img/Denuncia_policia/icono_micrositio.png') }}" height="30px">&nbsp;&nbsp;Acceso a Policía Estatal</a></li>
                                 <li><a href="{{ url('/login') }}" ><img src="{{ asset('img/Denuncia_policia/icono_micrositio.png') }}" height="30px">&nbsp;&nbsp;Acceso a Policía Municpal</a></li>
                             </ul>

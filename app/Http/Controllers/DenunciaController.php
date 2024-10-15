@@ -552,6 +552,7 @@ class DenunciaController extends Controller
             $victima->segundo_apellido = $request->SegundoApellido_victima;
             $victima->fecha_nacimiento = $request->fnacimiento_victima;
             $victima->id_nacionalidad = $request->nacionalidad_victima;
+            $victima->mayor_edad = $request->mayor_edad_victima;
             $victima->id_tipo_persona = 1;
             $victima->id_denuncia =  $id_denuncia;
             $victima->id_tipo_involucrado = 1;
@@ -792,82 +793,35 @@ class DenunciaController extends Controller
         $token = $request->token;
 
         
-        $expediente = Denuncia::where([['folio_denuncia',$folio],['token_denuncia',$token]])
-        ->get();
+        $expediente = Denuncia::where([['folio_denuncia',$folio],['token_denuncia',$token]]);
         // dd($expediente);
                         // dd($expediente);
                         // return $expediente;
 
-        if($expediente->isNotEmpty())
+        if($expediente->get()->isNotEmpty())
         {
-            $expediente = $expediente[0];
+            $expediente = $expediente->first();
             $id_denuncia = $expediente->id;
-            // dd($id_denuncia);
             $NumeroCaso = Caso::where("id_denuncia_linea",$id_denuncia)->first();
             $denunciante = Involucrado::where("id_tipo_involucrado","4")->where("id_denuncia",$id_denuncia)->first();
+            if(empty($denunciante)){
+                $victima = Involucrado::where("id_tipo_involucrado","1")->where("id_denuncia",$id_denuncia)->first();
+                $denunciante = Involucrado::where("id_tipo_involucrado","3")->where("id_denuncia",$id_denuncia)->first();
+                $victimaDenunciante = 0;
+            }else{
+                $victima  = null;
+                $victimaDenunciante = 1;
+            }
             $hechos = Hecho::where("id_denuncia",$id_denuncia)->first();
-            // return $denunciante;
-
-            // $hechos = DB::connection('sqlpredenuncia')->table('HechosDenunciante')
-            //                 ->leftjoin('catalogos.dbo.Pais', 'catalogos.dbo.Pais.id','=', 'HechosDenunciante.Pais')
-            //                 ->leftjoin('catalogos.dbo.ENTIDAD', 'catalogos.dbo.ENTIDAD.ID','=','HechosDenunciante.Entidad')
-            //                 ->leftjoin('catalogos.dbo.MUNICIPIO', 'catalogos.dbo.MUNICIPIO.ID','=','HechosDenunciante.Municipio')
-            //                 ->select('Narrativa','FechaExacta','HoraExacta','catalogos.dbo.Pais.desc AS Pais','catalogos.dbo.ENTIDAD.DESCRIPCION AS Entidad','catalogos.dbo.MUNICIPIO.DESCRIPCION AS Municipio','Colonia','Calle','NumeroExt','NumeroInt','CodigoPostal','IdCarretera','KM','DescripcionHecho','TipoFecha')
-            //                 ->where('IdExpediente',$expediente[0]->IdExpediente)
-            //                 ->get();
-
-            // return $hechos;
             $delito = null;
             if(!empty($expediente->id_delito_clasificacion))
             $delito =  DelitoClasificacion::where("id",$expediente->id_delito_clasificacion);
-        // $delito =  DB::connection('sqlpredenuncia')->table('Delitos')
-        //                 ->leftJoin('catalogos_new.dbo.DelitosSIGI', 'catalogos_new.dbo.DelitosSIGI.IdDelito','=','Delitos.DelitoId')
-        //                 ->select('catalogos_new.dbo.DelitosSIGI.cNombre as Delito','IdExpediente','IdModalidad')
-        //                 ->where([['IdExpediente',$expediente[0]->IdExpediente],['EstadoDelito',1]])
-        //                 ->get();
-
-        // return $delito;
-
-        $delito_aux="";
-        // if($delito[0]->Delito == '')
-        // {
-            //     $delito_aux =  DB::connection('sqlpredenuncia')->table('catalogos.dbo.UnidadRegion')
-            //                 ->leftJoin('catalogos.dbo.DelitosPredenuncia', 'catalogos.dbo.DelitosPredenuncia.Id','=','catalogos.dbo.UnidadRegion.IdDelito')
-            //                 ->leftJoin('catalogos.dbo.DelitoRoboPredenuncia', 'catalogos.dbo.DelitoRoboPredenuncia.Id','=','catalogos.dbo.UnidadRegion.IdTipoRobo')
-            //                 ->select('catalogos.dbo.DelitosPredenuncia.Descripcion as Delito','catalogos.dbo.DelitoRoboPredenuncia.Descripcion as TipoRobo')
-            //                 ->where('catalogos.dbo.UnidadRegion.IdUnidadRegion',$delito[0]->IdUnidadRegion)
-            //                 ->get();
-            // }
+            $delito_aux="";
             $evidencias = Evidencia::where("id_denuncia",$id_denuncia)->get();
-            // $evidencias = DB::connection('sqlpredenuncia')->table('EvidenciasPredenuncia')
-            //                 ->select('ruta')
-            //                 ->where('IdExpediente',$expediente[0]->IdExpediente)
-            //                 ->get();
-
-            // return $evidencias;
-
-            // $id_denuncia = 88;
             $testigos =  Involucrado::where("id_tipo_involucrado",5)->where("id_denuncia",$id_denuncia)->get();
-            // dd($testigos);
-            // $testigos =  DB::connection('sqlpredenuncia')->table('Testigos')
-            //                 ->select('Nombre','PrimerApellido','SegundoApellido','InformacionAdicional')
-            //                 ->where('IdExpediente',$expediente[0]->IdExpediente)
-            //                 ->get();
-
-                            // return $testigos;
-
-            // $notificaciones = NotificacionUsuario::where("id_denuncia_linea")->get();
             $notificaciones = NotificacionUsuario::where("llave_modulo",$id_denuncia)->where("id_modulo",1)->whereNull("id_usuario_emisor")->get();
 
-            // $notificaciones = DB::connection('sqlpredenuncia')->table('Notificaciones')
-            //                 ->select('FechaCita','Hora','TipoNotificacion','Asunto','Descripcion','created_at')
-            //                 ->where('IdExpediente',$expediente[0]->IdExpediente)
-            //                 ->orderby('created_at','DESC')
-            //                 ->get();
-
-                            // return $notificaciones;
-
-            return view('consulta.datos',compact('NumeroCaso','denunciante','hechos','delito','evidencias','testigos','notificaciones','delito_aux'));
+            return view('consulta.datos',compact('NumeroCaso','denunciante','hechos','delito','evidencias','testigos','notificaciones','delito_aux','victima','victimaDenunciante'));
         }
         else
         {
