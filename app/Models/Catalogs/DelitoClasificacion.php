@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class DelitoClasificacion extends Model
 {
     protected $connection = 'sqlsrv';
-    protected $table = 'cat_delito_clasificacion';
+    protected $table = 'cat_delitos';
 }
