@@ -10,13 +10,13 @@
 		<tbody>
 
 			@php
-
 			if(!empty($delito)){
-
-				$Delito =$delito->first()->clasificacion;
+				
+				$Delito = $delito->first()->delito;
 			}else{
 				$Delito = null;
 			}
+			
 				$Narrativa = $hechos->narrativa;
 				if($hechos->es_tramo_carretero==0){
 					$Colonia = $hechos->colony()->first()->nombre_asentamiento;

@@ -27,11 +27,14 @@
 
 		<ul class="tab-nav tab-nav2 clearfix">
       <li><a href="#tabs-1">Formalización</a></li>
-			<li><a href="#tabs-2">Generales</a></li>
-      <li><a href="#tabs-3">Hechos</a></li>
-      <li><a href="#tabs-4">Evidencias</a></li>
-      <li><a href="#tabs-5">Testigo(s)</a></li>
-      <li><a href="#tabs-6">Conclusión</a></li>
+			<li><a href="#tabs-2">Denunciante</a></li>
+      @if($victimaDenunciante == 0)
+			<li><a href="#tabs-3">Víctima</a></li>
+      @endif
+      <li><a href="#tabs-4">Hechos</a></li>
+      <li><a href="#tabs-5">Evidencias</a></li>
+      <li><a href="#tabs-6">Testigo(s)</a></li>
+      <li><a href="#tabs-7">Conclusión</a></li>
 		</ul>
 
 		<div class="tab-container">
@@ -41,17 +44,22 @@
 			</div>
       <div class="tab-content clearfix" id="tabs-2">
         @include('consulta.tabla_generales')
+      </div> 
+      @if($victimaDenunciante == 0)
+      <div class="tab-content clearfix" id="tabs-3">
+        @include('consulta.tabla_victima')
       </div>
-       <div class="tab-content clearfix" id="tabs-3">
+      @endif
+       <div class="tab-content clearfix" id="tabs-4">
         @include('consulta.tabla_hechos')
       </div>
-      <div class="tab-content clearfix" id="tabs-4">
+      <div class="tab-content clearfix" id="tabs-5">
         @include('consulta.tabla_evidencias')
       </div>
-      <div class="tab-content clearfix" id="tabs-5">
+      <div class="tab-content clearfix" id="tabs-6">
         @include('consulta.tabla_testigos')
 			</div>
-      <div class="tab-content clearfix" id="tabs-6">
+      <div class="tab-content clearfix" id="tabs-7">
         @include('consulta.tabla_conclusion')
 			</div>
 		</div>
