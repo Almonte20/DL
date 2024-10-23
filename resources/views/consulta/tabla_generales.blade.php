@@ -21,10 +21,6 @@
 		$Nacionalidad = null;
 		if(!empty($denunciante->id_nacionalidad))
 			$Nacionalidad = $denunciante->first()->country()->first()->nacionalidad;
-		
-		
-
-		
 		@endphp
 		
 	  @if($denunciante)

@@ -32,7 +32,7 @@ class RegistroDenunciaMailable extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'FGE: Registro de Denuncia',
+            subject: $this->data->titulo,
         );
     }
 

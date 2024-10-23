@@ -8,11 +8,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Involucrado extends Model
 {
     protected $connection = 'sqlsrv';
     protected $table = 'sis_denuncia_linea_involucrado';
+    use SoftDeletes;
+    protected $fillable = ['id'];
 
     public function country(): BelongsTo
     {

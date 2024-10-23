@@ -46,7 +46,28 @@ Route::get('generarPDF/{id_denuncia}', [DenunciaController::class, 'generarPreSi
 Route::get('pruebaw', function(){
 	$data = ['codigo_verificacion' => "555666"];
 	$email = 'sistemas.ingresos@gmail.com';
+	$rutaAcuse = 'C:\PLANTILLAS FGE\Denuncia\public\acuse\acuse_112.pdf';
+	$rutaDenuncia = 'C:\PLANTILLAS FGE\Denuncia\public\acuse\acuse_112.pdf';
+	$folio = "PD/2025666";
+	$token = "ASFASFASFFSFAFASFSFA";
+
 	Mail::to(trim($email))->send(new CodigoVerificacionMailable($data));
+	$mensajeNotificacion = 'El registro de su Denuncia se realizó de forma correcta, asignándole el folio '.$folio.' y la clave de seguimiento '.$token.', Su denuncia en línea será analizada por el Agente de Ministerio Público Orientador Digital, quien la asignará a la Fiscalía correspondiente para su seguimiento, atención y comunicación con usted. Esté al pendiente del correo/teléfono proporcionado.';
+	$info = new \stdClass;
+	$info->titulo = "FGE: Registro de denuncia en línea";
+	$info->nombre = "Alejandro Almonte Acosta";
+	$info->folio = $folio;
+	$info->email = $email;
+	$info->asunto = 'Denuncia en Línea FGE';
+	$info->token = $token;
+	$info->mensaje = $mensajeNotificacion;
+	
+	setlocale(LC_TIME, 'spanish');
+	$fecha = Carbon::now();
+	$fecha = strftime("%A, %d de %B del %Y", strtotime($fecha));
+	$info->fecha = $fecha;
+	Mail::to($email)->
+	send(new RegistroDenunciaMailable($info,$rutaAcuse,$rutaDenuncia));
 
 	$recipients = '524431401809'; // Asigna el valor de la variable
 	// $data = array(

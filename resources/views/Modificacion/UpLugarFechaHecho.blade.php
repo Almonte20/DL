@@ -5,20 +5,36 @@
     <h1>LUGAR Y FECHA DE LOS HECHOS:</h1>
 </div>
 
+@php
+
+if(!empty($hechos->fecha_final)){
+$fechaLapso = true;
+}else{
+$fechaLapso = false;
+}
+
+$Municipio =$hechos->colony()->first()->municipio()->first()->nombre_municipio;
+$Entidad = $hechos->colony()->first()->municipio()->first()->estado()->first()->nombre_estado;
+$txtlugar = $hechos->place()->first()->lugar;
+
+
+@endphp
+
 <div class="text-center mb-3">
     <p class="mb-2 txt-preguntas">INDIQUE LA FECHA Y HORA EN QUE SUCEDIÓ EL HECHO A DENUNCIAR</p>
     {{-- <div class="col-md text-center"> --}}
         <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="fecha_especifica_lapso" id="fecha" value="0" checked
-                onchange="fechaIntervalo(this)">
+            <input class="form-check-input" type="radio" name="fecha_especifica_lapso" id="fecha" value="0"
+                onchange="fechaIntervalo(this)" @if (!$fechaLapso){{'checked'}}@endif>
             <label class="form-check-label" for="fecha">Fecha y hora específica</label>
         </div>
         <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="fecha_especifica_lapso" id="intervalo" value="1"
-                onchange="fechaIntervalo(this)">
+                onchange="fechaIntervalo(this)" @if ($fechaLapso){{'checked'}}@endif>
             <label class="form-check-label" for="intervalo">Lapso de tiempo</label>
         </div>
-    {{-- </div> --}}
+        {{--
+    </div> --}}
 </div>
 
 <div id="ResponsableDiv" class="container pl-3">
@@ -31,9 +47,9 @@
                         hechos</label>
                     <label for="fecha_inicial" style="font-size: 7px;" class="text-danger">Requerido</label>
                 </div>
-                <input type="datetime-local" id="input-fecha-especifica-hechos" class="form-control required" name="fecha_inicial" max="{{ date('Y-m-d H:i') }}"
-                data-message-error='"FECHA Y HORA DE LOS HECHOS" es requerido.'
-                >
+                <input type="datetime-local" id="input-fecha-especifica-hechos" class="form-control required"
+                    name="fecha_inicial" max="{{ date('Y-m-d H:i') }}"
+                    data-message-error='"FECHA Y HORA DE LOS HECHOS" es requerido.'>
 
                 <div style="color:#FF0000;">
                     {{ $errors->first('fechainicial') }}
@@ -51,14 +67,16 @@
                         hechos</label>
                     <label for="fecha_inicial" style="font-size: 7px;" class="text-danger">Requerido</label>
                 </div>
-                <input type="datetime-local" class="form-control" name="fecha_inicial" id="fecha_inicial" max="{{ date('Y-m-d H:i') }}"
-                data-message-error='"FECHA Y HORA INICIAL DE LOS HECHOS" es requerido.' onchange="validarFechas()">
+                <input type="datetime-local" class="form-control" name="fecha_inicial" id="fecha_inicial"
+                    max="{{ date('Y-m-d H:i') }}"
+                    data-message-error='"FECHA Y HORA INICIAL DE LOS HECHOS" es requerido.' onchange="validarFechas()"
+                    value="{{$hechos->fecha_inicial}}">
                 <div style="color:#FF0000;">
                     {{ $errors->first('fechainicial') }}
                 </div>
             </div>
         </div>
-        <div class="col-md-4 d-none" id="DivIntervalo">
+        <div class="col-md-4 @if (!$fechaLapso){{'d-none'}}@endif" id="DivIntervalo">
             <div class="form-group">
                 <div class="form-ic-cmp">
                     <i class="fal fa-file-alt"></i>&nbsp;
@@ -66,8 +84,9 @@
                     <label for="fecha_final" style="font-size: 7px;" class="text-danger">Requerido</label>
 
                 </div>
-                <input type="datetime-local" class="form-control" name="fecha_final" id="fecha_final" max="{{ date('Y-m-d H:i') }}"
-                data-message-error='"FECHA Y HORA FINAL DE LOS HECHOS" es requerido.' onchange="validarFechas()">
+                <input type="datetime-local" class="form-control" name="fecha_final" id="fecha_final"
+                    max="{{ date('Y-m-d H:i') }}" data-message-error='"FECHA Y HORA FINAL DE LOS HECHOS" es requerido.'
+                    onchange="validarFechas()" @if ($fechaLapso){{$hechos->fecha_final}}@endif>
                 <div style="color:#FF0000;">
                     {{ $errors->first('fecha_final') }}
                 </div>
@@ -99,7 +118,7 @@
                 <i class="fad fa-map-marker-alt "></i>&nbsp;
                 <label for="municipio_hechos" class="mb-0">Domicilio</label>
                 <input type="text" name="domicilio_mapa" id="search" class="form-control mb-3 mt-1"
-                    placeholder="Buscar dirección en México">
+                    placeholder="Buscar dirección en México" value="{{$hechos->domicilio_mapa}}">
             </div>
 
         </div>
@@ -116,8 +135,8 @@
                     <label for="CP_hechos" style="font-size: 7px;" class="text-danger">Requerido</label>
 
                 </div>
-                <input class=" form-control required" value="" maxlength="5" onkeypress="return justNumbers(event);"
-                     name="CP_hechos" type="text" id="CP_hechos"
+                <input class=" form-control required" value="{{$hechos->codigo_postal}}" maxlength="5"
+                    onkeypress="return justNumbers(event);" name="CP_hechos" type="text" id="CP_hechos"
                     placeholder="Ingrese C.P." maxlength="5"
                     data-message-error='"CÓDIGO POSTAL DONDE SUCEDIÓ EL HECHO" es requerido.'
                     onblur="validarCP(this,'entidad_hechos','municipio_hechos','asentamiento_hechos')"
@@ -132,9 +151,9 @@
                     <i class="fal fa-map"></i>&nbsp;
                     <label for="entidad_hechos">Estado</label>
                 </div>
-                <select class=" form-control " value="{{(old('entidad'))}}"
-                    id="entidad_hechos" name="entidad_hechos" disabled>
-                    <option value="0">Estado</option>
+                <select class=" form-control " value="{{(old('entidad'))}}" id="entidad_hechos" name="entidad_hechos"
+                    disabled>
+                    <option value="0">{{$Entidad}}</option>
                 </select>
                 <div style="color:#FF0000;">
 
@@ -147,8 +166,8 @@
                     <label for="municipio_hechos">Municipio</label>
                 </div>
                 <select class=" form-control " value="<?php echo e(old('municipio')); ?>" id="municipio_hechos"
-                     name="municipio_hechos" disabled>
-                    <option value="0">Municipio</option>
+                    name="municipio_hechos" disabled>
+                    <option value="0">{{$Municipio}}</option>
                     {{-- @foreach ($municipios as $country)
 
                     <option @if ($country->id == 118)
@@ -170,15 +189,19 @@
                     <label for="colonia" style="font-size: 7px;" class="text-danger">Requerido</label>
 
                 </div>
-                <select class=" form-control required" value="<?php echo e(old('municipio')); ?>"
-                     name="asentamiento_hechos"
-                     data-message-error='"COLIONIA DONDE SUCEDIÓ EL HECHO" es requerido.'
-                    id="asentamiento_hechos">
 
+                <select class=" form-control required" value="<?php echo e(old('municipio')); ?>"
+                    name="asentamiento_hechos" data-message-error='"COLIONIA DONDE SUCEDIÓ EL HECHO" es requerido.'
+                    id="asentamiento_hechos">
                     <option value="0">Seleccione una colonia</option>
+                    @foreach ($colonies_hechos as $colony)
+                    <option @if ($colony->id == $hechos->id_asentamiento)
+                        {{'selected'}}
+                        @endif value="{{$colony->id}}">{{$colony->nombre_asentamiento}}</option>
+                    @endforeach
                 </select>
-                {{-- <input class=" form-control " maxlength="250" value=""
-                     name="colonia" type="text" id="colonia"> --}}
+                {{-- <input class=" form-control " maxlength="250" value="" name="colonia" type="text" id="colonia">
+                --}}
                 <div style="color:#FF0000;">
 
                 </div>
@@ -190,9 +213,8 @@
                     <label for="calle_hechos" style="font-size: 7px;" class="text-danger">Requerido</label>
 
                 </div>
-                <input class=" form-control required " value="" maxlength="250"
-                     name="calle_hechos" type="text" id="calle_hechos"
-                     data-message-error='"CALLE DONDE SUCEDIÓ EL HECHO" es requerido.'
+                <input class=" form-control required " value="{{$hechos->calle}}" maxlength="250" name="calle_hechos"
+                    type="text" id="calle_hechos" data-message-error='"CALLE DONDE SUCEDIÓ EL HECHO" es requerido.'
                     placeholder="Ingrese la calle">
                 <div style="color:#FF0000;">
 
@@ -202,13 +224,14 @@
             <div class="form-group col-md-2">
                 <div class="form-ic-cmp">
                     <i class="fal fa-hashtag"></i>&nbsp;
-                    <label for="numext_hechos">No. Exterior <span style="font-size: 7px;" class="text-danger">Requerido</span></label>
+                    <label for="numext_hechos">No. Exterior <span style="font-size: 7px;"
+                            class="text-danger">Requerido</span></label>
 
                 </div>
-                <input class=" form-control required" value="" maxlength="6"
+                <input class=" form-control required" value="{{$hechos->numero_exterior}}" maxlength="6"
                     name="numext_hechos" type="text"
-                    data-message-error='"NÚMERO EXTERIOR DONDE SUCEDIÓ EL HECHO" es requerido.'
-                    id="numext_hechos" placeholder="Número exterior">
+                    data-message-error='"NÚMERO EXTERIOR DONDE SUCEDIÓ EL HECHO" es requerido.' id="numext_hechos"
+                    placeholder="Número exterior">
                 <div style="color:#FF0000;">
 
                 </div>
@@ -223,8 +246,8 @@
                     <label for="numint_hechos">No. Interior</label>
 
                 </div>
-                <input class=" form-control" value="" maxlength="6"
-                    name="numint_hechos" type="text" id="numint_hechos" placeholder="Número interior">
+                <input class=" form-control" value="{{$hechos->numero_interior}}" maxlength="6" name="numint_hechos"
+                    type="text" id="numint_hechos" placeholder="Número interior">
                 <div style="color:#FF0000;">
 
                 </div>
@@ -232,36 +255,38 @@
 
             <div class="form-row col-lg-12">
                 <div class="form-group col-md-4">
-                    <div class="form-ic-cmp">
-                        <i class="fal fa-home"></i>&nbsp;
-                        <label for="select_lugar">Lugar</label>
-                        <label for="fecha_inicial" style="font-size: 7px;" class="text-danger">Requerido</label>
-                    </div>
-                    <select name="lugar_descripcion"
-                        id="select_lugar" class=" form-control required" data-show-subtext="true"
-                        data-live-search="true" onchange="lugarReferencia(this)"
-                        data-message-error='"LUGAR DONDE SUCEDIÓ EL HECHO" es requerido.'>
-                        <option value="0">Seleccione un lugar</option>
+                    <div class="select">
+                        <div class="form-ic-cmp">
+                            <i class="fal fa-home"></i>&nbsp;
+                            <label for="select_lugar">Lugar</label>
+                            <label for="fecha_inicial" style="font-size: 7px;" class="text-danger">Requerido</label>
+                        </div>
+                        <select name="lugar_descripcion" id="select_lugar" class=" form-control required"
+                            data-show-subtext="true" data-live-search="true" onchange="lugarReferencia(this)"
+                            data-message-error='"LUGAR DONDE SUCEDIÓ EL HECHO" es requerido.'>
+                            <option value="0">Seleccione un lugar</option>
 
-                        @foreach ($lugares as $lugar)
+                            @foreach ($lugares as $lugar)
 
-                        <option value="{{$lugar->id}}">{{$lugar->lugar}}</option>
-                        @endforeach
+                            <option value="{{$lugar->id}}" @if ($lugar->id == $hechos->id_lugar)
+                                {{'selected'}}@endif>{{$lugar->lugar}}</option>
 
-                    </select>
-                    <div style="color:#FF0000;">
+                            @endforeach
 
+                        </select>
                     </div>
                 </div>
 
-                <div class="form-group col-md-8 d-none" id="referenciaLugar">
+                <div class="form-group col-md-8" id="referenciaLugar">
                     <div class="form-ic-cmp">
                         <i class="fal fa-home"></i>&nbsp;
-                        <label for="numext_hechos">Referencia del lugar (<span id="txt_lugar_referencia"></span>)</label>
+                        <label for="numext_hechos">Referencia del lugar (<span
+                                id="txt_lugar_referencia">{{$txtlugar}}</span>)</label>
 
                     </div>
-                    <textarea name="referencia_lugar" class="form-control" placeholder="Referencia del lugar" id="descripcion-referencia-lugar"
-                    data-message-error='"REFERENCIA DEL LUGAR DONDE SUCEDIÓ EL HECHO" es requerido.'></textarea>
+                    <textarea name="referencia_lugar" class="form-control" placeholder="Referencia del lugar"
+                        id="descripcion-referencia-lugar"
+                        data-message-error='"REFERENCIA DEL LUGAR DONDE SUCEDIÓ EL HECHO" es requerido.'>{{$hechos->referencia_lugar}}</textarea>
                 </div>
 
             </div>
@@ -347,8 +372,8 @@
                     data-original-title="Recuerda colocar todos los datos conocidos del lugar donde sucedieron los hechos. Ej. municipio más cerc, lugar conocido más cerca, etc."></i>&nbsp;
                 <label for="colonia" style="font-size: 7px;" class="text-danger">Requerido</label>
             </div>
-            <textarea class="form-control" name="descripcion_lugar" id="descripcion_lugar" rows="7" maxlength="1990"
-                ></textarea>
+            <textarea class="form-control" name="descripcion_lugar" id="descripcion_lugar" rows="7"
+                maxlength="1990"></textarea>
             <!-- <textarea class="form-control" value="&lt;?php echo e(old(&#039;descripcion_lugar&#039;,&#039;&#039;)); ?&gt;" maxlength="4000" placeholder="Recuerda que debes ingresar una descripcion del lugar de los hechos." rows="7"  name="descripcion_lugar" cols="50" id="descripcion_lugar"></textarea> -->
             <div style="color:#FF0000;">
 
@@ -363,8 +388,8 @@
 
     <div class="row d-none">
         <div class="d-none">
-            <input type="text" name="latitud" id="latitude" class="form-control mb-3" placeholder="Latitud" readonly>
-            <input type="text" name="longitud" id="longitude" class="form-control mb-3" placeholder="Longitud" readonly>
+            <input type="text" name="latitud" id="latitude" class="form-control mb-3" placeholder="Latitud" readonly value="{{$hechos->latitud}}">
+            <input type="text" name="longitud" id="longitude" class="form-control mb-3" placeholder="Longitud" readonly value="{{$hechos->longitud}}">
         </div>
         <div class="col-md-3">
             Código Postal
@@ -485,200 +510,175 @@
 			let infoWindow;
 
 			function initMap() {
-				const mexicoBounds = new google.maps.LatLngBounds(
-					new google.maps.LatLng(14.3895, -118.449591), // southwest
-					new google.maps.LatLng(32.718653, -86.5891) // northeast
-				);
+    const mexicoBounds = new google.maps.LatLngBounds(
+        new google.maps.LatLng(14.3895, -118.449591), // southwest
+        new google.maps.LatLng(32.718653, -86.5891) // northeast
+    );
 
-				map = new google.maps.Map(document.getElementById("map"), {
-					center: {
-						// lat: 23.6345,
-						// lng: -102.5528
-                        lat: 19.5665,
-                        lng: -101.7068
-					},
-					restriction: {
-						latLngBounds: mexicoBounds,
-						strictBounds: true
-					},
-					zoom: 8,
-					mapId: 'DEMO_MAP_ID',
-					gestureHandling: 'greedy'
-				});
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: {
+            lat: {{$hechos->latitud}},
+            lng: {{$hechos->longitud}}
+        },
+        restriction: {
+            latLngBounds: mexicoBounds,
+            strictBounds: true
+        },
+        zoom: 18,
+        mapId: 'DEMO_MAP_ID',
+        gestureHandling: 'greedy'
+    });
 
-                marker = new google.maps.marker.AdvancedMarkerElement({
+    const initialPosition = new google.maps.LatLng({{$hechos->latitud}}, {{$hechos->longitud}});
 
-                    map: map,
-                    title: 'Ubicación Actual',
-                    gmpDraggable: true
-                });
+    marker = new google.maps.marker.AdvancedMarkerElement({
+        map: map,
+        position: initialPosition, // Establece la posición inicial del marcador
+        title: 'Ubicación Actual',
+        gmpDraggable: true
+    });
 
-				infoWindow = new google.maps.InfoWindow();
+    infoWindow = new google.maps.InfoWindow();
 
-				// const searchInput = document.getElementById("search");
-				// const postalCodeInput = document.getElementById("CP_mapa");
-				// const latitudeInput = document.getElementById("latitude");
-				// const longitudeInput = document.getElementById("longitude");
-				// const streetInput = document.getElementById("calle_mapa");
-				// const municipioInput = document.getElementById("municipio_mapa");
-				// const estadoInput = document.getElementById("estado_mapa");
-				// const numeroInput = document.getElementById("numero_mapa");
+    const searchInput = document.getElementById("search");
+    const postalCodeInput = document.getElementById("CP_hechos");
+    const latitudeInput = document.getElementById("latitude");
+    const longitudeInput = document.getElementById("longitude");
+    const streetInput = document.getElementById("calle_hechos");
+    const numeroInput = document.getElementById("numext_hechos");
 
+    const searchBox = new google.maps.places.SearchBox(searchInput, {
+        componentRestrictions: {
+            country: 'MX'
+        } // Restringe la búsqueda al país de México
+    });
 
-                const searchInput = document.getElementById("search");
-				const postalCodeInput = document.getElementById("CP_hechos");
-				const latitudeInput = document.getElementById("latitude");
-				const longitudeInput = document.getElementById("longitude");
-				const streetInput = document.getElementById("calle_hechos");
-				// const municipioInput = document.getElementById("municipio_hechos");
-				// const estadoInput = document.getElementById("estado_hechos");
-				const numeroInput = document.getElementById("numext_hechos");
+    // Llama a la función para actualizar campos con la posición inicial
+    // updateFields(initialPosition);
 
+    function updateFields(position) {
+        postalCodeInput.value = "";
+        latitudeInput.value = position.lat();
+        longitudeInput.value = position.lng();
 
+        const geocoder = new google.maps.Geocoder();
+        geocoder.geocode({
+            location: position
+        }, (results, status) => {
+            if (status === "OK") {
+                if (results[0]) {
+                    let street;
+                    let municipality;
+                    let number;
+                    let state;
+                    for (let i = 0; i < results[0].address_components.length; i++) {
+                        const component = results[0].address_components[i];
 
-
-				const searchBox = new google.maps.places.SearchBox(searchInput, {
-					componentRestrictions: {
-						country: 'MX'
-					} // Restringe la búsqueda al país de México
-				});
-
-				function updateFields(position) {
-					postalCodeInput.value = "";
-					latitudeInput.value = position.lat();
-					longitudeInput.value = position.lng();
-
-					// Obtener el código postal utilizando la API de Geocoding
-					const geocoder = new google.maps.Geocoder();
-					geocoder.geocode({
-						location: position
-					}, (results, status) => {
-						if (status === "OK") {
-							if (results[0]) {
-                                let street;
-                                let municipality;
-                                let number;
-                                let state;
-								for (let i = 0; i < results[0].address_components.length; i++) {
-
-                                    const component = results[0].address_components[i];
-
-                                    if (component.types.includes("route")) {
-                                        street = component.long_name;
-                                    }
-
-                                    if (component.types.includes("locality")) {
-                                        municipality = component.long_name;
-                                    }
-
-                                    if (component.types.includes("street_number")) {
-                                        number = component.long_name;
-                                    }
-
-                                    if (component.types.includes("administrative_area_level_1")) {
-                                        state = component.long_name;
-                                    }
-
-                                    if (results[0].address_components[i].types.includes("postal_code")) {
-                                        postalCodeInput.value = results[0].address_components[i].long_name;
-                                        const blurEvent = new Event('blur');
-                                        postalCodeInput.dispatchEvent(blurEvent);
-                                        break;
-                                    }
-
-                                     // Asignar los valores a los campos de entrada correspondientes
-                                    if (street) {
-                                        // Asignar el nombre de la calle al campo de entrada
-                                        // Aquí debes reemplazar 'streetInput' con el ID o nombre de tu campo de entrada para la calle
-                                        streetInput.value = street;
-                                    }
-
-                                    if (municipality) {
-                                        // Asignar el municipio al campo de entrada
-                                        // Aquí debes reemplazar 'municipalityInput' con el ID o nombre de tu campo de entrada para el municipio
-                                        // municipioInput.value = municipality;
-                                    }
-
-                                    if (number) {
-                                        // Asignar el número exterior al campo de entrada
-                                        // Aquí debes reemplazar 'numberInput' con el ID o nombre de tu campo de entrada para el número exterior
-                                        numeroInput.value = number;
-                                    }
-
-                                    if (state) {
-                                        // estadoInput.value = state;
-                                    }
-
-								}
-							} else {
-								console.log("No se encontraron resultados de geocodificación");
-							}
-						} else {
-							console.log("Error de geocodificación: " + status);
-						}
-					});
-				}
-
-				function updateMarkerPositionAndCenter(position) {
-                    if (!mexicoBounds.contains(position)) {
-                        console.log("La posición está fuera de los límites de México");
-                        return;
-                    }
-                    // marker.setPosition(position);
-                    marker.setAttribute('position', position.lat() + ',' + position.lng());
-                    map.setCenter(position); // Posiciona el mapa en el centro
-                    map.setZoom(17); // Establece el nivel de zoom deseado (por ejemplo, 17)
-                    updateFields(position);
-					showInfoWindow(position);
-
-                }
-				function showInfoWindow(position) {
-					infoWindow.setContent("<strong>Latitud:</strong> " + position.lat() + "<br><strong>Longitud:</strong> " + position.lng());
-					infoWindow.open(map, marker);
-				}
-
-
-                marker.addListener("dragend", () => {
-                    // const position = marker.getPosition();
-                    const getPosition = marker.getAttribute('position');
-                    const parts = getPosition.split(',');
-
-                    const position = {
-                        lat: function() {
-                            return parseFloat(parts[0]); // La primera parte es la latitud
-                        },
-                        lng: function() {
-                            return parseFloat(parts[1]); // La segunda parte es la longitud
+                        if (component.types.includes("route")) {
+                            street = component.long_name;
                         }
-                    };
 
-					const newLatLng = new google.maps.LatLng(parseFloat(position.lat()), parseFloat(position
-                        .lng()));
-                    updateMarkerPositionAndCenter(newLatLng);
-                });
+                        if (component.types.includes("locality")) {
+                            municipality = component.long_name;
+                        }
 
-				searchBox.addListener("places_changed", () => {
-					const places = searchBox.getPlaces();
+                        if (component.types.includes("street_number")) {
+                            number = component.long_name;
+                        }
 
-					if (places.length === 0) {
-						return;
-					}
+                        if (component.types.includes("administrative_area_level_1")) {
+                            state = component.long_name;
+                        }
 
-					const place = places[0];
+                        if (component.types.includes("postal_code")) {
+                            postalCodeInput.value = component.long_name;
+                            const blurEvent = new Event('blur');
+                            postalCodeInput.dispatchEvent(blurEvent);
+                            break;
+                        }
 
-					if (!place.geometry || !mexicoBounds.contains(place.geometry.location)) {
-						console.log("No se pudo encontrar la ubicación o está fuera de México");
-						return;
-					}
+                        if (street) {
+                            streetInput.value = street;
+                        }
 
-					updateMarkerPositionAndCenter(place.geometry.location);
-				});
+                        if (municipality) {
+                            // municipioInput.value = municipality;
+                        }
 
-				google.maps.event.addListener(map, "click", (event) => {
-					const position = event.latLng;
-					updateMarkerPositionAndCenter(position);
-				});
-			}
+                        if (number) {
+                            numeroInput.value = number;
+                        }
+
+                        if (state) {
+                            // estadoInput.value = state;
+                        }
+                    }
+                } else {
+                    console.log("No se encontraron resultados de geocodificación");
+                }
+            } else {
+                console.log("Error de geocodificación: " + status);
+            }
+        });
+    }
+
+    function updateMarkerPositionAndCenter(position) {
+        if (!mexicoBounds.contains(position)) {
+            console.log("La posición está fuera de los límites de México");
+            return;
+        }
+        marker.setAttribute('position', position.lat() + ',' + position.lng());
+        map.setCenter(position);
+        map.setZoom(17);
+        updateFields(position);
+        showInfoWindow(position);
+    }
+
+    function showInfoWindow(position) {
+        infoWindow.setContent("<strong>Latitud:</strong> " + position.lat() + "<br><strong>Longitud:</strong> " + position.lng());
+        infoWindow.open(map, marker);
+    }
+
+    marker.addListener("dragend", () => {
+        const getPosition = marker.getAttribute('position');
+        const parts = getPosition.split(',');
+
+        const position = {
+            lat: function() {
+                return parseFloat(parts[0]);
+            },
+            lng: function() {
+                return parseFloat(parts[1]);
+            }
+        };
+
+        const newLatLng = new google.maps.LatLng(parseFloat(position.lat()), parseFloat(position.lng()));
+        updateMarkerPositionAndCenter(newLatLng);
+    });
+
+    searchBox.addListener("places_changed", () => {
+        const places = searchBox.getPlaces();
+
+        if (places.length === 0) {
+            return;
+        }
+
+        const place = places[0];
+
+        if (!place.geometry || !mexicoBounds.contains(place.geometry.location)) {
+            console.log("No se pudo encontrar la ubicación o está fuera de México");
+            return;
+        }
+
+        updateMarkerPositionAndCenter(place.geometry.location);
+    });
+
+    google.maps.event.addListener(map, "click", (event) => {
+        const position = event.latLng;
+        updateMarkerPositionAndCenter(position);
+    });
+}
+
 </script>
 
 

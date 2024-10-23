@@ -8,11 +8,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class InvolucradoDomicilio extends Model
 {
     protected $connection = 'sqlsrv';
     protected $table = 'sis_denuncia_linea_involucrado_domicilio';
+    use SoftDeletes;
 
     public function colony(): BelongsTo
 	{

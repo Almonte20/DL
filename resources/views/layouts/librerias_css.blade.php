@@ -54,7 +54,7 @@
 <link href="{{ asset('lib/animate/animate.min.css') }}" rel="stylesheet">
 
 {{-- <link href="{{ asset('lib/sweetalert/dist/sweetalert2.min.css') }}" rel="stylesheet"> --}}
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
 
 <!-- Social Feed -->
 {{-- <link rel="stylesheet" href="{{ asset('lib/social-feed/css/jquery.socialfeed.css')}}"> --}}

@@ -79,9 +79,7 @@
         font-size: 20px;
         font-family: "labrador_aregular";
     }
-    select2-container--default .select2-search--inline .select2-search__field {
-    margin-left: 10px !important;
-    }
+    
 
 
     /* ----------------------------------------------------------------

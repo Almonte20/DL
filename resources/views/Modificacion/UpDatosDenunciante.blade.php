@@ -7,6 +7,30 @@
     </h1>
 </div>
 
+
+@php
+use Carbon\Carbon;
+$Colonia = $denunciante->address()->first()->colony()->first()->nombre_asentamiento;
+$Calle = $denunciante->address()->first()->calle;
+$NumExt = $denunciante->address()->first()->numero_exterior;
+$NumInt = $denunciante->address()->first()->numero_interior;
+$CodigoPostal = $denunciante->address()->first()->codigo_postal;
+$Entidad = $denunciante->address()->first()->colony()->first()->municipio()->first()->estado()->first()->nombre_estado;
+$Municipio = $denunciante->address()->first()->colony()->first()->municipio()->first()->nombre_municipio;
+$Nacionalidad = null;
+if(!empty($denunciante->id_nacionalidad))
+    $Nacionalidad = $denunciante->first()->country()->first()->nacionalidad;
+
+if($denunciante->id_nacionalidad == 118){
+    $busquedaCurp = true;
+}else{
+    $busquedaCurp = false;
+}
+
+
+
+@endphp
+
 <div class="container">
     <!-- curp api -->
     <div class="form-row col-lg-12 align-items-end justify-content-start">
@@ -16,12 +40,12 @@
                 <label for="nacionalidad_denunciante">Nacionalidad</label>
                 <label for="nacionalidad_denunciante" style="font-size: 7px;" class="text-danger">Requerido</label>
             </div>
-            <select name="nacionalidad_denunciante" id="nacionalidad_denunciante" onchange="validarNacionalidad(this)"
-                class=" form-control " data-curp="divCurp_denunciante">
+            <select name="nacionalidad_denunciante" id="nacionalidad_denunciante" onchange="validarNacionalidad(this,'denunciante')"
+                class=" form-control " data-curp="divCurp_denunciante"  @if ($busquedaCurp)  {{'disabled'}} @endif>
                 <option value="0">Seleccione la nacionalidad</option>
                 @foreach ($countries as $country)
 
-                <option @if ($country->id == 118)
+                <option @if ($country->id == $denunciante->id_nacionalidad)
                     {{'selected'}}
                     @endif value="{{$country->id}}">{{$country->nacionalidad}}</option>
                 @endforeach
@@ -37,17 +61,19 @@
                 <label for="curp">CURP</label>
                 <label for="nombre" style="font-size: 7px;" class="text-danger">Requerido</label>
             </div>
-            <input type="text" name="curp_denunciante" id="curp_denunciante" class=" form-control "
-                value="{{ old('curp') }}" maxlength="18" placeholder="CURP">
+            <input type="text" name="curp_denunciante" id="curp_denunciante" class=" form-control  @if (!$busquedaCurp)  {{'d-none'}} @endif"
+                value="{{$denunciante->curp}}" maxlength="18" placeholder="CURP"  @if ($busquedaCurp)  {{'readonly'}} @endif>
             <div style="color:#FF0000;">
                 {{ $errors->first('curp') }}
             </div>
         </div>
 
-        <div class="form-group col-md-2">
-            <button class="btn-sm btn-search btn-buscar-curp" onclick="consultarCurp(this,'denunciante')"
+        <div class="form-group col-md-4">
+            <button class="btn-sm btn-search btn-buscar-curp d-none" onclick="consultarCurp(this,'denunciante')"
                 id="btnConsultarCurp_denunciante"> BUSCAR</button>
-            <img src="{{asset("img/denuncia/loading.gif")}}" class="img-responsive d-none" width="30%"
+            <button type="button" class="btn-sm btn-search  @if (!$busquedaCurp)  {{'d-none'}} @endif" data-destino="denunciante" onclick="consultarOtraCurp(this)"
+                        style="background: #002b49;" id="btn-consultar-otra-curp-denunciante"> CAMBIAR DATOS DEL DENUNCIANTE</button>
+            <img src="{{asset("img/denuncia/loading.gif")}}" class="img-responsive d-none" width="10%"
                 id="imgLoading_denunciante">
         </div>
 
@@ -55,8 +81,8 @@
 
 </div>
 
-<div id="DatosGenerales_denunciante" class="d-none">
-
+<div id="DatosGenerales_denunciante" class="d-non">
+    <input class="d-none" type="hidden" value="{{$denunciante->id}}" />
     <div class="container">
         <div class="form-row col-lg-12">
             <div class="form-group col-md-4">
@@ -66,8 +92,9 @@
                     <label for="nombre" style="font-size: 7px;" class="text-danger">Requerido</label>
                 </div>
                 <input type="text" name="nombre_denunciante" id="Nombre_denunciante" class=" form-control required"
-                    value="{{ old('nombre') }}" data-message-error='"NOMBRE" es requerido.' required
-                    maxlength="50"  placeholder="Nombre">
+                    value="{{$denunciante->nombre}}" data-message-error='"NOMBRE" es requerido.' required
+                    maxlength="50"  placeholder="Nombre"
+                    @if ($busquedaCurp){{'readonly'}}  @endif>
                 <div style="color:#FF0000;">
                     {{ $errors->first('nombre') }}
                 </div>
@@ -80,8 +107,8 @@
                 </div>
                 <input type="text" name="PrimerApellido_denunciante" id="PrimerApellido_denunciante"
                     class=" form-control required" data-message-error='"PRIMER APELLIDO" es requerido.'
-                    value="{{ old('PrimerApellido') }}" maxlength="50"
-                    placeholder="Primer apellido">
+                    value="{{$denunciante->primer_apellido}}" maxlength="50"
+                    placeholder="Primer apellido"  @if ($busquedaCurp)  {{'readonly'}} @endif>
                 <div style="color:#FF0000;">
                     {{ $errors->first('PrimerApellido') }}
                 </div>
@@ -92,8 +119,8 @@
                     <label for="SegundoApellido">Segundo Apellido</label>
                 </div>
                 <input type="text" name="SegundoApellido_denunciante" id="SegundoApellido_denunciante"
-                    class=" form-control " value="{{ old('SegundoApellido') }}" maxlength="50"
-                    placeholder="Segundo apellido">
+                    class=" form-control " value="{{$denunciante->segundo_apellido}}" maxlength="50"
+                    placeholder="Segundo apellido"  @if ($busquedaCurp)  {{'readonly'}} @endif>
                 <div style="color:#FF0000;">
                     {{ $errors->first('SegundoApellido') }}
                 </div>
@@ -108,9 +135,14 @@
                     <label for="nombre" style="font-size: 7px;" class="text-danger">Requerido</label>
 
                 </div>
+
+                @php
+                    $fechaNac_denunciante = new DateTime($denunciante->fecha_nacimiento);
+                    $fechaNacimiento_denunciante = $fechaNac_denunciante->format('Y-m-d');
+                @endphp
                 <input type="date" name="fnacimiento_denunciante" id="fnacimiento_denunciante"
                     class=" form-control required " data-message-error='"FECHA DE NACIMIENTO" es requerido.'
-                    value="{{ old('fnacimiento') }}">
+                    value="{{$fechaNacimiento_denunciante}}"  @if ($busquedaCurp)  {{'readonly'}} @endif>
                 <div style="color:#FF0000;">
                     {{ $errors->first('fnacimiento') }}
                 </div>
@@ -141,7 +173,7 @@
                     <i class="fad fa-question-circle" data-toggle="tooltip" data-placement="top"
                         title="Capture un número celular que permita contactarlo vía WhatsApp"></i>&nbsp;
                 </div>
-                <input type="text" name="telefono" class=" form-control required" value="{{ old('telefono') }}"
+                <input type="text" name="telefono" class=" form-control required" value="{{$denunciante->telefono }}"
                     data-message-error='"TELÉFONO (WHATSAPP)" es requerido.' maxlength="10"
                     onkeypress="return justNumbers(event);" placeholder="1234567890">
                 <div style="color:#FF0000;">
@@ -163,10 +195,16 @@
                 </div>
                 {{-- <input type="file" name="credencial" class="file_multi_image required credencial" id="credencial"
                     accept="image/*" required> --}}
+                 @php
+                    $url = $denunciante->url_identificacion;
+                    $file = Storage::disk('buffalo')->get($url);
+                    $mimetype = Storage::disk('buffalo')->mimeType($url);
+                    $data = 'data:' . $mimetype . ';base64,' . base64_encode($file) . '';
+                @endphp
                 <div class="input-group mb-3" role='button'>
                     <div class="input-group-prepend"> </div>
                     <div class="custom-file">
-                        <input style="cursor:pointer;" type="file" class="custom-file-input required" id="credencial"
+                        <input style="cursor:pointer;" type="file" class="custom-file-input " id="credencial"
                             name="credencial" data-message-error='"IDENTIFICACIÓN OFICIAL" es requerido.'>
                         <label class="custom-file-label" id="custom-file-label-credencial" for="inputGroupFile01">Buscar
                             Archivo</label>  
@@ -174,7 +212,9 @@
                 </div>
             </div>
             <div class="form-group col-md-4 text-center">
-                <div id="preview_credencial"></div>
+                <div id="preview_credencial">
+                <img src="{{ $data }}"style="max-width: 150px;" alt="">
+                </div>
             </div>
         </div>
 
@@ -192,7 +232,7 @@
 
                         </div>
                         <input type="email" name="correo" id="correo" class=" form-control required "
-                            value="{{ old('correo') }}" data-message-error='"CORREO ELECTRÓNICO" es requerido.'
+                            value="{{$denunciante->email}}" data-message-error='"CORREO ELECTRÓNICO" es requerido.'
                             maxlength="50" placeholder="correo@dominio.com">
                         <div style="color:#FF0000;">
                             {{ $errors->first('correo') }}
@@ -204,6 +244,7 @@
             </div>
             <div class="card-footer">
                 <h6 class="h6" for="correo">Por favor, ingrese un correo electrónico vigente. A dicha cuenta se le enviará la información de acceso para el seguimiento puntual de su denuncia</h6>
+                <input name="correo_guardado" type="hidden" class="d-none" value="{{$denunciante->email}}">
               </div>
         </div>
 
@@ -230,7 +271,7 @@
                 <option value="0">Seleccione un país</option>
                 @foreach ($countries as $country)
 
-                <option @if ($country->id == 118)
+                <option @if ($country->id == $domicilio_denunciante->id_pais)
                     {{'selected'}}
                     @endif value="{{$country->id}}">{{$country->pais}}</option>
                 @endforeach
@@ -239,6 +280,7 @@
                 {{ $errors->first('pais') }}
             </div>
         </div>
+       
         <div class="form-group col-md-8" id="extranjero">
             <div class="form-ic-cmp">
                 <i class="fal fa-home"></i>&nbsp;
@@ -247,7 +289,7 @@
 
             </div>
             <input type="text" name="domicilio_extranjero" id="domicilio_extranjero" class=" form-control "
-                value="{{ old('domicilio_extranjero') }}" maxlength="250" placeholder="Ciudad Extrajera">
+                value=" @if ($denunciante->address()->first()->id_pais =! 118)  {{$domicilio_denunciante->otro_domicilio}}   @endif" maxlength="250" placeholder="Ciudad Extrajera">
             <div style="color:#FF0000;">
                 {{ $errors->first('domicilio_extranjero') }}
             </div>
@@ -262,9 +304,9 @@
                     <label for="nombre" style="font-size: 7px;" class="text-danger">Requerido</label>
 
                 </div>
-                <input class=" form-control required" value="" maxlength="5" onkeypress="return justNumbers(event);"
+                <input class=" form-control required" maxlength="5" onkeypress="return justNumbers(event);"
                     data-message-error='"CÓDIGO POSTAL" es requerido.' name="CP" type="text" id="CP"
-                    placeholder="Ingrese CP" maxlength="5"
+                    placeholder="Ingrese CP" maxlength="5" value="{{$domicilio_denunciante->codigo_postal}}"
                     onblur="validarCP(this,'entidad_residencia','municipio_residencia','asentamiento_residencia')">
 
                 <div style="color:#FF0000;">
@@ -278,7 +320,7 @@
                 </div>
                 <select class=" form-control " value="{{(old('entidad'))}}" id="entidad_residencia"
                     name="entidad_residencia" disabled>
-                    <option value="0">Estado</option>
+                    <option value="0">{{$Entidad}}</option>
                 </select>
                 <div style="color:#FF0000;">
 
@@ -297,7 +339,7 @@
                 </div>
                 <select class=" form-control " value="<?php echo e(old('municipio')); ?>" id="municipio_residencia"
                     name="municipio_residencia" disabled>
-                    <option value="0">Municipio</option>
+                    <option value="0">{{$Municipio}}</option>
                     {{-- @foreach ($municipios as $country)
 
                     <option @if ($country->id == 118)
@@ -313,7 +355,7 @@
 
 
         </div>
-
+      
         <div class="form-row col-lg-12">
             <div class="form-group col-md-4">
                 <div class="form-ic-cmp">
@@ -326,6 +368,11 @@
                     data-message-error='"COLONIA" es requerido.' name="asentamiento_residencia"
                     id="asentamiento_residencia">
                     <option value="0">Seleccione una colonia</option>
+                    @foreach ($colonies as $colony)
+                        <option @if ($colony->id == $denunciante->address()->first()->id_asentamiento)
+                            {{'selected'}}
+                        @endif value="{{$colony->id}}">{{$colony->nombre_asentamiento}}</option>
+                    @endforeach
                 </select>
                 {{-- <input class=" form-control " maxlength="250" value="" name="colonia" type="text" id="colonia">
                 --}}
@@ -340,7 +387,7 @@
                     <label for="calle" style="font-size: 7px;" class="text-danger">Requerido</label>
 
                 </div>
-                <input class=" form-control required " value="" maxlength="250"
+                <input class=" form-control required " value="{{$denunciante->address()->first()->calle}}" maxlength="250"
                     data-message-error='"CALLE" es requerido.' name="calle" type="text" id="calle"
                     placeholder="Ingrese la calle">
                 <div style="color:#FF0000;">
@@ -352,7 +399,7 @@
                     <i class="fal fa-hashtag"></i>&nbsp;
                     <label for="numext">No. Exterior <span style="font-size: 7px;" class="text-danger">Requerido</span></label>
                 </div>
-                <input class=" form-control required" value="" maxlength="6"
+                <input class=" form-control required" value="{{$denunciante->address()->first()->numero_exterior}}" maxlength="6"
                     data-message-error='"NÚMERO EXTERIOR" es requerido.' name="numext" type="text" id="numext"
                     placeholder="Número exterior">
                 <div style="color:#FF0000;">
@@ -364,7 +411,7 @@
                     <i class="fal fa-hashtag"></i>&nbsp;
                     <label for="numint">No. Interior</label>
                 </div>
-                <input class=" form-control " placeholder="Opcional" value="" maxlength="6" name="numint" type="text"
+                <input class=" form-control " placeholder="Opcional" value="{{$denunciante->address()->first()->numero_interior}}" maxlength="6" name="numint" type="text"
                     id="numint">
                 <div style="color:#FF0000;">
 
@@ -393,7 +440,7 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(be, s);
     })();
 
-    function validarNacionalidad(select){
+    function validarNacionalidad(select,destino){
         var valor = $(select).val();
         var divcurp = $(select).data("curp");
 
@@ -403,14 +450,18 @@
                 $("#DatosGenerales_victima").addClass("d-none");
                 $("#btnConsultarCurp_victima").removeClass("d-none");
                 $('#btnConsultarCurp_victima').attr("disabled",false);
-
             }
+           
+            $("#DatosGenerales_"+destino).addClass("d-none");
+            $("#btnConsultarCurp_"+destino).removeClass("d-none");
+            $('#btnConsultarCurp_'+destino).attr("disabled",false);
+            
 
-            $('.btn-buscar-curp').text('BUSCAR');
+            $('btnConsultarCurp_'+destino).text('BUSCAR');
 
-            $('#Nombre_victima').removeClass('required')
-            $('#PrimerApellido_victima').removeClass('required')
-            $('#fnacimiento_victima').removeClass('required')
+            // $('#Nombre_victima').removeClass('required')
+            // $('#PrimerApellido_victima').removeClass('required')
+            // $('#fnacimiento_victima').removeClass('required')
         }else{
             $("#"+divcurp).addClass("d-none");
             if(divcurp == "divCurp_victima"){
@@ -419,12 +470,18 @@
 
                 $("#DatosGenerales_victima").removeClass("d-none");
             }
+           
+            $("#btnConsultarCurp_"+destino).addClass("d-none");
+            $('#btnConsultarCurp_'+destino).attr("disabled",true);
 
-            $('#Nombre_victima').addClass('required')
-            $('#PrimerApellido_victima').addClass('required')
-            $('#fnacimiento_victima').addClass('required')
+            $("#DatosGenerales_"+destino).removeClass("d-none");
+        
 
-            $('.btn-buscar-curp').html('SIGUIENTE &nbsp;&nbsp; <i class="fa-solid fa-chevron-right"></i>');
+            $('#Nombre_'+destino).addClass('required')
+            $('#PrimerApellido_'+destino).addClass('required')
+            $('#fnacimiento_'+destino).addClass('required')
+
+            $('btnConsultarCurp_'+destino).html('SIGUIENTE &nbsp;&nbsp; <i class="fa-solid fa-chevron-right"></i>');
         }
     }
 
@@ -520,7 +577,7 @@
                 });
                 $('#imgLoading_'+destino).addClass("d-none");
 
-                // input-hidden
+               // input-hidden
                 $('#curp_'+destino).val( curp );
                 $('#Nombre_'+destino).val( res.nombres );
                 $('#PrimerApellido_'+destino).val( res.apellido1);
@@ -537,7 +594,7 @@
                 $("#DatosGenerales_"+destino).removeClass("d-none");
 
 
-                $('#btn-consultar-otra-curp').removeClass('d-none');
+                $('#btn-consultar-otra-curp-'+destino).removeClass('d-none');
 
             }else{
                 Swal.fire({
@@ -664,6 +721,35 @@ function validarCP(input,select_estado,select_municipio,select_asentamiento){
     }
 
 }
+
+
+const consultarOtraCurp = (boton) => {
+        var destino = $(boton).data("destino");
+      
+        $('#nacionalidad_'+destino).prop('disabled', false);
+        $('#nacionalidad_'+destino).prop('disabled', false);
+        $('#curp_'+destino).prop('readonly', false);
+
+        $('#btn-consultar-otra-curp-'+destino).addClass('d-none');
+        $('#DatosGenerales_'+destino).addClass('d-none');
+
+        $('#btnConsultarCurp_'+destino).removeClass('d-none');
+        $('#btnConsultarCurp_'+destino).prop('disabled', false);
+
+        $('#Nombre_'+destino).val('');
+        $('#Nombre_'+destino).prop('readonly', false);
+
+        $('#PrimerApellido_'+destino).val('');
+        $('#PrimerApellido_'+destino).prop('readonly', false);
+
+        $('#SegundoApellido_'+destino).val('');
+        $('#SegundoApellido_'+destino).prop('readonly', false);
+
+        $('#fnacimiento_'+destino).val('');
+        $('#fnacimiento_'+destino).prop('readonly', false);
+
+        $('input[name="mayor_edad_'+destino+'"]').prop('checked', false);
+    }
 
 
 

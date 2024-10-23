@@ -59,14 +59,17 @@ var msg = "";
 jQuery(document).ready(function() {
 
     $('input[name="conoce_responsable"]').on('change', () => {
-        $('#conoce-responsable-mensaje-error').addClass('d-none');
+            $('#conoce-responsable-mensaje-error').addClass('d-none');
 
-        if ($('input[name="conoce_responsable"]:checked').val() == '1')
-            $('#nombre-alias-responsable').addClass('required');
-        else
-            $('#nombre-alias-responsable').removeClass('required');
-    })
-
+            if ($('input[name="conoce_responsable"]:checked').val() == '1')
+                $('#nombre-alias-responsable').addClass('required');
+            else
+                $('#nombre-alias-responsable').removeClass('required');
+        })
+        // variables para seter correo y telefono proporcionado y realizar comparaciones y acciones en caso de que el usuario los cambie
+    let correoNotification;
+    let whatsappNotification;
+    correoNotification = $('[name="correo_guardado"]').val();
     $('input[name="conoce_rasgos_responsable"]').on('change', () => {
         $('#rasgos-responsable-mensaje-error').addClass('d-none');
         // Comprobar si hay un valor seleccionado
@@ -115,9 +118,7 @@ jQuery(document).ready(function() {
 
 
 
-    // variables para seter correo y telefono proporcionado y realizar comparaciones y acciones en caso de que el usuario los cambie
-    let correoNotification;
-    let whatsappNotification;
+
 
 
     $('.f1 input[type="text"], .f1 input[type="password"], .f1 textarea').on('focus', function() {
@@ -178,6 +179,7 @@ jQuery(document).ready(function() {
         // medios de notificacion
         const correo = $('[name="correo"]').val();
         const whatsapp = $('[name="telefono"]').val();
+
 
         // en caso de que el usuario cambie el correo se volvera a enviar el codigo de verificación
         if (correoNotification != correo /* || whatsappNotification != whatsapp */ ) {
@@ -256,7 +258,7 @@ jQuery(document).ready(function() {
                     // proporcionados al priincipio para no volver a mandar el codigo de verificacion
                     correoNotification = correo;
                     whatsappNotification = whatsapp;
-
+                    $('[name="correo_guardado"]').val(correo);
                     Swal.fire({
                         icon: "success",
                         title: "VERIFICACIÓN EXITOSA",
@@ -572,13 +574,22 @@ jQuery(document).ready(function() {
             }
         }
 
-
+        var id_denuncia = $("#id_denuncia").val();
+        var textoGuardado = "";
+        var txtboton = "";
+        if (id_denuncia == "") {
+            textoGuardado = "¿ESTÁ SEGURO DE REGISTRAR LA DENUNCIA?";
+            txtboton = "SÍ, REGISTRAR DENUNCIA";
+        } else {
+            textoGuardado = "¿ESTÁ SEGURO DE ACTUALIZAR LA DENUNCIA?";
+            txtboton = "SÍ, ACTUALIZAR DENUNCIA";
+        }
 
         Swal.fire({
             icon: "question",
-            title: "¿ESTÁ SEGURO DE REGISTRAR LA DENUNCIA?",
+            title: textoGuardado,
             showDenyButton: true,
-            confirmButtonText: "SÍ, REGISTRAR DENUNCIA",
+            confirmButtonText: txtboton,
             denyButtonText: `NO, CANCELAR`,
             reverseButtons: true,
             // confirmButtonColor: '#008000',

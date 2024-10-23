@@ -26,7 +26,7 @@ padding-right: 50px;
             <br><br>
             <div style="width:100%;height:200px;">
               <center style="font-family:Arial; font-size: 12px;">
-                <p class="justificar_texto">El registro de su Denuncia se realizó de forma correcta, asignándole el folio:</p>
+                <p class="justificar_texto">{{$data->mensaje}}</p>
                 <p class="justificar_texto" style="font-size: 26px; margin:0;"><strong>{{ $data->folio }}</strong></p>
                 <p class="justificar_texto">y la clave de seguimiento:</p>
                 <p class="justificar_texto" style="font-size: 26px; margin:0;"><strong>{{ $data->token }}</strong></p>

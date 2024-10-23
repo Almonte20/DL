@@ -1,5 +1,8 @@
 var array_testigo = new Array();
 var id_editar_testigo = '';
+$(document).ready(function() {
+    llenarArray();
+});
 
 function showForm(elementoHTMLDivShow, elementoHTMLDivHide) {
     displayDivShow(elementoHTMLDivShow);
@@ -18,6 +21,14 @@ function displayDivShow(elementoHTML) {
 
 function displayDivHide(elementoHTML) {
     $(elementoHTML).hide();
+}
+
+function llenarArray() {
+    var input = $("#arrayTestigos").val();
+    if (input != '') {
+        array_testigo = JSON.parse(input);
+        crear_tabla_testigo()
+    }
 }
 
 function limpiarForm_Testigo() {
@@ -40,7 +51,7 @@ function registrar_testigo() {
     var materno = $("#maternoTestigo").val();
     var adicional = $("#adicionalTestigo").val();
     if (nombre != '' || paterno != '' || materno != '' || adicional != '') {
-        array_testigo.push({ "nombreTestigo": nombre, "paternoTestigo": paterno, "maternoTestigo": materno, "adicionalTestigo": adicional });
+        array_testigo.push({ "idTestigo": null, "nombreTestigo": nombre, "paternoTestigo": paterno, "maternoTestigo": materno, "adicionalTestigo": adicional });
         crear_tabla_testigo();
     } else {
         Swal.fire(
@@ -64,10 +75,14 @@ function crear_tabla_testigo() {
         var aux = '';
         if (array_testigo[a]["nombreTestigo"] != '') {
             nombre = array_testigo[a]["nombreTestigo"] + " " + array_testigo[a]["paternoTestigo"] + " " + array_testigo[a]['maternoTestigo'];
+            if (array_testigo[a]["adicionalTestigo"] != '') {
+                nombre = nombre + "(" + array_testigo[a]["adicionalTestigo"] + ")";
+            }
             aux = "Nombre del testigo";
         } else {
             aux = array_testigo[a]["adicionalTestigo"];
-            nombre = array_testigo[a]["adicionalTestigo"].substring(0, 20) + "...";
+            nombre = array_testigo[a]["adicionalTestigo"];
+            // nombre = array_testigo[a]["adicionalTestigo"].substring(0, 20) + "...";
         }
         var num = a + 1;
         var htmlTags = "<tr>" +

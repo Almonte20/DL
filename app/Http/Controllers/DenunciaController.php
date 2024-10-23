@@ -521,7 +521,6 @@ class DenunciaController extends Controller
             $fileImage = $request->file('credencial');
             $extension = $fileImage->getClientOriginalExtension();
             $name = "Identificacion_denunciante.".$extension;
-            dd($fileImage);
             $ruta = Storage::disk('buffalo')->putFileAs($rutaGuardado, $fileImage, $name);
             $denunciante->url_identificacion = $ruta;
         }
@@ -628,7 +627,7 @@ class DenunciaController extends Controller
         $hechos->narrativa = $request->narrativa;
         $hechos->id_lugar = $request->lugar_descripcion;
         $hechos->referencia_lugar = $request->referencia_lugar;
-        $hechos->existio_evidencia = $request->existio_violencia;
+        $hechos->existio_violencia = $request->existio_violencia;
         if( $request->existio_violencia == 1){
             $hechos->descripcion_violencia = $request->descripcion_violencia;
         }
@@ -691,9 +690,10 @@ class DenunciaController extends Controller
         $SegundoApellido = $request->SegundoApellido_denunciante;
         $correo = $request->correo;
         $telefono = $request->telefono;
-        $mensajeNotificacion = 'El registro de su Denuncia se realizó de forma correcta, asignándole el folio '.$folio.' y la clave de seguimiento '.$token.', Su denuncia en línea será analizada por el Agente de Ministerio Público Orientador Digital, quien la asignará a la Fiscalía correspondiente para su seguimiento, atención y comunicación con usted. Esté al pendiente del correo/teléfono proporcionado.';
+        $mensajeNotificacion = 'El registro de su Denuncia se realizó de forma correcta, asignándole el folio:';
         $info = new \stdClass;
-        $info->nombre = $request->nombre.' '.$PrimerApellido.' '.$SegundoApellido;
+        $info->titulo = "FGE: Registro de denuncia en línea";
+        $info->nombre = $nombre.' '.$PrimerApellido.' '.$SegundoApellido;
         $info->folio = $folio;
         $info->email = $correo;
         $info->asunto = 'Denuncia en Línea FGE';
@@ -710,8 +710,8 @@ class DenunciaController extends Controller
         unlink($rutaDenuncia);
 
         $array = ["respuesta"=> true ,"token"=> $token, "denuncia" => Crypt::encrypt($denuncia->id) ,  "data"=>$denuncia, "folio" => $folio ];
-        // $mensajeWhatsapp = "Denuncia en línea registrada '\n' con éxito, con el siguiente folio: $folio y clave de seguimiento: $token";
-        $this->sendWhatsapp($mensajeNotificacion,$telefono);
+        $mensajeWhatsapp = "Informa que se envió una notificación al correo $correo para el seguimiento de la Denuncia en Línea.";
+        $this->sendWhatsapp($mensajeWhatsapp,$telefono);
         
         $notificacion = new NotificacionUsuario;
         $notificacion->nombre_involucrado = $nombre." ".$PrimerApellido." ".$SegundoApellido;
@@ -771,15 +771,21 @@ class DenunciaController extends Controller
                 $victimaDenunciante = 0;
             }else{
                 $victimaDenunciante = 1;
+                $victima = null;
             }
             $domicilio_denunciante =  InvolucradoDomicilio::where("id_involucrado",$denunciante->id)->first();
+            $colonies = CatAsentamientos::where("codigo_postal",$denunciante->address()->first()->codigo_postal)->get();
+            $colonies_hechos = CatAsentamientos::where("codigo_postal",$hechos->codigo_postal)->get();
             
-            $testigos = Involucrado::where("id_tipo_involucrado","5")->where("id_denuncia",$id_denuncia)->get();
-            $responsable = Involucrado::where("id_tipo_involucrado","2")->where("id_denuncia",$id_denuncia)->get();
+            
+            $testigos = Involucrado::where("id_tipo_involucrado",5)->where("id_denuncia",$id_denuncia)->get();
+            $responsable = Involucrado::where("id_tipo_involucrado",2)->where("id_denuncia",$id_denuncia);
+            // dd($responsable->first());
+            // $responsable = Involucrado::where("id","292");
             $evidencias = Evidencia::where("id_denuncia",$id_denuncia)->get();
-      
+            $id_denuncia = Crypt::encrypt($id_denuncia);
 
-            return view("modificacion",compact('expediente','countries','estados','municipios','lugares'));
+            return view("modificacion",compact('id_denuncia','expediente','countries','estados','municipios','colonies','colonies_hechos','lugares','denunciante','victima','domicilio_denunciante','testigos','hechos','responsable','evidencias','victimaDenunciante'));
         }else{
             return redirect()->back()->with('fail','No es posible localizar la denuncia, favor de revisar los datos.');
         }
@@ -923,9 +929,272 @@ class DenunciaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        DB::beginTransaction();
+
+        try{
+
+        // dd($request);
+        $id_denuncia = Crypt::decrypt($request->id_denuncia);
+        $id_denunciante = empty($request->id_denunciante) ? null : Crypt::decrypt($request->id_denunciante);
+       
+        $id_victima = empty($request->id_victima) ? null : Crypt::decrypt($request->id_victima);
+        $id_responsable = empty($request->id_responsable) ? null : Crypt::decrypt($request->id_responsable);
+        $rutaGuardado = "DenunciaEnLinea/".$id_denuncia;
+        $denuncia = Denuncia::find($id_denuncia);
+        $folio = $denuncia->folio_denuncia;
+        $token = $denuncia->token_denuncia;
+        
+        //*********************** DATOS DENUNCIANTE ******************************
+        // dd($request);
+        $denunciante = Involucrado::find($id_denunciante);
+        $denunciante->curp = $request->curp_denunciante;
+        $denunciante->nombre = $request->nombre_denunciante;
+        $denunciante->primer_apellido = $request->PrimerApellido_denunciante;
+        $denunciante->segundo_apellido = $request->SegundoApellido_denunciante;
+        $denunciante->fecha_nacimiento = $request->fnacimiento_denunciante;
+        $denunciante->id_nacionalidad = $request->nacionalidad_denunciante;
+        $denunciante->email = $request->correo;
+        $denunciante->telefono = $request->telefono;
+        $denunciante->id_tipo_persona = 1;
+        $denunciante->id_denuncia =  $id_denuncia;
+        if($request->victimadenunciante == 1){
+            $denunciante->id_tipo_involucrado = 4;
+        }else{
+            $denunciante->id_tipo_involucrado = 3;
+        }
+        
+        if($request->hasfile('credencial')){
+            $fileImage = $request->file('credencial');
+            $extension = $fileImage->getClientOriginalExtension();
+            $name = "Identificacion_denunciante.".$extension;
+          
+            $ruta = Storage::disk('buffalo')->putFileAs($rutaGuardado, $fileImage, $name);
+            $denunciante->url_identificacion = $ruta;
+        }
+        $denunciante->save();
+
+        
+        $denunciante_domicilio = InvolucradoDomicilio::where("id_involucrado",$id_denunciante)->first();
+        $denunciante_domicilio->id_pais = $request->pais;
+        if($request->pais == 118){
+            $denunciante_domicilio->codigo_postal = $request->CP;
+            $denunciante_domicilio->calle = $request->calle;
+            $denunciante_domicilio->numero_exterior = $request->numext;
+            $denunciante_domicilio->numero_interior = $request->numint;
+            $denunciante_domicilio->id_asentamiento = $request->asentamiento_residencia;
+        }else{
+            $denunciante->otro_domicilio = $request->domicilio_extranjero;
+        }
+        $denunciante_domicilio->save();
+
+         //*********************** DATOS DE LA VICTIMA ******************************
+        
+        if($request->victimadenunciante == 0){
+            $victima = Involucrado::where("id_denuncia",$id_denuncia)->where("id_tipo_involucrado",1)->first();
+            if($victima->count() == 0)
+                $victima = new Involucrado();
+
+            $victima->nombre = $request->nombre_victima;
+            $victima->primer_apellido = $request->PrimerApellido_victima;
+            $victima->segundo_apellido = $request->SegundoApellido_victima;
+            $victima->fecha_nacimiento = $request->fnacimiento_victima;
+            $victima->id_nacionalidad = $request->nacionalidad_victima;
+            $victima->mayor_edad = $request->mayor_edad_victima;
+            $victima->id_tipo_persona = 1;
+            $victima->id_denuncia =  $id_denuncia;
+            $victima->id_tipo_involucrado = 1;
+
+            if($request->hasfile('identificacion_victima') && $request->mayor_edad_victima == 1){
+                $fileImage = $request->file('identificacion_victima');
+                $extension = $fileImage->getClientOriginalExtension();
+                $name = "Identificacion_victima.".$extension;
+                $ruta = Storage::disk('buffalo')->putFileAs($rutaGuardado, $fileImage, $name);
+                $victima->url_identificacion = $ruta;
+            }
+            
+            if($request->nacionalidad_victima == 118){
+                $victima->curp = $request->curp_victima;
+            }
+         
+
+            $victima->save();
+           
+        }else{
+            Involucrado::where('id_denuncia', $id_denuncia)->where("id_tipo_involucrado",1)->delete();
+        }
+        
+        //*********************** DATOS DEL RESPONSABLE ******************************
+        
+        if($request->conoce_responsable == 1 || $request->conoce_rasgos_responsable == 1){
+            $responsable = Involucrado::where("id_denuncia",$id_denuncia)->where("id_tipo_involucrado",2)->first();
+            if($responsable->count() == 0)
+                $responsable = new Involucrado();
+        
+        if($request->conoce_responsable == 1){
+            $responsable->nombre = $request->nombre_alias_responsable;
+        }else{
+            $responsable->nombre = "Desconocido";
+        }
+       
+            $responsable->id_tipo_persona = 1;
+            $responsable->id_denuncia =  $id_denuncia;
+            $responsable->id_tipo_involucrado = 2;
+
+            if($request->conoce_rasgos_responsable == 1){
+                $responsable->descripcion_involucrado = $request->rasgos_fisicos_responsable;
+            }
+            
+            $responsable->save();
+            
+            if($request->conoce_direccion_responsable == 1 && $request->conoce_rasgos_responsable == 1){
+                $responsable_domicilio = InvolucradoDomicilio::where("id_involucrado",$id_responsable);
+                $responsable_domicilio->otro_domicilio = $request->direccionResponsable;
+                $responsable_domicilio->id_pais = 0;
+                $responsable_domicilio->id_involucrado = $responsable->id;
+                $responsable_domicilio->save();
+            }
+        }else{
+            Involucrado::where('id_denuncia', $id_denuncia)->where("id_tipo_involucrado",2)->delete();
+        }
+
+        
+
+         //***************************  HECHOS  ********************************************
+         
+         $hechos = Hecho::where("id_denuncia",$id_denuncia)->first();
+         $hechos->domicilio_mapa = $request->domicilio_mapa;
+         $hechos->latitud = $request->latitud;
+         $hechos->longitud = $request->longitud;
+         $hechos->calle = $request->calle_hechos;
+         $hechos->codigo_postal = $request->CP_hechos;
+         $hechos->numero_exterior = $request->numext_hechos;
+         $hechos->numero_interior = $request->numint_hechos;
+         $hechos->id_asentamiento = $request->asentamiento_hechos;
+         $fecha_inicial = Carbon::parse($request->fecha_inicial)->format('Y-m-d H:i:s');
+         $hechos->fecha_inicial = $fecha_inicial;
+         
+         if($request->fecha_especifica_lapso == 1){
+             $fecha_final = Carbon::parse($request->fecha_final)->format('Y-m-d H:i:s');
+             $hechos->fecha_final =$fecha_final;
+         }
+         
+         $hechos->suceso = $request->suceso;
+         $hechos->narrativa = $request->narrativa;
+         $hechos->id_lugar = $request->lugar_descripcion;
+         $hechos->referencia_lugar = $request->referencia_lugar;
+         $hechos->existio_violencia = $request->existio_violencia;
+         if( $request->existio_violencia == 1){
+             $hechos->descripcion_violencia = $request->descripcion_violencia;
+         }
+         $hechos->save();
+
+        
+          
+        //***************************** TESTIGOS *********************************
+        
+        $arrayTestigos = $request->arrayTestigos;
+
+        if($request->existen_testigos == 1) {
+            $arrayTestigos = JSON_decode($request->input('arrayTestigos'));
+            // dd($arrayTestigos);
+           foreach ($arrayTestigos as $key => $value) {
+                if(empty($value->idTestigo)){
+                    $testigo = new Involucrado();
+                }else{
+                    $testigo = Involucrado::find($value->idTestigo);
+                }
+                $testigo->nombre = $value->nombreTestigo;
+                $testigo->primer_apellido = $value->paternoTestigo;
+                $testigo->segundo_apellido = $value->maternoTestigo;
+                $testigo->descripcion_involucrado = $value->adicionalTestigo;
+                $testigo->id_tipo_involucrado = 5;
+                $testigo->id_tipo_persona = 1;
+                $testigo->id_denuncia = $id_denuncia;
+                $testigo->save();
+            }
+        }else{
+           Involucrado::where('id_denuncia', $id_denuncia)->where("id_tipo_involucrado",5)->delete();
+        }
+            
+           
+           //***************************** EVIDENCIAS *********************************
+
+       // $ruta = "DenunciaEnLinea/$folio/";
+       if(!$request->hasFile('evidencias') || $request->existen_evidencias == 0){
+           $total_evidencias = 0;
+       }else{
+           $total_evidencias = count($request->file('evidencias'));
+       }
+       $count = Evidencia::where("id_denuncia",$id_denuncia)->count();
+       if($total_evidencias > 0){
+           for ($i=0; $i < $total_evidencias; $i++) {
+               $fileImage = $request->file('evidencias')[$i];
+               $extension = $fileImage->getClientOriginalExtension();
+               $numeroEvidencia = $count+1;
+               $name = "Evidencia_$numeroEvidencia.".$extension;
+               $ruta = Storage::disk('buffalo')->putFileAs($rutaGuardado, $fileImage, $name);
+               $Evidencia = new Evidencia();
+               $Evidencia->id_tipo_evidencia = 1;
+               $Evidencia->url = $ruta;
+               $Evidencia->id_denuncia = $id_denuncia;
+               $Evidencia->save();
+               $count++;
+           }
+       }
+       //*************************************** GENERACIÓN DE ACUSE */
+       $rutaAcuse = $this->generarPDF($id_denuncia);
+       $rutaDenuncia = $this->generarPreSigi($id_denuncia);
+       // dd($rutaDenuncia);
+       // ************************************** NOTIFICACIONES */
+       $nombre = $request->nombre_denunciante;
+       $PrimerApellido = $request->PrimerApellido_denunciante;
+       $SegundoApellido = $request->SegundoApellido_denunciante;
+       $correo = $request->correo;
+       $telefono = $request->telefono;
+       $mensajeNotificacion = 'La actualización de su Denuncia se realizó de forma correcta, asignándole el folio:';
+       $info = new \stdClass;
+       $info->titulo = "FGE: Actualización de denuncia en línea";
+       $info->nombre = $nombre.' '.$PrimerApellido.' '.$SegundoApellido;
+       $info->folio = $folio;
+       $info->email = $correo;
+       $info->asunto = 'Denuncia en Línea FGE';
+       $info->token = $token;
+       $info->mensaje = $mensajeNotificacion;
+       
+       setlocale(LC_TIME, 'spanish');
+       $fecha = Carbon::now();
+       $fecha = strftime("%A, %d de %B del %Y", strtotime($fecha));
+       $info->fecha = $fecha;
+       Mail::to($correo)->
+       send(new RegistroDenunciaMailable($info,$rutaAcuse,$rutaDenuncia));
+       unlink($rutaAcuse);
+       unlink($rutaDenuncia);
+       
+       $array = ["respuesta"=> true ,"token"=> $token, "denuncia" => Crypt::encrypt($denuncia->id) ,  "data"=>$denuncia, "folio" => $folio ];
+       $mensajeWhatsapp = "Informa que se envió una notificación al correo $correo para el seguimiento de la Denuncia en Línea.";
+       $this->sendWhatsapp($mensajeWhatsapp,$telefono);
+       
+     
+       $notificacion = new NotificacionUsuario;
+       $notificacion->nombre_involucrado = $nombre." ".$PrimerApellido." ".$SegundoApellido;
+       $notificacion->correo_electronico = $correo;
+       $notificacion->telefono = $telefono;
+       $notificacion->id_modulo = 1;
+       $notificacion->llave_modulo = $denuncia->id;
+       $notificacion->mensaje = $mensajeNotificacion;
+       $notificacion->id_usuario_receptor = $denunciante->id;
+       $notificacion->save();
+
+       DB::commit();
+        
+       return response()->json($array);
+
+       }catch(\Exception $e){
+           DB::rollBack();
+           $array = ["respuesta"=> false ,"error"=> "Error al intentar registrar la denuncia: ".$e->getMessage() ];
+       }
     }
 
     /**
