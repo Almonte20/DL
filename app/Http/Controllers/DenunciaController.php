@@ -144,6 +144,9 @@ class DenunciaController extends Controller
         
         $pdf->SetFont('Arial','B',11);
         $pdf->Ln(15);
+        $textoHora = $this->horaATexto($hora);
+       
+        // $pdf->MultiCell(0,4.5,utf8_decode("En la Ciudad de Morelia, Michoacán de Ocampo, a las $hora nueve  horas con cuarenta y cinco minutos, del día 07 siete de Octubre del año 2024, dos mil veinticuatro, el Jorge Alberto González Venegas Agente del Ministerio Público, de la Unidad de Atención Inmediata de la Fiscalía Coordinadora de la Fiscalía General del Estado, recibe el folio de Denuncia en Línea, de conformidad a las facultades que  confieren los artículos 17 Párrafo Cuarto, 19, 20 y 21 de la Constitución Política de los Estados Unidos Mexicanos; 18, 49, 82, 109, 127, 131, 183, 184, 186, 187, 188, 190, 212, 213, 217, 218, 221, 222, 223, 224, 225, 226 y 360 del Código Nacional de Procedimientos Penales,  y de conformidad a lo establecido por el apartado C del artículo 20 de la Constitución Política de los Estados Unidos Mexicanos, mismo que a la letra establece:  “De los derechos de la víctima o del ofendido:"),0,'J');
         $pdf->MultiCell(0,4.5,utf8_decode("En la Ciudad de Morelia, Michoacán de Ocampo, a las $hora horas , del día $dia, del mes de $mes, del año $anio, dos mil veinticuatro, se presenta ante el/la Lic. GONZALEZ VENEGAS JORGE ALBERTO Agente del Ministerio Público, de la Unidad de Investigación, de conformidad a las facultades que confieren los artículos 21 constitucional; 109, 212, 213, 217, 218, 221, 222 y 223 del Código Nacional de Procedimientos Penales, y de conformidad al apartado C. del artículo 20 constitucional que a la letra establece: De los derechos de la víctima o del ofendido:"),0,'J');
         $pdf->SetFont('Arial','',11);
         $pdf->MultiCell(0,4.5,utf8_decode("I. Recibir asesoría jurídica; ser informado de los derechos que en su favor establece la Constitución y, cuando lo solicite, ser informado del desarrollo del procedimiento penal. II. Coadyuvar con el Ministerio Público; a que se le reciban todos los datos o elementos de prueba con los que cuente, tanto en la investigación como en el proceso a que se desahoguen las diligencias correspondientes, y a intervenir en el juicio e interponer los recursos en los términos que prevea la ley. Cuando el Ministerio Público considere que no es necesario el desahogo de la diligencia, deberá fundar y motivar su negativa. III. Recibir, desde la comisión del delito, atención médica y psicológica de urgencia. IV. Que se le repare el daño. En los casos en que sea procedente, El Ministerio Público estará obligado a solicitar la reparación del daño, sin menoscabo de que la víctima u ofendido lo pueda solicitar directamente, y el juzgador no podrá absolver al sentenciado de dicha reparación si ha emitido una sentencia condenatoria. La ley fijará procedimientos ágiles para ejecutar las sentencias en materia de reparación del daño. V. Al resguardo de su identidad y otros datos personales en los siguientes casos: cuando sean menores de edad; cuando se trate de delitos de violación, trata de personas, secuestro o delincuencia organizada; y cuando a juicio del juzgador sea necesario para su protección, salvaguardando en todo caso los derechos de la defensa. El Ministerio Público deberá garantizar la protección de víctimas, ofendidos, testigos y en general todos los sujetos que intervengan en el proceso. Los jueces deberán vigilar el buen cumplimiento de esta obligación. VI. Solicitar las medidas cautelares y providencias necesarias para la protección y restitución de sus derechos, y VII. Impugnar ante autoridad judicial las omisiones del Ministerio Público en la investigación de los delitos, así como las resoluciones de reserva, no ejercicio, desistimiento de la acción penal o suspensión del procedimiento cuando no está satisfecha la reparación del daño."),0,'J');
@@ -164,7 +167,7 @@ class DenunciaController extends Controller
         }
         
         $domicilio_denunciante =  InvolucradoDomicilio::where("id_involucrado",$denunciante->id)->first();
-
+       
         $pdf->Ln(3);
         $pdf->SetFont('Arial','',11);
         $pdf->Cell(20,7,utf8_decode("NOMBRE:"),0,0,'L');
@@ -220,29 +223,30 @@ class DenunciaController extends Controller
         $pdf->SetFont('Arial','B',11);
         $pdf->Cell(0,7,utf8_decode("+52 $denunciante->telefono"),0,1,'L');
         $pdf->SetY($yAfter);
-
-        $Colonia = $denunciante->address()->first()->colony()->first()->nombre_asentamiento;
-		$Calle = $denunciante->address()->first()->calle;
-		$NumExt = $denunciante->address()->first()->numero_exterior;
-		if(!empty($denunciante->address()->first()->numero_interior)){
-            $NumExt = $NumExt."-".$denunciante->address()->first()->numero_interior;
+       
+        if($denunciante->address()->first()->id_pais == 118){
+            $Colonia = $denunciante->address()->first()->colony()->first()->nombre_asentamiento;
+            $Calle = $denunciante->address()->first()->calle;
+            $NumExt = $denunciante->address()->first()->numero_exterior;
+            if(!empty($denunciante->address()->first()->numero_interior)){
+                $NumExt = $NumExt."-".$denunciante->address()->first()->numero_interior;
+            }
+            // mb_internal_encoding('UTF-8');
+            $CodigoPostal = $denunciante->address()->first()->codigo_postal;
+            $Entidad = $denunciante->address()->first()->colony()->first()->municipio()->first()->estado()->first()->nombre_estado;
+            $Municipio =$denunciante->address()->first()->colony()->first()->municipio()->first()->nombre_municipio;
         }
-        // mb_internal_encoding('UTF-8');
-		$CodigoPostal = $denunciante->address()->first()->codigo_postal;
-		$Entidad = $denunciante->address()->first()->colony()->first()->municipio()->first()->estado()->first()->nombre_estado;
-		$Municipio =$denunciante->address()->first()->colony()->first()->municipio()->first()->nombre_municipio;
 
 		$Nacionalidad = null;
 		if(!empty($denunciante->id_nacionalidad))
 			$Nacionalidad = $denunciante->first()->country()->first()->nacionalidad;
 
         $pdf->SetFont('Arial','',11);
-        
         $pdf->Cell(24,7,utf8_decode("DOMICILIO:"),0,0,'L');
         if($domicilio_denunciante->id_pais == 118){
             $direccion = "$domicilio_denunciante->calle, $NumExt, Col. $Colonia, CP. $CodigoPostal, $Municipio, $Entidad";
         }else{
-            $direccion = $denunciante->address()->first()->otro_domicilio;
+            $direccion = $denunciante->address()->first()->otro_domicilio.", ".$denunciante->address()->first()->country()->first()->pais;
         }
         $pdf->SetFont('Arial','B',11);
 
@@ -464,8 +468,9 @@ class DenunciaController extends Controller
 
         // dd($request);
         // dd($request->hasFile('evidencias'));
-        DB::beginTransaction();
 
+
+        DB::beginTransaction();
         try{
 
 
@@ -537,7 +542,7 @@ class DenunciaController extends Controller
             $denunciante_domicilio->numero_interior = $request->numint;
             $denunciante_domicilio->id_asentamiento = $request->asentamiento_residencia;
         }else{
-            $denunciante->otro_domicilio = $request->domicilio_extranjero;
+            $denunciante_domicilio->otro_domicilio = $request->domicilio_extranjero;
         }
         $denunciante_domicilio->save();
         
@@ -1211,6 +1216,118 @@ class DenunciaController extends Controller
           return response()->json($municipios);
         }
     }
+
+    function horaATexto($hora) {
+        // Validar el formato de la hora
+        if (!preg_match('/^(0?[0-9]|1[0-9]|2[0-3]):([0-5][0-9])$/', $hora)) {
+            return "Formato de hora inválido.";
+        }
+    
+        list($horas, $minutos) = explode(':', $hora);
+        
+        $horasTexto = [
+            0 => "cero",
+            1 => "una",
+            2 => "dos",
+            3 => "tres",
+            4 => "cuatro",
+            5 => "cinco",
+            6 => "seis",
+            7 => "siete",
+            8 => "ocho",
+            9 => "nueve",
+            10 => "diez",
+            11 => "once",
+            12 => "doce",
+            13 => "trece",
+            14 => "catorce",
+            15 => "quince",
+            16 => "dieciséis",
+            17 => "diecisiete",
+            18 => "dieciocho",
+            19 => "diecinueve",
+            20 => "veinte",
+            21 => "veintiuna",
+            22 => "veintidós",
+            23 => "veintitrés",
+        ];
+    
+        $minutosTexto = [
+            0 => "",
+            1 => "un",
+            2 => "dos",
+            3 => "tres",
+            4 => "cuatro",
+            5 => "cinco",
+            6 => "seis",
+            7 => "siete",
+            8 => "ocho",
+            9 => "nueve",
+            10 => "diez",
+            11 => "once",
+            12 => "doce",
+            13 => "trece",
+            14 => "catorce",
+            15 => "quince",
+            16 => "dieciséis",
+            17 => "diecisiete",
+            18 => "dieciocho",
+            19 => "diecinueve",
+            20 => "veinte",
+            21 => "veintiuno",
+            22 => "veintidós",
+            23 => "veintitrés",
+            24 => "veinticuatro",
+            25 => "veinticinco",
+            26 => "veintiséis",
+            27 => "veintisiete",
+            28 => "veintiocho",
+            29 => "veintinueve",
+            30 => "treinta",
+            31 => "treinta y uno",
+            32 => "treinta y dos",
+            33 => "treinta y tres",
+            34 => "treinta y cuatro",
+            35 => "treinta y cinco",
+            36 => "treinta y seis",
+            37 => "treinta y siete",
+            38 => "treinta y ocho",
+            39 => "treinta y nueve",
+            40 => "cuarenta",
+            41 => "cuarenta y uno",
+            42 => "cuarenta y dos",
+            43 => "cuarenta y tres",
+            44 => "cuarenta y cuatro",
+            45 => "cuarenta y cinco",
+            46 => "cuarenta y seis",
+            47 => "cuarenta y siete",
+            48 => "cuarenta y ocho",
+            49 => "cuarenta y nueve",
+            50 => "cincuenta",
+            51 => "cincuenta y uno",
+            52 => "cincuenta y dos",
+            53 => "cincuenta y tres",
+            54 => "cincuenta y cuatro",
+            55 => "cincuenta y cinco",
+            56 => "cincuenta y seis",
+            57 => "cincuenta y siete",
+            58 => "cincuenta y ocho",
+            59 => "cincuenta y nueve",
+        ];
+    
+        $horasTextoFinal = $horasTexto[(int)$horas];
+        $minutosTextoFinal = $minutosTexto[(int)$minutos];
+    
+        if ($minutos == 0) {
+            return "Siendo las $horasTextoFinal horas";
+        } elseif ($minutos == 1) {
+            return "Siendo las $horasTextoFinal horas con $minutosTextoFinal minuto";
+        } else {
+            return "Siendo las $horasTextoFinal horas con $minutosTextoFinal minutos";
+        }
+    }
+    
+  
 
 
 }

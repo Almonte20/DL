@@ -52,7 +52,7 @@ Route::get('pruebaw', function(){
 	$token = "ASFASFASFFSFAFASFSFA";
 
 	Mail::to(trim($email))->send(new CodigoVerificacionMailable($data));
-	$mensajeNotificacion = 'El registro de su Denuncia se realizó de forma correcta, asignándole el folio '.$folio.' y la clave de seguimiento '.$token.', Su denuncia en línea será analizada por el Agente de Ministerio Público Orientador Digital, quien la asignará a la Fiscalía correspondiente para su seguimiento, atención y comunicación con usted. Esté al pendiente del correo/teléfono proporcionado.';
+	$mensajeNotificacion = 'La actualización de su Denuncia se realizó de forma correcta, asignándole el folio:';
 	$info = new \stdClass;
 	$info->titulo = "FGE: Registro de denuncia en línea";
 	$info->nombre = "Alejandro Almonte Acosta";

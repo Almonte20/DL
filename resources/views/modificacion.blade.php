@@ -10,11 +10,17 @@
 {{--
 <link rel="stylesheet" type="text/css" href="{{ asset('plugins/sweetalert2/sweetalert2.min.css') }}"> --}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-{{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{{--
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.css" integrity="sha512-CbQfNVBSMAYmnzP3IC+mZZmYMP2HUnVkV4+PwuhpiMUmITtSpS7Prr3fNncV1RBOnWxzz4pYQ5EAGG4ck46Oig==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
-<link href="https://cdn.jsdelivr.net/npm/select2-bootstrap4-theme@1.0.0/dist/select2-bootstrap4.min.css" rel="stylesheet" />
+{{--
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-theme/0.1.0-beta.10/select2-bootstrap.css"
+    integrity="sha512-CbQfNVBSMAYmnzP3IC+mZZmYMP2HUnVkV4+PwuhpiMUmITtSpS7Prr3fNncV1RBOnWxzz4pYQ5EAGG4ck46Oig=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
+<link href="https://cdn.jsdelivr.net/npm/select2-bootstrap4-theme@1.0.0/dist/select2-bootstrap4.min.css"
+    rel="stylesheet" />
 <style>
     .card-bodys {
         background-image: url('{{asset("img/denuncia/Tarjeta Registro Exitoso.png")}}');
@@ -59,22 +65,26 @@
     .form-control::placeholder {
         color: #b4c1c1;
     }
+
     .card {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Ajusta los valores según tus preferencias */
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        /* Ajusta los valores según tus preferencias */
     }
+
     .card-footer {
         background-color: rgb(0 0 0 / 0%);
     }
-    .txtVictima{
+
+    .txtVictima {
         font-size: 22px;
     }
 
-    .txt-preguntas{
-        font-weight: bold; 
+    .txt-preguntas {
+        font-weight: bold;
         font-size: 27px;
     }
 
-    .select2-selection__rendered{
+    .select2-selection__rendered {
         font-weight: 400;
         font-size: 1rem;
         font-family: inherit;
@@ -89,7 +99,7 @@
 </style>
 
 @php
-    use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Crypt;
 @endphp
 
 <div class="top-content">
@@ -115,16 +125,17 @@
 
         {{-- <div class="row"> --}}
             {{-- <div class="col-sm-10 col-sm-offset-1 col-md-12 col-lg-12 col-lg-offset-0 form-box"> --}}
-                <form action="{{ route('denuncia.updateDenuncia') }}" method="POST" enctype="multipart/form-data" class="f1 p-0"
-                    id="form_denuncia">
+                <form action="{{ route('denuncia.updateDenuncia') }}" method="POST" enctype="multipart/form-data"
+                    class="f1 p-0" id="form_denuncia">
                     @csrf
                     <!-- <form role="form" action="" method="post" class="f1"> -->
                     <input type="hidden" name="id_policia" value="" class="form-control" maxlength="50"
                         style="display: none;">
                     <input type="hidden" name="id_denuncia" value="{{$id_denuncia}}" style="display: none;">
-                    <input type="hidden" name="id_denunciante" value="{{Crypt::encrypt($denunciante->id)}}" style="display: none;">
-                    
-              
+                    <input type="hidden" name="id_denunciante" value="{{Crypt::encrypt($denunciante->id)}}"
+                        style="display: none;">
+
+
                     <div class="container f1-steps" style="text-align: center;">
                         {{-- <div class="f1-progress">
                             <div class="f1-progress-line" data-now-value="50" data-number-of-steps="2"
@@ -178,20 +189,22 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <p class="text-center mb-2 txt-preguntas">¿QUÉ HA SUCEDIDO?</p>
-                                                <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <textarea class="form-control required" name="narrativa" id="narrativa-hecho" rows="7" minlength="150" placeholder="Explica ampliamente qué y como sucedió el hecho"
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <textarea class="form-control required" name="narrativa"
+                                                        id="narrativa-hecho" rows="7" minlength="150"
+                                                        placeholder="Explica ampliamente qué y como sucedió el hecho"
                                                         data-message-error='El dato "QUÉ HA SUCEDIDO" es requerido.'>{{$hechos->narrativa }}</textarea>
-                                                        <div style="color:#FF0000;">
-                                                            {{ $errors->first('narrativa') }}
-                                                        </div>
+                                                    <div style="color:#FF0000;">
+                                                        {{ $errors->first('narrativa') }}
                                                     </div>
                                                 </div>
+                                            </div>
                                         </div>
-                                       
+
                                     </div>
                                 </div>
-                               
+
                             </section>
 
                             <section class="p-0 mt-5 mb-3 d-non">
@@ -270,39 +283,40 @@
     </div> --}}
 
 
-</div>{{-- container --}}
 
 
 
 
 
-<div class="container d-none" id="registro_exitoso">
+    <div class="container d-none" id="registro_exitoso">
 
-    <div class="row justify-content-center">
-        <div class="col-md text-center">
+        <div class="row justify-content-center">
+            <div class="col-md text-center">
 
-            <form action="{{ route('denuncia.consultaDenuncia') }}" method="POST">
-                @csrf
-                <div class="d-none">
-                    <input type="hidden" id="folio" name="folio"><br><br>
+                <form action="{{ route('denuncia.consultaDenuncia') }}" method="POST">
+                    @csrf
+                    <div class="d-none">
+                        <input type="hidden" id="folio" name="folio"><br><br>
 
-                    <input type="hidden" id="token" name="token"><br><br>
-                </div>
-                 <button class="btn-sm btn-back" type="submit"><i class="fa-solid fa-search"></i>&nbsp; CONSULTAR DENUNCIA</button>
-                 <button class="btn-sm btn-next" type="button" onclick="location.reload()"><i class="fa-solid fa-file-circle-plus"></i>&nbsp; REGISTRAR NUEVA DENUNCIA</button>
-            </form>
+                        <input type="hidden" id="token" name="token"><br><br>
+                    </div>
+                    <button class="btn-sm btn-back" type="submit"><i class="fa-solid fa-search"></i>&nbsp; CONSULTAR
+                        DENUNCIA</button>
+                    <button class="btn-sm btn-next" type="button" onclick="location.reload()"><i
+                            class="fa-solid fa-file-circle-plus"></i>&nbsp; REGISTRAR NUEVA DENUNCIA</button>
+                </form>
 
+            </div>
         </div>
-    </div>
 
-    <div class="row justify-content-center">
-        <div class="col-md">
-            <div class="card  bg-light border-dark mt-5">
-                <img class="card-img" src="{{asset("img/denuncia/Tarjeta Registro Exitoso.png")}}"
-                    alt="Card image cap">
+        <div class="row justify-content-center">
+            <div class="col-md">
+                <div class="card  bg-light border-dark mt-5">
+                    <img class="card-img" src="{{asset("img/denuncia/Tarjeta Registro Exitoso.png")}}"
+                        alt="Card image cap">
 
 
-                <div class="card-img-overlay text-center" style="
+                    <div class="card-img-overlay text-center" style="
                     font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-900) var(--unnamed-font-size-90)/var(--unnamed-line-spacing-103) var(--unnamed-font-family-labrador-a);
                     letter-spacing: var(--unnamed-character-spacing-0);
                     color: var(--unnamed-color-cf8e1d);
@@ -313,37 +327,38 @@
                     opacity: 1;
                     top: 175px;
                     width: 100%;">
-                    ¡ACTUALIZACIÓN EXITOSA!
-                </div>
-                <div class="card-img-overlay  text-center txt-conclusion" style="    top: 250px;">
-                    Se ha actualizado su denuncia con número de folio:
+                        ¡ACTUALIZACIÓN EXITOSA!
+                    </div>
+                    <div class="card-img-overlay  text-center txt-conclusion" style="    top: 250px;">
+                        Se ha actualizado su denuncia con número de folio:
+                    </div>
+
+                    <div class="card-img-overlay text-center txt-conclusion" style="    top: 285px;">
+
+                    </div>
+
+
+                    <div class="card-img-overlay  text-center txt-dato" style="    top: 330px;" id="txt_folio">
+
+                    </div>
+
+                    <div class="card-img-overlay  text-center txt-conclusion" style="    top: 380px;">
+
+                    </div>
+
+                    <div class="card-img-overlay d-none text-center txt-dato" style="    top: 425px;"
+                        id="txt_clave_seguimiento">
+
+                    </div>
+
+
                 </div>
 
-                <div class="card-img-overlay text-center txt-conclusion" style="    top: 285px;">
-                  
-                </div>
-
-
-                <div class="card-img-overlay  text-center txt-dato" style="    top: 330px;" id="txt_folio">
-                   
-                </div>
-
-                <div class="card-img-overlay  text-center txt-conclusion" style="    top: 380px;">
-                   
-                </div>
-
-                <div class="card-img-overlay d-none text-center txt-dato" style="    top: 425px;" id="txt_clave_seguimiento">
-
-                </div>
 
 
             </div>
-
-
-
         </div>
     </div>
-</div>
 
 
 

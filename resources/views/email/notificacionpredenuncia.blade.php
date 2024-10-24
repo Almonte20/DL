@@ -17,11 +17,9 @@ padding-right: 50px;
             <div style="width:100%;height:200px; top: 0;">
                 <h2 style="font-family:Arial;font-size:25px;line-height:35px; text-align: center; margin-left: 20px; margin-right: 20px;">
                   Fiscalía General del Estado de Michoacán
-                  <br>
-                  <br>
                   <p>Notificación Denuncia en Línea</p>
                 </h2>
-                <div><center>{{ $data->fecha }}</center></div>
+                <div><center>{{utf8_decode($data->fecha)}}</center></div>
             </div>
             <br><br>
             <div style="width:100%;height:200px;">

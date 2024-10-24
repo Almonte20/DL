@@ -22,7 +22,8 @@
 {{--
 <link rel="stylesheet" type="text/css" href="{{ asset('plugins/sweetalert2/sweetalert2.min.css') }}"> --}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-{{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
+{{--
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
 
 <style>
     .card-bodys {
@@ -68,18 +69,22 @@
     .form-control::placeholder {
         color: #b4c1c1;
     }
+
     .card {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Ajusta los valores según tus preferencias */
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        /* Ajusta los valores según tus preferencias */
     }
+
     .card-footer {
         background-color: rgb(0 0 0 / 0%);
     }
-    .txtVictima{
+
+    .txtVictima {
         font-size: 22px;
     }
 
-    .txt-preguntas{
-        font-weight: bold; 
+    .txt-preguntas {
+        font-weight: bold;
         font-size: 27px;
     }
 </style>
@@ -148,208 +153,185 @@
                     <!-- <form role="form" action="" method="post" class="f1"> -->
                     <input type="hidden" name="id_policia" value="" class="form-control" maxlength="50"
                         style="display: none;">
-                     <input type="hidden" name="id_denuncia" value="" style="display: none;">
-                        <div class="container f1-steps" style="text-align: left;">
+                    <input type="hidden" name="id_denuncia" value="" style="display: none;">
                     <div class="container f1-steps" style="text-align: left;">
-                        {{-- <div class="f1-progress">
-                            <div class="f1-progress-line" data-now-value="50" data-number-of-steps="2"
-                                style="width: 50%;"></div>
-                        </div> --}}
-                        <div class="row">
-                            <div id="step-denunciante" class="col f1-step active">
-                                <div class="f1-step-icon" style="margin-left: 260px !important;"><i
-                                        class="fal fa-user-circle"></i></div>
-                                <p style="margin-left: 260px !important;">DENUNCIANTE</p>
+                        <div class="container f1-steps" style="text-align: left;">
+                            {{-- <div class="f1-progress">
+                                <div class="f1-progress-line" data-now-value="50" data-number-of-steps="2"
+                                    style="width: 50%;"></div>
+                            </div> --}}
+                            <div class="row">
+                                <div id="step-denunciante" class="col f1-step active">
+                                    <div class="f1-step-icon" style="margin-left: 260px !important;"><i
+                                            class="fal fa-user-circle"></i></div>
+                                    <p style="margin-left: 260px !important;">DENUNCIANTE</p>
+                                </div>
+                                <div class="col custom-slider">
+                                    <div class="circle start"></div>
+                                    <div class="line"></div>
+                                    <div class="circle end"></div>
+                                </div>
+                                <div id="step-hechos" class="col f1-step">
+                                    <div class="f1-step-icon" style="margin-right: 260px !important;"><i
+                                            class="fal fa-pen-alt"></i></div>
+                                    <p style="margin-right: 260px !important;">HECHOS</p>
+                                </div>
                             </div>
-                            <div class="col custom-slider">
-                                <div class="circle start"></div>
-                                <div class="line"></div>
-                                <div class="circle end"></div>
-                            </div>
-                            <div id="step-hechos" class="col f1-step">
-                                <div class="f1-step-icon" style="margin-right: 260px !important;"><i
-                                        class="fal fa-pen-alt"></i></div>
-                                <p style="margin-right: 260px !important;">HECHOS</p>
-                            </div>
+                            {{-- <div class="f1-step ">
+                                <div class="f1-step-icon"><i class="fal fa-fingerprint"></i></div>
+                                <p>Evidencias/Testigos</p>
+                            </div> --}}
                         </div>
-                        {{-- <div class="f1-step ">
-                            <div class="f1-step-icon"><i class="fal fa-fingerprint"></i></div>
-                            <p>Evidencias/Testigos</p>
+                        {{-- <div class="form-row col-lg-12 text-center" id="campos_faltantes" style="display: none">
+                            <div class="form-group col-md-6.5 text-center" style="background-color: #f8d7da;">
+                                <label for="nombre" style="color: #721c24;" class="text-center">* Por favor verifique
+                                    que
+                                    los campos requeridos
+                                    se encuentren ingresados.</label>
+                            </div>
                         </div> --}}
-                    </div>
-                    {{-- <div class="form-row col-lg-12 text-center" id="campos_faltantes" style="display: none">
-                        <div class="form-group col-md-6.5 text-center" style="background-color: #f8d7da;">
-                            <label for="nombre" style="color: #721c24;" class="text-center">* Por favor verifique que
-                                los campos requeridos
-                                se encuentren ingresados.</label>
-                        </div>
-                    </div> --}}
 
-                    {{-- <div id="campos_faltantes" class="container text-center d-none">
-                        <p style="background-color: #f8d7da;">
-                            * Por favor verifique que los datos requeridos se encuentren ingresados.
-                        </p>
-                    </div> --}}
+                        {{-- <div id="campos_faltantes" class="container text-center d-none">
+                            <p style="background-color: #f8d7da;">
+                                * Por favor verifique que los datos requeridos se encuentren ingresados.
+                            </p>
+                        </div> --}}
 
-                    <!-- datos denunciante -->
-                    <section id="datos-denunciante" class="p-0 mt-5 mb-3 d-non">
-                        @include('Denuncia.DatosDenunciante')
-                    </section>
-                    {{-- <fieldset class="d-block"> --}}
+                        <!-- datos denunciante -->
+                        <section id="datos-denunciante" class="p-0 mt-5 mb-3 d-non">
+                            @include('Denuncia.DatosDenunciante')
+                        </section>
+                        {{-- <fieldset class="d-block"> --}}
 
-                        <div id="datos-hechos" class="d-none">
-                            <section class="p-0 mt-5 mb-3">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <p class="text-center mb-2 txt-preguntas">¿QUÉ HA SUCEDIDO?</p>
+                            <div id="datos-hechos" class="d-none">
+                                <section class="p-0 mt-5 mb-3">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <p class="text-center mb-2 txt-preguntas">¿QUÉ HA SUCEDIDO?</p>
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <textarea class="form-control required" name="narrativa" id="narrativa-hecho" rows="7" minlength="150" placeholder="Explica ampliamente qué y cómo sucedió el hecho"
-                                                        data-message-error='"QUÉ HA SUCEDIDO" es requerido.'>{{ old('narrativa','') }}</textarea>
+                                                        <textarea class="form-control required" name="narrativa"
+                                                            id="narrativa-hecho" rows="7" minlength="150"
+                                                            placeholder="Explica ampliamente qué y cómo sucedió el hecho"
+                                                            data-message-error='"QUÉ HA SUCEDIDO" es requerido.'>{{ old('narrativa','') }}</textarea>
                                                         <div style="color:#FF0000;">
                                                             {{ $errors->first('narrativa') }}
                                                         </div>
                                                     </div>
                                                 </div>
-                                        </div>
-                                        <div class="col-md-12 mt-3 text-center">
-                                            <p class="mb-2 txt-preguntas">¿QUIÉN ES LA
-                                                VÍCTIMA?</p>
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="radiodenunciante" name="victimadenunciante"
-                                                    class="custom-control-input required" value="1" checked
-                                                    data-message-error='"¿QUIÉN ES LA VÍCTIMA?" es requerido.'
-                                                    onchange="otraPersona()">
-                                                <label class="custom-control-label" for="radiodenunciante">Yo</label>
                                             </div>
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="radiovictima" name="victimadenunciante"
-                                                    class="custom-control-input required" value="0"
-                                                    data-message-error='"¿QUIÉN ES LA VÍCTIMA?" es requerido.'
-                                                    onchange="otraPersona()">
-                                                <label class="custom-control-label" for="radiovictima">Otra
-                                                    persona</label>
-                                            </div>
-                                            <!-- Aquí se agrega el mensaje de error -->
-                                            <div id="quien-es-victima-mensaje-error" class="text-danger mt-1 d-none"
-                                                style=" font-size: 14px;">
-                                                Indique una opción.
+                                            <div class="col-md-12 mt-3 text-center">
+                                                <p class="mb-2 txt-preguntas">¿QUIÉN ES LA
+                                                    VÍCTIMA?</p>
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" id="radiodenunciante" name="victimadenunciante"
+                                                        class="custom-control-input required" value="1" checked
+                                                        data-message-error='"¿QUIÉN ES LA VÍCTIMA?" es requerido.'
+                                                        onchange="otraPersona()">
+                                                    <label class="custom-control-label"
+                                                        for="radiodenunciante">Yo</label>
+                                                </div>
+                                                <div class="custom-control custom-radio custom-control-inline">
+                                                    <input type="radio" id="radiovictima" name="victimadenunciante"
+                                                        class="custom-control-input required" value="0"
+                                                        data-message-error='"¿QUIÉN ES LA VÍCTIMA?" es requerido.'
+                                                        onchange="otraPersona()">
+                                                    <label class="custom-control-label" for="radiovictima">Otra
+                                                        persona</label>
+                                                </div>
+                                                <!-- Aquí se agrega el mensaje de error -->
+                                                <div id="quien-es-victima-mensaje-error" class="text-danger mt-1 d-none"
+                                                    style=" font-size: 14px;">
+                                                    Indique una opción.
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                </section>
+
+                                <section class="p-0 mt-5 mb-3">
+                                    @include('Denuncia.Victima')
+                                </section>
+
+                                <section class="p-0 mt-5 mb-3">
+                                    @include('Denuncia.Responsable')
+                                </section>
+
+                                <section class="p-0 mt-5 mb-3">
+                                    @include('Denuncia.LugarFechaHecho')
+                                </section>
+
+                                <section class="p-0 mt-5 mb-3">
+                                    @include('Denuncia.Hecho')
+                                </section>
+
+                                <section class="p-0 mt-5 mb-3">
+                                    @include('Denuncia.Testigos')
+                                </section>
+
+                                <section class="p-0 mt-5 mb-3">
+                                    @include('Denuncia.evidencias')
+                                </section>
+
+                                <div class="fa-4x d-none" id="div_spin">
+                                    <center>
+                                        <i class="fas fa-circle-notch fa-spin" style="color:#002b49;"></i>
+                                    </center>
                                 </div>
-                            </section>
 
-                            <section class="p-0 mt-5 mb-3">
-                                @include('Denuncia.Victima')
-                            </section>
-
-                            <section class="p-0 mt-5 mb-3">
-                                @include('Denuncia.Responsable')
-                            </section>
-
-                            <section class="p-0 mt-5 mb-3">
-                                @include('Denuncia.LugarFechaHecho')
-                            </section>
-
-                            <section class="p-0 mt-5 mb-3">
-                                @include('Denuncia.Hecho')
-                            </section>
-
-                            <section class="p-0 mt-5 mb-3">
-                                @include('Denuncia.Testigos')
-                            </section>
-
-                            <section class="p-0 mt-5 mb-3">
-                                @include('Denuncia.evidencias')
-                            </section>
-
-                            <div class="fa-4x d-none" id="div_spin">
-                                <center>
-                                    <i class="fas fa-circle-notch fa-spin" style="color:#002b49;"></i>
-                                </center>
+                                <div class="f1-buttons text-center mt-5 mb-3" id="botones_finalizacion">
+                                    <button type="button" class="btn-sm btn-back" id="btn-atras"><i
+                                            class="fa-solid fa-chevron-left"></i> &nbsp;&nbsp; ATRÁS</button>
+                                    <button type="button" id="btn-step-two" {{-- onclick="guardarDenuncia(this)" --}}
+                                        class="btn-sm btn-success" id="finalizar_denuncia">
+                                        REGISTRAR DENUNCIA &nbsp;&nbsp; <i class="fa-solid fa-chevron-up"></i>
+                                    </button>
+                                </div>
                             </div>
 
-                            <div class="f1-buttons text-center mt-5 mb-3" id="botones_finalizacion">
-                                <button type="button" class="btn-sm btn-back" id="btn-atras"><i
-                                        class="fa-solid fa-chevron-left"></i> &nbsp;&nbsp; ATRÁS</button>
-                                <button type="button" id="btn-step-two" {{-- onclick="guardarDenuncia(this)" --}}
-                                    class="btn-sm btn-success" id="finalizar_denuncia">
-                                    REGISTRAR DENUNCIA &nbsp;&nbsp; <i class="fa-solid fa-chevron-up"></i>
-                                </button>
-                            </div>
-                        </div>
-
-
-                        {{-- <div class="f1-buttons">
-                            <button type="button" class="btn btn-previous">Atrás</button>
-                            <button type="button" class="btn btn-next">Siguiente</button>
-                        </div> --}}
-
-                        {{--
-                    </fieldset> --}}
-                    {{-- <fieldset class="">
-                        <h1>Evidencias:</h1>
-                        {{-- @include('DenunciaDigital.evidencia') --}}
-
-                        {{-- <h1>Testigos:</h1> --}}
-                        {{-- @include('DenunciaDigital.testigos') --}}
 
 
 
 
+                </form>
 
-
-                        {{--
-            </div> --}}
-
-            {{-- <div class="f1-buttons">
-                <button type="button" class="btn btn-previous">Atrás</button>
-                <button type="button" class="btn btn-next">Siguiente</button>
-            </div> --}}
-            {{-- </fieldset> --}}
-
-
-            </form>
-            {{-- </div> --}}
-        {{--
-    </div> --}}
-
-
-</div>{{-- container --}}
+            </div>
+        </div>{{-- container --}}
 
 
 
-
-
-<div class="container d-none" id="registro_exitoso">
-
-    <div class="row justify-content-center">
-        <div class="col-md text-center">
-
-            <form action="{{ route('denuncia.consultaDenuncia') }}" method="POST">
-                @csrf
-                <div class="d-none">
-                    <input type="hidden" id="folio" name="folio"><br><br>
-
-                    <input type="hidden" id="token" name="token"><br><br>
-                </div>
-                 <button class="btn-sm btn-back" type="submit"><i class="fa-solid fa-search"></i>&nbsp; CONSULTAR DENUNCIA</button>
-                 <button class="btn-sm btn-next" type="button" onclick="location.reload()"><i class="fa-solid fa-file-circle-plus"></i>&nbsp; REGISTRAR NUEVA DENUNCIA</button>
-            </form>
-
-        </div>
     </div>
 
-    <div class="row justify-content-center">
-        <div class="col-md">
-            <div class="card  bg-light border-dark mt-5">
-                <img class="card-img" src="{{asset("img/denuncia/Tarjeta Registro Exitoso.png")}}"
-                    alt="Card image cap">
+    <div class="container d-none" id="registro_exitoso">
+
+        <div class="row justify-content-center">
+            <div class="col-md text-center">
+
+                <form action="{{ route('denuncia.consultaDenuncia') }}" method="POST">
+                    @csrf
+                    <div class="d-none">
+                        <input type="hidden" id="folio" name="folio"><br><br>
+
+                        <input type="hidden" id="token" name="token"><br><br>
+                    </div>
+                    <button class="btn-sm btn-back" type="submit"><i class="fa-solid fa-search"></i>&nbsp; CONSULTAR
+                        DENUNCIA</button>
+                    <button class="btn-sm btn-next" type="button" onclick="location.reload()"><i
+                            class="fa-solid fa-file-circle-plus"></i>&nbsp; REGISTRAR NUEVA DENUNCIA</button>
+                </form>
+
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md">
+                <div class="card  bg-light border-dark mt-5">
+                    <img class="card-img" src="{{asset("img/denuncia/Tarjeta Registro Exitoso.png")}}"
+                        alt="Card image cap">
 
 
-                <div class="card-img-overlay text-center" style="
+                    <div class="card-img-overlay text-center" style="
                     font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-900) var(--unnamed-font-size-90)/var(--unnamed-line-spacing-103) var(--unnamed-font-family-labrador-a);
                     letter-spacing: var(--unnamed-character-spacing-0);
                     color: var(--unnamed-color-cf8e1d);
@@ -360,107 +342,104 @@
                     opacity: 1;
                     top: 175px;
                     width: 100%;">
-                    ¡REGISTRO EXITOSO!
+                        ¡REGISTRO EXITOSO!
+                    </div>
+                    <div class="card-img-overlay  text-center txt-conclusion" style="    top: 250px;">
+                        Su denuncia se registró con el
+                    </div>
+
+                    <div class="card-img-overlay text-center txt-conclusion" style="    top: 285px;">
+                        Folio único:
+                    </div>
+
+
+                    <div class="card-img-overlay  text-center txt-dato" style="    top: 330px;" id="txt_folio">
+
+                    </div>
+
+                    <div class="card-img-overlay  text-center txt-conclusion" style="    top: 380px;">
+                        Clave de seguimiento:
+                    </div>
+
+                    <div class="card-img-overlay  text-center txt-dato" style="    top: 425px;"
+                        id="txt_clave_seguimiento">
+
+                    </div>
+
+
                 </div>
-                <div class="card-img-overlay  text-center txt-conclusion" style="    top: 250px;">
-                    Su denuncia se registró con el
-                </div>
-
-                <div class="card-img-overlay text-center txt-conclusion" style="    top: 285px;">
-                    Folio único:
-                </div>
-
-
-                <div class="card-img-overlay  text-center txt-dato" style="    top: 330px;" id="txt_folio">
-
-                </div>
-
-                <div class="card-img-overlay  text-center txt-conclusion" style="    top: 380px;">
-                    Clave de seguimiento:
-                </div>
-
-                <div class="card-img-overlay  text-center txt-dato" style="    top: 425px;" id="txt_clave_seguimiento">
-
-                </div>
-
-
             </div>
-
-
-
         </div>
     </div>
-</div>
 
 
 
 
-</div>
 
-<div class="modal fade" id="modalpolicia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="false">
-    <form class="form-horizontal form-bordered" method="POST" action="{{ url("/policia_registro_denuncia") }}"
-        enctype="multipart/form-data">
-        @csrf
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header text-center">
-                    <h3 class="modal-title w-100 font-weight-bold">¿Es Policía?</h3>
-                </div>
-                <div class="modal-body mx-3">
-                    <select id="Respuestapolicia" name="Respuestapolicia" class="form-control selectpicker"
-                        data-live-search="true">
-                        <option value="0" selected disabled>Seleccione una opción</option>
-                        <option value="1">Sí</option>
-                        <option value="2">No</option>
-                    </select>
-                </div>
-                <div class="modal-body mx-3" id="modaldatospol" name="modaldatospol" style="display: none;">
-                    <div class="form-row col-lg-12">
-                        <div class="form-group col-md-12">
-                            <div class="form-ic-cmp">
-                                <i class="fad fa-id-card"></i>&nbsp;
-                                <label for="NombrePol">Nombre</label>
-                            </div>
-                            <input type="text" id="NombrePol" name="NombrePol" class="form-control" maxlength="50">
-                        </div>
+    <div class="modal fade" id="modalpolicia" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="false">
+        <form class="form-horizontal form-bordered" method="POST" action="{{ url("/policia_registro_denuncia") }}"
+            enctype="multipart/form-data">
+            @csrf
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h3 class="modal-title w-100 font-weight-bold">¿Es Policía?</h3>
                     </div>
-                    <div class="form-row col-lg-12">
-                        <div class="form-group col-md-6">
-                            <div class="form-ic-cmp">
-                                <i class="fal fa-at"></i>&nbsp;
-                                <label for="EmailPol">Correo</label>
-                            </div>
-                            <input type="email" id="EmailPol" name="EmailPol" class="form-control" maxlength="50">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <div class="form-ic-cmp">
-                                <i class="fal fa-phone-alt"></i>&nbsp;
-                                <label for="TelPol">Teléfono</label>
-                            </div>
-                            <input type="number" id="TelPol" name="TelPol" class="form-control" maxlength="10">
-                        </div>
+                    <div class="modal-body mx-3">
+                        <select id="Respuestapolicia" name="Respuestapolicia" class="form-control selectpicker"
+                            data-live-search="true">
+                            <option value="0" selected disabled>Seleccione una opción</option>
+                            <option value="1">Sí</option>
+                            <option value="2">No</option>
+                        </select>
                     </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button class="btn btn-next" type="submit">Guardar</button>
+                    <div class="modal-body mx-3" id="modaldatospol" name="modaldatospol" style="display: none;">
+                        <div class="form-row col-lg-12">
+                            <div class="form-group col-md-12">
+                                <div class="form-ic-cmp">
+                                    <i class="fad fa-id-card"></i>&nbsp;
+                                    <label for="NombrePol">Nombre</label>
+                                </div>
+                                <input type="text" id="NombrePol" name="NombrePol" class="form-control" maxlength="50">
+                            </div>
+                        </div>
+                        <div class="form-row col-lg-12">
+                            <div class="form-group col-md-6">
+                                <div class="form-ic-cmp">
+                                    <i class="fal fa-at"></i>&nbsp;
+                                    <label for="EmailPol">Correo</label>
+                                </div>
+                                <input type="email" id="EmailPol" name="EmailPol" class="form-control" maxlength="50">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <div class="form-ic-cmp">
+                                    <i class="fal fa-phone-alt"></i>&nbsp;
+                                    <label for="TelPol">Teléfono</label>
+                                </div>
+                                <input type="number" id="TelPol" name="TelPol" class="form-control" maxlength="10">
+                            </div>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center">
+                            <button class="btn btn-next" type="submit">Guardar</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
 
 
 
 
-@endsection
+    @endsection
 
-@section('js')
-<script src="assetsWizard/js/scripts.js"></script>
-<script src="lib/pnotify/pnotify.custom.min.js"></script>
-{{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
-<script>
-    jQuery(document).ready( function(){
+    @section('js')
+    <script src="assetsWizard/js/scripts.js"></script>
+    <script src="lib/pnotify/pnotify.custom.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
+    <script>
+        jQuery(document).ready( function(){
     //$("#modalpolicia").modal("show");
     // regresar al url de denuncia con el id del policia validar si existe id no se mostrara el modal
 });
@@ -1096,7 +1075,7 @@ function alertas(msg)
         }
 
 
-</script>
-<script src="{{ asset('js/testigos.js') }}"></script>
-{{-- <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script> --}}
-@endsection
+    </script>
+    <script src="{{ asset('js/testigos.js') }}"></script>
+    {{-- <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script> --}}
+    @endsection
