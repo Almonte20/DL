@@ -349,7 +349,7 @@
             </div>
             <div class="form-group col-md-2">
                 <div class="form-ic-cmp">
-                    <i class="fal fa-hashtag"></i>&nbsp;
+                    {{-- <i class="fal fa-hashtag"></i>&nbsp; --}}
                     <label for="numext">No. Exterior <span style="font-size: 7px;" class="text-danger">Requerido</span></label>
                 </div>
                 <input class=" form-control required" value="" maxlength="6"
@@ -361,7 +361,7 @@
             </div>
             <div class="form-group col-md-2">
                 <div class="form-ic-cmp">
-                    <i class="fal fa-hashtag"></i>&nbsp;
+                    {{-- <i class="fal fa-hashtag"></i>&nbsp; --}}
                     <label for="numint">No. Interior</label>
                 </div>
                 <input class=" form-control " placeholder="Opcional" value="" maxlength="6" name="numint" type="text"
