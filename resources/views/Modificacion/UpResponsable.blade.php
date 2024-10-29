@@ -13,6 +13,7 @@
 </div>
 
 @php
+   
     if($responsable->get()->isNotEmpty()){
        
 
@@ -24,7 +25,7 @@
 
         if($responsable->first()->nombre != "Desconocido"){
             $conoceResponsable = true;
-            $responsable = $responsable->first();
+            
         }else{
             $conoceResponsable = false;
         }
@@ -34,14 +35,13 @@
         $conoceResponsable = false;
         $rasgosFisicos = false;
     }
-    
-    if($rasgosFisicos && $responsable->address()->get()->isNotEmpty()){
+    if($rasgosFisicos && $responsable->first()->address()->get()->isNotEmpty()){
         $conoceDireccion = true;
     }else{
         $conoceDireccion = false;
     }
-   
   
+    $responsable = $responsable->first();
 @endphp
 <div class="container">
     <div id="ResponsableDiv" class="pl-3">

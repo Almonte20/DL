@@ -20,6 +20,7 @@ use App\Models\InvolucradoDomicilio;
 use App\Models\NotificacionUsuario;
 use Carbon\Carbon;
 use Codedge\Fpdf\Fpdf\Fpdf;
+use App\Traits\HeaderTrait;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -28,10 +29,13 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Traits\WhatsappTrait;
+use App\Http\Controllers\Header;
 
 
 class DenunciaController extends Controller
 {
+
+    
     use WhatsappTrait;
     /**
      * Display a listing of the resource.
@@ -42,9 +46,10 @@ class DenunciaController extends Controller
 
      public function __construct()
     {
-
         $this->fpdf_acuse = new Fpdf;
-        $this->fpdf_denuncia = new Fpdf;
+        $this->fpdf_denuncia = new class extends Fpdf {
+            use HeaderTrait; // Usa el trait para incluir el encabezado en todas las páginas
+        };
     }
 
     public function index()
@@ -89,6 +94,7 @@ class DenunciaController extends Controller
         // // $token = "asfasfsa";
     }
 
+
     public function generarPreSigi($id_denuncia)
     {
 
@@ -99,34 +105,40 @@ class DenunciaController extends Controller
         
         $folio = $denuncia->folio_denuncia;
         $pdf = $this->fpdf_denuncia;
-        $pdf->AddPage('P', 'letter');
+        $pdf->AddPage('P', 'Letter');
+
+        $pdf->SetMargins(15,22,15);
         // $pdf->AddFont('LabradorA-Black');
-        $pdf->SetAutoPageBreak(true,1);
+        $pdf->SetAutoPageBreak(true,15);
+        // $this->Header($pdf);
+        // $this->Footer($pdf);
 
         $pdf->AddFont('LabradorA-Black');
         $pdf->AddFont('LabradorA-Italic');
         $pdf->AddFont('LabradorA-ExtraBold');
-
-        $pdf->SetFont('Arial','B',10);
+        $pdf->AliasNbPages();
+        $pdf->SetFont('Arial','B',15);
         
-        $pdf->Image('img\denuncia\Titulo_fisca.jpg',10,10,180);
+        // $pdf->Image('img\denuncia\Titulo_fisca.jpg',10,10,180);
+        // $pdf->Image('img\denuncia\Plantilla Pre Acceius.png',0,10,220);
+        // $pdf->Image('img\denuncia\Banner Fiscalía.png',0,10,220);
+       
         
-        $pdf->SetXY(110,45);
-        $pdf->Rect(110,45 ,50 ,14 );
+        // $pdf->SetXY(110,45);
+        // $pdf->Rect(110,45 ,50 ,14 );
+        // $pdf->SetFont('Arial','',10);
+        // $pdf->Cell(50,14,utf8_decode("Número Único de caso:"),0,0,'C');
+        // $pdf->Rect(160,45,46,14 );
+        // $pdf->SetFont('Arial','B',10);
+        // $pdf->Cell(0,14,utf8_decode(!empty($NumeroCaso) ? $NumeroCaso->caso : 'Sin asignar'),0,0,'C');
+    
+        $pdf->SetXY(110,42);
+        // $pdf->Rect(110,45,50 ,14 );
         $pdf->SetFont('Arial','',10);
-        $pdf->Cell(50,14,utf8_decode("Número Único de caso:"),0,0,'C');
-        $pdf->Rect(160,45,46,14 );
+        $pdf->Cell(50,8,utf8_decode("Folio de Denuncia:"),1,0,'C');
+        // $pdf->Rect(160,45,46,14 );
         $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(0,14,utf8_decode(!empty($NumeroCaso) ? $NumeroCaso->caso : 'Sin asignar'),0,0,'C');
-        
-        
-        $pdf->SetXY(110,59);
-        $pdf->Rect(110,59 ,50 ,14 );
-        $pdf->SetFont('Arial','',10);
-        $pdf->Cell(50,14,utf8_decode("Número de expediente:"),0,0,'C');
-        $pdf->Rect(160,59,46,14 );
-        $pdf->SetFont('Arial','B',10);
-        $pdf->Cell(0,14,$folio,0,0,'C');
+        $pdf->Cell(0,8,$folio,1,0,'C');
         
         
         $pdf->SetFont('Arial','B',10);
@@ -135,24 +147,26 @@ class DenunciaController extends Controller
         $anio = date("Y");
         $hora = date("H:i");
         
-        $pdf->Ln(15);
-        $pdf->Cell(0,14,utf8_decode("Morelia, Michoacán a $dia de $mes del $anio"),0,0,'R');
+        // $pdf->Ln(15);
+        // $pdf->Cell(0,14,utf8_decode("Morelia, Michoacán a $dia de $mes del $anio"),0,0,'R');
         
-        $pdf->Ln(15);
+        $pdf->Ln(10);
         $pdf->SetFont('Arial','B',12);
         $pdf->Cell(0,14,utf8_decode("DENUNCIA"),0,0,'C');
         
-        $pdf->SetFont('Arial','B',11);
+        $pdf->SetFont('Arial','B',9.5);
         $pdf->Ln(15);
         $textoHora = $this->horaATexto($hora);
-       
-        // $pdf->MultiCell(0,4.5,utf8_decode("En la Ciudad de Morelia, Michoacán de Ocampo, a las $hora nueve  horas con cuarenta y cinco minutos, del día 07 siete de Octubre del año 2024, dos mil veinticuatro, el Jorge Alberto González Venegas Agente del Ministerio Público, de la Unidad de Atención Inmediata de la Fiscalía Coordinadora de la Fiscalía General del Estado, recibe el folio de Denuncia en Línea, de conformidad a las facultades que  confieren los artículos 17 Párrafo Cuarto, 19, 20 y 21 de la Constitución Política de los Estados Unidos Mexicanos; 18, 49, 82, 109, 127, 131, 183, 184, 186, 187, 188, 190, 212, 213, 217, 218, 221, 222, 223, 224, 225, 226 y 360 del Código Nacional de Procedimientos Penales,  y de conformidad a lo establecido por el apartado C del artículo 20 de la Constitución Política de los Estados Unidos Mexicanos, mismo que a la letra establece:  “De los derechos de la víctima o del ofendido:"),0,'J');
-        $pdf->MultiCell(0,4.5,utf8_decode("En la Ciudad de Morelia, Michoacán de Ocampo, a las $hora horas , del día $dia, del mes de $mes, del año $anio, dos mil veinticuatro, se presenta ante el/la Lic. GONZALEZ VENEGAS JORGE ALBERTO Agente del Ministerio Público, de la Unidad de Investigación, de conformidad a las facultades que confieren los artículos 21 constitucional; 109, 212, 213, 217, 218, 221, 222 y 223 del Código Nacional de Procedimientos Penales, y de conformidad al apartado C. del artículo 20 constitucional que a la letra establece: De los derechos de la víctima o del ofendido:"),0,'J');
-        $pdf->SetFont('Arial','',11);
-        $pdf->MultiCell(0,4.5,utf8_decode("I. Recibir asesoría jurídica; ser informado de los derechos que en su favor establece la Constitución y, cuando lo solicite, ser informado del desarrollo del procedimiento penal. II. Coadyuvar con el Ministerio Público; a que se le reciban todos los datos o elementos de prueba con los que cuente, tanto en la investigación como en el proceso a que se desahoguen las diligencias correspondientes, y a intervenir en el juicio e interponer los recursos en los términos que prevea la ley. Cuando el Ministerio Público considere que no es necesario el desahogo de la diligencia, deberá fundar y motivar su negativa. III. Recibir, desde la comisión del delito, atención médica y psicológica de urgencia. IV. Que se le repare el daño. En los casos en que sea procedente, El Ministerio Público estará obligado a solicitar la reparación del daño, sin menoscabo de que la víctima u ofendido lo pueda solicitar directamente, y el juzgador no podrá absolver al sentenciado de dicha reparación si ha emitido una sentencia condenatoria. La ley fijará procedimientos ágiles para ejecutar las sentencias en materia de reparación del daño. V. Al resguardo de su identidad y otros datos personales en los siguientes casos: cuando sean menores de edad; cuando se trate de delitos de violación, trata de personas, secuestro o delincuencia organizada; y cuando a juicio del juzgador sea necesario para su protección, salvaguardando en todo caso los derechos de la defensa. El Ministerio Público deberá garantizar la protección de víctimas, ofendidos, testigos y en general todos los sujetos que intervengan en el proceso. Los jueces deberán vigilar el buen cumplimiento de esta obligación. VI. Solicitar las medidas cautelares y providencias necesarias para la protección y restitución de sus derechos, y VII. Impugnar ante autoridad judicial las omisiones del Ministerio Público en la investigación de los delitos, así como las resoluciones de reserva, no ejercicio, desistimiento de la acción penal o suspensión del procedimiento cuando no está satisfecha la reparación del daño."),0,'J');
+        $firmanteMP = "LIC. JORGE ALBERTO GONZALEZ VENEGAS";
+        $texto = utf8_decode("<b>En la Ciudad de Morelia, Michoacán de Ocampo, a las $hora $textoHora, del día $dia del mes de $mes del año $anio, dos mil veinticuatro, el <u>$firmanteMP</u> Agente del Ministerio Público, de la Unidad de Atención Inmediata de la Fiscalía Coordinadora de la Fiscalía General del Estado, <u>RECIBE EL FOLIO DE DENUNCIA EN LÍNEA</u>, de conformidad a las facultades que  confieren los artículos 17 Párrafo Cuarto, 19, 20 y 21 de la Constitución Política de los Estados Unidos Mexicanos; 18, 49, 82, 109, 127, 131, 183, 184, 186, 187, 188, 190, 212, 213, 217, 218, 221, 222, 223, 224, 225, 226 y 360 del Código Nacional de Procedimientos Penales,  y de conformidad a lo establecido por el apartado C del artículo 20 de la Constitución Política de los Estados Unidos Mexicanos, mismo que a la letra establece:".' "De los derechos de la víctima o del ofendido:"'."  I.</b>  Recibir asesoría jurídica; ser informado de los derechos que en su favor establece la Constitución y, cuando lo solicite, ser informado del desarrollo del procedimiento penal. <b>II.</b> Coadyuvar con el Ministerio Público; a que se le reciban todos los datos o elementos de prueba con los que cuente, tanto en la investigación como en el proceso a que se desahoguen las diligencias correspondientes, y a intervenir en el juicio e interponer los recursos en los términos que prevea la ley. Cuando el Ministerio Público considere que no es necesario el desahogo de la diligencia, deberá fundar y motivar su negativa. <b>III.</b> Recibir, desde la comisión del delito, atención médica y psicológica de urgencia. <b>IV.</b> Que se le repare el daño. En los casos en que sea procedente, El Ministerio Público estará obligado a solicitar la reparación del daño, sin menoscabo de que la víctima u ofendido lo pueda solicitar directamente, y el juzgador no podrá absolver al sentenciado de dicha reparación si ha emitido una sentencia condenatoria. La ley fijará procedimientos ágiles para ejecutar las sentencias en materia de reparación del daño. <b>V.</b> Al resguardo de su identidad y otros datos personales en los siguientes casos: cuando sean menores de edad; cuando se trate de delitos de violación, trata de personas, secuestro o delincuencia organizada; y cuando a juicio del juzgador sea necesario para su protección, salvaguardando en todo caso los derechos de la defensa. El Ministerio Público deberá garantizar la protección de víctimas, ofendidos, testigos y en general todos los sujetos que intervengan en el proceso. Los jueces deberán vigilar el buen cumplimiento de esta obligación.  <b>VI.</b> Solicitar las medidas cautelares y providencias necesarias para la protección y restitución de sus derechos, y <b>VII.</b> Impugnar ante autoridad judicial las omisiones del Ministerio Público en la investigación de los delitos, así como las resoluciones de reserva, no ejercicio, desistimiento de la acción penal o suspensión del procedimiento cuando no esté satisfecha la reparación del daño.");
+        $pdf->WriteHTML($texto);
+        // $pdf->MultiCell(0,4,utf8_decode("En la Ciudad de Morelia, Michoacán de Ocampo, a las $hora $textoHora, del día $dia del mes de $mes del año $anio, dos mil veinticuatro, el $firmanteMP Agente del Ministerio Público, de la Unidad de Atención Inmediata de la Fiscalía Coordinadora de la Fiscalía General del Estado, RECIBE EL FOLIO DE DENUNCIA EN LÍNEA, de conformidad a las facultades que  confieren los artículos 17 Párrafo Cuarto, 19, 20 y 21 de la Constitución Política de los Estados Unidos Mexicanos; 18, 49, 82, 109, 127, 131, 183, 184, 186, 187, 188, 190, 212, 213, 217, 218, 221, 222, 223, 224, 225, 226 y 360 del Código Nacional de Procedimientos Penales,  y de conformidad a lo establecido por el apartado C del artículo 20 de la Constitución Política de los Estados Unidos Mexicanos, mismo que a la letra establece:  “De los derechos de la víctima o del ofendido:"),0,'J');
+        // $pdf->MultiCell(0,4.5,utf8_decode("En la Ciudad de Morelia, Michoacán de Ocampo, a las $hora horas , del día $dia, del mes de $mes, del año $anio, dos mil veinticuatro, se presenta ante el/la Lic. GONZALEZ VENEGAS JORGE ALBERTO Agente del Ministerio Público, de la Unidad de Investigación, de conformidad a las facultades que confieren los artículos 21 constitucional; 109, 212, 213, 217, 218, 221, 222 y 223 del Código Nacional de Procedimientos Penales, y de conformidad al apartado C. del artículo 20 constitucional que a la letra establece: De los derechos de la víctima o del ofendido:"),0,'J');
+        $pdf->SetFont('Arial','',9);
+        // $pdf->MultiCell(0,4,utf8_decode("I. Recibir asesoría jurídica; ser informado de los derechos que en su favor establece la Constitución y, cuando lo solicite, ser informado del desarrollo del procedimiento penal. II. Coadyuvar con el Ministerio Público; a que se le reciban todos los datos o elementos de prueba con los que cuente, tanto en la investigación como en el proceso a que se desahoguen las diligencias correspondientes, y a intervenir en el juicio e interponer los recursos en los términos que prevea la ley. Cuando el Ministerio Público considere que no es necesario el desahogo de la diligencia, deberá fundar y motivar su negativa. III. Recibir, desde la comisión del delito, atención médica y psicológica de urgencia. IV. Que se le repare el daño. En los casos en que sea procedente, El Ministerio Público estará obligado a solicitar la reparación del daño, sin menoscabo de que la víctima u ofendido lo pueda solicitar directamente, y el juzgador no podrá absolver al sentenciado de dicha reparación si ha emitido una sentencia condenatoria. La ley fijará procedimientos ágiles para ejecutar las sentencias en materia de reparación del daño. V. Al resguardo de su identidad y otros datos personales en los siguientes casos: cuando sean menores de edad; cuando se trate de delitos de violación, trata de personas, secuestro o delincuencia organizada; y cuando a juicio del juzgador sea necesario para su protección, salvaguardando en todo caso los derechos de la defensa. El Ministerio Público deberá garantizar la protección de víctimas, ofendidos, testigos y en general todos los sujetos que intervengan en el proceso. Los jueces deberán vigilar el buen cumplimiento de esta obligación.  VI. Solicitar las medidas cautelares y providencias necesarias para la protección y restitución de sus derechos, y VII. Impugnar ante autoridad judicial las omisiones del Ministerio Público en la investigación de los delitos, así como las resoluciones de reserva, no ejercicio, desistimiento de la acción penal o suspensión del procedimiento cuando no esté satisfecha la reparación del daño."),0,'J');
         
-        $pdf->Ln(3);
-        $pdf->SetFont('Arial','B',11);
+        $pdf->Ln(5);
+        $pdf->SetFont('Arial','B',9);
         $pdf->Cell(0,7,utf8_decode("Quien enterado de lo anterior, proporciona la siguiente información: "),0,1,'L');
         $pdf->Ln(3);
         $pdf->Cell(0,7,utf8_decode("1.- GENERALES DEL DENUNCIANTE."),0,1,'L');
@@ -169,58 +183,57 @@ class DenunciaController extends Controller
         $domicilio_denunciante =  InvolucradoDomicilio::where("id_involucrado",$denunciante->id)->first();
        
         $pdf->Ln(3);
-        $pdf->SetFont('Arial','',11);
-        $pdf->Cell(20,7,utf8_decode("NOMBRE:"),0,0,'L');
-        
+        $pdf->SetFont('Arial','',9);
+        $pdf->Cell(16,7,utf8_decode("NOMBRE:"),0,0,'L');
+       
         $xNombre = $pdf->GetX();
         $yNombre = $pdf->GetY();
-        $pdf->SetFont('Arial','B',11);
-        $pdf->MultiCell(100,7,utf8_decode("$denunciante->nombre $denunciante->primer_apellido $denunciante->segundo_apellido"),0,'');
+        $pdf->SetFont('Arial','B',9);
+        $pdf->MultiCell(111,7,utf8_decode("$denunciante->nombre $denunciante->primer_apellido $denunciante->segundo_apellido"),0,'');
         $yAfterNombre = $pdf->GetY();
-        $pdf->SetXY($xNombre+100,$yNombre);
+        $pdf->SetXY($xNombre+111,$yNombre);
         
         // Convertir a formato DD/MM/AAAA
         $fecha_nacimiento_f = date('d/m/Y', strtotime($denunciante->fecha_nacimiento));
-        $pdf->SetFont('Arial','',11);
-        $pdf->Cell(48,7,utf8_decode("FECHA DE NACIMIENTO:"),0,0,'L');
-        $pdf->SetFont('Arial','B',11);
+        $pdf->SetFont('Arial','',9);
+        $pdf->Cell(40,7,utf8_decode("FECHA DE NACIMIENTO:"),0,0,'L');
+        $pdf->SetFont('Arial','B',9);
         $pdf->Cell(0,7,utf8_decode("$fecha_nacimiento_f"),0,0,'L');
         
         $pdf->SetY($yAfterNombre);
-        $pdf->SetFont('Arial','',11);
-        $pdf->Cell(33,7,utf8_decode("NACIONALIDAD:"),0,0,'L');
-        $pdf->SetFont('Arial','B',11);
+        $pdf->SetFont('Arial','',9);
+        $pdf->Cell(28,7,utf8_decode("NACIONALIDAD:"),0,0,'L');
+        $pdf->SetFont('Arial','B',9);
 
         $x = $pdf->GetX();
         $y = $pdf->GetY();
-        $pdf->MultiCell(87,7,mb_strtoupper($denunciante->country()->first()->nacionalidad, 'UTF-8'),0,'');
+        $pdf->MultiCell(99,7,mb_strtoupper($denunciante->country()->first()->nacionalidad, 'UTF-8'),0,'');
         $yAfter = $pdf->GetY();
-        $pdf->SetXY($x+87,$y);
+        $pdf->SetXY($x+99,$y);
         if($denunciante->id_nacionalidad == 118){
-            $pdf->SetFont('Arial','',11);
+            $pdf->SetFont('Arial','',9);
             $pdf->Cell(15,7,utf8_decode("CURP:"),0,0,'L');
-            $pdf->SetFont('Arial','B',11);
-            $pdf->Cell(0,7,utf8_decode("$denunciante->curp"),0,0,'L');
+            $pdf->SetFont('Arial','B',9);
+            $pdf->Cell(0,7,utf8_decode("$denunciante->curp"),0,1,'L');
         }
-        $pdf->SetY($yAfterNombre);
-       
-        $pdf->AddPage('P', 'letter');
-
-        $pdf->SetFont('Arial','B',11);
+        $pdf->Ln(5);
+        
+        
+        $pdf->SetFont('Arial','B',9);
         $pdf->Cell(0,7,utf8_decode("2.- DATOS DE LOCALIZACIÓN."),0,1,'L');
         $pdf->Ln(5);
-        $pdf->SetFont('Arial','',11);
-        $pdf->Cell(48,7,utf8_decode("CORREO ELECTRÓNICO:"),0,0,'L');
-        $pdf->SetFont('Arial','B',11);
+        $pdf->SetFont('Arial','',9);
+        $pdf->Cell(40,7,utf8_decode("CORREO ELECTRÓNICO:"),0,0,'L');
+        $pdf->SetFont('Arial','B',9);
         $x = $pdf->GetX();
         $y = $pdf->GetY();
-        $pdf->MultiCell(91,7,utf8_decode("$denunciante->email"),0,'');
+        $pdf->MultiCell(88,7,utf8_decode("$denunciante->email"),0,'');
         $yAfter = $pdf->GetY();
-        $pdf->SetXY($x+91,$y);
+        $pdf->SetXY($x+88,$y);
         // $pdf->Cell(91,7,utf8_decode("$denunciante->email"),1,0,'L');
-        $pdf->SetFont('Arial','',11);
-        $pdf->Cell(25,7,utf8_decode("TELÉFONO:"),0,0,'L');
-        $pdf->SetFont('Arial','B',11);
+        $pdf->SetFont('Arial','',9);
+        $pdf->Cell(20,7,utf8_decode("TELÉFONO:"),0,0,'L');
+        $pdf->SetFont('Arial','B',9);
         $pdf->Cell(0,7,utf8_decode("+52 $denunciante->telefono"),0,1,'L');
         $pdf->SetY($yAfter);
        
@@ -239,44 +252,44 @@ class DenunciaController extends Controller
 
 		$Nacionalidad = null;
 		if(!empty($denunciante->id_nacionalidad))
-			$Nacionalidad = $denunciante->first()->country()->first()->nacionalidad;
-
-        $pdf->SetFont('Arial','',11);
-        $pdf->Cell(24,7,utf8_decode("DOMICILIO:"),0,0,'L');
-        if($domicilio_denunciante->id_pais == 118){
-            $direccion = "$domicilio_denunciante->calle, $NumExt, Col. $Colonia, CP. $CodigoPostal, $Municipio, $Entidad";
-        }else{
-            $direccion = $denunciante->address()->first()->otro_domicilio.", ".$denunciante->address()->first()->country()->first()->pais;
-        }
-        $pdf->SetFont('Arial','B',11);
-
-        $pdf->MultiCell(0,7,utf8_decode(mb_strtoupper($direccion,'UTF-8')),0,'');
-
-        if($victimaDenunciante == 0){
+        $Nacionalidad = $denunciante->first()->country()->first()->nacionalidad;
+    
+    $pdf->SetFont('Arial','',9);
+    $pdf->Cell(24,7,utf8_decode("DOMICILIO:"),0,0,'L');
+    if($domicilio_denunciante->id_pais == 118){
+        $direccion = "$domicilio_denunciante->calle, $NumExt, Col. $Colonia, CP. $CodigoPostal, $Municipio, $Entidad";
+    }else{
+        $direccion = $denunciante->address()->first()->otro_domicilio.", ".$denunciante->address()->first()->country()->first()->pais;
+    }
+    $pdf->SetFont('Arial','B',9);
+    
+    $pdf->MultiCell(0,7,utf8_decode(mb_strtoupper($direccion,'UTF-8')),0,'');
+    
+    if($victimaDenunciante == 0){
             $pdf->Ln(3);
             $pdf->Cell(0,7,utf8_decode("3.- DATOS DE LA VÍCTIMA."),0,1,'L');
             $pdf->Ln(3);
-            $pdf->SetFont('Arial','',11);
+            $pdf->SetFont('Arial','',9);
             $pdf->Cell(20,7,utf8_decode("NOMBRE:"),0,0,'L');
             
             $xNombre = $pdf->GetX();
             $yNombre = $pdf->GetY();
-            $pdf->SetFont('Arial','B',11);
+            $pdf->SetFont('Arial','B',9);
             $pdf->MultiCell(100,7,utf8_decode("$victima->nombre $victima->primer_apellido $victima->segundo_apellido"),0,'');
             $yAfterNombre = $pdf->GetY();
             $pdf->SetXY($xNombre+100,$yNombre);
-            
+        
             // Convertir a formato DD/MM/AAAA
             $fecha_nacimiento_f = date('d/m/Y', strtotime($victima->fecha_nacimiento));
-            $pdf->SetFont('Arial','',11);
+            $pdf->SetFont('Arial','',9);
             $pdf->Cell(48,7,utf8_decode("FECHA DE NACIMIENTO:"),0,0,'L');
-            $pdf->SetFont('Arial','B',11);
+            $pdf->SetFont('Arial','B',9);
             $pdf->Cell(0,7,utf8_decode("$fecha_nacimiento_f"),0,0,'L');
             
             $pdf->SetY($yAfterNombre);
-            $pdf->SetFont('Arial','',11);
+            $pdf->SetFont('Arial','',9);
             $pdf->Cell(33,7,utf8_decode("NACIONALIDAD:"),0,0,'L');
-            $pdf->SetFont('Arial','B',11);
+            $pdf->SetFont('Arial','B',9);
     
             $x = $pdf->GetX();
             $y = $pdf->GetY();
@@ -284,35 +297,54 @@ class DenunciaController extends Controller
             $yAfter = $pdf->GetY();
             $pdf->SetXY($x+87,$y);
             if($victima->id_nacionalidad == 118){
-                $pdf->SetFont('Arial','',11);
+                $pdf->SetFont('Arial','',9);
                 $pdf->Cell(15,7,utf8_decode("CURP:"),0,0,'L');
-                $pdf->SetFont('Arial','B',11);
+                $pdf->SetFont('Arial','B',9);
                 $pdf->Cell(0,7,utf8_decode("$victima->curp"),0,1,'L');
             }
-            $pdf->SetY($yAfterNombre);
+            // $pdf->SetY($yAfterNombre);
         }
         $pdf->Ln(10);
-        $pdf->MultiCell(0,5,utf8_decode("Sin más generales que agregar de su persona, con relación a los hechos que denuncia, de conformidad a lo dispuesto por los artículos 109, 131, 221, 222 y 223 del Código Nacional de Procedimientos Penales, el compareciente MANIFIESTA: "),0,'');
-        $pdf->Ln(10);
-        $pdf->SetFont('Arial','',11);
-        $pdf->MultiCell(0,5,utf8_decode("\n  \n $hechos->narrativa  \n  \n"),1,'J');
-        
-        $pdf->Ln(40);
-        $pdf->SetFont('Arial','',11);
-        $pdf->Line($pdf->GetX(),$pdf->GetY(),$pdf->GetX()+80,$pdf->GetY());
-        $pdf->Cell(80,7,utf8_decode("AGENTE DEL MINISTERIO PÚBLICO"),0,0,'C');
-        $pdf->SetX($pdf->GetX()+36);
-        $pdf->Line($pdf->GetX(),$pdf->GetY(),$pdf->GetX()+80,$pdf->GetY());
-        $pdf->Cell(80,7,utf8_decode("DENUNCIANTE"),0,1,'C');
+        // $pdf->AddPage('P', 'Letter');
+        // $this->Header($pdf);
+        // $this->Footer($pdf);
 
-        $pdf->SetFont('Arial','B',11);
+        $pdf->SetFont('Arial','B',9);
+        // $pdf->MultiCell(87,7,mb_strtoupper($denunciante->country()->first()->nacionalidad, 'UTF-8'),0,'');
+        $pdf->MultiCell(0,3.5,utf8_decode("Sin más generales que agregar de su persona, con relación a los hechos se le hace del conocimiento que de conformidad a los numerales 82 fracción I, inciso B, 83 y 85 del Código Nacional de Procedimientos Penales, las notificaciones personales, con pleno efecto legal, pueden realizarse a través de medios tecnológicos, por lo que se le cuestiona si es su deseo que se le notifique a través de los medios de localización señalados en el cuerpo de la presente. Impuesto de lo anterior la persona manifiesta: Si es mi deseo que se me notifique por los medios tecnológicos señalados en mis datos generales."),0,'');
+        $pdf->Ln(10);
+        $pdf->MultiCell(0,3.5,utf8_decode("Así mismo de conformidad al motivo de su denuncia, en atención a lo enunciado al artículo 49 del Código Nacional de Procedimientos Penales, se le PROTESTA para que se conduzca con verdad en lo que se declara, haciéndole del conocimiento que declarar con falsedad ante una autoridad constituye un delito, mismo que es perseguido por la legislación penal del Estado Michoacán de Ocampo, por lo que enterado y comprendido de lo expresado se le exhorta a conducirse con verdad."),0,'');
+        $pdf->Ln(10);
+        $pdf->MultiCell(0,3.5,utf8_decode("Por último se le informa que cuenta con el derecho de optar por un Mecanismo Alterno al Procedimiento Penal para la solución de su conflicto, esto con las formalidades procedentes al caso que se presenta, rigiéndose los mismos bajo el principio de REPARACIÓN INTEGRAL DEL DAÑO A LA VÍCTIMA U OFENDIDO DEL HECHO, mecanismos que constituyen una alternativa de solución rápida y pacífica del conflicto, donde el ACUERDO SE LOGRA ENTRE LAS PARTES DIRECTAMENTE. Contando con la asistencia profesional de un especialista en Mecanismos Alternativos de Solución de Controversias, quien le auxiliara y brindará ayuda efectiva para propiciar una resolución. Finalmente, se le hace saber, que conforme al artículo 31 de la Ley Nacional de Mecanismos Alternativos de Solución de Controversias, cuando no se alcance Acuerdo entre las partes, los intervinientes conservarán sus derechos para resolver la controversia mediante las acciones legales que procedan. Por lo que se procede a manifestar los siguientes:"),0,'');
+        $pdf->Ln(10);
+        $pdf->SetFont('Arial','B',9);
+        $pdf->Cell(0,12,utf8_decode("HECHOS"),1,1,'C');
+        $pdf->SetFont('Arial','',9);
+        $pdf->MultiCell(0,3.5,utf8_decode("\n  \n $hechos->narrativa  \n  \n"),1,'J');
+        
+        $pdf->Ln(8);
+        $medidaLinea = 80;
+        $pdf->SetFont('Arial','',9);
+        $pdf->MultiCell($medidaLinea,25,"",0,'J');
+        $pdf->Line($pdf->GetX(),$pdf->GetY(),$pdf->GetX()+$medidaLinea,$pdf->GetY());
+        $pdf->Cell($medidaLinea,7,utf8_decode("AGENTE DEL MINISTERIO PÚBLICO"),0,0,'C');
+        $pdf->SetX($pdf->GetX()+26);
+        $pdf->Line($pdf->GetX(),$pdf->GetY(),$pdf->GetX()+$medidaLinea,$pdf->GetY());
+        $pdf->SetXY($pdf->GetX(),$pdf->GetY()-25);
+        $x = $pdf->GetX();
+        $y = $pdf->GetY();
+        $pdf->MultiCell($medidaLinea,25,"",0,'J');
+        $pdf->SetXY($x,$y+25);
+        $pdf->Cell($medidaLinea,7,utf8_decode("DENUNCIANTE"),0,1,'C');
+
+        $pdf->SetFont('Arial','B',9);
         $pdf->Ln(1);
         $x = $pdf->GetX();
         $y = $pdf->GetY();
-        $pdf->MultiCell(80,7,utf8_decode("GONZALEZ VENEGAS JORGE ALBERTO"),0,'C');
+        $pdf->MultiCell($medidaLinea,5,utf8_decode($firmanteMP),0,'C');
 
-        $pdf->SetXY($pdf->GetX()+80+36,$y);
-        $pdf->MultiCell(80,7,utf8_decode("$denunciante->nombre $denunciante->primer_apellido $denunciante->segundo_apellido"),0,'C');
+        $pdf->SetXY($pdf->GetX()+$medidaLinea+26,$y);
+        $pdf->MultiCell($medidaLinea,5,utf8_decode("$denunciante->nombre $denunciante->primer_apellido $denunciante->segundo_apellido"),0,'C');
 
         // $pdf->WriteHTML($html);
         // $pdf->Output("");
@@ -325,6 +357,8 @@ class DenunciaController extends Controller
 
     }
 
+    // Método para crear el encabezado
+  
     public function nombreMes($mes){
         $meses = array(
             "ENERO", "FEBRERO", "MARZO", "ABRIL", "MAYO", "JUNIO",
@@ -762,35 +796,40 @@ class DenunciaController extends Controller
         if($expediente->get()->isNotEmpty())
         {
             $id_denuncia = $expediente->first()->id;
-            // dd($id_denuncia);
-            $countries = CatalogsCatCountries::all();
-            $estados = CatState::all();
-            $municipios = CatMunicipality::all();
-            $lugares = CatPlaces::all();
+        
+            if($expediente->first()->id_estatus == 19){
+                // dd($id_denuncia);
+                $countries = CatalogsCatCountries::all();
+                $estados = CatState::all();
+                $municipios = CatMunicipality::all();
+                $lugares = CatPlaces::all();
 
-            $hechos = Hecho::where('id_denuncia', $id_denuncia)->first();
-            $denunciante = Involucrado::where("id_tipo_involucrado","4")->where("id_denuncia",$id_denuncia)->first();
-            if(empty($denunciante)){
-                $victima = Involucrado::where("id_tipo_involucrado","1")->where("id_denuncia",$id_denuncia)->first();
-                $denunciante = Involucrado::where("id_tipo_involucrado","3")->where("id_denuncia",$id_denuncia)->first();
-                $victimaDenunciante = 0;
+                $hechos = Hecho::where('id_denuncia', $id_denuncia)->first();
+                $denunciante = Involucrado::where("id_tipo_involucrado","4")->where("id_denuncia",$id_denuncia)->first();
+                if(empty($denunciante)){
+                    $victima = Involucrado::where("id_tipo_involucrado","1")->where("id_denuncia",$id_denuncia)->first();
+                    $denunciante = Involucrado::where("id_tipo_involucrado","3")->where("id_denuncia",$id_denuncia)->first();
+                    $victimaDenunciante = 0;
+                }else{
+                    $victimaDenunciante = 1;
+                    $victima = null;
+                }
+                $domicilio_denunciante =  InvolucradoDomicilio::where("id_involucrado",$denunciante->id)->first();
+                $colonies = CatAsentamientos::where("codigo_postal",$denunciante->address()->first()->codigo_postal)->get();
+                $colonies_hechos = CatAsentamientos::where("codigo_postal",$hechos->codigo_postal)->get();
+                
+                
+                $testigos = Involucrado::where("id_tipo_involucrado",5)->where("id_denuncia",$id_denuncia)->get();
+                $responsable = Involucrado::where("id_tipo_involucrado",2)->where("id_denuncia",$id_denuncia);
+                // dd($responsable->first());
+                // $responsable = Involucrado::where("id","292");
+                $evidencias = Evidencia::where("id_denuncia",$id_denuncia)->get();
+                $id_denuncia = Crypt::encrypt($id_denuncia);
+
+                return view("modificacion",compact('id_denuncia','expediente','countries','estados','municipios','colonies','colonies_hechos','lugares','denunciante','victima','domicilio_denunciante','testigos','hechos','responsable','evidencias','victimaDenunciante'));
             }else{
-                $victimaDenunciante = 1;
-                $victima = null;
+                return redirect()->back()->with('fail','Esta denuncia no puede ser modificada.');
             }
-            $domicilio_denunciante =  InvolucradoDomicilio::where("id_involucrado",$denunciante->id)->first();
-            $colonies = CatAsentamientos::where("codigo_postal",$denunciante->address()->first()->codigo_postal)->get();
-            $colonies_hechos = CatAsentamientos::where("codigo_postal",$hechos->codigo_postal)->get();
-            
-            
-            $testigos = Involucrado::where("id_tipo_involucrado",5)->where("id_denuncia",$id_denuncia)->get();
-            $responsable = Involucrado::where("id_tipo_involucrado",2)->where("id_denuncia",$id_denuncia);
-            // dd($responsable->first());
-            // $responsable = Involucrado::where("id","292");
-            $evidencias = Evidencia::where("id_denuncia",$id_denuncia)->get();
-            $id_denuncia = Crypt::encrypt($id_denuncia);
-
-            return view("modificacion",compact('id_denuncia','expediente','countries','estados','municipios','colonies','colonies_hechos','lugares','denunciante','victima','domicilio_denunciante','testigos','hechos','responsable','evidencias','victimaDenunciante'));
         }else{
             return redirect()->back()->with('fail','No es posible localizar la denuncia, favor de revisar los datos.');
         }
@@ -812,6 +851,9 @@ class DenunciaController extends Controller
         if($expediente->get()->isNotEmpty())
         {
             $expediente = $expediente->first();
+
+    
+
             $id_denuncia = $expediente->id;
             $NumeroCaso = Caso::where("id_denuncia_linea",$id_denuncia)->first();
             $denunciante = Involucrado::where("id_tipo_involucrado","4")->where("id_denuncia",$id_denuncia)->first();
@@ -833,9 +875,8 @@ class DenunciaController extends Controller
             $notificaciones = NotificacionUsuario::where("llave_modulo",$id_denuncia)->where("id_modulo",1)->whereNull("id_usuario_emisor")->get();
 
             return view('consulta.datos',compact('NumeroCaso','denunciante','hechos','delito','evidencias','testigos','notificaciones','delito_aux','victima','victimaDenunciante'));
-        }
-        else
-        {
+      
+    }else{
 
             return redirect()->back()->with('fail','No es posible localizar la denuncia, favor de revisar los datos.');
         }
@@ -948,6 +989,9 @@ class DenunciaController extends Controller
         $id_responsable = empty($request->id_responsable) ? null : Crypt::decrypt($request->id_responsable);
         $rutaGuardado = "DenunciaEnLinea/".$id_denuncia;
         $denuncia = Denuncia::find($id_denuncia);
+        $denuncia->id_estatus = 5;
+        $denuncia->save();
+       
         $folio = $denuncia->folio_denuncia;
         $token = $denuncia->token_denuncia;
         
@@ -1198,7 +1242,7 @@ class DenunciaController extends Controller
 
        }catch(\Exception $e){
            DB::rollBack();
-           $array = ["respuesta"=> false ,"error"=> "Error al intentar registrar la denuncia: ".$e->getMessage() ];
+           $array = ["respuesta"=> false ,"error"=> "Error al intentar actualizar la denuncia: ".$e->getMessage() ];
        }
     }
 
@@ -1319,11 +1363,11 @@ class DenunciaController extends Controller
         $minutosTextoFinal = $minutosTexto[(int)$minutos];
     
         if ($minutos == 0) {
-            return "Siendo las $horasTextoFinal horas";
+            return "$horasTextoFinal horas";
         } elseif ($minutos == 1) {
-            return "Siendo las $horasTextoFinal horas con $minutosTextoFinal minuto";
+            return "$horasTextoFinal horas con $minutosTextoFinal minuto";
         } else {
-            return "Siendo las $horasTextoFinal horas con $minutosTextoFinal minutos";
+            return "$horasTextoFinal horas con $minutosTextoFinal minutos";
         }
     }
     
@@ -1331,3 +1375,4 @@ class DenunciaController extends Controller
 
 
 }
+

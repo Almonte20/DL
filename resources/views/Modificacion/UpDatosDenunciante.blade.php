@@ -10,13 +10,14 @@
 
 @php
 use Carbon\Carbon;
-$Colonia = $denunciante->address()->first()->colony()->first()->nombre_asentamiento;
-$Calle = $denunciante->address()->first()->calle;
-$NumExt = $denunciante->address()->first()->numero_exterior;
-$NumInt = $denunciante->address()->first()->numero_interior;
-$CodigoPostal = $denunciante->address()->first()->codigo_postal;
-$Entidad = $denunciante->address()->first()->colony()->first()->municipio()->first()->estado()->first()->nombre_estado;
-$Municipio = $denunciante->address()->first()->colony()->first()->municipio()->first()->nombre_municipio;
+// dd($denunciante->address()->first()->id_pais == 118);
+if($denunciante->address()->first()->id_pais == 118){
+    $Entidad = $denunciante->address()->first()->colony()->first()->municipio()->first()->estado()->first()->nombre_estado;
+    $Municipio = $denunciante->address()->first()->colony()->first()->municipio()->first()->nombre_municipio;
+}else{
+    $Entidad = "Entidad";
+    $Municipio = "Municipio";
+}
 $Nacionalidad = null;
 if(!empty($denunciante->id_nacionalidad))
     $Nacionalidad = $denunciante->first()->country()->first()->nacionalidad;
@@ -288,8 +289,9 @@ if($denunciante->id_nacionalidad == 118){
                 <label for="nombre" style="font-size: 7px;" class="text-danger">Requerido</label>
 
             </div>
+       
             <input type="text" name="domicilio_extranjero" id="domicilio_extranjero" class=" form-control "
-                value=" @if ($denunciante->address()->first()->id_pais =! 118)  {{$domicilio_denunciante->otro_domicilio}}   @endif" maxlength="250" placeholder="Ciudad Extrajera">
+                value="@if($denunciante->address()->first()->id_pais != 118){{$denunciante->address()->first()->otro_domicilio}}@endif" maxlength="250" placeholder="Ciudad Extrajera">
             <div style="color:#FF0000;">
                 {{ $errors->first('domicilio_extranjero') }}
             </div>
