@@ -131,7 +131,7 @@ use Illuminate\Support\Facades\Crypt;
                     <!-- <form role="form" action="" method="post" class="f1"> -->
                     <input type="hidden" name="id_policia" value="" class="form-control" maxlength="50"
                         style="display: none;">
-                    <input type="hidden" name="id_denuncia" value="{{$id_denuncia}}" style="display: none;">
+                    <input type="hidden" name="id_denuncia" id="id_denuncia" value="{{$id_denuncia}}" style="display: none;">
                     <input type="hidden" name="id_denunciante" value="{{Crypt::encrypt($denunciante->id)}}"
                         style="display: none;">
 

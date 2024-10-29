@@ -223,7 +223,7 @@ $txtlugar = $hechos->place()->first()->lugar;
 
             <div class="form-group col-md-2">
                 <div class="form-ic-cmp">
-                    <i class="fal fa-hashtag"></i>&nbsp;
+                    {{-- <i class="fal fa-hashtag"></i>&nbsp; --}}
                     <label for="numext_hechos">No. Exterior <span style="font-size: 7px;"
                             class="text-danger">Requerido</span></label>
 
@@ -242,7 +242,7 @@ $txtlugar = $hechos->place()->first()->lugar;
 
             <div class="form-group col-md-2">
                 <div class="form-ic-cmp">
-                    <i class="fal fa-hashtag"></i>&nbsp;
+                    {{-- <i class="fal fa-hashtag"></i>&nbsp; --}}
                     <label for="numint_hechos">No. Interior</label>
 
                 </div>

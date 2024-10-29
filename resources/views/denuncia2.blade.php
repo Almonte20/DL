@@ -153,7 +153,7 @@
                     <!-- <form role="form" action="" method="post" class="f1"> -->
                     <input type="hidden" name="id_policia" value="" class="form-control" maxlength="50"
                         style="display: none;">
-                    <input type="hidden" name="id_denuncia" value="" style="display: none;">
+                    <input type="hidden" name="id_denuncia" id="id_denuncia" value="" style="display: none;">
                     <div class="container f1-steps" >
                         <div class="container f1-steps text-center" >
                             {{-- <div class="f1-progress">
