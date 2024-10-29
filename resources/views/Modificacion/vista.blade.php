@@ -70,7 +70,7 @@
                     <i class="fal fa-hashtag"></i>&nbsp;
                     <label for="folio">Folio</label>
                 </div>
-                <input type="text" id="folio" value="PD/202446" name="folio" class="form-control" maxlength="15" minlength="5" required style="background-color:rgba(230, 238, 250, 0.5);">
+                <input type="text" id="folio" value="" name="folio" class="form-control" maxlength="15" minlength="5" required style="background-color:rgba(230, 238, 250, 0.5);">
                 <div style="color:#FF0000;">
                     <span id="folio-error"></span>
                 </div>
@@ -80,7 +80,7 @@
                     <i class="fal fa-fingerprint"></i>&nbsp;
                     <label for="token">Clave De Seguimiento</label>
                 </div>
-                <input value="8w58OIqsZu4BJDEfFoZ7" type="text" id="token" name="token" class="form-control" maxlength="20" minlength="20" required style="background-color:rgba(230, 238, 250, 0.5);">
+                <input value="" type="text" id="token" name="token" class="form-control" maxlength="20" minlength="20" required style="background-color:rgba(230, 238, 250, 0.5);">
             </div>
             <div class="form-group col-md-4">
                 <button type="submit" class="btn_wizard btn-submit" style="margin-top: 30px;"><i class="fa-solid fa-sm fa-magnifying-glass"></i> Buscar</button>
