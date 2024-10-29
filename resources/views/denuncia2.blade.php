@@ -154,8 +154,8 @@
                     <input type="hidden" name="id_policia" value="" class="form-control" maxlength="50"
                         style="display: none;">
                     <input type="hidden" name="id_denuncia" value="" style="display: none;">
-                    <div class="container f1-steps" style="text-align: left;">
-                        <div class="container f1-steps" style="text-align: left;">
+                    <div class="container f1-steps" >
+                        <div class="container f1-steps text-center" >
                             {{-- <div class="f1-progress">
                                 <div class="f1-progress-line" data-now-value="50" data-number-of-steps="2"
                                     style="width: 50%;"></div>
