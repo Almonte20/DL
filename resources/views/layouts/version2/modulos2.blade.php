@@ -245,7 +245,7 @@
                         </li>
                         <li class="menu-has-children nav-menu-item"><a href="#">Trámites</a>
                             <ul>
-                            <li><a href="{{ route("denuncia.index")}}"><img src="{{ asset('img/iconos/denuncia_digital.png/') }}" height="30px">&nbsp&nbspDenuncia en Línea</a></li>
+                            <li><a href="{{config("app.url")}}"><img src="{{ asset('img/iconos/denuncia_digital.png/') }}" height="30px">&nbsp&nbspDenuncia en Línea</a></li>
                             <li><a href="{{ url('/cartas') }}" target="_blank"><img src="{{ asset('img/cartas/icono_cartas_menu.png/') }}" height="30px">&nbsp;&nbsp;Cartas en Línea</a></li>
                                 <li><a href="{{ url('/tramites') }}" target="_blank"><img src="{{ asset('img/iconos/tramites_b.png/') }}" height="30px">&nbsp&nbspTrámites</a></li>
                                 <li><a href="/VehiculosRecuperados" target="_blank"><img src="{{ asset('img/iconos/vehículos_b.png/') }}" height="30px">&nbsp&nbspVehículos Recuperados</a></li>
