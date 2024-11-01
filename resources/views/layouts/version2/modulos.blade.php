@@ -335,7 +335,6 @@ font-size: 19px !important;
                                       <li><a href="{{config("app.url")}}" target="_blank"><img src="{{ asset('img/denuncia/logo_blanco.png') }}" height="30px">&nbsp;&nbsp;Presentar Denuncia</a></li>
                                       <li><a href="{{asset('documentos/ayuda_denuncia.pdf')}}" target="_blank"><img src="{{ asset('img/iconos/help2.png') }}" height="30px">&nbsp;&nbsp;¿Cómo Presentar Denuncia?</a></li>
                                       <li><a href="{{config("app.url")}}/consulta" target="_blank"><img src="{{ asset('img/iconos/consulta_digital.png') }}" height="30px">&nbsp;&nbsp;Consultar Denuncia</a></li>
-                                      <li><a href="{{config("app.url")}}/editar" target="_blank"><img src="{{ asset('img/iconos/consulta_digital.png') }}" height="30px">&nbsp;&nbsp;Modificar Denuncia</a></li>
                                       <li><a href="{{ url('/login') }}" ><img src="{{ asset('img/Denuncia_policia/icono_micrositio.png') }}" height="30px">&nbsp;&nbsp;Acceso a Policía Estatal</a></li>
                                       <li><a href="{{ url('/login') }}" ><img src="{{ asset('img/Denuncia_policia/icono_micrositio.png') }}" height="30px">&nbsp;&nbsp;Acceso a Policía Municpal</a></li>
                                        </ul>

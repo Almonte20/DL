@@ -34,7 +34,6 @@
       <li><a href="#tabs-4">Hechos</a></li>
       <li><a href="#tabs-5">Evidencias</a></li>
       <li><a href="#tabs-6">Testigo(s)</a></li>
-      <li><a href="#tabs-7">Conclusión</a></li>
 		</ul>
 
 		<div class="tab-container">
@@ -59,19 +58,17 @@
       <div class="tab-content clearfix" id="tabs-6">
         @include('consulta.tabla_testigos')
 			</div>
-      <div class="tab-content clearfix" id="tabs-7">
-        @include('consulta.tabla_conclusion')
-			</div>
+      <div class="row justify-content-end">
+        <div class="col-md-2 py-3 px-md-.25">
+            <a href="https://fiscaliamichoacan.gob.mx/" class="btn btn-danger btn-block" >Salir</a>
+        </div>
+    </div>
 		</div>
 
 	</div>
   <br>
   <hr>
-  <div class="row justify-content-end">
-      <div class="col-md-2 py-3 px-md-.25">
-          <a href="https://fiscaliamichoacan.gob.mx/" class="btn btn-danger btn-block" >Salir</a>
-      </div>
-  </div>
+ 
 	<div class="line"></div>
   <!-- fin tabs -->
   </div>

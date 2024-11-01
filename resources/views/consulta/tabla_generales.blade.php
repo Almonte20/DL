@@ -10,14 +10,19 @@
 
 		@php
 		use Carbon\Carbon;
-		$Colonia = $denunciante->address()->first()->colony()->first()->nombre_asentamiento;
-		$Calle = $denunciante->address()->first()->calle;
-		$NumExt = $denunciante->address()->first()->numero_exterior;
-		$NumInt = $denunciante->address()->first()->numero_interior;
-		$CodigoPostal = $denunciante->address()->first()->codigo_postal;
-		$Entidad = $denunciante->address()->first()->colony()->first()->municipio()->first()->estado()->first()->nombre_estado;
-		$Municipio =$denunciante->address()->first()->colony()->first()->municipio()->first()->nombre_municipio;
-		$DomicilioExtranjero = $denunciante->address()->first()->otro_domicilio;
+		if($denunciante->address()->first()->id_pais == 118){
+
+			$Colonia = $denunciante->address()->first()->colony()->first()->nombre_asentamiento;
+			$Calle = $denunciante->address()->first()->calle;
+			$NumExt = $denunciante->address()->first()->numero_exterior;
+			$NumInt = $denunciante->address()->first()->numero_interior;
+			$CodigoPostal = $denunciante->address()->first()->codigo_postal;
+			$Entidad = $denunciante->address()->first()->colony()->first()->municipio()->first()->estado()->first()->nombre_estado;
+			$Municipio =$denunciante->address()->first()->colony()->first()->municipio()->first()->nombre_municipio;
+		}else{
+
+			$DomicilioExtranjero = $denunciante->address()->first()->otro_domicilio;
+		}
 		$Nacionalidad = null;
 		if(!empty($denunciante->id_nacionalidad))
 			$Nacionalidad = $denunciante->first()->country()->first()->nacionalidad;

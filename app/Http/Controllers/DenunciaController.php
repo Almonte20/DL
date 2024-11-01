@@ -758,8 +758,7 @@ class DenunciaController extends Controller
         $notificacion->telefono = $telefono;
         $notificacion->id_modulo = 1;
         $notificacion->llave_modulo = $denuncia->id;
-        $notificacion->mensaje = $mensajeNotificacion;
-        $notificacion->id_usuario_receptor = $denunciante->id;
+        $notificacion->mensaje = "$mensajeNotificacion $folio";
         $notificacion->save();
 
         DB::commit();
@@ -855,7 +854,7 @@ class DenunciaController extends Controller
     
 
             $id_denuncia = $expediente->id;
-            $NumeroCaso = Caso::where("id_denuncia_linea",$id_denuncia)->first();
+            $NumeroCaso = Caso::where("id_denuncia_linea",$id_denuncia)->first()->caso;
             $denunciante = Involucrado::where("id_tipo_involucrado","4")->where("id_denuncia",$id_denuncia)->first();
             if(empty($denunciante)){
                 $victima = Involucrado::where("id_tipo_involucrado","1")->where("id_denuncia",$id_denuncia)->first();
@@ -873,7 +872,8 @@ class DenunciaController extends Controller
             $evidencias = Evidencia::where("id_denuncia",$id_denuncia)->get();
             $testigos =  Involucrado::where("id_tipo_involucrado",5)->where("id_denuncia",$id_denuncia)->get();
             $notificaciones = NotificacionUsuario::where("llave_modulo",$id_denuncia)->where("id_modulo",1)->whereNull("id_usuario_emisor")->get();
-
+            
+            // return view('consultaDenuncia.datos',compact('NumeroCaso','denunciante','hechos','delito','evidencias','testigos','notificaciones','delito_aux','victima','victimaDenunciante'));
             return view('consulta.datos',compact('NumeroCaso','denunciante','hechos','delito','evidencias','testigos','notificaciones','delito_aux','victima','victimaDenunciante'));
       
     }else{
@@ -1202,7 +1202,7 @@ class DenunciaController extends Controller
        $SegundoApellido = $request->SegundoApellido_denunciante;
        $correo = $request->correo;
        $telefono = $request->telefono;
-       $mensajeNotificacion = 'La actualización de su Denuncia se realizó de forma correcta, asignándole el folio:';
+       $mensajeNotificacion = 'La actualización de su Denuncia se realizó de forma correcta, manteniendo el folio:';
        $info = new \stdClass;
        $info->titulo = "FGE: Actualización de denuncia en línea";
        $info->nombre = $nombre.' '.$PrimerApellido.' '.$SegundoApellido;
@@ -1232,8 +1232,7 @@ class DenunciaController extends Controller
        $notificacion->telefono = $telefono;
        $notificacion->id_modulo = 1;
        $notificacion->llave_modulo = $denuncia->id;
-       $notificacion->mensaje = $mensajeNotificacion;
-       $notificacion->id_usuario_receptor = $denunciante->id;
+       $notificacion->mensaje = "$mensajeNotificacion $folio";
        $notificacion->save();
 
        DB::commit();
