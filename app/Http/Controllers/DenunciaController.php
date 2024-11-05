@@ -883,8 +883,12 @@ class DenunciaController extends Controller
                 return view("modificacion",compact('id_denuncia','expediente','countries','estados','municipios','colonies','colonies_hechos','lugares','denunciante','victima','domicilio_denunciante','testigos','hechos','responsable','evidencias','victimaDenunciante'));
             }else{
                 
-
-            $NumeroCaso = Caso::where("id_denuncia_linea",$id_denuncia)->first()->caso;
+               $NumeroCaso = Caso::where("id_denuncia_linea",$id_denuncia);
+            if($NumeroCaso->get()->isNotEmpty()){
+                $NumeroCaso = Caso::where("id_denuncia_linea",$id_denuncia)->first()->caso;
+            }else{
+                $NumeroCaso = null;
+            }
             $denunciante = Involucrado::where("id_tipo_involucrado","4")->where("id_denuncia",$id_denuncia)->first();
             if(empty($denunciante)){
                 $victima = Involucrado::where("id_tipo_involucrado","1")->where("id_denuncia",$id_denuncia)->first();
