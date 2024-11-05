@@ -179,7 +179,7 @@ jQuery(document).ready(function() {
 
             Swal.fire({
                 title: "Actualización del medio de notificación",
-                html: "<p class='h5'>Se ha detectado un cambio en la dirección de correo electrónico asociada a su denuncia. Para continuar con la modificación, tendra que volver a validarlo.</p>",
+                html: "<p class='h5'>Se ha detectado un cambio en la dirección de correo electrónico asociada a su denuncia. Para continuar con la modificación, tendrá que volver a validarlo.</p>",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
