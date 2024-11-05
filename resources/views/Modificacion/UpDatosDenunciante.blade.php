@@ -290,7 +290,7 @@ if($denunciante->id_nacionalidad == 118){
 
             </div>
        
-            <input type="text" name="domicilio_extranjero" id="domicilio_extranjero" class=" form-control "
+            <input type="text" name="domicilio_extranjero" id="domicilio_extranjero" class=" form-control @if($denunciante->address()->first()->id_pais != 118){{"required"}}@endif"
                 value="@if($denunciante->address()->first()->id_pais != 118){{$denunciante->address()->first()->otro_domicilio}}@endif" maxlength="250" placeholder="Ciudad Extrajera">
             <div style="color:#FF0000;">
                 {{ $errors->first('domicilio_extranjero') }}
@@ -306,7 +306,7 @@ if($denunciante->id_nacionalidad == 118){
                     <label for="nombre" style="font-size: 7px;" class="text-danger">Requerido</label>
 
                 </div>
-                <input class=" form-control required" maxlength="5" onkeypress="return justNumbers(event);"
+                <input class="form-control @if($denunciante->address()->first()->id_pais == 118){{"required"}}@endif" maxlength="5" onkeypress="return justNumbers(event);"
                     data-message-error='"CÓDIGO POSTAL" es requerido.' name="CP" type="text" id="CP"
                     placeholder="Ingrese CP" maxlength="5" value="{{$domicilio_denunciante->codigo_postal}}"
                     onblur="validarCP(this,'entidad_residencia','municipio_residencia','asentamiento_residencia')">
@@ -366,7 +366,7 @@ if($denunciante->id_nacionalidad == 118){
                     <label for="colonia" style="font-size: 7px;" class="text-danger">Requerido</label>
 
                 </div>
-                <select class=" form-control required" value="<?php echo e(old('municipio')); ?>"
+                <select class=" form-control @if($denunciante->address()->first()->id_pais == 118){{"required"}}@endif" value="<?php echo e(old('municipio')); ?>"
                     data-message-error='"COLONIA" es requerido.' name="asentamiento_residencia"
                     id="asentamiento_residencia">
                     <option value="0">Seleccione una colonia</option>
@@ -389,7 +389,7 @@ if($denunciante->id_nacionalidad == 118){
                     <label for="calle" style="font-size: 7px;" class="text-danger">Requerido</label>
 
                 </div>
-                <input class=" form-control required " value="{{$denunciante->address()->first()->calle}}" maxlength="250"
+                <input class=" form-control @if($denunciante->address()->first()->id_pais == 118){{"required"}}@endif " value="{{$denunciante->address()->first()->calle}}" maxlength="250"
                     data-message-error='"CALLE" es requerido.' name="calle" type="text" id="calle"
                     placeholder="Ingrese la calle">
                 <div style="color:#FF0000;">
@@ -401,7 +401,7 @@ if($denunciante->id_nacionalidad == 118){
                     <i class="fal fa-hashtag"></i>&nbsp;
                     <label for="numext">No. Exterior <span style="font-size: 7px;" class="text-danger">Requerido</span></label>
                 </div>
-                <input class=" form-control required" value="{{$denunciante->address()->first()->numero_exterior}}" maxlength="6"
+                <input class=" form-control @if($denunciante->address()->first()->id_pais == 118){{"required"}}@endif" value="{{$denunciante->address()->first()->numero_exterior}}" maxlength="6"
                     data-message-error='"NÚMERO EXTERIOR" es requerido.' name="numext" type="text" id="numext"
                     placeholder="Número exterior">
                 <div style="color:#FF0000;">

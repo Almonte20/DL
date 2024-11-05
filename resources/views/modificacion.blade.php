@@ -424,7 +424,7 @@ use Illuminate\Support\Facades\Crypt;
 @endsection
 
 @section('js')
-<script src="assetsWizard/js/scripts.js"></script>
+<script src="assetsWizard/js/scriptsUpdate.js"></script>
 <script src="lib/pnotify/pnotify.custom.min.js"></script>
 
 <script>

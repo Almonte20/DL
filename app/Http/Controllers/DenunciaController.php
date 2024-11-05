@@ -850,10 +850,40 @@ class DenunciaController extends Controller
         if($expediente->get()->isNotEmpty())
         {
             $expediente = $expediente->first();
-
-    
-
             $id_denuncia = $expediente->id;
+            if($expediente->id_estatus == 19){
+                // dd($id_denuncia);
+                $countries = CatalogsCatCountries::all();
+                $estados = CatState::all();
+                $municipios = CatMunicipality::all();
+                $lugares = CatPlaces::all();
+
+                $hechos = Hecho::where('id_denuncia', $id_denuncia)->first();
+                $denunciante = Involucrado::where("id_tipo_involucrado","4")->where("id_denuncia",$id_denuncia)->first();
+                if(empty($denunciante)){
+                    $victima = Involucrado::where("id_tipo_involucrado","1")->where("id_denuncia",$id_denuncia)->first();
+                    $denunciante = Involucrado::where("id_tipo_involucrado","3")->where("id_denuncia",$id_denuncia)->first();
+                    $victimaDenunciante = 0;
+                }else{
+                    $victimaDenunciante = 1;
+                    $victima = null;
+                }
+                $domicilio_denunciante =  InvolucradoDomicilio::where("id_involucrado",$denunciante->id)->first();
+                $colonies = CatAsentamientos::where("codigo_postal",$denunciante->address()->first()->codigo_postal)->get();
+                $colonies_hechos = CatAsentamientos::where("codigo_postal",$hechos->codigo_postal)->get();
+                
+                
+                $testigos = Involucrado::where("id_tipo_involucrado",5)->where("id_denuncia",$id_denuncia)->get();
+                $responsable = Involucrado::where("id_tipo_involucrado",2)->where("id_denuncia",$id_denuncia);
+                // dd($responsable->first());
+                // $responsable = Involucrado::where("id","292");
+                $evidencias = Evidencia::where("id_denuncia",$id_denuncia)->get();
+                $id_denuncia = Crypt::encrypt($id_denuncia);
+
+                return view("modificacion",compact('id_denuncia','expediente','countries','estados','municipios','colonies','colonies_hechos','lugares','denunciante','victima','domicilio_denunciante','testigos','hechos','responsable','evidencias','victimaDenunciante'));
+            }else{
+                
+
             $NumeroCaso = Caso::where("id_denuncia_linea",$id_denuncia)->first()->caso;
             $denunciante = Involucrado::where("id_tipo_involucrado","4")->where("id_denuncia",$id_denuncia)->first();
             if(empty($denunciante)){
@@ -872,11 +902,11 @@ class DenunciaController extends Controller
             $evidencias = Evidencia::where("id_denuncia",$id_denuncia)->get();
             $testigos =  Involucrado::where("id_tipo_involucrado",5)->where("id_denuncia",$id_denuncia)->get();
             $notificaciones = NotificacionUsuario::where("llave_modulo",$id_denuncia)->where("id_modulo",1)->whereNull("id_usuario_emisor")->get();
-            
-            // return view('consultaDenuncia.datos',compact('NumeroCaso','denunciante','hechos','delito','evidencias','testigos','notificaciones','delito_aux','victima','victimaDenunciante'));
-            return view('consulta.datos',compact('NumeroCaso','denunciante','hechos','delito','evidencias','testigos','notificaciones','delito_aux','victima','victimaDenunciante'));
+            return view('consulta.datos',compact('NumeroCaso','denunciante','hechos','delito','evidencias','testigos','notificaciones','delito_aux','victima','victimaDenunciante','expediente'));
+          
+            }
       
-    }else{
+        }else{
 
             return redirect()->back()->with('fail','No es posible localizar la denuncia, favor de revisar los datos.');
         }
@@ -1081,11 +1111,11 @@ class DenunciaController extends Controller
             if($responsable->count() == 0)
                 $responsable = new Involucrado();
         
-        if($request->conoce_responsable == 1){
-            $responsable->nombre = $request->nombre_alias_responsable;
-        }else{
-            $responsable->nombre = "Desconocido";
-        }
+            if($request->conoce_responsable == 1){
+                $responsable->nombre = $request->nombre_alias_responsable;
+            }else{
+                $responsable->nombre = "Desconocido";
+            }
        
             $responsable->id_tipo_persona = 1;
             $responsable->id_denuncia =  $id_denuncia;

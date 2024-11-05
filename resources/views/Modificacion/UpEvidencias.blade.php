@@ -225,7 +225,7 @@
            
             var tr = '<tr> ';
                 tr += '<td class="text-center">'+count+'</td>';
-            tr += '<td class="text-center"><div class="input-group mb-3">  <div class="input-group-prepend">  </div>  <div class="custom-file">    <input type="file" class="custom-file-input" onchange="cargarArchivo(this)" name="evidencias[]">    <label class="custom-file-label" for="inputGroupFile01">Buscar Archivo</label>  </div></div></td>';
+            tr += '<td class="text-center"><div class="input-group mb-3">  <div class="input-group-prepend">  </div>  <div class="custom-file">    <input type="file" class="custom-file-input required" onchange="cargarArchivo(this)" name="evidencias[]" data-message-error="EVIDENCIA #'+count+' es requerido.">    <label class="custom-file-label" for="inputGroupFile01">Buscar Archivo</label>  </div></div></td>';
             tr += '<td class="text-center"></td>';
             tr += ' <td class="text-center"> <i style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Eliminar" class="fas fa-trash-alt icon-trash-alt" onclick="eliminar_evidencia(this);"></i></td>';
             tr += '</tr>';

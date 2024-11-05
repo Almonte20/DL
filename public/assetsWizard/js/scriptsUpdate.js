@@ -111,16 +111,6 @@ jQuery(document).ready(function() {
 
 
 
-
-
-
-
-
-
-
-
-
-
     $('.f1 input[type="text"], .f1 input[type="password"], .f1 textarea').on('focus', function() {
         $(this).removeClass('input-error');
     });
@@ -181,18 +171,38 @@ jQuery(document).ready(function() {
         const whatsapp = $('[name="telefono"]').val();
 
 
+
         // en caso de que el usuario cambie el correo se volvera a enviar el codigo de verificación
         if (correoNotification != correo /* || whatsappNotification != whatsapp */ ) {
             // se genera numero aleatorio
-            let codigoVerificacion = generarCodigoVerificacion();
-            console.log(`Código verificación: ${codigoVerificacion}`);
-            // se envia codigo de verificacion
-            enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
 
-            // ventana para validar el codigo de verificacion enviado
+
             Swal.fire({
-                title: "CÓDIGO DE VERIFICACIÓN",
-                html: `
+                title: "Actualización del medio de notificación",
+                html: "<p class='h5'>Se ha detectado un cambio en la dirección de correo electrónico asociada a su denuncia. Para continuar con la modificación, tendra que volver a validarlo.</p>",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                reverseButtons: true,
+                allowOutsideClick: false,
+                cancelButtonText: "Cancelar",
+                confirmButtonText: "Aceptar",
+                customClass: {
+                    confirmButton: 'btn-verificar-codigo' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    let codigoVerificacion = generarCodigoVerificacion();
+                    console.log(`Código verificación: ${codigoVerificacion}`);
+                    // se envia codigo de verificacion
+                    enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
+
+                    // ventana para validar el codigo de verificacion enviado
+                    Swal.fire({
+                        title: "CÓDIGO DE VERIFICACIÓN",
+                        html: `
                     <p style="font-size: 22px;">PARA VALIDAR QUE TIENES ACCESO AL CORREO PROPORCIONADO, SE HA ENVIADO UN <b>CÓDIGO DE VERIFICACIÓN</b> DE SEIS DÍGITOS AL CORREO <b>${correo}</b></p>
                     <br>
                     <div style="display: flex; justify-content: space-between; gap: 10px; padding: 0 20px;">
@@ -205,103 +215,104 @@ jQuery(document).ready(function() {
                     </div>
                     <br>
                 `,
-                allowOutsideClick: false,
-                confirmButtonText: "VERIFICAR CÓDIGO",
-                confirmButtonColor: "#008f39",
-                showLoaderOnConfirm: true,
-                showDenyButton: true,
-                denyButtonText: "REENVIAR CÓDIGO",
-                denyButtonColor: "#142f4a",
-                showCancelButton: true,
-                cancelButtonText: "EDITAR DATOS",
-                cancelButtonColor: "#808080",
-                customClass: {
-                    confirmButton: 'btn-verificar-codigo' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
-                },
-                didOpen: () => {
-                    const inputs = ['input1', 'input2', 'input3', 'input4', 'input5', 'input6'];
-
-                    inputs.forEach((inputId, index) => {
-                        const inputElement = document.getElementById(inputId);
-
-                        inputElement.addEventListener('input', () => {
-                            if (inputElement.value.length === 1 && index < inputs.length - 1) {
-                                document.getElementById(inputs[index + 1]).focus(); // Mover el foco al siguiente input
-                            }
-                        });
-
-                        inputElement.addEventListener('keydown', (e) => {
-                            if (e.key === 'Backspace' && inputElement.value === '' && index > 0) {
-                                document.getElementById(inputs[index - 1]).focus(); // Mover el foco al input anterior
-                            }
-                        });
-                    });
-                },
-                preConfirm: () => {
-                    const input1 = document.getElementById('input1').value;
-                    const input2 = document.getElementById('input2').value;
-                    const input3 = document.getElementById('input3').value;
-                    const input4 = document.getElementById('input4').value;
-                    const input5 = document.getElementById('input5').value;
-                    const input6 = document.getElementById('input6').value;
-
-                    const codigoIngresado = `${input1}${input2}${input3}${input4}${input5}${input6}`;
-
-                    // Validar el código de verificación
-                    if (codigoVerificacion != codigoIngresado) {
-                        Swal.showValidationMessage('El código ingresado es incorrecto.');
-                        return false;
-                    }
-
-                    // esta asignacion de variables se debe al que si el usuario regresa al step-1
-                    // y cuando quiere ir al step-2 se evalua que el correo o whatsapp sean los miismos
-                    // proporcionados al priincipio para no volver a mandar el codigo de verificacion
-                    correoNotification = correo;
-                    whatsappNotification = whatsapp;
-                    $('[name="correo_guardado"]').val(correo);
-                    Swal.fire({
-                        icon: "success",
-                        title: "VERIFICACIÓN EXITOSA",
-                        text: "EL CÓDIGO ES CORRECTO.",
-                        confirmButtonText: "ACEPTAR",
+                        allowOutsideClick: false,
+                        confirmButtonText: "VERIFICAR CÓDIGO",
+                        confirmButtonColor: "#008f39",
+                        showLoaderOnConfirm: true,
+                        showDenyButton: true,
+                        denyButtonText: "REENVIAR CÓDIGO",
+                        denyButtonColor: "#142f4a",
+                        showCancelButton: true,
+                        cancelButtonText: "EDITAR DATOS",
+                        cancelButtonColor: "#808080",
                         customClass: {
-                            confirmButton: 'swal2-deny' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
+                            confirmButton: 'btn-verificar-codigo' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
+                        },
+                        didOpen: () => {
+                            const inputs = ['input1', 'input2', 'input3', 'input4', 'input5', 'input6'];
+
+                            inputs.forEach((inputId, index) => {
+                                const inputElement = document.getElementById(inputId);
+
+                                inputElement.addEventListener('input', () => {
+                                    if (inputElement.value.length === 1 && index < inputs.length - 1) {
+                                        document.getElementById(inputs[index + 1]).focus(); // Mover el foco al siguiente input
+                                    }
+                                });
+
+                                inputElement.addEventListener('keydown', (e) => {
+                                    if (e.key === 'Backspace' && inputElement.value === '' && index > 0) {
+                                        document.getElementById(inputs[index - 1]).focus(); // Mover el foco al input anterior
+                                    }
+                                });
+                            });
+                        },
+                        preConfirm: () => {
+                            const input1 = document.getElementById('input1').value;
+                            const input2 = document.getElementById('input2').value;
+                            const input3 = document.getElementById('input3').value;
+                            const input4 = document.getElementById('input4').value;
+                            const input5 = document.getElementById('input5').value;
+                            const input6 = document.getElementById('input6').value;
+
+                            const codigoIngresado = `${input1}${input2}${input3}${input4}${input5}${input6}`;
+
+                            // Validar el código de verificación
+                            if (codigoVerificacion != codigoIngresado) {
+                                Swal.showValidationMessage('El código ingresado es incorrecto.');
+                                return false;
+                            }
+
+                            // esta asignacion de variables se debe al que si el usuario regresa al step-1
+                            // y cuando quiere ir al step-2 se evalua que el correo o whatsapp sean los miismos
+                            // proporcionados al priincipio para no volver a mandar el codigo de verificacion
+                            correoNotification = correo;
+                            whatsappNotification = whatsapp;
+                            $('[name="correo_guardado"]').val(correo);
+                            Swal.fire({
+                                icon: "success",
+                                title: "VERIFICACIÓN EXITOSA",
+                                text: "EL CÓDIGO ES CORRECTO.",
+                                confirmButtonText: "ACEPTAR",
+                                customClass: {
+                                    confirmButton: 'swal2-deny' // Clase CSS personalizada para el botón "Confirm" de la segunda ventana
+                                },
+                            });
+
+                            $('#btn-consultar-otra-curp').addClass('d-none');
+
+                            // se establece el nombre del denunciante como nombre de opcion de victima
+                            let nombre = $("#Nombre_denunciante").val();
+                            let primerAp = $("#PrimerApellido_denunciante").val();
+                            let SegundoAp = $("#SegundoApellido_denunciante").val();
+                            $("#nombre-victima-denunciante").html(nombre);
+                            $("#primer-apellido-victima-denunciante").html(primerAp);
+                            $("#segundo-apellido-victima-denunciante").html(SegundoAp);
+
+                            // se oculta el primer step para mostrar el segundo step
+                            $('#step-denunciante').removeClass('active');
+                            $('#datos-denunciante').addClass('d-none');
+                            $('#step-hechos').addClass('active');
+                            $('#datos-hechos').removeClass('d-none');
+
+                            return true;
+                        },
+                        preDeny: () => {
+                            /** REENVIO DEL CÓDIGO DE VALIDACIÓN */
+
+                            // se reenvia el código de verificación
+                            codigoVerificacion = generarCodigoVerificacion();
+                            // se envia codigo de verificacion nuevamente
+                            enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
+
+                            toastr.success('Se reenvió el código de validacón con exito.')
+
+                            // Retorna false para evitar que la ventana de sweetalert se cierre
+                            return false;
                         },
                     });
-
-                    $('#btn-consultar-otra-curp').addClass('d-none');
-
-                    // se establece el nombre del denunciante como nombre de opcion de victima
-                    let nombre = $("#Nombre_denunciante").val();
-                    let primerAp = $("#PrimerApellido_denunciante").val();
-                    let SegundoAp = $("#SegundoApellido_denunciante").val();
-                    $("#nombre-victima-denunciante").html(nombre);
-                    $("#primer-apellido-victima-denunciante").html(primerAp);
-                    $("#segundo-apellido-victima-denunciante").html(SegundoAp);
-
-                    // se oculta el primer step para mostrar el segundo step
-                    $('#step-denunciante').removeClass('active');
-                    $('#datos-denunciante').addClass('d-none');
-                    $('#step-hechos').addClass('active');
-                    $('#datos-hechos').removeClass('d-none');
-
-                    return true;
-                },
-                preDeny: () => {
-                    /** REENVIO DEL CÓDIGO DE VALIDACIÓN */
-
-                    // se reenvia el código de verificación
-                    codigoVerificacion = generarCodigoVerificacion();
-                    // se envia codigo de verificacion nuevamente
-                    enviarCodigoVerificacion(correo, whatsapp, codigoVerificacion);
-
-                    toastr.success('Se reenvió el código de validacón con exito.')
-
-                    // Retorna false para evitar que la ventana de sweetalert se cierre
-                    return false;
-                },
+                }
             });
-
         } else {
             /** SE PASA AL SEGUNDO STEP (HECHOS) */
 

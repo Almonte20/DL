@@ -388,8 +388,10 @@ $txtlugar = $hechos->place()->first()->lugar;
 
     <div class="row d-none">
         <div class="d-none">
-            <input type="text" name="latitud" id="latitude" class="form-control mb-3" placeholder="Latitud" readonly value="{{$hechos->latitud}}">
-            <input type="text" name="longitud" id="longitude" class="form-control mb-3" placeholder="Longitud" readonly value="{{$hechos->longitud}}">
+            <input type="text" name="latitud" id="latitude" class="form-control mb-3" placeholder="Latitud" readonly
+                value="{{$hechos->latitud}}">
+            <input type="text" name="longitud" id="longitude" class="form-control mb-3" placeholder="Longitud" readonly
+                value="{{$hechos->longitud}}">
         </div>
         <div class="col-md-3">
             Código Postal
@@ -497,6 +499,17 @@ $txtlugar = $hechos->place()->first()->lugar;
     </div>
 </div>
 
+@php
+    if(empty($hechos->latitud)){
+        $hechos->latitud = 19.5665;
+        $hechos->longitud = -101.7068;
+        $zoom = 8;
+        $banderaPosicion = false;
+    }else{
+        $banderaPosicion = true;
+        $zoom = 18;
+    }
+@endphp
 
 
 <script
@@ -506,178 +519,180 @@ $txtlugar = $hechos->place()->first()->lugar;
 
 <script>
     let map;
-			let marker;
-			let infoWindow;
+    let marker;
+    let infoWindow;
 
-			function initMap() {
-    const mexicoBounds = new google.maps.LatLngBounds(
-        new google.maps.LatLng(14.3895, -118.449591), // southwest
-        new google.maps.LatLng(32.718653, -86.5891) // northeast
-    );
+    function initMap() {
+        const mexicoBounds = new google.maps.LatLngBounds(
+            new google.maps.LatLng(14.3895, -118.449591), // southwest
+            new google.maps.LatLng(32.718653, -86.5891) // northeast
+        );
 
-    map = new google.maps.Map(document.getElementById("map"), {
-        center: {
-            lat: {{$hechos->latitud}},
-            lng: {{$hechos->longitud}}
-        },
-        restriction: {
-            latLngBounds: mexicoBounds,
-            strictBounds: true
-        },
-        zoom: 18,
-        mapId: 'DEMO_MAP_ID',
-        gestureHandling: 'greedy'
-    });
+        map = new google.maps.Map(document.getElementById("map"), {
+            center: {
+                lat: {{$hechos->latitud}},
+                lng: {{$hechos->longitud}}
+            },
+            restriction: {
+                latLngBounds: mexicoBounds,
+                strictBounds: true
+            },
+            zoom: {{$zoom}},
+            mapId: 'DEMO_MAP_ID',
+            gestureHandling: 'greedy'
+        });
 
-    const initialPosition = new google.maps.LatLng({{$hechos->latitud}}, {{$hechos->longitud}});
+        @if($banderaPosicion)
+            const initialPosition = new google.maps.LatLng({{$hechos->latitud}}, {{$hechos->longitud}});
+        @endif
 
-    marker = new google.maps.marker.AdvancedMarkerElement({
-        map: map,
-        position: initialPosition, // Establece la posición inicial del marcador
-        title: 'Ubicación Actual',
-        gmpDraggable: true
-    });
+        marker = new google.maps.marker.AdvancedMarkerElement({
+            map: map,
+            position: initialPosition, // Establece la posición inicial del marcador
+            title: 'Ubicación Actual',
+            gmpDraggable: true
+        });
 
-    infoWindow = new google.maps.InfoWindow();
+        infoWindow = new google.maps.InfoWindow();
 
-    const searchInput = document.getElementById("search");
-    const postalCodeInput = document.getElementById("CP_hechos");
-    const latitudeInput = document.getElementById("latitude");
-    const longitudeInput = document.getElementById("longitude");
-    const streetInput = document.getElementById("calle_hechos");
-    const numeroInput = document.getElementById("numext_hechos");
+        const searchInput = document.getElementById("search");
+        const postalCodeInput = document.getElementById("CP_hechos");
+        const latitudeInput = document.getElementById("latitude");
+        const longitudeInput = document.getElementById("longitude");
+        const streetInput = document.getElementById("calle_hechos");
+        const numeroInput = document.getElementById("numext_hechos");
 
-    const searchBox = new google.maps.places.SearchBox(searchInput, {
-        componentRestrictions: {
-            country: 'MX'
-        } // Restringe la búsqueda al país de México
-    });
+        const searchBox = new google.maps.places.SearchBox(searchInput, {
+            componentRestrictions: {
+                country: 'MX'
+            } // Restringe la búsqueda al país de México
+        });
 
-    // Llama a la función para actualizar campos con la posición inicial
-    // updateFields(initialPosition);
+        // Llama a la función para actualizar campos con la posición inicial
+        // updateFields(initialPosition);
 
-    function updateFields(position) {
-        postalCodeInput.value = "";
-        latitudeInput.value = position.lat();
-        longitudeInput.value = position.lng();
+        function updateFields(position) {
+            postalCodeInput.value = "";
+            latitudeInput.value = position.lat();
+            longitudeInput.value = position.lng();
 
-        const geocoder = new google.maps.Geocoder();
-        geocoder.geocode({
-            location: position
-        }, (results, status) => {
-            if (status === "OK") {
-                if (results[0]) {
-                    let street;
-                    let municipality;
-                    let number;
-                    let state;
-                    for (let i = 0; i < results[0].address_components.length; i++) {
-                        const component = results[0].address_components[i];
+            const geocoder = new google.maps.Geocoder();
+            geocoder.geocode({
+                location: position
+            }, (results, status) => {
+                if (status === "OK") {
+                    if (results[0]) {
+                        let street;
+                        let municipality;
+                        let number;
+                        let state;
+                        for (let i = 0; i < results[0].address_components.length; i++) {
+                            const component = results[0].address_components[i];
 
-                        if (component.types.includes("route")) {
-                            street = component.long_name;
+                            if (component.types.includes("route")) {
+                                street = component.long_name;
+                            }
+
+                            if (component.types.includes("locality")) {
+                                municipality = component.long_name;
+                            }
+
+                            if (component.types.includes("street_number")) {
+                                number = component.long_name;
+                            }
+
+                            if (component.types.includes("administrative_area_level_1")) {
+                                state = component.long_name;
+                            }
+
+                            if (component.types.includes("postal_code")) {
+                                postalCodeInput.value = component.long_name;
+                                const blurEvent = new Event('blur');
+                                postalCodeInput.dispatchEvent(blurEvent);
+                                break;
+                            }
+
+                            if (street) {
+                                streetInput.value = street;
+                            }
+
+                            if (municipality) {
+                                // municipioInput.value = municipality;
+                            }
+
+                            if (number) {
+                                numeroInput.value = number;
+                            }
+
+                            if (state) {
+                                // estadoInput.value = state;
+                            }
                         }
-
-                        if (component.types.includes("locality")) {
-                            municipality = component.long_name;
-                        }
-
-                        if (component.types.includes("street_number")) {
-                            number = component.long_name;
-                        }
-
-                        if (component.types.includes("administrative_area_level_1")) {
-                            state = component.long_name;
-                        }
-
-                        if (component.types.includes("postal_code")) {
-                            postalCodeInput.value = component.long_name;
-                            const blurEvent = new Event('blur');
-                            postalCodeInput.dispatchEvent(blurEvent);
-                            break;
-                        }
-
-                        if (street) {
-                            streetInput.value = street;
-                        }
-
-                        if (municipality) {
-                            // municipioInput.value = municipality;
-                        }
-
-                        if (number) {
-                            numeroInput.value = number;
-                        }
-
-                        if (state) {
-                            // estadoInput.value = state;
-                        }
+                    } else {
+                        console.log("No se encontraron resultados de geocodificación");
                     }
                 } else {
-                    console.log("No se encontraron resultados de geocodificación");
+                    console.log("Error de geocodificación: " + status);
                 }
-            } else {
-                console.log("Error de geocodificación: " + status);
+            });
+        }
+
+        function updateMarkerPositionAndCenter(position) {
+            if (!mexicoBounds.contains(position)) {
+                console.log("La posición está fuera de los límites de México");
+                return;
             }
+            marker.setAttribute('position', position.lat() + ',' + position.lng());
+            map.setCenter(position);
+            map.setZoom(17);
+            updateFields(position);
+            showInfoWindow(position);
+        }
+
+        function showInfoWindow(position) {
+            infoWindow.setContent("<strong>Latitud:</strong> " + position.lat() + "<br><strong>Longitud:</strong> " + position.lng());
+            infoWindow.open(map, marker);
+        }
+
+        marker.addListener("dragend", () => {
+            const getPosition = marker.getAttribute('position');
+            const parts = getPosition.split(',');
+
+            const position = {
+                lat: function() {
+                    return parseFloat(parts[0]);
+                },
+                lng: function() {
+                    return parseFloat(parts[1]);
+                }
+            };
+
+            const newLatLng = new google.maps.LatLng(parseFloat(position.lat()), parseFloat(position.lng()));
+            updateMarkerPositionAndCenter(newLatLng);
+        });
+
+        searchBox.addListener("places_changed", () => {
+            const places = searchBox.getPlaces();
+
+            if (places.length === 0) {
+                return;
+            }
+
+            const place = places[0];
+
+            if (!place.geometry || !mexicoBounds.contains(place.geometry.location)) {
+                console.log("No se pudo encontrar la ubicación o está fuera de México");
+                return;
+            }
+
+            updateMarkerPositionAndCenter(place.geometry.location);
+        });
+
+        google.maps.event.addListener(map, "click", (event) => {
+            const position = event.latLng;
+            updateMarkerPositionAndCenter(position);
         });
     }
-
-    function updateMarkerPositionAndCenter(position) {
-        if (!mexicoBounds.contains(position)) {
-            console.log("La posición está fuera de los límites de México");
-            return;
-        }
-        marker.setAttribute('position', position.lat() + ',' + position.lng());
-        map.setCenter(position);
-        map.setZoom(17);
-        updateFields(position);
-        showInfoWindow(position);
-    }
-
-    function showInfoWindow(position) {
-        infoWindow.setContent("<strong>Latitud:</strong> " + position.lat() + "<br><strong>Longitud:</strong> " + position.lng());
-        infoWindow.open(map, marker);
-    }
-
-    marker.addListener("dragend", () => {
-        const getPosition = marker.getAttribute('position');
-        const parts = getPosition.split(',');
-
-        const position = {
-            lat: function() {
-                return parseFloat(parts[0]);
-            },
-            lng: function() {
-                return parseFloat(parts[1]);
-            }
-        };
-
-        const newLatLng = new google.maps.LatLng(parseFloat(position.lat()), parseFloat(position.lng()));
-        updateMarkerPositionAndCenter(newLatLng);
-    });
-
-    searchBox.addListener("places_changed", () => {
-        const places = searchBox.getPlaces();
-
-        if (places.length === 0) {
-            return;
-        }
-
-        const place = places[0];
-
-        if (!place.geometry || !mexicoBounds.contains(place.geometry.location)) {
-            console.log("No se pudo encontrar la ubicación o está fuera de México");
-            return;
-        }
-
-        updateMarkerPositionAndCenter(place.geometry.location);
-    });
-
-    google.maps.event.addListener(map, "click", (event) => {
-        const position = event.latLng;
-        updateMarkerPositionAndCenter(position);
-    });
-}
 
 </script>
 

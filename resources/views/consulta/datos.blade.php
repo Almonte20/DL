@@ -15,12 +15,20 @@
 <link rel="stylesheet" href= "assetsWizard/fontawesome-pro-5.10.2-web/css/all.css">
 
 <div class="container">
-  <br>
-  <span style="font-size: 25px">Información de la denuncia</span>
-  <h5>Formulario de Consulta</h5>
+  <div class="row mb-0 mt-2">
+    <div class="col-md">
+      <span style="font-size: 25px">Información de la denuncia</span>
+      <h5>Formulario de Consulta</h5>
+    </div>
+ 
+
+  </div>
+  
+  
   <hr>
   <blockquote>
-    <p class="text-justify font-weight-light">Módulo que contiene la información correspondiente a la denuncia.</p>
+    <p class="text-justify font-weight-light">Módulo que contiene la información correspondiente a la denuncia con número de folio:</p>
+    <h5 class="text-justify font-weight-bold h4">{{$expediente->folio_denuncia}}</h5>
   </blockquote>
   <!-- tabs -->
 	<div class="tabs clearfix" id="tab-3">
