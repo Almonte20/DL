@@ -30,7 +30,8 @@ use Illuminate\Support\Str;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Traits\WhatsappTrait;
 use App\Http\Controllers\Header;
-
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class DenunciaController extends Controller
 {
@@ -59,7 +60,7 @@ class DenunciaController extends Controller
         $municipios = CatMunicipality::all();
         $lugares = CatPlaces::all();
         // dd($paises);
-
+        // dd(Auth::user());
         return view('denuncia2',compact('countries','estados','lugares'));
         // return view('denuncia',compact('countries','estados','lugares'));
     }
@@ -522,16 +523,31 @@ class DenunciaController extends Controller
             $consecMax = 0;
         }
         $consecutivo = $consecMax+1;
-        $folio =  "PD/".date('Y').$consecutivo;
-
+        $folio =  "DL/".str_pad($consecutivo, 5, "0", STR_PAD_LEFT)."/".date('Y');
+        // dd($request->id_policia);
+        
         $denuncia = new Denuncia;
         $denuncia->folio_denuncia = $folio;
         $denuncia->consecutivo = $consecutivo;
         $denuncia->anio = date('Y');
-        $denuncia->id_tipo_denunciante = 1;
+        if(!empty($request->id_policia)){
+            $policia = User::find($request->id_policia);
+            $tipo_policia = $policia->Policia;
+            $nombre_policia = $policia->name." ". $policia->PrimerApellido." ".$policia->SegundoApellido;
+            $denuncia->id_policia = $request->id_policia;
+            $denuncia->nombre_policia = $nombre_policia ;
+            if($tipo_policia == 1){
+                $denuncia->id_tipo_denunciante = 2;
+            }else{
+                $denuncia->id_tipo_denunciante = 3;
+            }
+        }else{
+            $denuncia->id_tipo_denunciante = 1;
+        }
         $denuncia->id_estatus = 5;
         $token = Str::random(20);
         $denuncia->token_denuncia = $token;
+        // dd($denuncia);
         $denuncia->save();
 
 

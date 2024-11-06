@@ -93,6 +93,21 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
+        'user' => [
+            'driver' => 'sqlsrv',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_HOST_USER', 'localhost'),
+            'port' => env('DB_PORT_USER', '1433'),
+            'database' => env('DB_DATABASE_USER', 'forge'),
+            'username' => env('DB_USERNAME_USER', 'forge'),
+            'password' => env('DB_PASSWORD_USER', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            // 'encrypt' => env('DB_ENCRYPT', 'yes'),
+            // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
+        ],
+
         'hellman' => [
             'driver' => 'sqlsrv',
             'url' => env('DATABASE_URL'),

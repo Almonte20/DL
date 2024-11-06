@@ -116,6 +116,8 @@
             </div>
         </div>
 
+     
+
         <div class="row">
             <div class="col-sm-10 col-sm-offset-1 col-md-12 col-lg-12 col-lg-offset-0 form-box">
                 <form action="{{ route('denuncia.store') }}" method="POST" enctype="multipart/form-data" class="f1"

@@ -611,7 +611,7 @@ font-size: 19px !important;
 
 
 
-  <div style="min-height: calc(100vh - 50px); background-image: url('{{ asset('../img/bg_fiscalia.png') }}'); background-repeat: no-repeat; background-attachment: fixed; background-position: right;">
+  <div style="min-height: calc(100vh - 50px); /* background-image: url('{{ asset('../img/bg_fiscalia.png') }}');*/ background-repeat: no-repeat; background-attachment: fixed; background-position: right;">
       @yield ('contenido')
   </div>
 

@@ -69,7 +69,7 @@ jQuery(document).ready(function() {
         // variables para seter correo y telefono proporcionado y realizar comparaciones y acciones en caso de que el usuario los cambie
     let correoNotification;
     let whatsappNotification;
-    correoNotification = $('[name="correo_guardado"]').val().trim();
+
     $('input[name="conoce_rasgos_responsable"]').on('change', () => {
         $('#rasgos-responsable-mensaje-error').addClass('d-none');
         // Comprobar si hay un valor seleccionado

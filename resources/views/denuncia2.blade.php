@@ -145,13 +145,15 @@
             </div> --}}
         </div>
 
+        
+
         {{-- <div class="row"> --}}
             {{-- <div class="col-sm-10 col-sm-offset-1 col-md-12 col-lg-12 col-lg-offset-0 form-box"> --}}
                 <form action="{{ route('denuncia.store') }}" method="POST" enctype="multipart/form-data" class="f1 p-0"
                     id="form_denuncia">
                     @csrf
                     <!-- <form role="form" action="" method="post" class="f1"> -->
-                    <input type="hidden" name="id_policia" value="" class="form-control" maxlength="50"
+                    <input type="hidden" name="id_policia" value="{{Auth::user()->id}}" class="form-control" maxlength="50"
                         style="display: none;">
                     <input type="hidden" name="id_denuncia" id="id_denuncia" value="" style="display: none;">
                     <div class="container f1-steps" >
@@ -160,6 +162,8 @@
                                 <div class="f1-progress-line" data-now-value="50" data-number-of-steps="2"
                                     style="width: 50%;"></div>
                             </div> --}}
+
+                           
                             <div class="row">
                                 <div id="step-denunciante" class="col f1-step active">
                                     <div class="f1-step-icon" style="margin-left: 260px !important;"><i
@@ -182,23 +186,10 @@
                                 <p>Evidencias/Testigos</p>
                             </div> --}}
                         </div>
-                        {{-- <div class="form-row col-lg-12 text-center" id="campos_faltantes" style="display: none">
-                            <div class="form-group col-md-6.5 text-center" style="background-color: #f8d7da;">
-                                <label for="nombre" style="color: #721c24;" class="text-center">* Por favor verifique
-                                    que
-                                    los campos requeridos
-                                    se encuentren ingresados.</label>
-                            </div>
-                        </div> --}}
-
-                        {{-- <div id="campos_faltantes" class="container text-center d-none">
-                            <p style="background-color: #f8d7da;">
-                                * Por favor verifique que los datos requeridos se encuentren ingresados.
-                            </p>
-                        </div> --}}
-
+                        
                         <!-- datos denunciante -->
-                        <section id="datos-denunciante" class="p-0 mt-5 mb-3 d-non">
+                       
+                        <section id="datos-denunciante" class="p-0 mt-4 mb-3 d-non">
                             @include('Denuncia.DatosDenunciante')
                         </section>
                         {{-- <fieldset class="d-block"> --}}

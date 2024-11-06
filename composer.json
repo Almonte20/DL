@@ -11,6 +11,7 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "laravel/ui": "^4.5",
         "league/flysystem-ftp": "^3.27",
         "livewire/livewire": "^3.4",
         "simplesoftwareio/simple-qrcode": "~2"

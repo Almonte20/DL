@@ -12,6 +12,7 @@ use App\Models\FirmasDigitales;
 use App\Models\Involucrado;
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
@@ -30,6 +31,12 @@ use Illuminate\Support\Str;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// Route::prefix("auth")->group(function(){
+	// Route::get("login",function(){
+	// 	return "Hola login";
+	// });
+// });
 
 // Route::get('/', 'DenunciaController@index')->name('denuncia.index');
 Route::get('/', [DenunciaController::class, 'index'])->name('denuncia.index');
@@ -316,3 +323,7 @@ Route::get('get-curp/{curp}', function ($curp) {
 	return response()->json($renapo, 200, ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],JSON_UNESCAPED_UNICODE);
 })->name('get_curp');
 
+
+Auth::routes(['verify'=>'true']);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
