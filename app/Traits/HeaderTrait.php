@@ -13,7 +13,7 @@ trait HeaderTrait
           $this ->Cell(80);
           // Framed title
           // $pdf ->Cell(30, 10, 'Title', 1, 0, 'C');
-          $this->Image('img\denuncia\Banner Fiscalía.png',0,8,220);
+          $this->Image('img\denuncia\membrete_carta.jpg',0,0,216);
   
           // Line break
           $this ->Ln(20);// Espacio entre el encabezado y el contenido de la página
@@ -29,7 +29,7 @@ trait HeaderTrait
         $this->SetFont('Arial', 'I', 8);
         
         // Agrega el número de página
-        $this->Cell(0, 10, utf8_decode('Página '.$this->PageNo().'/{nb}'), 0, 0, 'C');
+        // $this->Cell(0, 10, utf8_decode('Página '.$this->PageNo().'/{nb}'), 0, 0, 'C');
     }
     var $B=0;
     var $I=0;

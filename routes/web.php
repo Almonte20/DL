@@ -43,7 +43,7 @@ Route::get('/', [DenunciaController::class, 'index'])->name('denuncia.index');
 Route::get('DenunciaDigital/municipios/{estado}/catalogo',[DenunciaController::class,'getMunicipios'])->name('getMunicipios');
 Route::post('store', [DenunciaController::class, 'store'] )->name('denuncia.store');
 Route::get('consulta', [DenunciaController::class, 'show'] )->name('denuncia.consulta');
-Route::get('editar', [DenunciaController::class, 'edit'] )->name('denuncia.editar');
+// Route::get('editar', [DenunciaController::class, 'edit'] )->name('denuncia.editar');
 Route::post('editarDenuncia', [DenunciaController::class, 'editarDenuncia'] )->name('denuncia.editarDenuncia');
 Route::post('updateDenuncia', [DenunciaController::class, 'update'] )->name('denuncia.updateDenuncia');
 Route::post('consultaDenuncia', [DenunciaController::class, 'consultaDenuncia'] )->name('denuncia.consultaDenuncia');
@@ -326,4 +326,4 @@ Route::get('get-curp/{curp}', function ($curp) {
 
 Auth::routes(['verify'=>'true']);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+

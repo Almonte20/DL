@@ -51,6 +51,7 @@ class DenunciaController extends Controller
         $this->fpdf_denuncia = new class extends Fpdf {
             use HeaderTrait; // Usa el trait para incluir el encabezado en todas las páginas
         };
+        date_default_timezone_set('America/Mexico_City');
     }
 
     public function index()
@@ -108,7 +109,7 @@ class DenunciaController extends Controller
         $pdf = $this->fpdf_denuncia;
         $pdf->AddPage('P', 'Letter');
 
-        $pdf->SetMargins(15,22,15);
+        $pdf->SetMargins(15,15,15);
         // $pdf->AddFont('LabradorA-Black');
         $pdf->SetAutoPageBreak(true,15);
         // $this->Header($pdf);
@@ -133,7 +134,7 @@ class DenunciaController extends Controller
         // $pdf->SetFont('Arial','B',10);
         // $pdf->Cell(0,14,utf8_decode(!empty($NumeroCaso) ? $NumeroCaso->caso : 'Sin asignar'),0,0,'C');
     
-        $pdf->SetXY(110,42);
+        $pdf->SetXY(110,35);
         // $pdf->Rect(110,45,50 ,14 );
         $pdf->SetFont('Arial','',10);
         $pdf->Cell(50,8,utf8_decode("Folio de Denuncia:"),1,0,'C');
@@ -305,7 +306,7 @@ class DenunciaController extends Controller
             }
             // $pdf->SetY($yAfterNombre);
         }
-        $pdf->Ln(10);
+        $pdf->Ln(6);
         // $pdf->AddPage('P', 'Letter');
         // $this->Header($pdf);
         // $this->Footer($pdf);
