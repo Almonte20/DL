@@ -24,6 +24,9 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 {{--
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/select2-bootstrap4-theme@1.0.0/dist/select2-bootstrap4.min.css"
+rel="stylesheet" />
 
 <style>
     .card-bodys {
@@ -86,6 +89,20 @@
     .txt-preguntas {
         font-weight: bold;
         font-size: 27px;
+    }
+
+    
+    .select2-selection__rendered {
+        font-weight: 400;
+        font-size: 1rem;
+        font-family: inherit;
+        color: #495057;
+    }
+
+    .select2-container--bootstrap4 {
+        display: block;
+        max-width: 100%;
+        min-width: 100%;
     }
 </style>
 
@@ -474,6 +491,19 @@ $( '#acepto' ).on( 'click', function() {
         //     placeholder: 'Selecciona un lugar',
         //     theme: 'bootstrap4'
         // });
+
+        $("#select_lugar").select2({
+            placeholder: 'Selecciona un lugar',
+            theme: 'bootstrap4',
+            language: {
+                noResults: function() {
+                    return "No hay resultado";        
+                },
+                searching: function() {
+                    return "Buscando..";
+                }
+            }
+        });
 
         $('#imageModal').on('hidden.bs.modal', function (e) {
             // alert("cerrado");
@@ -1068,6 +1098,8 @@ function alertas(msg)
 
 
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script src="{{ asset('js/testigos.js') }}"></script>
     {{-- <script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script> --}}
     @endsection
