@@ -202,9 +202,13 @@
         if(valor == 0){
             $("#OtraPersonaDiv").removeClass("d-none");
             $("#YoVictimaDiv").addClass("d-none");
+            $("#nacionalidad_victima").val(118).trigger("change");
         }else{
+            $("#OtraPersonaDiv").find("input").val("");
+            $("#nacionalidad_victima").val("118").trigger("change");
             $("#OtraPersonaDiv").addClass("d-none");
             $("#YoVictimaDiv").removeClass("d-none");
+            consultarOtraCurp($("#btn-consultar-otra-curp-victima"));
             $("#mayor_edad_victimaN").prop('checked', true).trigger("change");
         }
     }

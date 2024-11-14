@@ -85,8 +85,8 @@ $txtlugar = $hechos->place()->first()->lugar;
 
                 </div>
                 <input type="datetime-local" class="form-control" name="fecha_final" id="fecha_final"
-                    max="{{ date('Y-m-d H:i') }}" data-message-error='"FECHA Y HORA FINAL DE LOS HECHOS" es requerido.'
-                    onchange="validarFechas()" @if ($fechaLapso){{$hechos->fecha_final}}@endif>
+                    min="@if($fechaLapso){{$hechos->fecha_inicial}}@else{{date('Y-m-d H:i')}}@endif" data-message-error='"FECHA Y HORA FINAL DE LOS HECHOS" es requerido.'
+                    onchange="validarFechas()" value="@if($fechaLapso){{$hechos->fecha_final}}@endif">
                 <div style="color:#FF0000;">
                     {{ $errors->first('fecha_final') }}
                 </div>
@@ -544,14 +544,32 @@ $txtlugar = $hechos->place()->first()->lugar;
 
         @if($banderaPosicion)
             const initialPosition = new google.maps.LatLng({{$hechos->latitud}}, {{$hechos->longitud}});
+            
+            marker = new google.maps.marker.AdvancedMarkerElement({
+                map: map,
+                position: initialPosition, // Establece la posición inicial del marcador
+                title: 'Ubicación Actual',
+                gmpDraggable: true
+            });
+
+            marker.addListener("dragend", () => {
+            const getPosition = marker.getAttribute('position');
+            const parts = getPosition.split(',');
+
+            const position = {
+                lat: function() {
+                    return parseFloat(parts[0]);
+                },
+                lng: function() {
+                    return parseFloat(parts[1]);
+                }
+            };
+
+            const newLatLng = new google.maps.LatLng(parseFloat(position.lat()), parseFloat(position.lng()));
+            updateMarkerPositionAndCenter(newLatLng);
+        });
         @endif
 
-        marker = new google.maps.marker.AdvancedMarkerElement({
-            map: map,
-            position: initialPosition, // Establece la posición inicial del marcador
-            title: 'Ubicación Actual',
-            gmpDraggable: true
-        });
 
         infoWindow = new google.maps.InfoWindow();
 
@@ -654,22 +672,7 @@ $txtlugar = $hechos->place()->first()->lugar;
             infoWindow.open(map, marker);
         }
 
-        marker.addListener("dragend", () => {
-            const getPosition = marker.getAttribute('position');
-            const parts = getPosition.split(',');
-
-            const position = {
-                lat: function() {
-                    return parseFloat(parts[0]);
-                },
-                lng: function() {
-                    return parseFloat(parts[1]);
-                }
-            };
-
-            const newLatLng = new google.maps.LatLng(parseFloat(position.lat()), parseFloat(position.lng()));
-            updateMarkerPositionAndCenter(newLatLng);
-        });
+        
 
         searchBox.addListener("places_changed", () => {
             const places = searchBox.getPlaces();

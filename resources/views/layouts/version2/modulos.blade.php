@@ -312,7 +312,7 @@ font-size: 19px !important;
                                     <ul>
                                       <li><a href="http://cjim.fiscaliamichoacan.gob.mx/" target="_blank"><img src="{{ asset('img/iconos/cjim_b.png/') }}" height="30px">&nbsp;&nbsp;CJIM</a></li>
                                       <li><a href="http://cmasc.fiscaliamichoacan.gob.mx/" target="_blank"><img src="{{ asset('img/iconos/nacional_penal.png/') }}" height="30px">&nbsp;&nbsp;Justicia Alternativa</a></li>
-                                      <li><a href="https://bibliotecadigital.fiscaliamichoacan.gob.mx/" target="_blank"><img src="{{ asset('img/iconos/Biblioteca_Digital/') }}" height="30px">&nbsp;&nbsp;Biblioteca Digital</a></li>
+                                      <li><a href="https://bibliotecadigital.fiscaliamichoacan.gob.mx/" target="_blank"><img src="{{ asset('img/iconos/Biblioteca_Digital.png') }}" height="30px">&nbsp;&nbsp;Biblioteca Digital</a></li>
 
                                     </ul>
                                 </li>
