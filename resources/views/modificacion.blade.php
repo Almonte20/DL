@@ -580,7 +580,7 @@ function alertas(msg)
             $("#calle").val('');
             $("#numext").val('');
             $("#numint").val('');
-            $("#CP").val('');
+            $("#CP").val('').trigger("blur");
 
             $("#domicilio_extranjero").addClass("required");
             $("#CP").removeClass("required");

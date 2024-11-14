@@ -99,7 +99,7 @@ class DenunciaController extends Controller
 
     public function generarPreSigi($id_denuncia)
     {
-
+        
         date_default_timezone_set('America/Mexico_City');
         $denuncia = Denuncia::where('id', $id_denuncia)->first();
         $hechos = Hecho::where('id_denuncia', $id_denuncia)->first();
@@ -120,7 +120,6 @@ class DenunciaController extends Controller
         $pdf->AddFont('LabradorA-ExtraBold');
         $pdf->AliasNbPages();
         $pdf->SetFont('Arial','B',15);
-        
         // $pdf->Image('img\denuncia\Titulo_fisca.jpg',10,10,180);
         // $pdf->Image('img\denuncia\Plantilla Pre Acceius.png',0,10,220);
         // $pdf->Image('img\denuncia\Banner Fiscalía.png',0,10,220);
@@ -144,10 +143,13 @@ class DenunciaController extends Controller
         
         
         $pdf->SetFont('Arial','B',10);
-        $dia = sprintf("%02d", date('d'));
-        $mes = $this->nombreMes(date('n')-1);
-        $anio = date("Y");
-        $hora = date("H:i");
+        // $dia = sprintf("%02d", date('d'));
+        $dia = sprintf("%02d", $denuncia->created_at->format('d'));
+        // $mes = $this->nombreMes(date('n')-1);
+        $mes = $this->nombreMes($denuncia->created_at->format('n')-1);
+        $anio = $denuncia->created_at->format("Y");
+        $hora = $denuncia->created_at->format("H:i");
+       
         
         // $pdf->Ln(15);
         // $pdf->Cell(0,14,utf8_decode("Morelia, Michoacán a $dia de $mes del $anio"),0,0,'R');
@@ -504,7 +506,7 @@ class DenunciaController extends Controller
 
         // dd($request);
         // dd($request->hasFile('evidencias'));
-
+       
 
         DB::beginTransaction();
         try{
@@ -768,7 +770,10 @@ class DenunciaController extends Controller
         $array = ["respuesta"=> true ,"token"=> $token, "denuncia" => Crypt::encrypt($denuncia->id) ,  "data"=>$denuncia, "folio" => $folio ];
         $mensajeWhatsapp = "Informa que se envió una notificación al correo $correo para el seguimiento de la Denuncia en Línea.";
         $this->sendWhatsapp($mensajeWhatsapp,$telefono);
+
         
+        Controller::saveLog(Controller::CREATION, 'Modulo Denuncia en Línea', "Registro de denuncia en línea con folio: $folio", [$request->all()]);
+       
         $notificacion = new NotificacionUsuario;
         $notificacion->nombre_involucrado = $nombre." ".$PrimerApellido." ".$SegundoApellido;
         $notificacion->correo_electronico = $correo;
@@ -1275,8 +1280,8 @@ class DenunciaController extends Controller
        $array = ["respuesta"=> true ,"token"=> $token, "denuncia" => Crypt::encrypt($denuncia->id) ,  "data"=>$denuncia, "folio" => $folio ];
        $mensajeWhatsapp = "Informa que se envió una notificación al correo $correo para el seguimiento de la Denuncia en Línea.";
        $this->sendWhatsapp($mensajeWhatsapp,$telefono);
+       Controller::saveLog(Controller::UPDATE, 'Modulo Denuncia en Línea', "Actualización de denuncia en línea con folio: $folio", [$request->all()]);
        
-     
        $notificacion = new NotificacionUsuario;
        $notificacion->nombre_involucrado = $nombre." ".$PrimerApellido." ".$SegundoApellido;
        $notificacion->correo_electronico = $correo;

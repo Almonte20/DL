@@ -108,6 +108,18 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
+        'usuarios_sistemas' => [
+            'driver' => 'sqlsrv',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_HOST_USERS', ''),
+            'port' => env('DB_PORT_USERS', ''),
+            'database' => env('DB_DATABASE_USERS', ''),
+            'username' => env('DB_USERNAME_USERS', ''),
+            'password' => env('DB_PASSWORD_USERS', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+        ],
         'hellman' => [
             'driver' => 'sqlsrv',
             'url' => env('DATABASE_URL'),
