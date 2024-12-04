@@ -473,7 +473,7 @@
                     // $('#btnConsultarCurp').remove();;
                     $('#imgLoading_'+destino).addClass("d-none");
                     $('#btnConsultarCurp_'+destino).removeClass("d-none");
-                    $('#btnConsultarCurp_'+destino).attr("disabled",true);
+                    $('#btnConsultarCurp_'+destino).attr("disabled",false);
 
                     $('#nacionalidad_'+destino).attr('disabled',false);
                     $('#curp_'+destino).attr('readonly',false);
@@ -562,37 +562,47 @@
     }
 
     function validarCURP(curp) {
-    // Expresión regular para validar el formato de CURP
-    var regexCURP = /^[A-Za-z]{4}\d{6}[A-Za-z]{6}[A-Za-z\d]\d$/;
+    // Expresión regular para validar el formato general de la CURP
+    var regexCURP = /^[A-Z]{4}\d{6}[H|M][A-Z]{2}[A-Z]{3}[A-Z\d]\d$/;
 
     if (!regexCURP.test(curp)) {
         // Si el formato no coincide, retorna falso
         return false;
     }
 
-    // Se obtienen los valores de la CURP
-    var primerLetra = curp.charAt(0);
-    var segundaLetra = curp.charAt(1);
+    // Se extraen los valores de la CURP
     var fechaNacimiento = curp.substr(4, 6);
     var sexo = curp.charAt(10);
     var estado = curp.substr(11, 2);
 
+    // Lista de códigos válidos de estados
+    var estadosValidos = [
+        "AS", "BC", "BS", "CC", "CL", "CM", "CS", "CH", "DF", "DG",
+        "GT", "GR", "HG", "JC", "MC", "MN", "MS", "NT", "NL", "OC",
+        "PL", "QT", "QR", "SP", "SL", "SR", "TC", "TS", "TL", "VZ",
+        "YN", "ZS", "NE"
+    ];
+
     // Validación de la fecha de nacimiento
-    var anio = fechaNacimiento.substr(0, 2);
-    var mes = fechaNacimiento.substr(2, 2);
-    var dia = fechaNacimiento.substr(4, 2);
+    var anio = parseInt(fechaNacimiento.substr(0, 2), 10);
+    var mes = parseInt(fechaNacimiento.substr(2, 2), 10);
+    var dia = parseInt(fechaNacimiento.substr(4, 2), 10);
 
-    // Se obtiene el código del estado de la CURP
-    var estadosCURP = "ASBCDFGHLKMNPQRSTVWXYZ";
-    var codigoEstado = estadosCURP.indexOf(estado.charAt(0)) + 1;
+    // Ajustar el año para considerar el siglo
+    anio += anio < 50 ? 2000 : 1900; // Se asume que CURPs nacidos antes de 2050 usan el siglo XX y XXI.
 
-    // Verificar que la fecha de nacimiento sea válida
-    if (anio < 0 || anio > 99 || mes < 1 || mes > 12 || dia < 1 || dia > 31) {
+    // Verificar que la fecha sea válida
+    var fecha = new Date(anio, mes - 1, dia);
+    if (
+        fecha.getFullYear() !== anio ||
+        fecha.getMonth() + 1 !== mes ||
+        fecha.getDate() !== dia
+    ) {
         return false;
     }
 
-    // Verificar que el código del estado sea válido
-    if (codigoEstado < 1 || codigoEstado > 32) {
+    // Verificar que el estado sea válido
+    if (!estadosValidos.includes(estado)) {
         return false;
     }
 
@@ -604,6 +614,51 @@
     // Si todas las validaciones pasan, retorna verdadero
     return true;
 }
+
+//     function validarCURP(curp) {
+//         alert(curp);
+//     // Expresión regular para validar el formato de CURP
+//     var regexCURP = /^[A-Za-z]{4}\d{6}[A-Za-z]{6}[A-Za-z\d]\d$/;
+
+//     if (!regexCURP.test(curp)) {
+//         // Si el formato no coincide, retorna falso
+//         return false;
+//     }
+
+//     // Se obtienen los valores de la CURP
+//     var primerLetra = curp.charAt(0);
+//     var segundaLetra = curp.charAt(1);
+//     var fechaNacimiento = curp.substr(4, 6);
+//     var sexo = curp.charAt(10);
+//     var estado = curp.substr(11, 2);
+
+//     // Validación de la fecha de nacimiento
+//     var anio = fechaNacimiento.substr(0, 2);
+//     var mes = fechaNacimiento.substr(2, 2);
+//     var dia = fechaNacimiento.substr(4, 2);
+
+//     // Se obtiene el código del estado de la CURP
+//     var estadosCURP = "ASBCDFGHLKMNPQRSTVWXYZ";
+//     var codigoEstado = estadosCURP.indexOf(estado.charAt(0)) + 1;
+
+//     // Verificar que la fecha de nacimiento sea válida
+//     if (anio < 0 || anio > 99 || mes < 1 || mes > 12 || dia < 1 || dia > 31) {
+//         return false;
+//     }
+
+//     // Verificar que el código del estado sea válido
+//     if (codigoEstado < 1 || codigoEstado > 32) {
+//         return false;
+//     }
+
+//     // Verificar que el sexo sea válido
+//     if (sexo !== 'H' && sexo !== 'M') {
+//         return false;
+//     }
+
+//     // Si todas las validaciones pasan, retorna verdadero
+//     return true;
+// }
 
 function validarCP(input,select_estado,select_municipio,select_asentamiento){
     var valor = $(input).val();
