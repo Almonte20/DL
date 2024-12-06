@@ -774,14 +774,14 @@ class DenunciaController extends Controller
         
         Controller::saveLog(Controller::CREATION, 'Modulo Denuncia en Línea', "Registro de denuncia en línea con folio: $folio", [$request->all()]);
        
-        $notificacion = new NotificacionUsuario;
-        $notificacion->nombre_involucrado = $nombre." ".$PrimerApellido." ".$SegundoApellido;
-        $notificacion->correo_electronico = $correo;
-        $notificacion->telefono = $telefono;
-        $notificacion->id_modulo = 1;
-        $notificacion->llave_modulo = $denuncia->id;
-        $notificacion->mensaje = "$mensajeNotificacion $folio";
-        $notificacion->save();
+        // $notificacion = new NotificacionUsuario;
+        // $notificacion->nombre_involucrado = $nombre." ".$PrimerApellido." ".$SegundoApellido;
+        // $notificacion->correo_electronico = $correo;
+        // $notificacion->telefono = $telefono;
+        // $notificacion->id_modulo = 1;
+        // $notificacion->llave_modulo = $denuncia->id;
+        // $notificacion->mensaje = "$mensajeNotificacion $folio";
+        // $notificacion->save();
 
         DB::commit();
         
@@ -927,7 +927,7 @@ class DenunciaController extends Controller
             $delito_aux="";
             $evidencias = Evidencia::where("id_denuncia",$id_denuncia)->get();
             $testigos =  Involucrado::where("id_tipo_involucrado",5)->where("id_denuncia",$id_denuncia)->get();
-            $notificaciones = NotificacionUsuario::where("llave_modulo",$id_denuncia)->where("id_modulo",1)->whereNull("id_usuario_emisor")->get();
+            // $notificaciones = NotificacionUsuario::where("llave_modulo",$id_denuncia)->where("id_modulo",1)->whereNull("id_usuario_emisor")->get();
             return view('consulta.datos',compact('NumeroCaso','denunciante','hechos','delito','evidencias','testigos','notificaciones','delito_aux','victima','victimaDenunciante','expediente'));
           
             }
@@ -1009,7 +1009,8 @@ class DenunciaController extends Controller
 
                             // return $testigos;
 
-            $notificaciones = NotificacionUsuario::where("llave_modulo",$id_denuncia)->where("id_modulo",1)->whereNull("id_usuario_emisor")->get();
+            // $notificaciones = NotificacionUsuario::where("llave_modulo",$id_denuncia)->where("id_modulo",1)->whereNull("id_usuario_emisor")->get();
+            $notificaciones = null;
             // $notificaciones = DB::connection('sqlpredenuncia')->table('Notificaciones')
             //                 ->select('FechaCita','Hora','TipoNotificacion','Asunto','Descripcion','created_at')
             //                 ->where('IdExpediente',$expediente[0]->IdExpediente)
@@ -1282,14 +1283,14 @@ class DenunciaController extends Controller
        $this->sendWhatsapp($mensajeWhatsapp,$telefono);
        Controller::saveLog(Controller::UPDATE, 'Modulo Denuncia en Línea', "Actualización de denuncia en línea con folio: $folio", [$request->all()]);
        
-       $notificacion = new NotificacionUsuario;
-       $notificacion->nombre_involucrado = $nombre." ".$PrimerApellido." ".$SegundoApellido;
-       $notificacion->correo_electronico = $correo;
-       $notificacion->telefono = $telefono;
-       $notificacion->id_modulo = 1;
-       $notificacion->llave_modulo = $denuncia->id;
-       $notificacion->mensaje = "$mensajeNotificacion $folio";
-       $notificacion->save();
+    //    $notificacion = new NotificacionUsuario;
+    //    $notificacion->nombre_involucrado = $nombre." ".$PrimerApellido." ".$SegundoApellido;
+    //    $notificacion->correo_electronico = $correo;
+    //    $notificacion->telefono = $telefono;
+    //    $notificacion->id_modulo = 1;
+    //    $notificacion->llave_modulo = $denuncia->id;
+    //    $notificacion->mensaje = "$mensajeNotificacion $folio";
+    //    $notificacion->save();
 
        DB::commit();
         
