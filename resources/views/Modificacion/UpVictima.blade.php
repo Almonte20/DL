@@ -240,7 +240,7 @@
                     </div>
                     @php
                       if($victimaDenunciante == 0 && $victima->mayor_edad == 1){
-                        $url_victima = $victima->url_identificacion;
+                        $url_victima = $identificacion_victima->ruta;
                         $file_victima = Storage::disk('buffalo')->get($url_victima);
                         $mimetype_victima = Storage::disk('buffalo')->mimeType($url_victima);
                         $data_victima = 'data:' . $mimetype_victima . ';base64,' . base64_encode($file_victima) . '';

@@ -89,7 +89,7 @@
                             @foreach ($evidencias as $evidencia)
                                 @php
                                     $count++;
-                                    $info = new SplFileInfo($evidencia->url);
+                                    $info = new SplFileInfo($evidencia->ruta);
                                     $fileName = $info->getBasename();
                                 @endphp
                                 <tr class="text-center ev">

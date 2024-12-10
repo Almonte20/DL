@@ -197,7 +197,7 @@ if($denunciante->id_nacionalidad == 118){
                 {{-- <input type="file" name="credencial" class="file_multi_image required credencial" id="credencial"
                     accept="image/*" required> --}}
                  @php
-                    $url = $denunciante->url_identificacion;
+                    $url = $identificacion_denunciante->ruta;
                     $file = Storage::disk('buffalo')->get($url);
                     $mimetype = Storage::disk('buffalo')->mimeType($url);
                     $data = 'data:' . $mimetype . ';base64,' . base64_encode($file) . '';
@@ -399,7 +399,7 @@ if($denunciante->id_nacionalidad == 118){
             <div class="form-group col-md-2">
                 <div class="form-ic-cmp">
                     <i class="fal fa-hashtag"></i>&nbsp;
-                    <label for="numext">No. Exterior <span style="font-size: 7px;" class="text-danger">Requerido</span></label>
+                    <label for="numext">Exterior <span style="font-size: 7px;" class="text-danger">Requerido</span></label>
                 </div>
                 <input class=" form-control @if($denunciante->address()->first()->id_pais == 118){{"required"}}@endif" value="{{$denunciante->address()->first()->numero_exterior}}" maxlength="6"
                     data-message-error='"NÚMERO EXTERIOR" es requerido.' name="numext" type="text" id="numext"
@@ -411,7 +411,7 @@ if($denunciante->id_nacionalidad == 118){
             <div class="form-group col-md-2">
                 <div class="form-ic-cmp">
                     <i class="fal fa-hashtag"></i>&nbsp;
-                    <label for="numint">No. Interior</label>
+                    <label for="numint">Interior</label>
                 </div>
                 <input class=" form-control " placeholder="Opcional" value="{{$denunciante->address()->first()->numero_interior}}" maxlength="6" name="numint" type="text"
                     id="numint">

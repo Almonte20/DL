@@ -30,6 +30,7 @@ use Illuminate\Support\Str;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Traits\WhatsappTrait;
 use App\Http\Controllers\Header;
+use App\Models\Documento;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -97,7 +98,7 @@ class DenunciaController extends Controller
     }
 
 
-    public function generarPreSigi($id_denuncia)
+    public function generarPreSigi($id_denuncia,$id_documento)
     {
         
         date_default_timezone_set('America/Mexico_City');
@@ -357,6 +358,18 @@ class DenunciaController extends Controller
         $pdf->Output('F', $rutaArchivo);
         $rutaGuardado = "DenunciaEnLinea/".$id_denuncia;
         $ruta = Storage::disk('buffalo')->putFileAs($rutaGuardado, $rutaArchivo, "Denuncia.pdf");
+        // ************************************* GUARDAR REGISTRO EN TABLA DE DOCUMENTOS
+        if(!isset($id_documento))
+            $documentoDenuncia = new Documento();
+        else
+            $documentoDenuncia = Documento::find($id_documento);
+
+        // dd($documentoDenuncia);
+        $documentoDenuncia->id_documento_cat = 25;
+        $documentoDenuncia->ruta = $ruta;
+        $documentoDenuncia->id_denuncia_linea = $denuncia->id;
+        $documentoDenuncia->save();
+
         return $rutaArchivo;
 
     }
@@ -575,15 +588,21 @@ class DenunciaController extends Controller
             $denunciante->id_tipo_involucrado = 3;
         }
         
+        
+        $denunciante->save();
         if($request->hasfile('credencial')){
             $fileImage = $request->file('credencial');
             $extension = $fileImage->getClientOriginalExtension();
             $name = "Identificacion_denunciante.".$extension;
             $ruta = Storage::disk('buffalo')->putFileAs($rutaGuardado, $fileImage, $name);
-            $denunciante->url_identificacion = $ruta;
+            // $denunciante->url_identificacion = $ruta;
+            $documento = new Documento();
+            $documento->id_documento_cat = 24;
+            $documento->id_involucrado = $denunciante->id;
+            $documento->ruta = $ruta;
+            $documento->id_denuncia_linea = $denuncia->id;
+            $documento->save();
         }
-        
-        $denunciante->save();
         
         $denunciante_domicilio = new InvolucradoDomicilio;
         $denunciante_domicilio->id_involucrado = $denunciante->id;
@@ -614,19 +633,24 @@ class DenunciaController extends Controller
             $victima->id_denuncia =  $id_denuncia;
             $victima->id_tipo_involucrado = 1;
 
+            
+            if($request->nacionalidad_victima == 118){
+                $victima->curp = $request->curp_victima;
+            }
+            
+            $victima->save();
             if($request->hasfile('identificacion_victima') && $request->mayor_edad_victima == 1){
                 $fileImage = $request->file('identificacion_victima');
                 $extension = $fileImage->getClientOriginalExtension();
                 $name = "Identificacion_victima.".$extension;
                 $ruta = Storage::disk('buffalo')->putFileAs($rutaGuardado, $fileImage, $name);
-                $victima->url_identificacion = $ruta;
+                $documento = new Documento();
+                $documento->id_documento_cat = 24;
+                $documento->id_involucrado = $victima->id;
+                $documento->ruta = $ruta;
+                $documento->id_denuncia_linea = $denuncia->id;
+                $documento->save();
             }
-            
-            if($request->nacionalidad_victima == 118){
-                $victima->curp = $request->curp_victima;
-            }
-
-            $victima->save();
         }
         
         //*********************** DATOS DEL RESPONSABLE ******************************
@@ -731,17 +755,18 @@ class DenunciaController extends Controller
                 $numeroEvidencia = $i+1;
                 $name = "Evidencia_$numeroEvidencia.".$extension;
                 $ruta = Storage::disk('buffalo')->putFileAs($rutaGuardado, $fileImage, $name);
-                $Evidencia = new Evidencia();
-                $Evidencia->id_tipo_evidencia = 1;
-                $Evidencia->url = $ruta;
-                $Evidencia->id_denuncia = $denuncia->id;
+                $Evidencia = new Documento();
+                $Evidencia->id_documento_cat = 18;
+                $Evidencia->ruta = $ruta;
+                $Evidencia->id_denuncia_linea = $denuncia->id;
                 $Evidencia->save();
             }
         }
         //*************************************** GENERACIÓN DE ACUSE */
         $rutaAcuse = $this->generarPDF($id_denuncia);
-        $rutaDenuncia = $this->generarPreSigi($id_denuncia);
+        $rutaDenuncia = $this->generarPreSigi($id_denuncia,null);
         // dd($rutaDenuncia);
+     
         // ************************************** NOTIFICACIONES */
         $nombre = $request->nombre_denunciante;
         $PrimerApellido = $request->PrimerApellido_denunciante;
@@ -844,7 +869,7 @@ class DenunciaController extends Controller
                 $responsable = Involucrado::where("id_tipo_involucrado",2)->where("id_denuncia",$id_denuncia);
                 // dd($responsable->first());
                 // $responsable = Involucrado::where("id","292");
-                $evidencias = Evidencia::where("id_denuncia",$id_denuncia)->get();
+                $evidencias = Documento::where("id_denuncia_linea",$id_denuncia)->where("id_documento_cat",18)->get();
                 $id_denuncia = Crypt::encrypt($id_denuncia);
 
                 return view("modificacion",compact('id_denuncia','expediente','countries','estados','municipios','colonies','colonies_hechos','lugares','denunciante','victima','domicilio_denunciante','testigos','hechos','responsable','evidencias','victimaDenunciante'));
@@ -882,14 +907,18 @@ class DenunciaController extends Controller
 
                 $hechos = Hecho::where('id_denuncia', $id_denuncia)->first();
                 $denunciante = Involucrado::where("id_tipo_involucrado","4")->where("id_denuncia",$id_denuncia)->first();
+             
                 if(empty($denunciante)){
                     $victima = Involucrado::where("id_tipo_involucrado","1")->where("id_denuncia",$id_denuncia)->first();
+                    $identificacion_victima = Documento::where("id_denuncia_linea",$id_denuncia)->where("id_involucrado",$victima->id)?->first();
                     $denunciante = Involucrado::where("id_tipo_involucrado","3")->where("id_denuncia",$id_denuncia)->first();
                     $victimaDenunciante = 0;
                 }else{
                     $victimaDenunciante = 1;
                     $victima = null;
+                    $identificacion_victima = null;
                 }
+                $identificacion_denunciante = Documento::where("id_denuncia_linea",$id_denuncia)->where("id_involucrado",$denunciante->id)?->first();
                 $domicilio_denunciante =  InvolucradoDomicilio::where("id_involucrado",$denunciante->id)->first();
                 $colonies = CatAsentamientos::where("codigo_postal",$denunciante->address()->first()->codigo_postal)->get();
                 $colonies_hechos = CatAsentamientos::where("codigo_postal",$hechos->codigo_postal)->get();
@@ -899,10 +928,10 @@ class DenunciaController extends Controller
                 $responsable = Involucrado::where("id_tipo_involucrado",2)->where("id_denuncia",$id_denuncia);
                 // dd($responsable->first());
                 // $responsable = Involucrado::where("id","292");
-                $evidencias = Evidencia::where("id_denuncia",$id_denuncia)->get();
+                $evidencias = Documento::where("id_denuncia_linea",$id_denuncia)->where("id_documento_cat",18)->get();
                 $id_denuncia = Crypt::encrypt($id_denuncia);
 
-                return view("modificacion",compact('id_denuncia','expediente','countries','estados','municipios','colonies','colonies_hechos','lugares','denunciante','victima','domicilio_denunciante','testigos','hechos','responsable','evidencias','victimaDenunciante'));
+                return view("modificacion",compact('id_denuncia','expediente','countries','estados','municipios','colonies','colonies_hechos','lugares','denunciante','victima','domicilio_denunciante','testigos','hechos','responsable','evidencias','victimaDenunciante','identificacion_denunciante','identificacion_victima'));
             }else{
                 
                $NumeroCaso = Caso::where("id_denuncia_linea",$id_denuncia);
@@ -925,9 +954,10 @@ class DenunciaController extends Controller
             if(!empty($expediente->id_delito_clasificacion))
             $delito =  DelitoClasificacion::where("id",$expediente->id_delito_clasificacion);
             $delito_aux="";
-            $evidencias = Evidencia::where("id_denuncia",$id_denuncia)->get();
+            $evidencias = Documento::where("id_denuncia_linea",$id_denuncia)->where("id_documento_cat",18)->get();
             $testigos =  Involucrado::where("id_tipo_involucrado",5)->where("id_denuncia",$id_denuncia)->get();
             // $notificaciones = NotificacionUsuario::where("llave_modulo",$id_denuncia)->where("id_modulo",1)->whereNull("id_usuario_emisor")->get();
+            $notificaciones = Involucrado::where("id_tipo_involucrado",55555)->get();
             return view('consulta.datos',compact('NumeroCaso','denunciante','hechos','delito','evidencias','testigos','notificaciones','delito_aux','victima','victimaDenunciante','expediente'));
           
             }
@@ -1034,9 +1064,8 @@ class DenunciaController extends Controller
      */
     public function update(Request $request)
     {
-        DB::beginTransaction();
-
-        try{
+        // DB::beginTransaction();
+        // try{
 
         // dd($request);
         $id_denuncia = Crypt::decrypt($request->id_denuncia);
@@ -1071,15 +1100,33 @@ class DenunciaController extends Controller
             $denunciante->id_tipo_involucrado = 3;
         }
         
+        $denunciante->save();
         if($request->hasfile('credencial')){
             $fileImage = $request->file('credencial');
             $extension = $fileImage->getClientOriginalExtension();
             $name = "Identificacion_denunciante.".$extension;
           
             $ruta = Storage::disk('buffalo')->putFileAs($rutaGuardado, $fileImage, $name);
-            $denunciante->url_identificacion = $ruta;
+            // $denunciante->url_identificacion = $ruta;
+            $documento = Documento::updateOrCreate(
+                [
+                    'id_denuncia_linea' => $id_denuncia,
+                    'id_involucrado' => $denunciante->id,
+                    'id_documento_cat' => 24,
+                ],
+                [
+                    'ruta' => $ruta
+                ]
+            );
+
+            // dd($documento);
+            // $documento = new Documento();
+            // $documento->id_documento_cat = 24;
+            // $documento->id_involucrado = $denunciante->id;
+            // $documento->ruta = $ruta;
+            // $documento->id_denuncia_linea = $denuncia->id;
+            // $documento->save();
         }
-        $denunciante->save();
 
         
         $denunciante_domicilio = InvolucradoDomicilio::where("id_involucrado",$id_denunciante)->first();
@@ -1111,22 +1158,28 @@ class DenunciaController extends Controller
             $victima->id_tipo_persona = 1;
             $victima->id_denuncia =  $id_denuncia;
             $victima->id_tipo_involucrado = 1;
+            if($request->nacionalidad_victima == 118){
+                $victima->curp = $request->curp_victima;
+            }
+            $victima->save();
 
             if($request->hasfile('identificacion_victima') && $request->mayor_edad_victima == 1){
                 $fileImage = $request->file('identificacion_victima');
                 $extension = $fileImage->getClientOriginalExtension();
                 $name = "Identificacion_victima.".$extension;
                 $ruta = Storage::disk('buffalo')->putFileAs($rutaGuardado, $fileImage, $name);
-                $victima->url_identificacion = $ruta;
+                // $victima->url_identificacion = $ruta;
+                Documento::firstOrCreate(
+                    [
+                        'id_denuncia_linea' => $id_denuncia,
+                        'id_involucrado' => $victima->id,
+                        'id_documento_cat' => 24,
+                    ],
+                    [
+                        'ruta' => $ruta
+                    ]
+                );
             }
-            
-            if($request->nacionalidad_victima == 118){
-                $victima->curp = $request->curp_victima;
-            }
-         
-
-            $victima->save();
-           
         }else{
             Involucrado::where('id_denuncia', $id_denuncia)->where("id_tipo_involucrado",1)->delete();
         }
@@ -1233,25 +1286,32 @@ class DenunciaController extends Controller
        }else{
            $total_evidencias = count($request->file('evidencias'));
        }
-       $count = Evidencia::where("id_denuncia",$id_denuncia)->count();
+       $count = Evidencia::where("id_denuncia_linea",$id_denuncia)->where("id_documento_cat",18)->count();
        if($total_evidencias > 0){
            for ($i=0; $i < $total_evidencias; $i++) {
-               $fileImage = $request->file('evidencias')[$i];
-               $extension = $fileImage->getClientOriginalExtension();
-               $numeroEvidencia = $count+1;
-               $name = "Evidencia_$numeroEvidencia.".$extension;
-               $ruta = Storage::disk('buffalo')->putFileAs($rutaGuardado, $fileImage, $name);
-               $Evidencia = new Evidencia();
-               $Evidencia->id_tipo_evidencia = 1;
-               $Evidencia->url = $ruta;
-               $Evidencia->id_denuncia = $id_denuncia;
-               $Evidencia->save();
-               $count++;
+                $fileImage = $request->file('evidencias')[$i];
+                $extension = $fileImage->getClientOriginalExtension();
+                $numeroEvidencia = $count+1;
+                $name = "Evidencia_$numeroEvidencia.".$extension;
+                $ruta = Storage::disk('buffalo')->putFileAs($rutaGuardado, $fileImage, $name);
+                $Evidencia = new Documento();
+                $Evidencia->id_documento_cat = 18;
+                $Evidencia->ruta = $ruta;
+                $Evidencia->id_denuncia_linea = $denuncia->id;
+                $Evidencia->save();
+            //    $Evidencia = new Evidencia();
+            //    $Evidencia->id_tipo_evidencia = 1;
+            //    $Evidencia->url = $ruta;
+            //    $Evidencia->id_denuncia = $id_denuncia;
+            //    $Evidencia->save();
+
+                $count++;
            }
        }
        //*************************************** GENERACIÓN DE ACUSE */
        $rutaAcuse = $this->generarPDF($id_denuncia);
-       $rutaDenuncia = $this->generarPreSigi($id_denuncia);
+       $id_documento = Documento::where("id_denuncia_linea",$id_denuncia)->where("id_documento_cat",25)->first()?->id;
+       $rutaDenuncia = $this->generarPreSigi($id_denuncia,$id_documento);
        // dd($rutaDenuncia);
        // ************************************** NOTIFICACIONES */
        $nombre = $request->nombre_denunciante;
@@ -1292,14 +1352,14 @@ class DenunciaController extends Controller
     //    $notificacion->mensaje = "$mensajeNotificacion $folio";
     //    $notificacion->save();
 
-       DB::commit();
+    //    DB::commit();
         
        return response()->json($array);
 
-       }catch(\Exception $e){
-           DB::rollBack();
-           $array = ["respuesta"=> false ,"error"=> "Error al intentar actualizar la denuncia: ".$e->getMessage() ];
-       }
+    //    }catch(\Exception $e){
+    //        DB::rollBack();
+    //        $array = ["respuesta"=> false ,"error"=> "Error al intentar actualizar la denuncia: ".$e->getMessage() ];
+    //    }
     }
 
     /**

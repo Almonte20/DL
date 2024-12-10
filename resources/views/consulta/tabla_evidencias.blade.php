@@ -16,9 +16,9 @@
 			@foreach($evidencias as $evidencia)
 			{{-- @dd($evidencia->type()->first()->tipo) --}}
 			<tr>
-				<td colspan="2" class="table-secondary"><b>Evidencia {{$num}}:</b> {{$evidencia->type()->first()->tipo}}</td>
+				<td colspan="2" class="table-secondary"><b>Evidencia {{$num}}</b> </td>
 				@php
-				$aux=substr($evidencia->url, -5);
+				$aux=substr($evidencia->ruta, -5);
 				$aux=explode('.',$aux);
 				@endphp
 				<td colspan="4">{{".".$aux[1]}}</td>

@@ -49,7 +49,7 @@
                     <i class="fal fa-file-alt"></i>&nbsp;
                     <label for="fecha_inicial">Fecha y hora <span class="spaninicial d-none">inicial</span> de los
                         hechos</label>
-                    <label for="fecha_inicial" style="font-size: 7px;" class="text-danger">Requerido</label>
+                    <label for="fecha_inicial" style="font-size: 6px;" class="text-danger">Requerido</label>
                 </div>
                 <input type="datetime-local" class="form-control" name="fecha_inicial" id="fecha_inicial" max="{{ date('Y-m-d H:i') }}"
                 data-message-error='"FECHA Y HORA INICIAL DE LOS HECHOS" es requerido.' onchange="validarFechas()">
@@ -63,7 +63,7 @@
                 <div class="form-ic-cmp">
                     <i class="fal fa-file-alt"></i>&nbsp;
                     <label for="fecha_final">Fecha y hora final de los hechos</label>
-                    <label for="fecha_final" style="font-size: 7px;" class="text-danger">Requerido</label>
+                    <label for="fecha_final" style="font-size: 6px;" class="text-danger">Requerido</label>
 
                 </div>
                 <input type="datetime-local" class="form-control" name="fecha_final" id="fecha_final" max="{{ date('Y-m-d H:i') }}"
