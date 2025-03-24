@@ -9,17 +9,17 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td class="table-secondary" style="width: 27%;"><b>Número Único de Caso:</b></td>
+				<td class="table-secondary" style="width: 27%;"><b>Carpeta de investigación:</b></td>
 				<td>{{ !empty($NumeroCaso) ? $NumeroCaso : 'En proceso...'}}</td>
 			</tr>
-			<tr>
+			{{-- <tr>
 				<td class="table-fge" colspan="6"><b>
 						<center>Notificaciones</center>
 					</b></td>
-			</tr>
+			</tr> --}}
 
-			<div class="table-responsive">
-				<table class="table table-bordered">
+			<div class="table-responsive d-none">
+				<table class="table table-bordered d-none">
 					<thead class="table-secondary text-center">
 						<th style="width: 7%">#</th>
 						<th style="width: 20%">Fecha de notificación</th>
@@ -51,8 +51,8 @@
 						@endif
 					</tbody>
 				</table>
-			</div>
-
+					</div>
+					
 		</tbody>
 	</table>
 </div>

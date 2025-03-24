@@ -161,6 +161,7 @@ jQuery(document).ready(function() {
             }
         });
 
+
         // sweetalert mostrar error
         if (erroresValidacion == true) {
             Swal.fire({
@@ -175,6 +176,21 @@ jQuery(document).ready(function() {
 
             return;
         }
+
+        if ($("#nacionalidad_denunciante").val() == 118) {
+            if (!validarCURP($("#curp_denunciante").val())) {
+                $("#curp_denunciante").addClass('input-error');
+                Swal.fire({
+                    title: "¡CURP no valida!",
+                    text: "Revisa que hayas ingresado la CURP correctamente",
+                    icon: "warning"
+                });
+                nextStep = false;
+                return;
+
+            }
+        }
+
 
         // medios de notificacion
         const correo = $('[name="correo"]').val();

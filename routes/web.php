@@ -49,7 +49,7 @@ Route::post('updateDenuncia', [DenunciaController::class, 'update'] )->name('den
 Route::post('consultaDenuncia', [DenunciaController::class, 'consultaDenuncia'] )->name('denuncia.consultaDenuncia');
 Route::get('denuncia/consulta/{folio}', [DenunciaController::class, 'consultaD'] )->name('denuncia.consultaD');
 Route::get('prueba', [DenunciaController::class, 'AcuseRegistro'] )->name('denuncia.prueba');
-Route::get('generarPDF/{id_denuncia}', [DenunciaController::class, 'generarPreSigi'])->name('denuncia.generarPDF');
+Route::get('generarPDF/{id_denuncia}/{id_documento}', [DenunciaController::class, 'generarPreSigi'])->name('denuncia.generarPDF');
 Route::get('pruebaw', function(){
 	$data = ['codigo_verificacion' => "555666"];
 	$email = 'sistemas.ingresos@gmail.com';

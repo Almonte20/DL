@@ -13,7 +13,7 @@ trait HeaderTrait
           $this ->Cell(80);
           // Framed title
           // $pdf ->Cell(30, 10, 'Title', 1, 0, 'C');
-          $this->Image('img\denuncia\membrete_carta.jpg',0,0,216);
+          $this->Image('img\denuncia\Membrete Acceius.png',0,0,216);
   
           // Line break
           $this ->Ln(20);// Espacio entre el encabezado y el contenido de la página

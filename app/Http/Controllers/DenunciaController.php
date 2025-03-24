@@ -33,6 +33,7 @@ use App\Http\Controllers\Header;
 use App\Models\Documento;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Throwable;
 
 class DenunciaController extends Controller
 {
@@ -494,7 +495,7 @@ class DenunciaController extends Controller
         $pdf->Image(public_path("acuse/QR_".$id_denuncia.".png"),225,144,50,50);
         unlink(public_path("acuse/QR_".$id_denuncia.".png"));
         // Resto del código para configurar el PDF
-        // $pdf->Output("");
+        $pdf->Output("");
         $rutaArchivo = public_path('acuse/acuse_'.$id_denuncia.'.pdf');
         $pdf->Output('F', $rutaArchivo);
         $rutaGuardado = "DenunciaEnLinea/".$id_denuncia;
@@ -812,8 +813,15 @@ class DenunciaController extends Controller
         
         return response()->json($array);
 
-        }catch(\Exception $e){
+        }catch(\Throwable $e){
             DB::rollBack();
+			$e->extraData = [
+				'id_accion' => Controller::CREATION,
+				'evento' => 'Registar denuncia en línea',
+				'modulo' => 'Denuncia en línea',
+				'typeResponse' => false,
+			];
+			throw $e;
             $array = ["respuesta"=> false ,"error"=> "Error al intentar registrar la denuncia: ".$e->getMessage() ];
         }
     }
@@ -1064,8 +1072,8 @@ class DenunciaController extends Controller
      */
     public function update(Request $request)
     {
-        // DB::beginTransaction();
-        // try{
+        DB::beginTransaction();
+        try{
 
         // dd($request);
         $id_denuncia = Crypt::decrypt($request->id_denuncia);
@@ -1352,14 +1360,21 @@ class DenunciaController extends Controller
     //    $notificacion->mensaje = "$mensajeNotificacion $folio";
     //    $notificacion->save();
 
-    //    DB::commit();
+        DB::commit();
         
        return response()->json($array);
 
-    //    }catch(\Exception $e){
-    //        DB::rollBack();
-    //        $array = ["respuesta"=> false ,"error"=> "Error al intentar actualizar la denuncia: ".$e->getMessage() ];
-    //    }
+       }catch(\Throwable $e){
+            DB::rollBack();
+            $e->extraData = [
+                'id_accion' => Controller::UPDATE,
+                'evento' => "Modificación de denuncia en línea con id_crypt {$request->id_denuncia}",
+                'modulo' => 'Denuncia en línea',
+                'typeResponse' => false,
+            ];
+            throw $e;
+           $array = ["respuesta"=> false ,"error"=> "Error al intentar actualizar la denuncia: ".$e->getMessage() ];
+       }
     }
 
     /**

@@ -491,17 +491,14 @@
 
     function RenapoCURP(curp,destino){
 
-
         $.ajax(
             {
                 method: 'GET',
-                url: '{{config("app.url")}}/get-curp/' + curp,
+                url: '{{config("app.url")}}/geta-curp/' + curp,
             }
         ).done( function( res ) {
             // alert(res);
             console.log( res );
-
-
             if ( res.statusOper === "EXITOSO" ) {
 
                 // $('#btnConsultarCurp').prop('disabled', true);
@@ -554,9 +551,42 @@
                 $('#imgLoading_'+destino).addClass("d-none");
                 $('#nacionalidad_'+destino).attr('disabled',false);
                 $('#curp_'+destino).attr('readonly',false);
-
             }
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            // Manejo de errores
+            $('#curp_'+destino).attr('readonly',false);
+            console.error("Error en la solicitud:", textStatus, errorThrown);
+            $('#Nombre_'+destino).attr('readonly',false);
+            $('#PrimerApellido_'+destino).attr('readonly',false);
+            $('#SegundoApellido_'+destino).attr('readonly',false);
+            $('#fnacimiento_'+destino).attr('readonly',false);
+            $("#DatosGenerales_"+destino).removeClass("d-none");
+            $('#imgLoading_'+destino).addClass("d-none");
+            $('#nacionalidad_'+destino).attr('disabled',true);
 
+
+
+            /*
+            if (jqXHR.status === 404) {
+                alert("Recurso no encontrado (404).");
+            } else if (jqXHR.status === 500) {
+                alert("Error del servidor (500).");
+            } else if (textStatus === "timeout") {
+                alert("La solicitud ha excedido el tiempo de espera.");
+            } else {
+                alert("Ocurrió un error inesperado: " + textStatus);
+            }
+            
+            Swal.fire({
+                imageUrl: "{{ asset('img/renapo.png') }}",
+                imageWidth: 200,
+                html: 'El servicio de consulta de CURP no está disponible, ingresa los datos manualmente.',
+                confirmButtonText: 'Enterado',
+                confirmButtonColor: '#152F4A',
+                width: 450,
+            });
+           */
+         
         });
 
     }

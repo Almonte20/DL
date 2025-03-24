@@ -630,8 +630,8 @@ function alertas(msg)
             $(boton).attr("disabled",true);
             $("#botones_finalizacion").addClass("d-none");
             $("#div_spin").removeClass("d-none");
+         
             try {
-
                 $.ajax({
                     url: "{{ route('denuncia.store') }}",
                     type: "post",
@@ -694,8 +694,7 @@ function alertas(msg)
                     });
 
             }
-                   
-
+        
         }
 
         function justNumbers(e)
