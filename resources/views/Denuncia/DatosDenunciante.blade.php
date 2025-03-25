@@ -494,7 +494,7 @@
         $.ajax(
             {
                 method: 'GET',
-                url: '{{config("app.url")}}/geta-curp/' + curp,
+                url: '{{config("app.url")}}/get-curp/' + curp,
             }
         ).done( function( res ) {
             // alert(res);
@@ -576,7 +576,7 @@
             } else {
                 alert("Ocurrió un error inesperado: " + textStatus);
             }
-            
+              */
             Swal.fire({
                 imageUrl: "{{ asset('img/renapo.png') }}",
                 imageWidth: 200,
@@ -585,7 +585,7 @@
                 confirmButtonColor: '#152F4A',
                 width: 450,
             });
-           */
+         
          
         });
 
