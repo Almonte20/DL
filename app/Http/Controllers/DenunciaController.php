@@ -495,7 +495,7 @@ class DenunciaController extends Controller
         $pdf->Image(public_path("acuse/QR_".$id_denuncia.".png"),225,144,50,50);
         unlink(public_path("acuse/QR_".$id_denuncia.".png"));
         // Resto del código para configurar el PDF
-        $pdf->Output("");
+        // $pdf->Output("");
         $rutaArchivo = public_path('acuse/acuse_'.$id_denuncia.'.pdf');
         $pdf->Output('F', $rutaArchivo);
         $rutaGuardado = "DenunciaEnLinea/".$id_denuncia;
@@ -808,7 +808,6 @@ class DenunciaController extends Controller
         // $notificacion->llave_modulo = $denuncia->id;
         // $notificacion->mensaje = "$mensajeNotificacion $folio";
         // $notificacion->save();
-
         DB::commit();
         
         return response()->json($array);

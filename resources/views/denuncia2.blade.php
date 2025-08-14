@@ -652,12 +652,14 @@ function alertas(msg)
                             showConfirmButton: false,
                             timer: 3000
                         });
+                        $('.top-content').css('padding', 'unset');
                         $("#txt_folio").html(data.folio);
                         $("#txt_clave_seguimiento").html(data.token);
                         $("#folio").val(data.folio);
                         $("#token").val(data.token);
                         $("#registro_exitoso").removeClass("d-none");
                         $("#registro").addClass("d-none");
+                        $("#registro_exitoso").focus();
                         // Aquí puedes realizar otras acciones según la respuesta HTML recibida
                     } else {
                         $(boton).attr("disabled", false);

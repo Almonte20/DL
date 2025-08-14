@@ -63,7 +63,7 @@ trait WhatsappTrait
             "body_vars" => array(
                 array(
                     "text" => "{{1}}",
-                    "val" => $message."Holi",
+                    "val" => $message."",
                 ),
             ),
         );
