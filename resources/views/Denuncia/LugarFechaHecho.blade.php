@@ -258,7 +258,8 @@
                     <div class="form-ic-cmp">
                         <i class="fal fa-home"></i>&nbsp;
                         <label for="numext_hechos">Referencia del lugar (<span id="txt_lugar_referencia"></span>)</label>
-
+                        
+                    <label for="fecha_final" style="font-size: 6px;" class="text-danger">Requerido</label>
                     </div>
                     <textarea name="referencia_lugar" class="form-control" placeholder="Referencia del lugar" id="descripcion-referencia-lugar"
                     data-message-error='"REFERENCIA DEL LUGAR DONDE SUCEDIÓ EL HECHO" es requerido.'></textarea>
